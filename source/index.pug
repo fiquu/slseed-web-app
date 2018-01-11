@@ -1,0 +1,92 @@
+doctype html
+
+html(lang='es')
+  head
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    meta(name='version', content=htmlWebpackPlugin.options.version)
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(charset='utf-8')
+
+    title Upstream - Mejor Municipio: Creando el barrio que queremos.
+
+    //- Social sharing
+    meta(property='og:title' content='Upstream - Mejor Municipio: Creando el barrio que queremos.')
+    meta(property='og:description' content='Upstream de Mejor Municipio.')
+    meta(property='og:url' content='https://upstream.mejormunicipio.com')
+    meta(property='og:type' content='website')
+    meta(property='og:image' content='https://upstream.mejormunicipio.com/static/images/og-image.jpg')
+    meta(property='og:image:width' content='1200')
+    meta(property='og:image:height' content='630')
+    meta(property='fb:app_id' content=htmlWebpackPlugin.options.env.FACEBOOK_APP_ID.replace(/"/g, ''))
+    meta(name='twitter:card' content='summary')
+
+    //- Icons and favicons
+    link(rel='icon' type='image/png' sizes='32x32' href=`${htmlWebpackPlugin.files.publicPath}static/images/icons/favicon-32x32.png`)
+    link(rel='icon' type='image/png' sizes='16x16' href=`${htmlWebpackPlugin.files.publicPath}static/images/icons/favicon-16x16.png`)
+    link(rel='shortcut icon' href='/static/images/icons/favicon.ico')
+
+    //- Web app manifest and theme color
+    link(rel='manifest' href=`${htmlWebpackPlugin.files.publicPath}static/manifest.json`)
+    meta(name='theme-color' content='#4dba87')
+
+    //- Add to home screen for Safari on iOS
+    link(rel='apple-touch-icon' href=`${htmlWebpackPlugin.files.publicPath}static/images/icons/apple-touch-icon-152x152.png`)
+
+    meta(name='apple-mobile-web-app-capable' content='yes')
+    meta(name='apple-mobile-web-app-status-bar-style' content='black')
+    meta(name='apple-mobile-web-app-title' content='mmun-citizens-app')
+
+    //- Add to home screen for Windows
+    meta(name='msapplication-TileImage' content=`${htmlWebpackPlugin.files.publicPath}static/images/icons/msapplication-icon-144x144.png`)
+    meta(name='msapplication-TileColor' content='#ffffff')
+
+    //- External styles
+    link(
+      href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css'
+      integrity='sha256-/Z28yXtfBv/6/alw+yZuODgTbKZm86IKbPE/5kjO/xY='
+      crossorigin='anonymous'
+      rel='stylesheet'
+      )
+
+  body
+    #app
+
+    //- External scripts
+    script(
+      src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/moment.min.js'
+      integrity='sha256-/As5lS2upX/fOCO/h/5wzruGngVW3xPs3N8LN4FkA5Q='
+      crossorigin='anonymous'
+      )
+
+    script(
+      src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/locale/es.js'
+      integrity='sha256-YseGBWzRisIid8bDVyx1Np6PVgYYhIPMzGULjdF7Ya4='
+      crossorigin='anonymous'
+      )
+
+    script(
+      src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'
+      integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='
+      crossorigin='anonymous'
+      )
+
+    script(
+      src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js'
+      integrity='sha256-Bhi6GMQ/72uYZcJXCJ2LToOIcN3+Cx47AZnq/Bw1f7A='
+      crossorigin='anonymous'
+      )
+
+    script(
+      src='https://cdnjs.cloudflare.com/ajax/libs/validator/9.2.0/validator.min.js'
+      integrity='sha256-jiujhkQqO+WUbK7S/dUUvHfZUGnQR2Jw5MldoyuWogc='
+      crossorigin='anonymous'
+      )
+
+    script(
+      src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js'
+      integrity='sha256-yNbKY1y6h2rbVcQtf0b8lq4a+xpktyFc3pSYoGAY1qQ='
+      crossorigin='anonymous'
+      )
+
+    if htmlWebpackPlugin.options.env.NODE_ENV === 'production'
+      script !{htmlWebpackPlugin.options.serviceWorkerLoader}
