@@ -17,9 +17,9 @@ Vue.use(VeeValidate);
 Vue.use(VueI18n);
 Vue.use(Auth);
 
-moment.locale('es');
+window.moment.locale('es');
 
-toastr.options = {
+window.toastr.options = {
   closeButton: false,
   debug: false,
   newestOnTop: false,
