@@ -220,6 +220,8 @@ section.view
 </template>
 
 <script>
+const { $, toastr } = window;
+
 export default {
   data() {
     return {
