@@ -1,9 +1,15 @@
-const UglifyJS = require('uglify-es');
+/**
+ * Load minified build module.
+ *
+ * @module build/load-minified
+ */
+
+const uglify = require('uglify-es');
 const fs = require('fs');
 
-module.exports = (filePath) => {
-  const code = fs.readFileSync(filePath, 'utf-8');
-  const result = UglifyJS.minify(code);
+module.exports = file => {
+  const code = fs.readFileSync(file, 'utf-8');
+  const result = uglify.minify(code);
 
   if (result.error) {
     return '';

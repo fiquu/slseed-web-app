@@ -1,57 +1,89 @@
-require('./check-versions')();
+/**
+ * Build main module.
+ *
+ * @module build/index
+ */
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 const webpack = require('webpack');
-const chalk = require('chalk');
-const rm = require('rimraf');
 const path = require('path');
+const rm = require('rimraf');
 const ora = require('ora');
+
+const versions = require('./check-versions');
+const ssm = require('./ssm');
 
 const webpackConfig = require('./webpack.prod.conf');
 const config = require('../config');
-const env = require('./env');
 
-const spinner = ora(`building for [${process.env.NODE_ENV}]...`);
+const spinner = ora(`Building for [${process.env.NODE_ENV}]...`);
 
-function onWebpackDone(err, stats) {
-  spinner.stop();
+// Check dependencies versions
+versions()
+  // Load parameters
+  .then(() => ssm())
 
-  if (err) {
-    throw err;
-  }
-
-  process.stdout.write(
-    `${stats.toString({
-      colors: true,
-      modules: false,
-      children: false,
-      chunks: false,
-      chunkModules: false
-    })}\n\n`
-  );
-
-  console.log(chalk.cyan('Build complete.\n'));
-
-  console.log(
-    chalk.yellow(
-      "Tip: built files are meant to be served over an HTTP server.\n  Opening index.html over file:// won't work.\n"
-    )
-  );
-}
-
-function onRmDone(err) {
-  if (err) {
-    throw err;
-  }
-
-  env.then(values => { // Fetch SSM parameters and assign
+  // Cleanup output dir
+  .then(() => {
     spinner.start();
 
-    Object.assign(config.build.env, values);
+    return new Promise((resolve, reject) =>
+      rm(path.join(config.assetsRoot, config.assetsSubDirectory), err => {
+        if (err) {
+          reject(err);
+          return;
+        }
 
-    webpack(webpackConfig, onWebpackDone);
+        resolve();
+      })
+    );
+  })
+
+  // Start build process
+  .then(() => {
+    // Assign env vars to config env stringified.
+    Object.keys(process.env).forEach(key => {
+      config.env[key] = JSON.stringify(process.env[key]);
+    });
+
+    return new Promise((resolve, reject) =>
+      webpack(webpackConfig, (err, stats) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        resolve(stats);
+      })
+    );
+  })
+
+  // Build complete
+  .then(stats => {
+    process.stdout.write(
+      `${stats.toString({
+        chunkModules: false,
+        children: false,
+        modules: false,
+        chunks: false,
+        colors: true
+      })}`
+    );
+
+    spinner.succeed('Build complete!');
+
+    spinner.info("Built files are meant to be served over an HTTP server. Opening index.html over file:// won't work.");
+  })
+
+  // Build error
+  .catch(err => {
+    spinner.fail('Build failed!');
+
+    if (err && err.message) {
+      spinner.fail(err.message);
+      console.error(err);
+    }
+
+    process.exit();
   });
-}
-
-rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), onRmDone);

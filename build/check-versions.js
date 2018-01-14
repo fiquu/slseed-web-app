@@ -1,50 +1,55 @@
+/**
+ * Check versions build module.
+ *
+ * @module build/check-versions
+ */
+
 const child = require('child_process');
-const chalk = require('chalk');
 const semver = require('semver');
-const shell = require('shelljs');
+const chalk = require('chalk');
+const ora = require('ora');
 
-const packageConfig = require('../package.json');
+const spinner = ora('Checking dependencies versions...').start();
 
-function exec(cmd) {
-  return child.execSync(cmd).toString().trim();
-}
+const package = require('../package.json');
 
-const versionRequirements = [{
-  name: 'node',
-  currentVersion: semver.clean(process.version),
-  versionRequirement: packageConfig.engines.node,
-}];
-
-if (shell.which('npm')) {
-  versionRequirements.push({
+const requirements = [
+  {
+    current: semver.clean(process.version),
+    requires: package.engines.node,
+    name: 'node'
+  },
+  {
+    requires: package.engines.npm,
     name: 'npm',
-    currentVersion: exec('npm --version'),
-    versionRequirement: packageConfig.engines.npm,
+    current: child
+      .execSync('npm --version')
+      .toString()
+      .trim()
+  }
+];
+
+module.exports = () =>
+  new Promise((resolve, reject) => {
+    const messages = [];
+
+    requirements.forEach(mod => {
+      if (!semver.satisfies(mod.current, mod.requires)) {
+        messages.push(`${mod.name}: ${chalk.red(mod.current)} should be ${chalk.green(mod.requires)}`);
+      }
+    });
+
+    if (messages.length < 1) {
+      spinner.succeed('Dependencies versions are ok!');
+      resolve();
+      return;
+    }
+
+    spinner.warn('You must update following modules:');
+
+    messages.forEach(warning => spinner.info(warning));
+
+    spinner.fail('Please fix dependencies version mismatches.');
+
+    reject();
   });
-}
-
-module.exports = () => {
-  const warnings = [];
-
-  for (let i = 0; i < versionRequirements.length; i += 1) {
-    const mod = versionRequirements[i];
-    if (!semver.satisfies(mod.currentVersion, mod.versionRequirement)) {
-      warnings.push(`${mod.name}: ${chalk.red(mod.currentVersion)} should be ${chalk.green(mod.versionRequirement)}`);
-    }
-  }
-
-  if (warnings.length) {
-    console.log('');
-    console.log(chalk.yellow('To use this template, you must update following to modules:'));
-    console.log();
-
-    for (let i = 0; i < warnings.length; i += 1) {
-      const warning = warnings[i];
-      console.log(warning);
-    }
-
-    console.log();
-
-    process.exit(1);
-  }
-};

@@ -3,15 +3,15 @@ doctype html
 html(lang='es')
   head
     meta(name='viewport' content='width=device-width, initial-scale=1')
-    meta(name='version', content=htmlWebpackPlugin.options.version)
+    meta(name='version', content=htmlWebpackPlugin.options.package.version)
     meta(http-equiv='X-UA-Compatible' content='IE=edge')
     meta(charset='utf-8')
 
-    title Upstream - Mejor Municipio: Creando el barrio que queremos.
+    title=htmlWebpackPlugin.options.package.title
 
     //- Social sharing
-    meta(property='og:title' content='Upstream - Mejor Municipio: Creando el barrio que queremos.')
-    meta(property='og:description' content='Upstream de Mejor Municipio.')
+    meta(property='og:title' content=htmlWebpackPlugin.options.package.title)
+    meta(property='og:description' content=htmlWebpackPlugin.options.package.descrption)
     meta(property='og:url' content='https://upstream.mejormunicipio.com')
     meta(property='og:type' content='website')
     meta(property='og:image' content='https://upstream.mejormunicipio.com/static/images/og-image.jpg')
