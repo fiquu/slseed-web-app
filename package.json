@@ -6,9 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "homepage": "https://github.com/FinalDevStudio/fi-slseed-app",
-  "contributors": [
-    "Santiago G. Marín <santiago@finaldevstudio.com> (https://github.com/stgogm)"
-  ],
+  "contributors": ["Santiago G. Marín <santiago@finaldevstudio.com> (https://github.com/stgogm)"],
   "repository": {
     "type": "git",
     "url": "git@github.com:FinalDevStudio/fi-slseed-app.git"
@@ -17,6 +15,7 @@
     "node": ">= 4.0.0",
     "npm": ">= 5.0.0"
   },
+  "browserslist": ["> 1%", "last 2 versions"],
   "scripts": {
     "start": "NODE_ENV=local node server",
     "dev-build": "NODE_ENV=development node build",
