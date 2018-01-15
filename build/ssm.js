@@ -12,7 +12,7 @@ const spinner = ora(`Resolving SSM parameters for [${process.env.NODE_ENV}]...`)
 spinner.start();
 
 const { profiles, region, params } = require('../config/ssm.env');
-const package = require('../package.json');
+const slseed = require('../slseed.json');
 
 process.env.AWS_PROFILE = profiles[process.env.NODE_ENV];
 
@@ -30,7 +30,7 @@ const errors = [];
 
 params.forEach(name => {
   const params = {
-    Name: `/${package.group.name}/${process.env.NODE_ENV}/${name}`,
+    Name: `/${slseed.group}/${process.env.NODE_ENV}/${name}`,
     WithDecryption: true
   };
 

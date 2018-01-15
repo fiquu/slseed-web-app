@@ -10,13 +10,11 @@ const ora = require('ora');
 
 const config = require('../config');
 
-const outputDir = path.join(config.assetsRoot, config.assetsSubDirectory);
-
 module.exports = () => {
-  const spinner = ora(`Cleaning up ${outputDir}...`).start();
+  const spinner = ora(`Cleaning up ${config.assetsRoot}...`).start();
 
   return new Promise((resolve, reject) =>
-    rm(outputDir, err => {
+    rm(config.assetsRoot, err => {
       if (err) {
         spinner.fail('Cleanup failed!');
 

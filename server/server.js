@@ -87,8 +87,8 @@ module.exports = () => {
 
   const server = app.listen(config.port);
 
-  // module.exports = {
-  //   close: () => server.close(),
-  //   ready: readyPromise
-  // };
+  return {
+    close: () => server.close(),
+    ready: readyPromise
+  };
 };

@@ -66,7 +66,7 @@ const webpackConfig = {
       staticFileGlobs: ['dist/**/*.{js,html,css}'],
       filename: 'service-worker.js',
       stripPrefix: 'dist/',
-      cacheId: 'vue-pwa',
+      cacheId: 'sw-cache',
       minify: true
     })
   ]

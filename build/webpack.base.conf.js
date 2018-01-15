@@ -1,4 +1,6 @@
 const eslintFriendlyFormatter = require('eslint-friendly-formatter');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
@@ -6,7 +8,9 @@ const path = require('path');
 const vueLoaderConfig = require('./vue-loader.conf');
 const loadMinified = require('./load-minified');
 const package = require('../package.json');
+const slseed = require('../slseed.json');
 const config = require('../config');
+const cdn = require('../cdn.json');
 const utils = require('./utils');
 
 const resolve = dir => path.join(__dirname, '..', dir);
@@ -32,11 +36,12 @@ module.exports = {
 
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': config.env
+      'process.env': config.env,
+      slseed: config.slseed
     }),
 
     new HtmlWebpackPlugin({
-      template: path.join('source', 'index.pug'),
+      template: path.join(__dirname, '..', 'source', 'index.pug'),
       filename: config.index,
       inject: true,
 
@@ -49,7 +54,54 @@ module.exports = {
       serviceWorkerLoader: loadMinified(path.join(__dirname, '..', 'source', 'service-worker.js')),
       chunksSortMode: 'dependency',
       env: config.env,
-      package
+      process,
+      package,
+      slseed,
+      cdn
+    }),
+
+    new FaviconsWebpackPlugin({
+      logo: config.appIconPath,
+      prefix: path.join(config.assetsSubDirectory, 'icons', '[hash].', ''),
+      background: slseed.background,
+      version: package.version,
+      title: slseed.title,
+      icons: {
+        appleStartup: false,
+        appleIcon: false,
+        opengraph: false,
+        favicons: true,
+        android: false,
+        twitter: false,
+        windows: false,
+        yandex: false,
+        coast: false
+      }
+    }),
+
+    new WebpackPwaManifest({
+      background_color: slseed.background,
+      description: slseed.description,
+      theme_color: slseed.color,
+      short_name: slseed.short,
+      version: package.version,
+      display: slseed.display,
+      name: slseed.title,
+      start_url: '/',
+      ios: true,
+      icons: [
+        {
+          src: config.appIconPath,
+          destination: path.join(config.assetsSubDirectory, 'icons'),
+          sizes: [36, 48, 72, 96, 144, 192, 512]
+        },
+        {
+          src: config.appIconPath,
+          destination: path.join(config.assetsSubDirectory, 'icons'),
+          sizes: [120, 152, 167, 180, 1024],
+          ios: true
+        }
+      ]
     })
   ],
 
