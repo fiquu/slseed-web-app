@@ -11,9 +11,6 @@
     "node": true,
     "es6": true
   },
-  "globals": {
-    "slseed": false
-  },
   "settings": {
     "import/resolver": {
       "webpack": {

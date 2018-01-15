@@ -6,13 +6,13 @@
 
 const merge = require('webpack-merge');
 
-const slseed = require('../slseed.json');
+const package = require('../package.json');
 const config = require('../config');
 
 module.exports = () => {
   const stage = require(`../config/${process.env.NODE_ENV}`); // Per stage config
   const obj = {
-    slseed: {},
+    app: {},
     env: {}
   };
 
@@ -37,10 +37,12 @@ module.exports = () => {
     });
   }
 
-  // Stringify Slseed values
-  Object.keys(slseed).forEach(key => {
-    obj.slseed[key] = JSON.stringify(slseed[key]);
-  });
+  // Stringify package app values
+  if (package.app) {
+    Object.keys(package.app).forEach(key => {
+      obj.app[key] = JSON.stringify(package.app[key]);
+    });
+  }
 
   // Merge and assign stage values to config
   Object.assign(config, merge(config, stage, obj));

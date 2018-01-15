@@ -30,7 +30,7 @@ export default {
 
   data() {
     return {
-      title: slseed.title
+      title: process.app.short
     };
   }
 };

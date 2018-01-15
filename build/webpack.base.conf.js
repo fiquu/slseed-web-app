@@ -8,9 +8,7 @@ const path = require('path');
 const vueLoaderConfig = require('./vue-loader.conf');
 const loadMinified = require('./load-minified');
 const package = require('../package.json');
-const slseed = require('../slseed.json');
 const config = require('../config');
-const cdn = require('../cdn.json');
 const utils = require('./utils');
 
 const resolve = dir => path.join(__dirname, '..', dir);
@@ -36,8 +34,8 @@ module.exports = {
 
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': config.env,
-      slseed: config.slseed
+      'process.app': config.app,
+      'process.env': config.env
     }),
 
     new HtmlWebpackPlugin({
@@ -53,19 +51,16 @@ module.exports = {
 
       serviceWorkerLoader: loadMinified(path.join(__dirname, '..', 'source', 'service-worker.js')),
       chunksSortMode: 'dependency',
-      env: config.env,
-      process,
-      package,
-      slseed,
-      cdn
+      env: process.env,
+      package
     }),
 
     new FaviconsWebpackPlugin({
       logo: config.appIconPath,
       prefix: path.join(config.assetsSubDirectory, 'icons', '[hash].', ''),
-      background: slseed.background,
+      background: package.app.background,
       version: package.version,
-      title: slseed.title,
+      title: package.app.name,
       icons: {
         appleStartup: false,
         appleIcon: false,
@@ -80,13 +75,13 @@ module.exports = {
     }),
 
     new WebpackPwaManifest({
-      background_color: slseed.background,
-      description: slseed.description,
-      theme_color: slseed.color,
-      short_name: slseed.short,
+      background_color: package.app.background,
+      description: package.app.description,
+      theme_color: package.app.color,
+      short_name: package.app.short,
+      display: package.app.display,
       version: package.version,
-      display: slseed.display,
-      name: slseed.title,
+      name: package.app.name,
       start_url: '/',
       ios: true,
       icons: [

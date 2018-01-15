@@ -9,22 +9,22 @@ html(lang='es')
     meta(http-equiv='X-UA-Compatible' content='IE=edge')
     meta(charset='utf-8')
 
-    title=data.slseed.title
+    title=data.package.app.name
 
     //- Social sharing
-    meta(property='og:title' content=data.slseed.title)
-    meta(property='og:description' content=data.slseed.description)
+    meta(property='og:title' content=data.package.app.name)
+    meta(property='og:description' content=data.package.app.description)
     meta(property='og:type' content='website')
     meta(property='og:image:width' content='1200')
     meta(property='og:image:height' content='630')
-    meta(property='fb:app_id' content=data.process.env.FACEBOOK_APP_ID)
-    meta(property='og:image' content=data.slseed.ogImage)
-    meta(property='og:url' content=data.slseed.ogUrl)
+    meta(property='fb:app_id' content=data.env.FACEBOOK_APP_ID)
+    meta(property='og:image' content=data.package.app.ogImage)
+    meta(property='og:url' content=data.package.app.home)
 
     meta(name='twitter:card' content='summary')
 
-    //- External styles (CDN)
-    each style in data.cdn.styles
+    //- External styles
+    each style in data.package.external.styles
       link(
         href=style.src
         integrity=style.integrity
@@ -35,8 +35,8 @@ html(lang='es')
   body
     #app
 
-    //- External scripts (CDN)
-    each script in data.cdn.scripts
+    //- External scripts
+    each script in data.package.external.scripts
       script(
         src=script.src
         integrity=script.integrity
@@ -44,5 +44,5 @@ html(lang='es')
         )
 
     //- Service worker
-    if data.process.env.NODE_ENV === 'production'
+    if data.env.NODE_ENV === 'production'
       script !{data.serviceWorkerLoader}
