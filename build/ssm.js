@@ -60,9 +60,9 @@ params.forEach(name => {
 module.exports = () =>
   Promise.all(promises).then(() => {
     if (errors.length > 1) {
-      spinner.fail('Some parameters could not be resolved!');
+      spinner.fail('Some parameters could not be resolved');
       throw new Error();
     }
 
-    spinner.succeed('All SSM parameters resolved!');
+    spinner.succeed('All SSM parameters resolved.');
   });

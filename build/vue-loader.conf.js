@@ -10,7 +10,7 @@ const utils = require('./utils');
 module.exports = {
   loaders: Object.assign(
     utils.cssLoaders({
-      sourceMap: config.cssSourceMap,
+      sourceMap: config.sourceMaps,
       extract: config.extractCss
     }),
     {

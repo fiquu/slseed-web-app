@@ -1,7 +1,7 @@
 <i18n>
 {
   "es": {
-    "TITLE"
+    "TITLE": "process.env.TITLE"
   }
 }
 </i18n>

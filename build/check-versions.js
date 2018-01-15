@@ -40,7 +40,7 @@ module.exports = () =>
     });
 
     if (messages.length < 1) {
-      spinner.succeed('Dependencies versions are ok!');
+      spinner.succeed('Dependencies versions are OK.');
       resolve();
       return;
     }

@@ -6,84 +6,31 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
-const webpack = require('webpack');
-const path = require('path');
-const rm = require('rimraf');
-const ora = require('ora');
-
 const versions = require('./check-versions');
+const configure = require('./configure');
+const cleanup = require('./cleanup');
+const build = require('./build');
 const ssm = require('./ssm');
-
-const webpackConfig = require('./webpack.prod.conf');
-const config = require('../config');
-
-const spinner = ora(`Building for [${process.env.NODE_ENV}]...`);
 
 // Check dependencies versions
 versions()
-  // Load parameters
+  // Load SSM parameters
   .then(() => ssm())
 
+  // Setup configuration
+  .then(() => configure())
+
   // Cleanup output dir
-  .then(() => {
-    spinner.start();
-
-    return new Promise((resolve, reject) =>
-      rm(path.join(config.assetsRoot, config.assetsSubDirectory), err => {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        resolve();
-      })
-    );
-  })
+  .then(() => cleanup())
 
   // Start build process
-  .then(() => {
-    // Assign env vars to config env stringified.
-    Object.keys(process.env).forEach(key => {
-      config.env[key] = JSON.stringify(process.env[key]);
-    });
+  .then(() => build())
 
-    return new Promise((resolve, reject) =>
-      webpack(webpackConfig, (err, stats) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        resolve(stats);
-      })
-    );
-  })
-
-  // Build complete
-  .then(stats => {
-    process.stdout.write(
-      `${stats.toString({
-        chunkModules: false,
-        children: false,
-        modules: false,
-        chunks: false,
-        colors: true
-      })}`
-    );
-
-    spinner.succeed('Build complete!');
-
-    spinner.info("Built files are meant to be served over an HTTP server. Opening index.html over file:// won't work.");
-  })
-
-  // Build error
+  // Handle build error
   .catch(err => {
-    spinner.fail('Build failed!');
-
-    if (err && err.message) {
-      spinner.fail(err.message);
+    if (err) {
       console.error(err);
     }
 
-    process.exit();
+    process.exit(1);
   });

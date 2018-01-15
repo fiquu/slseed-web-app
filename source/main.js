@@ -50,12 +50,10 @@ const i18n = new VueI18n({
 Vue.url.options.root = http.root;
 
 new Vue({
+  render: v => v(App),
   template: '<app/>',
   el: '#app',
   router,
   i18n,
-  http,
-  components: {
-    App
-  }
+  http
 });
