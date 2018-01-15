@@ -18,8 +18,8 @@ module.exports = {
     /* IMPORTANT: You should comment the ones you're not using in your instance. */
 
     // 'cognito-identity-pool-id',
-    // 'cognito-user-pool-id',
-    // 'cognito-client-id',
+    'cognito-user-pool-id',
+    'cognito-client-id',
 
     // 'public-uploads-bucket',
     // 'public-uploads-host',
