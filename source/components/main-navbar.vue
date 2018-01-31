@@ -1,3 +1,11 @@
+<i18n>
+{
+  "en": {
+    "SIGN_OUT": "Sign out"
+  }
+}
+</i18n>
+
 <template lang="pug">
 header.ui.fixed.top.compact.menu
   a.item(

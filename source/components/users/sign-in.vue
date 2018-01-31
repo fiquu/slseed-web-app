@@ -1,37 +1,37 @@
 <i18n>
 {
-  "es": {
-    "TITLE": "Bienvenido",
-    "SUBTITLE": "Por favor ingresa con tus credenciales.",
-    "FORGOT_PASSWORD": "Olvidé mi clave",
+  "en": {
+    "TITLE": "Welcome",
+    "SUBTITLE": "Please sign in with your credentials.",
+    "FORGOT_PASSWORD": "I forgot my password",
     "FORM": {
       "EMAIL": {
-        "PLACEHOLDER": "Ingresa tu email...",
+        "PLACEHOLDER": "Enter your email...",
         "LABEL": "Email"
       },
       "PASSWORD": {
-        "PLACEHOLDER": "Ingresa tu clave...",
-        "LABEL": "Clave"
+        "PLACEHOLDER": "Enter your password...",
+        "LABEL": "Password"
       },
       "NAME": {
-        "PLACEHOLDER": "Ingresa tu nombre completo...",
-        "LABEL": "Nombre Completo"
+        "PLACEHOLDER": "Enter your full name...",
+        "LABEL": "Full Name"
       },
       "NEW_PASSWORD": {
         "MESSAGE": {
-          "TITLE": "¡Esa es una clave temporal!",
-          "BODY": "Debes crear tu nueva clave para ingresar a la plataforma."
+          "TITLE": "That's a temporary password!",
+          "BODY": "You must create a new password."
         },
-        "PLACEHOLDER": "Crea tu clave...",
-        "LABEL": "Nueva Clave"
+        "PLACEHOLDER": "Create your password...",
+        "LABEL": "New Password"
       },
       "ERROR": {
         "MESSAGE": {
-          "TITLE": "No pudimos iniciar tu sesión...",
-          "BODY": "Por favor revisa que tu usuario y clave sean correctos."
+          "TITLE": "Couldn't sign you in...",
+          "BODY": "Please verify that your email and password are correct."
         }
       },
-      "SUBMIT": "Ingresar"
+      "SUBMIT": "Sign in"
     }
   }
 }

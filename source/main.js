@@ -17,7 +17,7 @@ Vue.use(VeeValidate);
 Vue.use(VueI18n);
 Vue.use(Auth);
 
-window.moment.locale('es');
+window.moment.locale('en');
 
 window.toastr.options = {
   closeButton: false,
@@ -39,7 +39,7 @@ window.toastr.options = {
 };
 
 const i18n = new VueI18n({
-  locale: 'es'
+  locale: 'en'
 });
 
 /**

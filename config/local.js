@@ -5,8 +5,8 @@ module.exports = {
   sourceMaps: true,
 
   // Development server settings
-  port: 8081,
   proxyTable: {},
+  port: 8081,
   headers: {
     'strict-transport-security': ['max-age=31536000', 'includeSubDomains', 'preload'].join(';'),
     'x-xss-protection': ['1', 'mode=block'].join(';'),

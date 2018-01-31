@@ -1,66 +1,66 @@
 <i18n>
 {
-  "es": {
-    "TITLE": "Reestablecer Clave",
-    "SUBTITLE": "Ingresa tu correo para reestablecer tu clave.",
-    "HAVE_PASSWORD": "Ya tengo mi clave",
-    "HAVE_CODE": "Ya tengo un código",
+  "en": {
+    "TITLE": "Reset Password",
+    "SUBTITLE": "Enter your email to reset your password.",
+    "HAVE_PASSWORD": "I have my password",
+    "HAVE_CODE": "I already have a recovery code",
     "FORM": {
       "EMAIL": {
-        "PLACEHOLDER": "Ingresa tu email...",
+        "PLACEHOLDER": "Enter your email...",
         "LABEL": "Email"
       },
       "CODE": {
-        "PLACEHOLDER": "Ingresa el código...",
-        "LABEL": "Código"
+        "PLACEHOLDER": "Enter your recovery code...",
+        "LABEL": "Recovery Code"
       },
       "PASSWORD": {
-        "PLACEHOLDER": "Ingresa tu nueva clave...",
-        "LABEL": "Nueva Clave"
+        "PLACEHOLDER": "Enter your new password...",
+        "LABEL": "New Password"
       },
-      "SUBMIT": "Solicitar código"
+      "SUBMIT": "Request a recovery code"
     },
     "RESET": {
-      "TITLE": "¡Atención!",
-      "BODY": "Sigue estas instrucciones para reestablecer tu clave:",
+      "TITLE": "Attention!",
+      "BODY": "Follow this instructions to reset your password:",
       "INSTRUCTIONS": {
-        "1": "No cierres esta ventana.",
-        "2": "Ve a la bandeja de entrada de tu correo.",
-        "3": "Abre el mensaje que te hemos enviado.",
-        "4": "Busca el código y cópialo.",
-        "5": "Vuelve a esta página y pega el código.",
-        "6": "Ingresa tu nueva clave.",
-        "7": "Confirma el cambio.",
-        "8": "¡Listo!"
+        "1": "Don't close this window.",
+        "2": "Go to your email inbox.",
+        "3": "Open the message we've sent you.",
+        "4": "Search the recovery code and copy it.",
+        "5": "Come back to this window and paste the recovery code.",
+        "6": "Enter your new password.",
+        "7": "Confirm the modification.",
+        "8": "Done!"
       },
-      "CONFIRM": "Confirmar",
-      "CANCEL": "Cancelar"
+      "CONFIRM": "Confirm",
+      "CANCEL": "Cancel"
     },
     "MESSAGES": {
       "INFO": {
-        "BODY": "Si ya tienes un código, ingresa tu correo y presiona el botón \"Ya tengo un código\"."
+        "BODY": "If you already have a recovery code, enter your email and press \"I already have a recovery code\"."
       },
       "SUCCESS": {
-        "TITLE": "¡Listo!",
-        "BODY": "Ingresa con tu nueva clave."
+        "TITLE": "Done!",
+        "BODY": "Please sign in with your new password."
       },
       "LIMIT_EXCEEDED": {
-        "BODY": "Por favor espera un momento antes de reintentar."
+        "BODY": "Please wai a while before retrying."
       },
       "USER_NOT_FOUND": {
-        "BODY": "Comprueba que el correo sea el correcto."
+        "BODY": "Check your email is right."
       },
       "INVALID_CODE": {
-        "BODY": "El codigo es inválido."
+        "BODY": "That recovery code is not valid."
       },
       "EXPIRED_CODE": {
-        "BODY": "Por favor pide un nuevo código."
+        "BODY": "Please request a new recovery code."
       },
       "NOT_AUTHORIZED": {
-        "BODY": "Por favor ponte en contacto con tu administrador."
+        "BODY": "Please contact your account administrator."
       },
       "ERROR": {
-        "BODY": "No se pudo realizar la solicitud."
+        "BODY": "Couldn't fulfill the request."
       }
     }
   }
