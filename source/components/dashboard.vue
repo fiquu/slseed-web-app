@@ -1,7 +1,7 @@
 <i18n>
 {
   "en": {
-    "TITLE": "Welcome"
+    "TITLE": "Dashboard"
   }
 }
 </i18n>
@@ -10,7 +10,7 @@
 section.ui.vertical.segment.view
   .ui.container
     .ui.red.segment
-      h1.ui.header(v-t=`'TITLE'`)
+      h4.ui.red.header(v-t=`'TITLE'`)
 </template>
 
 
