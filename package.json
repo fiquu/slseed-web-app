@@ -1,5 +1,4 @@
 {
-  "group": "slseed",
   "name": "fi-slseed-app",
   "description": "Serveless Seed Web App project.",
   "author": "Final Development Studio <sorcery@finaldevstudio.com> (http://finaldevstudio.com)",
@@ -10,6 +9,10 @@
   "contributors": [
     "Santiago G. Marín <santiago@finaldevstudio.com> (https://github.com/stgogm)"
   ],
+  "group": {
+    "title": "Fi Slseed",
+    "name": "slseed"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:FinalDevStudio/fi-slseed-app.git"

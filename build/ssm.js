@@ -29,7 +29,7 @@ const errors = [];
 
 params.forEach(name => {
   const params = {
-    Name: `/${package.group}/${process.env.NODE_ENV}/${name}`,
+    Name: `/${package.group.name}/${process.env.NODE_ENV}/${name}`,
     WithDecryption: true
   };
 
