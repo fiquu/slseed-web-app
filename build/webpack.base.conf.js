@@ -8,11 +8,13 @@ const eslintFriendlyFormatter = require('eslint-friendly-formatter');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const uglify = require('uglify-es');
+const babel = require('babel-core');
 const webpack = require('webpack');
 const path = require('path');
 
 const vueLoaderConfig = require('./vue-loader.conf');
-const loadMinified = require('./load-minified');
 const package = require('../package.json');
 const config = require('../config');
 const utils = require('./utils');
@@ -55,13 +57,29 @@ module.exports = {
         removeComments: true
       },
 
-      serviceWorkerLoader: loadMinified(
-        path.resolve(path.join(__dirname, '..', 'source', 'service-worker-loader.js'))
-      ),
       chunksSortMode: 'dependency',
       env: process.env,
       package
     }),
+
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(
+          __dirname,
+          path.join('..', 'source', 'service-worker', `loader.${process.env.NODE_ENV === 'local' ? 'dev' : 'build'}.js`)
+        ),
+        to: path.join(config.assetsSubDirectory, 'service-worker-loader.js'),
+        toType: 'file',
+        cache: true,
+        transform(content) {
+          return babel.transform(content, {
+            comments: false,
+            minified: true,
+            ast: false
+          }).code;
+        }
+      }
+    ]),
 
     new FaviconsWebpackPlugin({
       logo: config.appIconPath,

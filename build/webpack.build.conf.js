@@ -68,16 +68,6 @@ const webpackConfig = {
       }
     ]),
 
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, path.join('..', 'source', 'service-worker-loader.js')),
-        to: config.assetsSubDirectory,
-        transform: () => {
-
-        }
-      }
-    ]),
-
     new SWPrecacheWebpackPlugin({
       staticFileGlobs: ['dist/**/*.{js,html,css}'],
       filename: 'static/service-worker.js',

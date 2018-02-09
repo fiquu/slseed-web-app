@@ -10,8 +10,8 @@ const isLocalhost =
   // 127.0.0.1/8 is considered localhost for IPv4.
   hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/);
 
-window.addEventListener('load', () => {
-  const shouldRegister = 'serviceWorker' in navigator && (window.location.protocol === 'https:' || isLocalhost);
+self.addEventListener('load', () => {
+  const shouldRegister = 'serviceWorker' in navigator && (self.location.protocol === 'https:' || isLocalhost);
 
   if (shouldRegister) {
     navigator.serviceWorker
