@@ -1,3 +1,9 @@
+/**
+ * Local Storage service module.
+ *
+ * @module services/local-storage
+ */
+
 import VueLocalStorage from 'vue-localstorage';
 import Vue from 'vue';
 

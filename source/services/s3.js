@@ -1,3 +1,9 @@
+/**
+ * S3 service module.
+ *
+ * @module services/s3
+ */
+
 import AWS from 'aws-sdk';
 import uuid from 'uuid';
 

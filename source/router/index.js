@@ -1,3 +1,9 @@
+/**
+ * Router index module.
+ *
+ * @module router/index
+ */
+
 import VueRouter from 'vue-router';
 import Vue from 'vue';
 

@@ -1,3 +1,9 @@
+/**
+ * Auth plugin module.
+ *
+ * @module plugins/auth
+ */
+
 import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import AWS from 'aws-sdk';
 

@@ -1,9 +1,9 @@
 /**
- * Local storage config module.
+ * Local Storage config module.
  *
  * @see https://www.npmjs.com/package/vue-localstorage
  *
- * @module configs/auth
+ * @module configs/local-storage
  */
 
 export default {};

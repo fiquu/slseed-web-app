@@ -1,3 +1,9 @@
+/**
+ * Facebook service module.
+ *
+ * @module services/facebook
+ */
+
 import config from '@/configs/facebook';
 
 const id = 'facebook-jssdk';
