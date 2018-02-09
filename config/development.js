@@ -4,4 +4,7 @@
  * @module config/development
  */
 
-module.exports = {};
+module.exports = {
+  bundleAnalyzerReport: false,
+  serviceWorker: true
+};

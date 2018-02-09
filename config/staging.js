@@ -4,4 +4,7 @@
  * @module config/staging
  */
 
-module.exports = {};
+module.exports = {
+  bundleAnalyzerReport: false,
+  serviceWorker: true
+};

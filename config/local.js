@@ -6,7 +6,8 @@
 
 module.exports = {
   // devtool: '#cheap-module-eval-source-map', /* This generates code with `eval` :( */
-  bundleAnalyzerReport: true,
+  bundleAnalyzerReport: false,
+  serviceWorker: false,
   extractCss: false,
   sourceMaps: true,
 

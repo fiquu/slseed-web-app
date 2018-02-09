@@ -70,7 +70,7 @@ const webpackConfig = {
 
     new SWPrecacheWebpackPlugin({
       staticFileGlobs: ['dist/**/*.{js,html,css}'],
-      filename: 'static/service-worker.js',
+      filename: 'service-worker.js',
       stripPrefix: 'dist/',
       cacheId: 'sw-cache',
       minify: true

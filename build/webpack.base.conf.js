@@ -9,7 +9,6 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const uglify = require('uglify-es');
 const babel = require('babel-core');
 const webpack = require('webpack');
 const path = require('path');
@@ -66,9 +65,9 @@ module.exports = {
       {
         from: path.resolve(
           __dirname,
-          path.join('..', 'source', 'service-worker', `loader.${process.env.NODE_ENV === 'local' ? 'dev' : 'build'}.js`)
+          path.join('..', 'source', 'service-worker', `${config.serviceWorker ? 'loader' : 'noop'}.js`)
         ),
-        to: path.join(config.assetsSubDirectory, 'service-worker-loader.js'),
+        to: 'service-worker-loader.js',
         toType: 'file',
         cache: true,
         transform(content) {
