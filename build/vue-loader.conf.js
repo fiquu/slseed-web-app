@@ -1,7 +1,7 @@
 /**
  * Vue loader config build module.
  *
- * @module build/vue-loader
+ * @module build/vue-loader.conf
  */
 
 const config = require('../config');

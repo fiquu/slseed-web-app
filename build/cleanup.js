@@ -4,7 +4,6 @@
  * @module build/cleanup
  */
 
-const path = require('path');
 const rm = require('rimraf');
 const ora = require('ora');
 

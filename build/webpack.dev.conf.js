@@ -1,3 +1,9 @@
+/**
+ * Webpack development config build module.
+ *
+ * @module build/webpack.dev.conf
+ */
+
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const merge = require('webpack-merge');
 const webpack = require('webpack');

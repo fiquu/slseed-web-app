@@ -1,7 +1,7 @@
 <i18n>
 {
-  "es": {
-    "SIGN_OUT": "Salir"
+  "en": {
+    "SIGN_OUT": "Sign Out"
   }
 }
 </i18n>

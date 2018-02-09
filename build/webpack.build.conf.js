@@ -1,3 +1,9 @@
+/**
+ * Webpack build config build module.
+ *
+ * @module build/webpack.build.conf
+ */
+
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -62,9 +68,19 @@ const webpackConfig = {
       }
     ]),
 
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, path.join('..', 'source', 'service-worker-loader.js')),
+        to: config.assetsSubDirectory,
+        transform: () => {
+
+        }
+      }
+    ]),
+
     new SWPrecacheWebpackPlugin({
       staticFileGlobs: ['dist/**/*.{js,html,css}'],
-      filename: 'service-worker.js',
+      filename: 'static/service-worker.js',
       stripPrefix: 'dist/',
       cacheId: 'sw-cache',
       minify: true

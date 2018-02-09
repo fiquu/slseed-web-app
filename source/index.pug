@@ -1,30 +1,30 @@
 doctype html
 
-- const data = htmlWebpackPlugin.options;
+- const opts = htmlWebpackPlugin.options;
 
-html(lang='es')
+html(lang='en')
   head
     meta(name='viewport' content='width=device-width, initial-scale=1')
-    meta(name='version', content=data.package.version)
+    meta(name='version', content=opts.package.version)
     meta(http-equiv='X-UA-Compatible' content='IE=edge')
     meta(charset='utf-8')
 
-    title=data.package.app.name
+    title=opts.package.app.name
 
     //- Social sharing
-    meta(property='og:title' content=data.package.app.name)
-    meta(property='og:description' content=data.package.app.description)
+    meta(property='og:title' content=opts.package.app.name)
+    meta(property='og:description' content=opts.package.app.description)
     meta(property='og:type' content='website')
     meta(property='og:image:width' content='1200')
     meta(property='og:image:height' content='630')
-    meta(property='fb:app_id' content=data.env.FACEBOOK_APP_ID)
-    meta(property='og:image' content=data.package.app.ogImage)
-    meta(property='og:url' content=data.package.app.home)
+    meta(property='fb:app_id' content=opts.env.FACEBOOK_APP_ID)
+    meta(property='og:image' content=opts.package.app.ogImage)
+    meta(property='og:url' content=opts.package.app.home)
 
     meta(name='twitter:card' content='summary')
 
     //- External styles
-    each style in data.package.external.styles
+    each style in opts.package.external.styles
       link(
         href=style.src
         integrity=style.integrity
@@ -36,13 +36,13 @@ html(lang='es')
     #app
 
     //- External scripts
-    each script in data.package.external.scripts
+    each script in opts.package.external.scripts
       script(
         src=script.src
         integrity=script.integrity
         crossorigin='anonymous'
         )
 
-    //- Service worker
-    //- if data.env.NODE_ENV === 'production'
-    script(nonce='2726c7f26c') !{data.serviceWorkerLoader}
+    //- Service worker loader
+    //- if opts.env.NODE_ENV === 'production'
+    script(src='service-worker-loader.js')

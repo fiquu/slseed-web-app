@@ -1,3 +1,9 @@
+/**
+ * Webpack base config build module.
+ *
+ * @module build/webpack.base.conf
+ */
+
 const eslintFriendlyFormatter = require('eslint-friendly-formatter');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
@@ -49,7 +55,9 @@ module.exports = {
         removeComments: true
       },
 
-      serviceWorkerLoader: loadMinified(path.join(__dirname, '..', 'source', 'service-worker.js')),
+      serviceWorkerLoader: loadMinified(
+        path.resolve(path.join(__dirname, '..', 'source', 'service-worker-loader.js'))
+      ),
       chunksSortMode: 'dependency',
       env: process.env,
       package

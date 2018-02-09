@@ -72,6 +72,7 @@
     "start": "NODE_ENV=local node server",
     "build:development": "NODE_ENV=development node build",
     "build:staging": "NODE_ENV=staging node build",
+    "build:local": "NODE_ENV=local node build",
     "build": "NODE_ENV=production node build",
     "unit": "NODE_ENV=test cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "lint": "NODE_ENV=test eslint --ext .js,.vue src test/unit/specs test/e2e/specs",

@@ -1,5 +1,5 @@
 /**
- * Load minified build module.
+ * Load minified build helper module.
  *
  * @module build/load-minified
  */

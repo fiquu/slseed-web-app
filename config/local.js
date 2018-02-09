@@ -1,3 +1,9 @@
+/**
+ * Local stage configuration.
+ *
+ * @module config/local
+ */
+
 module.exports = {
   // devtool: '#cheap-module-eval-source-map', /* This generates code with `eval` :( */
   bundleAnalyzerReport: true,

@@ -1,10 +1,10 @@
 /**
- * Build main module.
+ * Build entry module.
  *
  * @module build/index
  */
 
-const { profiles } = require('../config/ssm.env');
+const { profiles } = require('../config/aws');
 
 /* Ensure a valid NODE_ENV */
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';

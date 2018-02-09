@@ -1,3 +1,9 @@
+/**
+ * Main build module.
+ *
+ * @module build/build
+ */
+
 const webpack = require('webpack');
 const ora = require('ora');
 
