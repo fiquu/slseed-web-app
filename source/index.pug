@@ -44,5 +44,5 @@ html(lang='es')
         )
 
     //- Service worker
-    if data.env.NODE_ENV === 'production'
-      script !{data.serviceWorkerLoader}
+    //- if data.env.NODE_ENV === 'production'
+    script(nonce='2726c7f26c') !{data.serviceWorkerLoader}

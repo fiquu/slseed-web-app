@@ -4,7 +4,13 @@
  * @module build/index
  */
 
+const { profiles } = require('../config/ssm.env');
+
+/* Ensure a valid NODE_ENV */
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+
+/* Set proper AWS profile */
+process.env.AWS_PROFILE = profiles[process.env.NODE_ENV] || 'default';
 
 const versions = require('./check-versions');
 const configure = require('./configure');

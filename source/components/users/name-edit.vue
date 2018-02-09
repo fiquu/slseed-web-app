@@ -1,9 +1,9 @@
 <i18n>
 {
-  "es": {
+  "en": {
     "MESSAGES": {
       "SUBMIT": {
-        "ERROR": "No se pudo actualizar el nombre"
+        "ERROR": "Couldn't update name."
       }
     }
   }
@@ -47,6 +47,8 @@
 
 <script>
 import AWS from 'aws-sdk';
+
+const { toastr } = window;
 
 export default {
   name: 'user-name-edit',
@@ -131,4 +133,3 @@ export default {
   }
 };
 </script>
-

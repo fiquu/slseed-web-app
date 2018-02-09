@@ -1,3 +1,9 @@
+/**
+ * Auth config module.
+ *
+ * @module configs/auth
+ */
+
 export default {
   // IMPORTANT: These values MUST be configured per-app.
   identityPoolId: process.env.COGNITO_IDENTITY_POOL_ID,

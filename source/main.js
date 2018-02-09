@@ -42,11 +42,6 @@ const i18n = new VueI18n({
   locale: 'en'
 });
 
-/**
- * Because fuck docs... right?
- *
- * @see https://github.com/pagekit/vue-resource/blob/develop/docs/config.md
- */
 Vue.url.options.root = http.root;
 
 new Vue({

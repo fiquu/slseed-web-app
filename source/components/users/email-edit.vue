@@ -1,9 +1,9 @@
 <i18n>
 {
-  "es": {
+  "en": {
     "MESSAGES": {
       "SUBMIT": {
-        "ERROR": "No se pudo actualizar el correo"
+        "ERROR": "Couldn't update email."
       }
     }
   }
@@ -47,6 +47,8 @@
 
 <script>
 import AWS from 'aws-sdk';
+
+const { toastr } = window;
 
 export default {
   name: 'user-email-edit',
@@ -130,4 +132,3 @@ export default {
   }
 };
 </script>
-

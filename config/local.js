@@ -14,7 +14,7 @@ module.exports = {
     'referrer-policy': 'same-origin',
     'x-frame-options': 'deny',
     'content-security-policy': [
-      "script-src 'self' https://cdnjs.cloudflare.com https://*.googleapis.com https://*.facebook.net https://*.facebook.com",
+      "script-src 'self' 'nonce-2726c7f26c' https://cdnjs.cloudflare.com https://*.googleapis.com https://*.facebook.net https://*.facebook.com",
       "img-src 'self' data: https://*.cloudfront.net https://*.google.com https://*.googleapis.com https://*.gstatic.com https://*.facebook.com",
       "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://*.googleapis.com",
       'font-src data: https://cdnjs.cloudflare.com https://*.gstatic.com',

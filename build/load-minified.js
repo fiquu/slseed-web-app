@@ -4,11 +4,17 @@
  * @module build/load-minified
  */
 
+const babel = require('babel-core');
 const uglify = require('uglify-es');
-const fs = require('fs');
+
+const options = {
+  comments: false,
+  minified: true,
+  ast: false
+};
 
 module.exports = file => {
-  const code = fs.readFileSync(file, 'utf-8');
+  const code = babel.transformFileSync(file, options).code;
   const result = uglify.minify(code);
 
   if (result.error) {

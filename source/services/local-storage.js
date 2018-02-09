@@ -1,18 +1,10 @@
 import VueLocalStorage from 'vue-localstorage';
 import Vue from 'vue';
 
+import config from '@/configs/local-storage';
+
 Vue.use(VueLocalStorage);
 
-/* Configure local storage */
-const localStorage = {
-  issue: {
-    type: Object,
-    default: {}
-  }
-};
-
-const instance = new Vue({
-  localStorage
-});
+const instance = new Vue(config);
 
 export default instance.$localStorage;

@@ -11,10 +11,8 @@ const spinner = ora(`Resolving SSM parameters for [${process.env.NODE_ENV}]...`)
 
 spinner.start();
 
-const { profiles, region, params } = require('../config/ssm.env');
+const { region, params } = require('../config/ssm.env');
 const package = require('../package.json');
-
-process.env.AWS_PROFILE = profiles[process.env.NODE_ENV];
 
 AWS.config.update({
   region,

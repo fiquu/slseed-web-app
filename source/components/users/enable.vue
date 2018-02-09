@@ -1,15 +1,15 @@
 <i18n>
 {
-  "es": {
-    "TITLE": "Activar cuenta",
+  "en": {
+    "TITLE": "Enable account",
     "CONFIRM": {
-      "MESSAGE": "Al activar la cuenta el usuario podrá ejecutar todas las acciónes permitidas sobre las solicitudes.",
-      "LABEL": "Confirmo que deseo activar esta cuenta."
+      "MESSAGE": "By enabling this account the user will be able to sign in.",
+      "LABEL": "Confirm account enabling."
     },
     "MESSAGES": {
-      "SUCCESS": "Cuenta activada."
+      "SUCCESS": "Account enabled."
     },
-    "DISABLE": "Activar"
+    "DISABLE": "Enable"
   }
 }
 </i18n>

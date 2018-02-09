@@ -1,15 +1,15 @@
 <i18n>
 {
-  "es": {
-    "TITLE": "Desactivar cuenta",
+  "en": {
+    "TITLE": "Disable account",
     "CONFIRM": {
-      "MESSAGE": "Al desactivar la cuenta el usuario ya no podrá ejecutar ninguna acción sobre las solicitudes.",
-      "LABEL": "Confirmo que deseo desactivar esta cuenta."
+      "MESSAGE": "By disabling this account the user will no longer be able to sign in.",
+      "LABEL": "Confirm account disabling."
     },
     "MESSAGES": {
-      "SUCCESS": "Cuenta desactivada."
+      "SUCCESS": "Account disabled."
     },
-    "DISABLE": "Desactivar"
+    "DISABLE": "Disable"
   }
 }
 </i18n>
@@ -58,6 +58,8 @@
 <script>
 import AWS from 'aws-sdk';
 
+const { toastr } = window;
+
 export default {
   name: 'user-disable',
 
@@ -101,4 +103,3 @@ export default {
   }
 };
 </script>
-

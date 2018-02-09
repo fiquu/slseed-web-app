@@ -1,16 +1,16 @@
 <i18n>
 {
-  "es": {
-    "TITLE": "Reenviar clave temporal",
+  "en": {
+    "TITLE": "Resend temporary password",
     "CONFIRM": {
-      "MESSAGE": "Esto reenviará la clave temporal al usuario.",
-      "LABEL": "Confirmo que deseo reenviar la clave temporal."
+      "MESSAGE": "This will resend the temporary password to the user.",
+      "LABEL": "Confirm temporary password resend."
     },
     "MESSAGES": {
-      "ERROR": "No se pudo reenviar la clave.",
-      "SUCCESS": "Clave reenviada."
+      "ERROR": "Couldn't resend temporary password.",
+      "SUCCESS": "Temporary password resent."
     },
-    "DISABLE": "Reenviar"
+    "DISABLE": "Resend"
   }
 }
 </i18n>
@@ -58,6 +58,8 @@
 
 <script>
 import AWS from 'aws-sdk';
+
+const { toastr } = window;
 
 export default {
   name: 'user-resend',
@@ -113,4 +115,3 @@ export default {
   }
 };
 </script>
-
