@@ -6,7 +6,7 @@ Serveless Seed Web App project.
 
 1. Create a repo.
 1. Add remote as slseed:
-    - `git remote add slseed git@github.com:FinalDevStudio/fi-slseed-api.git`
+    - `git remote add slseed git@github.com:FinalDevStudio/fi-slseed-app.git`
 1. Disable pushing:
     - `git remote set-url --push slseed DISABLED`
 1. Fetch the latest changes:
