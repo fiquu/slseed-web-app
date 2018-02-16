@@ -9,20 +9,6 @@ import uuid from 'uuid';
 
 import config from '@/configs/s3';
 
-AWS.config.update({
-  region: config.region,
-  credentials: new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: config.identityPoolId
-  })
-});
-
-const s3 = new AWS.S3({
-  apiVersion: config.apiVersion,
-  params: {
-    Bucket: config.bucket
-  }
-});
-
 export default {
   /**
    * Uploads a file to S3.
@@ -30,6 +16,13 @@ export default {
    * @param {File} file The File object to upload.
    */
   upload(file) {
+    const s3 = new AWS.S3({
+      apiVersion: config.apiVersion,
+      params: {
+        Bucket: config.bucket
+      }
+    });
+
     return new Promise((resolve, reject) => {
       const params = {
         ContentDisposition: `inline;filename="${file.name}"`,

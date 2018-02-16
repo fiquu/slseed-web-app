@@ -155,21 +155,6 @@ function get(prop) {
 }
 
 /**
- * Checks if the user has Demo privileges only.
- *
- * @returns {Boolean} Whether the user has demo access only.
- */
-function hasFullAccess() {
-  const groups = get('cognito:groups');
-
-  if (groups) {
-    return groups.indexOf('full-access') > -1;
-  }
-
-  return false;
-}
-
-/**
  * Sets the proper AWS credentials for identity based actions.
  */
 function setAWSCredentials() {
@@ -252,7 +237,6 @@ const Auth = {
       setAWSCredentials,
       confirmPassword,
       forgotPassword,
-      hasFullAccess,
       getAuthToken,
       isSignedIn,
       authUser,
