@@ -30,6 +30,7 @@ const webpackConfig = {
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: config.sourceMaps,
       compress: {
+        drop_console: true,
         warnings: true
       }
     }),
