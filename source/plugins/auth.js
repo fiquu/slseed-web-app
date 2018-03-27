@@ -24,24 +24,24 @@ const defaults = {
   }
 };
 
-let session;
+let payload;
 
 /**
  * Retrieves current user token.
  *
  * @param {Object} currentUser The current user in session.
  *
- * @returns {Promise} The resolve promise.
+ * @returns {Promise} A Promise resolving to the session object.
  */
 function getUserSession(currentUser) {
   return new Promise((resolve, reject) => {
-    currentUser.getSession((err, sess) => {
+    currentUser.getSession((err, session) => {
       if (err) {
         reject(err);
         return;
       }
 
-      resolve(sess);
+      resolve(session);
     });
   });
 }
@@ -60,32 +60,31 @@ function getCurrentUser() {
 /**
  * Authorizes current user.
  *
- * @returns {Promise} The authorization promise.
+ * @returns {Promise} A Promise resolving the current user session.
  */
 function authUser() {
-  return new Promise((resolve, reject) => {
-    const currentUser = getCurrentUser();
+  const currentUser = getCurrentUser();
 
-    if (!currentUser) {
-      resolve();
-      return;
-    }
+  if (!currentUser) {
+    return Promise.reject(new Error('No current user!'));
+  }
 
-    getUserSession(currentUser).then(resolve, reject);
-  });
+  return getUserSession(currentUser);
 }
 
 /**
  * Retrieves the appropriate token to perform HTTP requests.
+ *
+ * @returns {Promise} A Promise resolving the JWT token.
  */
 function getAuthToken() {
-  return session.getIdToken().jwtToken;
+  return authUser().then(session => session.getIdToken().getJwtToken());
 }
 
 /**
  * Checks if the user has signed in.
  *
- * @returns {Booblean} Whether the user has signed in.
+ * @returns {Boolean} Whether the user has signed in.
  */
 function isSignedIn() {
   return !!getCurrentUser();
@@ -136,13 +135,7 @@ function signOut() {
  *
  * @returns {Mixed} The property's value.
  */
-function get(prop) {
-  if (!session) {
-    return null;
-  }
-
-  const payload = session.getIdToken().decodePayload();
-
+async function get(prop) {
   if (!payload) {
     return null;
   }
@@ -156,19 +149,23 @@ function get(prop) {
 
 /**
  * Sets the proper AWS credentials for identity based actions.
+ *
+ * @returns {Promise} An empty Promise.
  */
 function setAWSCredentials() {
   const cognito = `cognito-idp.${defaults.region}.amazonaws.com/${defaults.credentials.UserPoolId}`;
 
-  /* Set proper AWS credentials */
-  AWS.config.update({
-    region: defaults.region,
-    credentials: new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: defaults.identityPoolId,
-      Logins: {
-        [cognito]: getAuthToken()
-      }
-    })
+  return getAuthToken().then(token => {
+    /* Set proper AWS credentials */
+    AWS.config.update({
+      region: defaults.region,
+      credentials: new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: defaults.identityPoolId,
+        Logins: {
+          [cognito]: token
+        }
+      })
+    });
   });
 }
 
@@ -210,27 +207,44 @@ const Auth = {
     Object.assign(defaults, options);
 
     /* Assign route auth checks */
-    router.beforeEach((to, from, next) =>
-      authUser()
-        .then(sess => {
-          session = sess;
+    router.beforeEach(async (to, from, next) => {
+      try {
+        const session = await authUser();
 
-          if (to.meta.requiresAuth && (!sess || !sess.getIdToken())) {
-            return next(defaults.paths.signIn);
-          }
+        payload = session.getIdToken().decodePayload();
 
-          return next();
-        })
-        .catch(next)
-    );
+        next();
+      } catch (err) {
+        if (to.meta.requiresAuth) {
+          next(defaults.paths.signIn);
+        } else {
+          next();
+        }
+      }
+    });
 
     /**
      * Add auth headers to every request.
      */
-    Vue.http.interceptors.push((req, next) => {
-      req.headers.set(AUTHORIZATION, getAuthToken());
-      next();
-    });
+    Vue.axios.interceptors.request.use(
+      async config => {
+        try {
+          const token = await getAuthToken();
+
+          if (!token) {
+            throw new Error('JWT token is empty!');
+          }
+
+          config.headers[AUTHORIZATION] = token;
+
+          return config;
+        } catch (err) {
+          console.error(err);
+          Promise.reject(err);
+        }
+      },
+      err => Promise.reject(err)
+    );
 
     /* eslint no-param-reassign:0 */
     Vue.prototype.$auth = {

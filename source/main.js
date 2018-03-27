@@ -1,6 +1,7 @@
 import VeeValidate from 'vee-validate';
-import VueResource from 'vue-resource';
+import VueAxios from 'vue-axios';
 import VueI18n from 'vue-i18n';
+import axios from 'axios';
 import Vue from 'vue';
 
 import Auth from '@/plugins/auth';
@@ -10,12 +11,15 @@ import App from '@/app';
 import http from '@/configs/http';
 import router from '@/router';
 
+axios.defaults.baseURL = http.baseURL;
+
 Vue.config.productionTip = false;
 
-Vue.use(VueResource);
+// IMPORTANT: Keep this order!
+Vue.use(VueAxios, axios);
+Vue.use(Auth);
 Vue.use(VeeValidate);
 Vue.use(VueI18n);
-Vue.use(Auth);
 
 window.moment.locale('en');
 
@@ -41,8 +45,6 @@ window.toastr.options = {
 const i18n = new VueI18n({
   locale: 'en'
 });
-
-Vue.url.options.root = http.root;
 
 new Vue({
   render: v => v(App),
