@@ -221,7 +221,18 @@ export default {
       /* Required fields */
       data.name = this.data.name;
 
-      this.cognitoUser.completeNewPasswordChallenge(pwd, data, this.signInCallbacks);
+      this.cognitoUser.completeNewPasswordChallenge(pwd, data, {
+        onSuccess: () => {
+          this.state.newPasswordRequired = false;
+
+          this.$auth.signOut(true);
+
+          this.data.password = this.data.newPassword;
+
+          this.signIn();
+        },
+        onFailure: err => this.onSignInError(err)
+      });
     },
 
     /**
