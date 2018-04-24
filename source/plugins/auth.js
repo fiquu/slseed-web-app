@@ -36,6 +36,8 @@ const Auth = {
       },
 
       created() {
+        console.log(this);
+
         /* Assign route auth checks */
         router.beforeEach(async (to, from, next) => {
           try {
@@ -88,6 +90,11 @@ const Auth = {
             currentUser.getSession((err, session) => {
               if (err) {
                 reject(err);
+                return;
+              }
+
+              if (!session.isValid()) {
+                reject(new Error('Cognito session is invalid!'));
                 return;
               }
 
@@ -175,7 +182,14 @@ const Auth = {
           const currentUser = this.getCurrentUser();
 
           if (currentUser) {
-            currentUser.signOut();
+            currentUser.signOut({
+              onFailure(e) {
+                console.log(e);
+              },
+              onSuccess(r) {
+                console.log('Sign out successful.', r);
+              }
+            });
           }
 
           if (!keep) {
@@ -210,18 +224,41 @@ const Auth = {
         setAWSCredentials() {
           const cognito = `cognito-idp.${defaults.region}.amazonaws.com/${defaults.credentials.UserPoolId}`;
 
-          return this.getAuthToken().then(token => {
-            /* Set proper AWS credentials */
-            AWS.config.update({
-              region: defaults.region,
-              credentials: new AWS.CognitoIdentityCredentials({
-                IdentityPoolId: defaults.identityPoolId,
-                Logins: {
-                  [cognito]: token
-                }
-              })
-            });
-          });
+          return this.getAuthToken()
+
+            .then(token => {
+              if (!token) {
+                throw new Error('No token available to set AWS credentials!');
+              }
+
+              /* Set proper AWS credentials */
+              AWS.config.update({
+                region: defaults.region,
+                credentials: new AWS.CognitoIdentityCredentials({
+                  IdentityPoolId: defaults.identityPoolId,
+                  Logins: {
+                    [cognito]: token
+                  }
+                })
+              });
+            })
+
+            .then(
+              () =>
+                new Promise((resolve, reject) =>
+                  // Call refresh method in order to authenticate user and get new temp credentials
+                  AWS.config.credentials.refresh(err => {
+                    if (err) {
+                      reject(err);
+                      return;
+                    }
+
+                    console.log('Successfully refreshed AWS credentials!');
+
+                    resolve();
+                  })
+                )
+            );
         },
 
         /**

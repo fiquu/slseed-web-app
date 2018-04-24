@@ -48,8 +48,6 @@
 <script>
 import AWS from 'aws-sdk';
 
-const { toastr } = window;
-
 export default {
   name: 'user-name-edit',
 
@@ -104,7 +102,7 @@ export default {
      */
     onSubmit(err) {
       if (err) {
-        toastr.error(this.$t('MESSAGES.SUBMIT.ERROR'));
+        this.$toastr.error(this.$t('MESSAGES.SUBMIT.ERROR'));
         this.isEditing = true;
       } else {
         this.user.name = String(this.data.name);

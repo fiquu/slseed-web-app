@@ -4,6 +4,9 @@ import VueI18n from 'vue-i18n';
 import axios from 'axios';
 import Vue from 'vue';
 
+import Moment from '@/plugins/moment';
+import Toastr from '@/plugins/toastr';
+import JQuery from '@/plugins/jquery';
 import Auth from '@/plugins/auth';
 
 import App from '@/app';
@@ -20,6 +23,9 @@ Vue.use(VueAxios, axios);
 Vue.use(Auth);
 Vue.use(VeeValidate);
 Vue.use(VueI18n);
+Vue.use(Toastr);
+Vue.use(Moment);
+Vue.use(JQuery);
 
 window.moment.locale('en');
 

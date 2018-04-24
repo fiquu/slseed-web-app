@@ -84,7 +84,7 @@ export default {
 
       this.user.enabled = true;
 
-      toastr.success(this.$t('MESSAGES.SUCCESS'));
+      this.$toastr.success(this.$t('MESSAGES.SUCCESS'));
 
       this.isEnabling = false;
     },

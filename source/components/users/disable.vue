@@ -58,8 +58,6 @@
 <script>
 import AWS from 'aws-sdk';
 
-const { toastr } = window;
-
 export default {
   name: 'user-disable',
 
@@ -86,7 +84,7 @@ export default {
 
       this.user.enabled = false;
 
-      toastr.success(this.$t('MESSAGES.SUCCESS'));
+      this.$toastr.success(this.$t('MESSAGES.SUCCESS'));
 
       this.isDisabling = false;
     },

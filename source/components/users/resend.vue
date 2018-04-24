@@ -59,8 +59,6 @@
 <script>
 import AWS from 'aws-sdk';
 
-const { toastr } = window;
-
 export default {
   name: 'user-resend',
 
@@ -88,14 +86,14 @@ export default {
       this.isResending = false;
 
       if (err) {
-        toastr.error(this.$t('MESSAGES.ERROR'));
+        this.$toastr.error(this.$t('MESSAGES.ERROR'));
 
         console.error(err);
 
         return;
       }
 
-      toastr.success(this.$t('MESSAGES.SUCCESS'));
+      this.$toastr.success(this.$t('MESSAGES.SUCCESS'));
     },
 
     /**
