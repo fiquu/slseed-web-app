@@ -6,5 +6,5 @@
 
 export default {
   // IMPORTANT: These values MUST be configured per-app.
-  baseURL: process.env.ADMINS_API_ENDPOINT
+  baseURL: process.env.API_ENDPOINT
 };
