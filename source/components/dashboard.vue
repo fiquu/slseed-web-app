@@ -15,11 +15,9 @@ section.ui.vertical.segment.view
     .ui.segment
       p(v-text=`this.$moment().format('LLLL')`)
 
-    .ui.segment(
-      :class=`{
-        loading: isFetching
-      }`
-      )
+    .ui.segment
+      div(v-if=`isFetching`)
+        .ui.active.loader
 
       .ui.list
         .item(v-for=`user in users`)
