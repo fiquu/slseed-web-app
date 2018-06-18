@@ -9,8 +9,6 @@ const semver = require('semver');
 const chalk = require('chalk');
 const ora = require('ora');
 
-const spinner = ora('Checking dependencies versions...').start();
-
 const package = require('../package.json');
 
 const requirements = [
@@ -29,27 +27,29 @@ const requirements = [
   }
 ];
 
-module.exports = () =>
-  new Promise((resolve, reject) => {
-    const messages = [];
+module.exports = () => {
+  const spinner = ora('Checking dependencies versions...').start();
 
-    requirements.forEach(mod => {
-      if (!semver.satisfies(mod.current, mod.requires)) {
-        messages.push(`${mod.name}: ${chalk.red(mod.current)} should be ${chalk.green(mod.requires)}`);
-      }
-    });
+  const messages = [];
 
-    if (messages.length < 1) {
-      spinner.succeed('Dependencies versions are OK.');
-      resolve();
-      return;
+  for (let mod of requirements) {
+    if (!semver.satisfies(mod.current, mod.requires)) {
+      messages.push(`${mod.name}: ${chalk.red(mod.current)} should be ${chalk.green(mod.requires)}`);
     }
+  }
 
-    spinner.warn('You must update following modules:');
+  if (messages.length < 1) {
+    spinner.succeed('Dependencies versions are OK.');
+    return;
+  }
 
-    messages.forEach(warning => spinner.info(warning));
+  spinner.warn('You must update following modules:');
 
-    spinner.fail('Please fix dependencies version mismatches.');
+  for (let warning of messages) {
+    spinner.info(warning);
+  }
 
-    reject();
-  });
+  spinner.fail('Please fix dependencies version mismatches.');
+
+  throw new Error('Please fix dependencies version mismatches.');
+};

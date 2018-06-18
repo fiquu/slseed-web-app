@@ -4,39 +4,61 @@
  * @module build/index
  */
 
-const { profiles } = require('../config/aws');
+const inquirer = require('inquirer');
 
-/* Ensure a valid NODE_ENV */
-process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+(async () => {
+  const { profiles } = require('../config/aws');
 
-/* Set proper AWS profile */
-process.env.AWS_PROFILE = profiles[process.env.NODE_ENV] || 'default';
+  let answers = await inquirer.prompt({
+    name: 'profile',
+    type: 'list',
+    message: 'Select build/deployment target profile:',
+    choices: Object.keys(profiles)
+  });
 
-const versions = require('./check-versions');
-const configure = require('./configure');
-const cleanup = require('./cleanup');
-const build = require('./build');
-const ssm = require('./ssm');
+  /* Set proper NODE_ENV */
+  process.env.NODE_ENV = answers.profile || 'development';
 
-// Check dependencies versions
-versions()
-  // Load SSM parameters
-  .then(() => ssm())
+  /* Set proper AWS profile */
+  process.env.AWS_PROFILE = profiles[answers.profile] || 'default';
 
-  // Setup configuration
-  .then(() => configure())
+  const versions = require('./check-versions');
+  const configure = require('./configure');
+  const cleanup = require('./cleanup');
+  const deploy = require('./deploy');
+  const build = require('./build');
+  const ssm = require('./ssm');
 
-  // Cleanup output dir
-  .then(() => cleanup())
+  try {
+    // Check dependencies versions
+    await versions();
 
-  // Start build process
-  .then(() => build())
+    // Load SSM parameters
+    await ssm();
 
-  // Handle build error
-  .catch(err => {
+    // Setup configuration
+    await configure();
+
+    // Cleanup output dir
+    await cleanup();
+
+    // Start build process
+    await build();
+
+    answers = await inquirer.prompt({
+      name: 'deploy',
+      type: 'confirm',
+      message: 'Perform deploy?'
+    });
+
+    if (answers.deploy) {
+      await deploy();
+    }
+  } catch (err) {
     if (err) {
-      console.error(err);
+      console.error(err.message);
     }
 
     process.exit(1);
-  });
+  }
+})();

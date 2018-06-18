@@ -173,12 +173,11 @@ module.exports = {
           name: utils.assetsPath(path.join('fonts', '[name].[hash:7].[ext]')),
           limit: 10000
         }
-      }
-    ].concat(
-      utils.styleLoaders({
+      },
+      ...utils.styleLoaders({
         sourceMap: config.sourceMaps,
         extract: config.extractCss
       })
-    )
+    ]
   }
 };

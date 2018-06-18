@@ -29,10 +29,7 @@ const webpackConfig = {
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: config.sourceMaps,
-      compress: {
-        drop_console: true,
-        warnings: true
-      }
+      compress: config.uglify
     }),
 
     new ExtractTextPlugin({

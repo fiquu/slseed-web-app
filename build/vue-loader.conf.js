@@ -8,15 +8,13 @@ const config = require('../config');
 const utils = require('./utils');
 
 module.exports = {
-  loaders: Object.assign(
-    utils.cssLoaders({
+  loaders: {
+    i18n: '@kazupon/vue-i18n-loader',
+    ...utils.cssLoaders({
       sourceMap: config.sourceMaps,
       extract: config.extractCss
-    }),
-    {
-      i18n: '@kazupon/vue-i18n-loader'
-    }
-  ),
+    })
+  },
 
   transformToRequire: {
     image: 'xlink:href',

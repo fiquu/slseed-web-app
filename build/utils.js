@@ -64,14 +64,14 @@ exports.styleLoaders = options => {
   const loaders = exports.cssLoaders(options);
   const output = [];
 
-  Object.keys(loaders).forEach(extension => {
+  for (let extension of Object.keys(loaders)) {
     const loader = loaders[extension];
 
     output.push({
       test: new RegExp(`\\.${extension}$`),
       use: loader
     });
-  });
+  }
 
   return output;
 };
