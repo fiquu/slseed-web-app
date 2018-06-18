@@ -5,6 +5,6 @@
  */
 
 module.exports = {
-  bundleAnalyzerReport: true,
+  bundleAnalyzerReport: false,
   serviceWorker: true
 };
