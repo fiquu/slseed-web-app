@@ -7,5 +7,11 @@
   },
   "rules": {
     "no-console": "off"
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
   }
 }
