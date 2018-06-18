@@ -16,7 +16,7 @@ const ora = require('ora');
 
 const config = require('../config');
 
-module.exports = () => {
+module.exports = async () => {
   const webpackConfig =
     process.env.NODE_ENV === 'testing' ? require('../build/webpack.build.conf') : require('../build/webpack.dev.conf');
 
@@ -49,15 +49,17 @@ module.exports = () => {
   app.use(hotMiddleware);
 
   // Proxy api requests
-  Object.keys(proxyTable).forEach(context => {
+  for (let context of Object.keys(proxyTable)) {
     let options = proxyTable[context];
 
     if (typeof options === 'string') {
-      options = { target: options };
+      options = {
+        target: options
+      };
     }
 
     app.use(proxyMiddleware(options.filter || context, options));
-  });
+  }
 
   // Handle fallback for HTML5 history API
   app.use(connectHistoryAPIFallback());

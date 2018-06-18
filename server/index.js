@@ -4,7 +4,13 @@
  * @module server/index
  */
 
+const { profiles } = require('../config/aws');
+
+/* Ensure a valid NODE_ENV */
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+
+/* Set proper AWS profile */
+process.env.AWS_PROFILE = profiles[process.env.NODE_ENV] || 'default';
 
 const versions = require('../build/check-versions');
 const configure = require('../build/configure');
@@ -12,15 +18,18 @@ const cleanup = require('../build/cleanup');
 const ssm = require('../build/ssm');
 const server = require('./server');
 
-// Check dependencies versions
-versions()
+(async () => {
+  // Check dependencies versions
+  await versions();
   // Load SSM parameters
-  .then(() => ssm())
+  await ssm();
 
   // Setup configuration
-  .then(() => configure())
+  await configure();
 
   // Cleanup output dir
-  .then(() => cleanup())
+  await cleanup();
 
-  .then(() => server());
+  // Start server
+  await server();
+})();
