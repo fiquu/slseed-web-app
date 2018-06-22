@@ -1,65 +1,69 @@
 <i18n>
 {
   "en": {
-    "TITLE": "Dashboard"
+    "TITLE": "Dashboard",
+    "GENDERS": {
+      "TITLE": "Genders",
+      "LINK": "View genders list"
+    },
+    "USERS": {
+      "TITLE": "Users",
+      "LINK": "View users list"
+    }
   }
 }
 </i18n>
 
 <template lang="pug">
 section.ui.vertical.segment.view
-  .ui.container
-    .ui.red.segment
-      h4.ui.red.header(v-t=`'TITLE'`)
+  .ui.equal.width.grid.container
+    .column
+      .ui.red.segment
+        h4.ui.red.header(v-t=`'TITLE'`)
+        p(v-text=`currentTime`)
 
-    .ui.segment
-      p(v-text=`this.$moment().format('LLLL')`)
+    .row
+      .column
+        .ui.top.attached.blue.segment
+          .ui.center.aligned.blue.icon.header
+            i.circular.transgender.alternate.icon
+            span(v-t=`'GENDERS.TITLE'`)
 
-    .ui.segment
-      div(v-if=`isFetching`)
-        .ui.active.loader
+        a.ui.bottom.attached.labeled.icon.blue.button(href=`#/genders`)
+          i.list.icon
+          span(v-t=`'GENDERS.LINK'`)
 
-      .ui.list
-        .item(v-for=`user in users`)
-          i.user.icon
-          .content
-            .header(v-text=`user.sub`)
-            .description
-              .ui.tiny.olive.label
-                i.plus.circle.icon
-                span(v-text=`$moment(user.createdAt).format('L')`)
+      .column
+        .ui.top.attached.yellow.segment
+          .ui.center.aligned.yellow.icon.header
+            i.circular.users.icon
+            span(v-t=`'USERS.TITLE'`)
 
-              .ui.tiny.label
-                i.edit.icon
-                span(v-text=`$moment(user.modifiedAt).format('L')`)
+        a.ui.bottom.attached.labeled.icon.yellow.button(href=`#/users`)
+          i.list.icon
+          span(v-t=`'USERS.LINK'`)
 </template>
 
 <script>
 export default {
+  created() {
+    this.interval = setInterval(this.$forceUpdate, 1000);
+  },
+
   data() {
     return {
-      isFetching: false,
-      users: null
+      interval: null
     };
   },
 
-  mounted() {
-    this.fetch();
+  computed: {
+    currentTime() {
+      return this.$moment().format('LLLL');
+    }
   },
 
-  methods: {
-    async fetch() {
-      this.isFetching = true;
-
-      try {
-        const res = await this.$http.get('users');
-        this.users = res.data;
-      } catch (err) {
-        console.error(err);
-      }
-
-      this.isFetching = false;
-    }
+  destroy() {
+    clearInterval(this.interval);
   }
 };
 </script>

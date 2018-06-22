@@ -14,7 +14,7 @@
 .field(
   v-if='user'
   :class=`{
-    error: errors.has('data-name')
+    error: errors.has('value')
   }`
   )
 
@@ -25,9 +25,9 @@
       @change='onValueChanged()'
       @input='onValueChanged()'
       :readonly='!isEditing'
-      v-model='data.name'
-      name='data-name'
+      v-model='data.value'
       minlength='3'
+      name='value'
       type='text'
       )
 
@@ -35,13 +35,13 @@
       :disabled=`isSubmitting`
       @click='toggleEditing()'
       :class=`{
-        negative: errors.has('data-name')
+        negative: errors.has('value')
       }`
       )
 
       i.notched.circle.loading.icon(v-if='isSubmitting')
-      i.cancel.icon(v-else-if=`errors.has('data-name') || isEditing && !isModified`)
-      i.save.icon(v-else-if=`!errors.has('data-name') && isEditing && isModified`)
+      i.cancel.icon(v-else-if=`errors.has('value') || isEditing && !isModified`)
+      i.save.icon(v-else-if=`!errors.has('value') && isEditing && isModified`)
       i.edit.icon(v-else-if='!isEditing')
 </template>
 
@@ -49,8 +49,6 @@
 import AWS from 'aws-sdk';
 
 export default {
-  name: 'user-name-edit',
-
   props: ['params', 'user'],
 
   data() {
@@ -59,12 +57,19 @@ export default {
       isModified: false,
       isEditing: false,
 
-      cognito: new AWS.CognitoIdentityServiceProvider(),
-
       data: {
-        name: String(this.user.name)
+        value: String(this.user.name)
       }
     };
+  },
+
+  computed: {
+    /**
+     * Checks if the value has been modified.
+     */
+    isModified() {
+      return this.user.name !== this.data.value;
+    }
   },
 
   methods: {
@@ -76,8 +81,8 @@ export default {
         this.isEditing = false;
 
         if (this.isModified) {
-          if (this.errors.has('data-name')) {
-            this.data.name = String(this.user.name);
+          if (this.errors.has('value')) {
+            this.data.value = String(this.user.value);
             this.isModified = false;
           } else {
             this.submit();
@@ -91,42 +96,30 @@ export default {
     },
 
     /**
-     * On value modified callback.
+     * Submits the new attribute data.
      */
-    onValueChanged() {
-      this.isModified = this.user.name !== this.data.name;
-    },
+    async submit() {
+      this.isSubmitting = true;
 
-    /**
-     * Attribute update callback.
-     */
-    onSubmit(err) {
-      if (err) {
+      try {
+        await this.$http.put(`users`, {
+          name: this.data.value,
+          _id: this.user._id
+        });
+
+        this.user.name = String(this.data.value);
+
+        this.isModified = false;
+      } catch (err) {
         this.$toastr.error(this.$t('MESSAGES.SUBMIT.ERROR'));
+
+        this.isModified = true;
         this.isEditing = true;
-      } else {
-        this.user.name = String(this.data.name);
+
+        console.error(err);
       }
 
       this.isSubmitting = false;
-      this.isModified = !!err;
-    },
-
-    /**
-     * Submits the new attribute data.
-     */
-    submit() {
-      this.isSubmitting = true;
-
-      this.params.Username = this.user.sub;
-      this.params.UserAttributes = [
-        {
-          Name: 'name',
-          Value: this.data.name
-        }
-      ];
-
-      this.cognito.adminUpdateUserAttributes(this.params, this.onSubmit);
     }
   }
 };
