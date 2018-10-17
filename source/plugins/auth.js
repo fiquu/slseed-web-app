@@ -10,8 +10,6 @@ import AWS from 'aws-sdk';
 import config from '@/configs/auth';
 import router from '@/router';
 
-const AUTHORIZATION = 'Authorization';
-
 const defaults = {
   identityPoolId: config.identityPoolId,
   region: 'us-east-1',
@@ -65,12 +63,13 @@ const Auth = {
                 throw new Error('JWT token is empty!');
               }
 
-              config.headers[AUTHORIZATION] = token;
+              config.headers.Authorization = token;
 
               return config;
             } catch (err) {
               console.error(err);
-              Promise.reject(err);
+
+              return Promise.reject(err);
             }
           },
           err => Promise.reject(err)
