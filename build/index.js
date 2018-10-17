@@ -7,20 +7,8 @@
 const inquirer = require('inquirer');
 
 (async () => {
-  const { profiles } = require('../config/aws');
-
-  let answers = await inquirer.prompt({
-    name: 'profile',
-    type: 'list',
-    message: 'Select build/deployment target profile:',
-    choices: Object.keys(profiles)
-  });
-
-  /* Set proper NODE_ENV */
-  process.env.NODE_ENV = answers.profile || 'development';
-
-  /* Set proper AWS profile */
-  process.env.AWS_PROFILE = profiles[answers.profile] || 'default';
+  // Set proper stage ENV
+  await require('../utils/stage-select')(true);
 
   const versions = require('./check-versions');
   const configure = require('./configure');
