@@ -1,9 +1,9 @@
 {
   "root": true,
-  "parser": "babel-eslint",
-  "extends": ["eslint:recommended", "prettier"],
-  "plugins": ["html"],
+  "extends": ["eslint:recommended", "plugin:vue/recommended", "prettier"],
+  "plugins": ["html", "vue"],
   "parserOptions": {
+    "parser": "babel-eslint",
     "sourceType": "module"
   },
   "env": {
@@ -12,11 +12,7 @@
     "es6": true
   },
   "settings": {
-    "import/resolver": {
-      "webpack": {
-        "config": "build/webpack.base.conf.js"
-      }
-    }
+    "html/html-extensions": [".html"]
   },
   "rules": {
     "no-console": "off",
