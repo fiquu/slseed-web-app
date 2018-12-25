@@ -33,13 +33,13 @@ const inquirer = require('inquirer');
     // Start build process
     await build();
 
-    answers = await inquirer.prompt({
-      name: 'deploy',
+    const { confirm } = await inquirer.prompt({
+      name: 'confirm',
       type: 'confirm',
       message: 'Perform deploy?'
     });
 
-    if (answers.deploy) {
+    if (confirm) {
       await deploy();
     }
   } catch (err) {

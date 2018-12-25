@@ -3,17 +3,16 @@
  *
  * @module build/webpack.base.conf
  */
-
 const eslintFriendlyFormatter = require('eslint-friendly-formatter');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const babel = require('babel-core');
 const webpack = require('webpack');
 const path = require('path');
 
-const vueLoaderConfig = require('./vue-loader.conf');
 const package = require('../package.json');
 const config = require('../config');
 const utils = require('./utils');
@@ -44,6 +43,8 @@ module.exports = {
       'process.app': config.app,
       'process.env': config.env
     }),
+
+    new VueLoaderPlugin(),
 
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '..', 'source', 'index.pug'),
@@ -128,26 +129,49 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.pug$/,
-        loader: 'pug-loader'
-      },
-      {
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        include: [resolve('source'), resolve('test')],
+        test: /\.vue$/,
+        loader: 'vue-loader',
         options: {
-          formatter: eslintFriendlyFormatter
+          transformToRequire: {
+            image: 'xlink:href',
+            source: 'source',
+            video: 'source',
+            img: 'source'
+          }
         }
       },
       {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: vueLoaderConfig
+        test: /\.pug$/,
+        loader: 'pug-plain-loader'
+      },
+      {
+        test: /\.pug$/,
+        oneOf: [
+          {
+            resourceQuery: /^\?vue/,
+            use: ['pug-plain-loader']
+          },
+          {
+            use: ['raw-loader', 'pug-plain-loader']
+          }
+        ]
+      },
+      {
+        resourceQuery: /blockType=i18n/,
+        loader: '@kazupon/vue-i18n-loader',
+        type: 'javascript/auto'
+      },
+      {
+        test: /\.(js|vue)$/,
+        use: 'eslint-loader',
+        enforce: 'pre',
+        include: [resolve('source'), resolve('test')]
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        use: {
+          loader: 'babel-loader'
+        },
         include: [resolve('source'), resolve('test')]
       },
       {
@@ -174,10 +198,10 @@ module.exports = {
           limit: 10000
         }
       },
-      ...utils.styleLoaders({
-        sourceMap: config.sourceMaps,
-        extract: config.extractCss
-      })
+      {
+        test: /\.scss$/,
+        use: ['vue-style-loader', 'css-loader', 'sass-loader']
+      }
     ]
   }
 };
