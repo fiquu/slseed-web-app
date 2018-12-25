@@ -1,12 +1,15 @@
 module.exports = {
+  /**
+   * API endpoint URL.
+   */
   ApiEndpointParam: {
     Type: 'AWS::SSM::Parameter',
     Properties: {
       Name: {
-        'Fn::Sub': '/${GroupName}/${Environment}/api-endpoint'
+        'Fn::Sub': '/${ProjectName}/${Environment}/api-endpoint'
       },
       Description: {
-        'Fn::Sub': '${GroupTitle} Database URI [${Environment}]'
+        'Fn::Sub': '${ProjectTitle} Database URI [${Environment}]'
       },
       Type: 'String',
       Value: {

@@ -1,22 +1,28 @@
 module.exports = {
-  // Public App S3 Bucket
+  /**
+   * Public App S3 Bucket (for app hosting).
+   */
   PublicAppS3Bucket: {
     Type: 'AWS::S3::Bucket'
   },
 
-  // Public App CloudFront Origin Access Identity
+  /**
+   * Public App CloudFront Origin Access Identity.
+   */
   PublicAppS3BucketAccess: {
     Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity',
     Properties: {
       CloudFrontOriginAccessIdentityConfig: {
         Comment: {
-          'Fn::Sub': '${GroupTitle} Public App Access Origin Identity [${Environment}]'
+          'Fn::Sub': '${ProjectTitle} Public App Access Origin Identity [${Environment}]'
         }
       }
     }
   },
 
-  // Public App CloudFront Distribution
+  /**
+   * Public App CloudFront Distribution.
+   */
   PublicAppCloudFrontDist: {
     Type: 'AWS::CloudFront::Distribution',
     DependsOn: ['PublicAppS3Bucket', 'PublicAppS3BucketAccess'],
@@ -26,7 +32,7 @@ module.exports = {
         PriceClass: 'PriceClass_All',
         Enabled: true,
         Comment: {
-          'Fn::Sub': '${GroupTitle} Public App [${Environment}]'
+          'Fn::Sub': '${ProjectTitle} Public App [${Environment}]'
         },
         Origins: [
           {
@@ -57,17 +63,19 @@ module.exports = {
     }
   },
 
-  // Public App S3 Bucket SSM Parameter
+  /**
+   * Public App S3 Bucket SSM Parameter.
+   */
   PublicAppS3BucketParam: {
     Type: 'AWS::SSM::Parameter',
     DependsOn: ['PublicAppS3Bucket'],
     Properties: {
       Type: 'String',
       Name: {
-        'Fn::Sub': '/${GroupName}/${Environment}/public-app-s3-bucket'
+        'Fn::Sub': '/${ProjectName}/${Environment}/public-app-s3-bucket'
       },
       Description: {
-        'Fn::Sub': '${GroupTitle} Public App S3 Bucket [${Environment}]'
+        'Fn::Sub': '${ProjectTitle} Public App S3 Bucket [${Environment}]'
       },
       Value: {
         Ref: 'PublicAppS3Bucket'
@@ -75,17 +83,19 @@ module.exports = {
     }
   },
 
-  // Public App CloudFront Distribution Id SSM Parameter
+  /**
+   *  Public App CloudFront Distribution Id SSM Parameter.
+   */
   PublicAppCloudFrontDistIdParam: {
     Type: 'AWS::SSM::Parameter',
     DependsOn: ['PublicAppCloudFrontDist'],
     Properties: {
       Type: 'String',
       Name: {
-        'Fn::Sub': '/${GroupName}/${Environment}/public-app-cloudfront-dist-id'
+        'Fn::Sub': '/${ProjectName}/${Environment}/public-app-cloudfront-dist-id'
       },
       Description: {
-        'Fn::Sub': '${GroupTitle} Public App CloudFront Distribution Id [${Environment}]'
+        'Fn::Sub': '${ProjectTitle} Public App CloudFront Distribution Id [${Environment}]'
       },
       Value: {
         Ref: 'PublicAppCloudFrontDist'
