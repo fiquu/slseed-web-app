@@ -5,27 +5,33 @@ const package = require('../../../package.json');
 
 module.exports = {
   AwsRegion: {
-    Description: 'Instance AWS region',
+    Description: 'Project AWS region',
     AllowedValues: [AWS.config.region],
     Default: AWS.config.region,
     Type: 'String'
   },
   Environment: {
-    Description: 'Instance deployment environment',
+    Description: 'Project deployment environment',
     AllowedValues: Object.keys(profiles),
     Default: process.env.NODE_ENV,
     Type: 'String'
   },
   ProjectName: {
-    Description: 'Instance group name',
+    Description: 'Project name',
     AllowedValues: [package.name],
     Default: package.name,
     Type: 'String'
   },
   ProjectTitle: {
-    Description: 'Instance group title',
+    Description: 'Project title',
     AllowedValues: [package.title],
     Default: package.title,
+    Type: 'String'
+  },
+  ApiStackName: {
+    Description: 'API stack name',
+    AllowedValues: [`${package.name.replace(/app$/, 'api')}-${process.env.NODE_ENV}-stack`],
+    Default: `${package.name.replace(/app$/, 'api')}-${process.env.NODE_ENV}-stack`,
     Type: 'String'
   }
 };
