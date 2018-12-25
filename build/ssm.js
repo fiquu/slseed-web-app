@@ -18,8 +18,6 @@ AWS.config.update({
 
 const ssm = new AWS.SSM();
 
-const errors = [];
-
 module.exports = async () => {
   const spinner = ora(`Resolving SSM parameters for [${process.env.NODE_ENV}]...`);
   const promises = [];
@@ -27,19 +25,16 @@ module.exports = async () => {
   spinner.start();
 
   for (let name of params) {
-    const promise = new Promise(resolve => {
+    const promise = new Promise((resolve, reject) => {
       const params = {
-        Name: `/${package.group.name}/${process.env.NODE_ENV}/${name}`,
+        Name: `/${package.name}/${process.env.NODE_ENV}/${name}`,
         WithDecryption: true
       };
 
       ssm.getParameter(params, (err, data) => {
         if (err) {
-          spinner.warn(err.message);
-          errors.push(err.message);
-
-          resolve();
-
+          spinner.fail(`${err.code}: ${params.Name}`);
+          reject();
           return;
         }
 
@@ -56,17 +51,10 @@ module.exports = async () => {
     promises.push(promise);
   }
 
-  await Promise.all(promises);
-
-  if (errors.length > 1) {
-    spinner.fail('Some parameters could not be resolved');
-
-    for (let err of errors) {
-      spinner.warn(err.message);
-    }
-
-    throw new Error('Some parameters could not be resolved');
+  try {
+    await Promise.all(promises);
+    spinner.succeed('All SSM parameters resolved.');
+  } catch (err) {
+    process.exit(1);
   }
-
-  spinner.succeed('All SSM parameters resolved.');
 };
