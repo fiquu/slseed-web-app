@@ -1,8 +1,8 @@
 module.exports = [
   {
-    name: 'api-endpoint',
+    name: 'ApiEndpoint',
     type: 'input',
-    message: `API Endpoint URI:`,
+    message: 'API Endpoint URI',
     validate: val => /^(https?):\/\/[-\w\d@:.,%/?&=]+$/.test(val)
   }
 ];
