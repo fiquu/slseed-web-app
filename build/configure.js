@@ -6,7 +6,7 @@
 
 const merge = require('webpack-merge');
 
-const package = require('../package.json');
+const pkg = require('../package.json');
 const config = require('../config');
 const ora = require('ora');
 
@@ -41,9 +41,9 @@ module.exports = () => {
   }
 
   // Stringify package app values
-  if (package.app) {
-    for (let key of Object.keys(package.app)) {
-      obj.app[key] = JSON.stringify(package.app[key]);
+  if (pkg.app) {
+    for (let key of Object.keys(pkg.app)) {
+      obj.app[key] = JSON.stringify(pkg.app[key]);
     }
   }
 

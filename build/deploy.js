@@ -14,7 +14,7 @@ const ora = require('ora');
 const fs = require('fs');
 
 const { apiVersions, region } = require('../config/aws');
-const package = require('../package.json');
+const pkg = require('../package.json');
 
 AWS.config.update({
   apiVersions,
@@ -35,7 +35,7 @@ module.exports = async () => {
 
   const s3BucketName = await new Promise((resolve, reject) => {
     const params = {
-      Name: `/${package.group.name}/${process.env.NODE_ENV}/${config.s3.ssmParam}`,
+      Name: `/${pkg.group.name}/${process.env.NODE_ENV}/${config.s3.ssmParam}`,
       WithDecryption: true
     };
 

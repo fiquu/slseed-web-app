@@ -5,14 +5,6 @@
  */
 
 module.exports = {
-  // devtool: '#cheap-module-eval-source-map', /* This generates code with `eval` :( */
-  bundleAnalyzerReport: false,
-  serviceWorker: false,
-  extractCss: false,
-  sourceMaps: true,
-
-  // Development server settings
-  proxyTable: {},
   port: 8081,
   headers: {
     'strict-transport-security': ['max-age=31536000', 'includeSubDomains', 'preload'].join(';'),

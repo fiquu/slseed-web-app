@@ -12,7 +12,7 @@
 
 const AWS = require('aws-sdk');
 
-const package = require('../package.json');
+const pkg = require('../package.json');
 
 AWS.config.update({
   region: 'us-east-1',
@@ -27,7 +27,7 @@ module.exports = async (params, env) => {
   const mappings = {};
 
   for (let param of params) {
-    mappings[`/${package.group.name}/${process.env.NODE_ENV}/${param}`] = String(param)
+    mappings[`/${pkg.group.name}/${process.env.NODE_ENV}/${param}`] = String(param)
       .toUpperCase()
       .replace(/[^\w\d]+/gi, '_');
   }

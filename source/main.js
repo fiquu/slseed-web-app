@@ -13,6 +13,9 @@ import App from '@/app';
 
 import http from '@/configs/http';
 import router from '@/router';
+import store from '@/store';
+
+import './registerServiceWorker';
 
 axios.defaults.baseURL = http.baseURL;
 
@@ -53,10 +56,11 @@ const i18n = new VueI18n({
 });
 
 new Vue({
-  render: v => v(App),
-  template: '<app/>',
+  render: h => h(App),
+  // template: '<app/>',
   el: '#app',
   router,
+  store,
   i18n,
   http
-});
+}).$mount('#app');

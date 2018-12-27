@@ -1,8 +1,12 @@
-# Webpack directories
-.webpack
-
 # Distributables folder
-dist
+/dist
+
+# Reports
+/tests/e2e/reports/
+
+# Local env files
+.env.local
+.env.*.local
 
 # Logs
 selenium-debug.log
