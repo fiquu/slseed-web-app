@@ -88,7 +88,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "serve": "vue-cli-service serve",
-    "start": "NODE_ENV=local npm run serve",
+    "start": "vue-cli-service serve --mode local",
     "check": "npm-check -u && npm-check",
     "build": "vue-cli-service build",
     "env": "node config/env",

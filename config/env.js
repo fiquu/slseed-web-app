@@ -61,7 +61,7 @@ const ssmEnv = require('./ssm.env');
 
     await Promise.all(promises);
 
-    fs.writeFileSync('.env.local', env, 'utf8');
+    fs.writeFileSync(`.env.${process.env.NODE_ENV}.local`, env, 'utf8');
 
     spinner.succeed('Env file saved!');
 
