@@ -5,6 +5,6 @@
  */
 
 export default {
-  key: process.env.ABLY_REALTIME_CLIENT_KEY,
+  key: process.env.VUE_APP_ABLY_REALTIME_CLIENT_KEY,
   namespace: 'clients:users'
 };

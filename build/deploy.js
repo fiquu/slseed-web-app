@@ -14,7 +14,7 @@ const ora = require('ora');
 const fs = require('fs');
 
 const { apiVersions, region } = require('../config/aws');
-const pkg = require('../package.json');
+const pkg = require('../pkg.json');
 
 AWS.config.update({
   apiVersions,
@@ -49,11 +49,11 @@ module.exports = async () => {
     });
   });
 
-  spinner.info(`Checking deploy status for [${chalk.bold(`v${package.version}`)}]...`);
+  spinner.info(`Checking deploy status for [${chalk.bold(`v${pkg.version}`)}]...`);
 
   const results = await new Promise((resolve, reject) => {
     const params = {
-      Prefix: path.join(package.name, package.version),
+      Prefix: path.join(pkg.name, pkg.version),
       Bucket: s3BucketName,
       MaxKeys: 1
     };
@@ -105,7 +105,7 @@ module.exports = async () => {
   console.dir(files);
 
   for (let file of files) {
-    const Key = path.join(package.name, package.version, file.replace(path.join(process.cwd(), 'dist'), ''));
+    const Key = path.join(pkg.name, pkg.version, file.replace(path.join(process.cwd(), 'dist'), ''));
 
     spinner.info(`Uploading ${chalk.bold(`${s3BucketName}/${Key}`)}...`);
 
@@ -136,7 +136,7 @@ module.exports = async () => {
 
   const cloudfrontDistId = await new Promise((resolve, reject) => {
     const params = {
-      Name: `/${package.group.name}/${process.env.NODE_ENV}/${config.cloudfront.ssmParam}`,
+      Name: `/${pkg.group.name}/${process.env.NODE_ENV}/${config.cloudfront.ssmParam}`,
       WithDecryption: true
     };
 
@@ -173,22 +173,22 @@ module.exports = async () => {
       IfMatch: distConfig.ETag,
       DistributionConfig: {
         ...distConfig.DistributionConfig,
-        Comment: `${package.app.name} [${process.env.NODE_ENV}]`,
+        Comment: `${pkg.app.name} [${process.env.NODE_ENV}]`,
         DefaultRootObject: 'index.html',
         Origins: {
           Quantity: 1,
           Items: [
             {
               ...distConfig.DistributionConfig.Origins.Items.pop(), // Copy last origin's config
-              Id: `S3-${s3BucketName}/${package.name}/${package.version}`,
+              Id: `S3-${s3BucketName}/${pkg.name}/${pkg.version}`,
               DomainName: `${s3BucketName}.s3.amazonaws.com`,
-              OriginPath: `/${package.name}/${package.version}`
+              OriginPath: `/${pkg.name}/${pkg.version}`
             }
           ]
         },
         DefaultCacheBehavior: {
           ...distConfig.DistributionConfig.DefaultCacheBehavior,
-          TargetOriginId: `S3-${s3BucketName}/${package.name}/${package.version}`
+          TargetOriginId: `S3-${s3BucketName}/${pkg.name}/${pkg.version}`
         }
       }
     };

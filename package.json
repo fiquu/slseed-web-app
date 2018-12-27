@@ -91,6 +91,7 @@
     "start": "NODE_ENV=local npm run serve",
     "check": "npm-check -u && npm-check",
     "build": "vue-cli-service build",
+    "env": "node config/env",
     "deploy": "node build"
   },
   "dependencies": {

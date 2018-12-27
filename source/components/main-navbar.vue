@@ -38,7 +38,7 @@ export default {
 
   data() {
     return {
-      title: process.app.short
+      title: process.env.VUE_APP_SHORT
     };
   }
 };
