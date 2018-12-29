@@ -2,6 +2,7 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 
+const externals = require('./externals.json');
 const pkg = require('./package.json');
 const config = require('./config');
 
@@ -15,11 +16,15 @@ module.exports = {
   outputDir: path.join(__dirname, 'dist'),
 
   configureWebpack: {
+    devServer: config.devServer,
+    devtool: false,
+
     resolve: {
       alias: {
         '@': path.join(__dirname, 'source')
       }
     },
+
     entry: {
       app: path.join(__dirname, 'source', 'main.js')
     },
@@ -71,10 +76,6 @@ module.exports = {
     ]
   },
 
-  devServer: {
-    port: 8081
-  },
-
   chainWebpack: config => {
     config.module
       .rule('i18n')
@@ -86,6 +87,7 @@ module.exports = {
     // Load index.pug instead of index.html
     config.plugin('html').tap(args => {
       args[0].template = `!!pug-loader!${path.join(__dirname, 'source', 'index.pug')}`;
+      args[0].externals = externals;
       args[0].package = pkg;
       args[0].env = env;
 

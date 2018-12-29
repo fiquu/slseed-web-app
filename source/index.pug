@@ -1,30 +1,30 @@
 doctype html
 
-- const opts = htmlWebpackPlugin.options;
+- const { options } = htmlWebpackPlugin;
 
 html(lang='en')
   head
     meta(name='viewport' content='width=device-width, initial-scale=1')
-    meta(name='version', content=opts.package.version)
+    meta(name='version', content=options.package.version)
     meta(http-equiv='X-UA-Compatible' content='IE=edge')
     meta(charset='utf-8')
 
-    title=opts.package.app.name
+    title=options.package.app.name
 
     //- Social sharing
-    meta(property='og:title' content=opts.package.app.name)
-    meta(property='og:description' content=opts.package.app.description)
+    meta(property='og:title' content=options.package.app.name)
+    meta(property='og:description' content=options.package.app.description)
     meta(property='og:type' content='website')
     meta(property='og:image:width' content='1200')
     meta(property='og:image:height' content='630')
-    meta(property='fb:app_id' content=opts.env.FACEBOOK_APP_ID)
-    meta(property='og:image' content=opts.package.app.ogImage)
-    meta(property='og:url' content=opts.package.app.home)
+    meta(property='fb:app_id' content=options.env.FACEBOOK_APP_ID)
+    meta(property='og:image' content=options.package.app.ogImage)
+    meta(property='og:url' content=options.package.app.home)
 
     meta(name='twitter:card' content='summary')
 
     //- External styles
-    each style in opts.package.external.styles
+    each style in options.externals.styles
       link(
         href=style.src
         integrity=style.integrity
@@ -36,7 +36,7 @@ html(lang='en')
     #app
 
     //- External scripts
-    each script in opts.package.external.scripts
+    each script in options.externals.scripts
       script(
         src=script.src
         integrity=script.integrity
