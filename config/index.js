@@ -4,8 +4,10 @@ const path = require('path');
 const port = 8081;
 
 module.exports = {
-  appIconPath: path.resolve(__dirname, path.join('..', 'source', 'assets', 'icon.png')),
-  assetsSubDirectory: path.join('static', 'icons'),
+  appIconPath: path.resolve(__dirname, path.join('..', 'public', 'static', 'images', 'icon.png')),
+  sourceDir: path.resolve(__dirname, path.join('..', 'source')),
+  outputDir: path.resolve(__dirname, path.join('..', 'dist')),
+  iconsDir: path.join('static', 'icons'),
   devServer: {
     port,
     headers: {
