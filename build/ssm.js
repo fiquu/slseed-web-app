@@ -7,8 +7,8 @@
 const AWS = require('aws-sdk');
 const ora = require('ora');
 
-const { apiVersions, region } = require('../config/aws');
-const params = require('../config/ssm.env');
+const { apiVersions, region } = require('../configs/aws');
+const params = require('../configs/ssm.env');
 const package = require('../package.json');
 
 AWS.config.update({

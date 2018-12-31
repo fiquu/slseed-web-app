@@ -57,7 +57,7 @@
     "start": "vue-cli-service serve --mode local",
     "check": "npm-check -u && npm-check",
     "build": "vue-cli-service build",
-    "env": "node config/env",
+    "env": "node configs/env",
     "deploy": "node build"
   },
   "dependencies": {

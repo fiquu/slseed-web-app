@@ -13,7 +13,7 @@ const walk = require('walk');
 const ora = require('ora');
 const fs = require('fs');
 
-const { apiVersions, region } = require('../config/aws');
+const { apiVersions, region } = require('../configs/aws');
 const pkg = require('../pkg.json');
 
 AWS.config.update({
@@ -23,7 +23,7 @@ AWS.config.update({
 
 module.exports = async () => {
   const spinner = ora(`Deploying for [${process.env.NODE_ENV}]...`);
-  const config = require('../config/deploy');
+  const config = require('../configs/deploy');
 
   const cloudfront = new AWS.CloudFront();
   const ssm = new AWS.SSM();

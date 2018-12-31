@@ -1,7 +1,7 @@
 /**
  * Deploy config.
  *
- * @module config/deploy
+ * @module configs/deploy
  */
 
 module.exports = {

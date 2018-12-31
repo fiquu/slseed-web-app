@@ -13,7 +13,7 @@ const ora = require('ora');
 module.exports = () => {
   const spinner = ora('Configuring...').start();
 
-  const stage = require(`../config/${process.env.NODE_ENV}`); // Per stage config
+  const stage = require(`../configs/${process.env.NODE_ENV}`); // Per stage config
   const obj = {
     app: {},
     env: {}

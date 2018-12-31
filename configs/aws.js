@@ -1,7 +1,7 @@
 /**
  * AWS SSM parameters config.
  *
- * @module config/profiles
+ * @module configs/profiles
  */
 
 module.exports = {
