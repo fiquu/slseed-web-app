@@ -8,9 +8,24 @@
   "license": "MIT",
   "private": false,
   "homepage": "https://github.com/FinalDevStudio/fi-slseed-app",
+  "bugs": {
+    "url": "https://github.com/FinalDevStudio/fi-slseed-app/issues"
+  },
+  "directories": {
+    "test": "tests"
+  },
   "contributors": [
     "Santiago G. Marín <santiago@finaldevstudio.com> (https://github.com/stgogm)",
     "JT Guzman <jtguzman@finaldevstudio.com> (https://github.com/jtguzman)"
+  ],
+  "keywords": [
+    "fi",
+    "vue",
+    "cli",
+    "vue-cli",
+    "app",
+    "seed",
+    "project"
   ],
   "group": {
     "title": "Fi Slseed",
@@ -19,9 +34,6 @@
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/FinalDevStudio/fi-slseed-app.git"
-  },
-  "bugs": {
-    "url": "https://github.com/FinalDevStudio/fi-slseed-app/issues"
   },
   "engines": {
     "node": ">= 8.0.0",
@@ -39,15 +51,6 @@
     "color": "#b9de3b",
     "ogImage": "https://www.example.com/static/images/og-image.jpg"
   },
-  "directories": {
-    "test": "tests"
-  },
-  "keywords": [
-    "vue",
-    "cli",
-    "seed",
-    "vue-cli"
-  ],
   "scripts": {
     "test": "NODE_ENV=test npm run test:unit && npm run test:e2e",
     "test:unit": "vue-cli-service test:unit",
