@@ -4,9 +4,11 @@
  * @module plugins/toastr
  */
 
+import toastr from 'toastr';
+
 const Toastr = {
   install: (Vue, options) => {
-    window.toastr.options = {
+    toastr.options = {
       closeButton: false,
       debug: false,
       newestOnTop: false,
@@ -26,8 +28,7 @@ const Toastr = {
       ...options
     };
 
-    /* eslint no-param-reassign:0 */
-    Vue.prototype.$toastr = window.toastr;
+    Vue.prototype.$toastr = toastr;
   }
 };
 
