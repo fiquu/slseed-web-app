@@ -30,27 +30,6 @@ Vue.use(Toastr);
 Vue.use(Moment);
 Vue.use(JQuery);
 
-window.moment.locale('en');
-
-window.toastr.options = {
-  closeButton: false,
-  debug: false,
-  newestOnTop: false,
-  progressBar: true,
-  positionClass: 'toast-bottom-center',
-  onclick: null,
-  showDuration: 231,
-  hideDuration: 231,
-  timeOut: 4630,
-  extendedTimeOut: 1157,
-  showEasing: 'linear',
-  hideEasing: 'linear',
-  closeEasing: 'linear',
-  showMethod: 'slideDown',
-  hideMethod: 'slideUp',
-  closeMethod: 'slideUp'
-};
-
 const i18n = new VueI18n({
   locale: 'en'
 });
