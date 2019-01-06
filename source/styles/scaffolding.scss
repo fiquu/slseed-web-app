@@ -1,0 +1,35 @@
+*:not(.icon) {
+  font-family: 'Arvo', serif !important;
+}
+
+html,
+body {
+  background-color: #f6f6f6;
+  user-select: none;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+input,
+textarea {
+  font-family: inherit;
+}
+
+#app {
+  flex-direction: column;
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  > header {
+    position: static !important;
+    flex: 0 0 auto;
+    border: 0;
+  }
+
+  > section.view {
+    overflow-y: auto;
+    flex: 1 1 auto;
+  }
+}
