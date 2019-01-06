@@ -22,22 +22,5 @@ html(lang='en')
 
     meta(name='twitter:card' content='summary')
 
-    //- External styles
-    each style in options.externals.styles
-      link(
-        href=style.src
-        integrity=style.integrity
-        crossorigin='anonymous'
-        rel='stylesheet'
-        )
-
   body
     #app
-
-    //- External scripts
-    each script in options.externals.scripts
-      script(
-        src=script.src
-        integrity=script.integrity
-        crossorigin='anonymous'
-        )
