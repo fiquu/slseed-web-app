@@ -2,7 +2,6 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 
-const externals = require('./externals.json');
 const pkg = require('./package.json');
 const cfg = require('./config');
 
@@ -89,7 +88,6 @@ module.exports = {
     // Load index.pug instead of index.html
     config.plugin('html').tap(args => {
       args[0].template = `!!pug-loader!${path.join(cfg.sourceDir, 'index.pug')}`;
-      args[0].externals = externals;
       args[0].package = pkg;
       args[0].env = env;
 
