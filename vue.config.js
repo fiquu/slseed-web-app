@@ -3,7 +3,7 @@ const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 
 const pkg = require('./package.json');
-const cfg = require('./config');
+const cfg = require('./configs');
 
 const { env } = process;
 
