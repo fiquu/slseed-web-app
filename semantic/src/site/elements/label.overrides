@@ -1,3 +1,14 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.label {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+
+  &.fluid {
+    display: block;
+    margin: 0;
+  }
+}

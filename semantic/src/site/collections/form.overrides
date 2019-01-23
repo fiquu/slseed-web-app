@@ -1,3 +1,15 @@
 /*******************************
          Site Overrides
 *******************************/
+
+form {
+  .field {
+    > label.ui.button {
+      font-weight: normal;
+    }
+  }
+}
+
+.field.error .ui.action.input input:focus {
+  border-color: inherit !important;
+}
