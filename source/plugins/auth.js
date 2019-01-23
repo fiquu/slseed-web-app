@@ -22,7 +22,7 @@ const defaults = {
   }
 };
 
-const Auth = {
+export default {
   install: (Vue, options = {}) => {
     Object.assign(defaults, options);
 
@@ -299,8 +299,8 @@ const Auth = {
     });
 
     /* eslint no-param-reassign:0 */
-    Vue.prototype.$auth = $auth;
+    Object.defineProperty(Vue.prototype, '$auth', {
+      value: $auth
+    });
   }
 };
-
-export default Auth;

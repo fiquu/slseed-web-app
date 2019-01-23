@@ -23,8 +23,5 @@ export default {
 };
 </script>
 
-<style src="../semantic/dist/semantic.min.css">
-</style>
-
 <style lang="scss" src="@/styles/global.scss">
 </style>

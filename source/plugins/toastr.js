@@ -4,9 +4,11 @@
  * @module plugins/toastr
  */
 
+import '@/styles/toastr.scss';
+
 import toastr from 'toastr';
 
-const Toastr = {
+export default {
   install: (Vue, options) => {
     toastr.options = {
       closeButton: false,
@@ -28,8 +30,8 @@ const Toastr = {
       ...options
     };
 
-    Vue.prototype.$toastr = toastr;
+    Object.defineProperty(Vue.prototype, '$toastr', {
+      value: toastr
+    });
   }
 };
-
-export default Toastr;

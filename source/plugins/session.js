@@ -5,7 +5,7 @@
  */
 import router from '@/router';
 
-const Session = {
+export default {
   install: (Vue, config) => {
     const $session = new Vue({
       data() {
@@ -49,9 +49,8 @@ const Session = {
       next();
     });
 
-    /* eslint no-param-reassign:0 */
-    Vue.prototype.$session = $session;
+    Object.defineProperty(Vue.prototype, '$session', {
+      value: $session
+    });
   }
 };
-
-export default Session;

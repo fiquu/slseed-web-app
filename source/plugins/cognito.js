@@ -6,7 +6,7 @@
 
 import { CognitoIdentityServiceProvider } from 'aws-sdk';
 
-const Cognito = {
+export default {
   install: Vue => {
     const $cognito = new Vue({
       methods: {
@@ -349,9 +349,8 @@ const Cognito = {
       }
     });
 
-    /* eslint no-param-reassign:0 */
-    Vue.prototype.$cognito = $cognito;
+    Object.defineProperty(Vue.prototype, '$cognito', {
+      value: $cognito
+    });
   }
 };
-
-export default Cognito;

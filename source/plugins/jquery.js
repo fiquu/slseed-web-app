@@ -4,11 +4,14 @@
  * @module plugins/jquery
  */
 
-const JQuery = {
+import jquery from 'jquery';
+
+window.jQuery = jquery; // Make available for other libraries
+
+export default {
   install: Vue => {
-    /* eslint no-param-reassign:0 */
-    Vue.prototype.$$ = window.$;
+    Object.defineProperty(Vue.prototype, '$$', {
+      value: jquery
+    });
   }
 };
-
-export default JQuery;

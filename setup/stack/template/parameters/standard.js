@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 
-const { profiles } = require('../../../configs/aws');
-const package = require('../../../package.json');
+const { profiles } = require('../../../../configs/aws');
+const package = require('../../../../package.json');
 
 module.exports = {
   AwsRegion: {
@@ -30,8 +30,8 @@ module.exports = {
   },
   ApiStackName: {
     Description: 'API stack name',
-    AllowedValues: [`${package.name.replace(/app$/, 'api')}-${process.env.NODE_ENV}-stack`],
-    Default: `${package.name.replace(/app$/, 'api')}-${process.env.NODE_ENV}-stack`,
+    AllowedValues: [`${package.name.replace(/app$/, 'api')}-${process.env.NODE_ENV}-main-stack`],
+    Default: `${package.name.replace(/app$/, 'api')}-${process.env.NODE_ENV}-main-stack`,
     Type: 'String'
   }
 };

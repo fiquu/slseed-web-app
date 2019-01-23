@@ -6,12 +6,14 @@
 
 import moment from 'moment';
 
-const Moment = {
+export default {
   install: (Vue, options) => {
-    moment.locale((options && options.locale) || 'en');
+    const { locale } = options || {};
 
-    Vue.prototype.$moment = moment;
+    moment.locale(locale || 'en');
+
+    Object.defineProperty(Vue.prototype, '$moment', {
+      value: moment
+    });
   }
 };
-
-export default Moment;
