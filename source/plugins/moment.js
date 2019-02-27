@@ -7,10 +7,8 @@
 import moment from 'moment';
 
 export default {
-  install: (Vue, options) => {
-    const { locale } = options || {};
-
-    moment.locale(locale || 'en');
+  install: (Vue, options = {}) => {
+    moment.locale(options.locale || 'en');
 
     Object.defineProperty(Vue.prototype, '$moment', {
       value: moment
