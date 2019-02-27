@@ -4,7 +4,7 @@
   "main": "npm start",
   "description": "Serveless Seed Web App project.",
   "author": "Final Development Studio <sorcery@finaldevstudio.com> (http://finaldevstudio.com)",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "private": false,
   "homepage": "https://github.com/FinalDevStudio/fi-slseed-app",
