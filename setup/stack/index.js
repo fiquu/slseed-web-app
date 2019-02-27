@@ -31,7 +31,7 @@ const { name, group } = require('../../package.json');
 
   try {
     const params = {
-      StackName: `${name}-${process.env.NODE_ENV}-stack`,
+      StackName: `${name}-${process.env.NODE_ENV}-main-stack`,
       Capabilities: ['CAPABILITY_NAMED_IAM'],
       TemplateBody: null,
       Parameters: null
