@@ -8,7 +8,7 @@ import axios from 'axios';
 
 export default {
   install: (Vue, options) => {
-    const value = axios.create({
+    const $api = axios.create({
       baseURL: options.baseURL,
       headers: {
         ...axios.defaults.headers,
@@ -17,7 +17,7 @@ export default {
     });
 
     Object.defineProperty(Vue.prototype, '$api', {
-      value
+      value: $api
     });
   }
 };

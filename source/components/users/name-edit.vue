@@ -102,7 +102,7 @@ export default {
       this.isSubmitting = true;
 
       try {
-        await this.$http.put(`users`, {
+        await this.$api.put(`users`, {
           name: this.data.value,
           _id: this.user._id
         });

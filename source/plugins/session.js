@@ -3,6 +3,7 @@
  *
  * @module plugins/session
  */
+
 import router from '@/router';
 
 export default {
@@ -27,7 +28,7 @@ export default {
       } else if (!$session.data) {
         /* Fetch session data if signed in and not present */
         try {
-          const res = await $session.$http.get('session');
+          const res = await $session.$api.get('session');
 
           $session.data = res.data;
         } catch (err) {
