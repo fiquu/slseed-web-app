@@ -64,7 +64,7 @@ module.exports = {
           {
             src: cfg.appIconPath,
             destination: cfg.iconsDir,
-            sizes: [36, 48, 72, 96, 144, 192, 512]
+            sizes: [192, 512]
           },
           {
             src: cfg.appIconPath,
