@@ -40,7 +40,7 @@ export default {
       this.fetching = true;
 
       try {
-        const res = await this.$http.get('users');
+        const res = await this.$api.get('users');
         this.users = res.data;
       } catch (err) {
         console.error(err);

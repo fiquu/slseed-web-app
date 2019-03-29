@@ -4,12 +4,12 @@ const AWS = require('aws-sdk');
 const is = require('fi-is');
 const ora = require('ora');
 
-const package = require('../../package.json');
+const { name, group } = require('../../package.json');
 
 (async () => {
   console.log(`\n${chalk.cyan.bold('Application Setup Script')}\n`);
-  console.log(`${chalk.bold('Group Title: ')} ${package.group.title}`);
-  console.log(`${chalk.bold('Group Name:  ')} ${package.group.name}\n`);
+  console.log(`${chalk.bold('Group Title: ')} ${group.title}`);
+  console.log(`${chalk.bold('Group Name:  ')} ${group.name}\n`);
 
   // Set proper stage ENV
   await require('../../utils/stage-select')(true);
@@ -31,7 +31,7 @@ const package = require('../../package.json');
 
   try {
     const params = {
-      StackName: `${package.name}-${process.env.NODE_ENV}-stack`,
+      StackName: `${name}-${process.env.NODE_ENV}-main-stack`,
       Capabilities: ['CAPABILITY_NAMED_IAM'],
       TemplateBody: null,
       Parameters: null
@@ -94,6 +94,18 @@ const package = require('../../package.json');
     }
 
     const cfmParamValues = await inquirer.prompt(cfmParamPrompts);
+
+    const { confirm } = await inquirer.prompt({
+      message: 'Confirm values?',
+      name: 'confirm',
+      type: 'confirm',
+      default: true
+    });
+
+    if (!confirm) {
+      spinner.warn('Values not confirmed. Cancelled.');
+      process.exit();
+    }
 
     params.TemplateBody = JSON.stringify(template);
 

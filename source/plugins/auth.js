@@ -34,9 +34,7 @@ export default {
       },
 
       created() {
-        console.log(this);
-
-        /* Assign route auth checks */
+        /* Assign route auth guards */
         router.beforeEach(async (to, from, next) => {
           try {
             const session = await this.authUser();
@@ -53,8 +51,8 @@ export default {
           }
         });
 
-        /* Add auth headers to every request */
-        Vue.axios.interceptors.request.use(
+        /* Add auth headers to every API request */
+        this.$api.interceptors.request.use(
           async config => {
             try {
               const token = await this.getAuthToken();
@@ -68,7 +66,6 @@ export default {
               return config;
             } catch (err) {
               console.error(err);
-
               return Promise.reject(err);
             }
           },
