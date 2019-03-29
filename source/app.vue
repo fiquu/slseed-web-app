@@ -1,24 +1,136 @@
 <i18n>
-{
-  "en": {
-    "SIGN_OUT": "Sign Out"
-  }
-}
+es:
+  MESSAGES:
+    SIGNED_OUT: Come back soon!
 </i18n>
 
 <template lang="pug">
 main#app
-  main-navbar
+  transition(name="dimmer-fade")
+    .ui.active.inverted.dimmer(v-if="dim")
+      img.ui.mini.image(
+        :src="$assets('images/navbar-icon.svg')"
+        v-show="loading"
+        )
 
-  router-view
+      .ui.huge.loader(v-show="loading")
+
+  transition
+    main-navbar(v-if="!loading")
+
+  transition(
+    name="component-fade"
+    mode="out-in"
+    )
+
+    router-view(v-if="!loading")
 </template>
 
 <script>
-import MainNavbar from '@/components/main-navbar';
+import VueScript from 'vue-script2';
+
+import MainNavbar from '@/modules/core/components/navbar/main';
+import router from '@/plugins/router';
 
 export default {
   components: {
     MainNavbar
+  },
+
+  data() {
+    return {
+      loading: true,
+      dim: true
+    };
+  },
+
+  async created() {
+    this.$auth.$on('update', () => {
+      this.loading = this.$auth.loading;
+      this.dim = this.$auth.loading;
+    });
+
+    this.$auth.$on('signedOut', () => {
+      this.$toastr.success(this.$t('MESSAGES.SIGNED_OUT'));
+    });
+
+    router.beforeEach((to, from, next) => {
+      this.dim = true;
+      next();
+    });
+
+    router.afterEach(() => {
+      this.dim = false;
+    });
+
+    try {
+      await VueScript.load(this.$assets('scripts/semantic.min.js'));
+    } catch (err) {
+      console.error(err);
+    }
+
+    this.loading = false;
   }
 };
 </script>
+
+<style lang="sass">
+// Global component fade transition
+.component-fade-enter-active,
+.component-fade-leave-active
+  transition: opacity 100ms ease
+
+.component-fade-enter,
+.component-fade-leave-to
+  opacity: 0 !important
+
+// Global list transitions
+.list-enter-active,
+.list-leave-active
+  transition-property: width, opacity, transform
+  transition-timing-function: ease
+  transition-duration: 300ms
+
+.list-enter,
+.list-leave-to
+  opacity: 0 !important
+  width: 1px !important
+
+// Global List transition styles
+.list-item
+  transition-property: width, opacity, transform
+  transition-timing-function: ease
+  transition-duration: 300ms
+
+.list-item-enter,
+.list-item-leave-to
+  transform: translateY(3rem) !important
+  opacity: 0 !important
+
+.list-item-leave-active
+  position: absolute !important
+</style>
+
+<style lang="sass" scoped>
+@import '@/styles/_colors.sass';
+
+.ui.inverted.dimmer
+  background-color: transparentize($pageBackground, 0.1)
+
+  .ui.loader
+    color: $primaryColor
+
+    &:after
+      border-color: transparentize($primaryColor, 0.75) transparent transparent
+
+    &:before
+      border-color: transparentize($primaryColor, 0.85)
+
+.dimmer-fade-enter-active,
+.dimmer-fade-leave-active
+  transition: opacity 300ms ease !important
+
+.dimmer-fade-enter,
+.dimmer-fade-leave-to
+  opacity: 0 !important
+</style>

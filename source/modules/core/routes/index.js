@@ -6,11 +6,16 @@
 
 export default [
   {
-    component: () => import('@/components/dashboard'),
-    path: '/dashboard',
-    name: 'dashboard',
+    path: '/',
+    name: 'index',
+    redirect: '/dashboard',
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    component: () => import('../components/not-found'),
+    path: '*',
+    name: 'not-found'
   }
 ];

@@ -6,17 +6,17 @@
 
 export default [
   {
-    component: () => import('@/components/users/sign-in'),
+    component: () => import('../components/sign-in'),
     name: 'users-sign-in',
     path: '/'
   },
   {
-    component: () => import('@/components/users/index'),
+    component: () => import('../components/index'),
     name: 'users-index',
     path: '/users'
   },
   {
-    component: () => import('@/components/users/password'),
+    component: () => import('../components/password'),
     name: 'users-password',
     path: '/password'
   }

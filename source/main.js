@@ -1,43 +1,51 @@
-import VeeValidate from 'vee-validate';
-import VueI18n from 'vue-i18n';
 import Vue from 'vue';
 
-import Moment from '@/plugins/moment';
-import Toastr from '@/plugins/toastr';
-import JQuery from '@/plugins/jquery';
-import Auth from '@/plugins/auth';
-import HTTP from '@/plugins/http';
-import API from '@/plugins/api';
+import { name, version } from '../package.json';
 
-import configs from '@/configs';
-import router from '@/router';
-import store from '@/store';
+// Plugins
+import '@/plugins/consts';
 
+import router from '@/plugins/router';
+import store from '@/plugins/store';
+import i18n from '@/plugins/i18n';
+
+import '@/plugins/local-storage';
+import '@/plugins/validate';
+import '@/plugins/session';
+import '@/plugins/assets';
+import '@/plugins/jquery';
+import '@/plugins/moment';
+import '@/plugins/toastr';
+import '@/plugins/auth';
+import '@/plugins/http';
+import '@/plugins/api';
+import '@/plugins/is';
+import '@/plugins/mq';
+import '@/plugins/op';
+
+// Register Service Worker
+// import 'registerServiceWorker';
+
+
+// Global components
+import loaderMessage from './modules/global/components/loader-message';
+
+// App component
 import App from '@/app';
 
-import './registerServiceWorker';
-
-// Import Semantic UI files last
-// NOTE: Ideally, these should be served via a private assets CDN
-import '../semantic/dist/semantic.min.css';
-import '../semantic/dist/semantic.min.js';
-
+// Set Vue config
 Vue.config.productionTip = false;
 
-// IMPORTANT: Keep this order!
-Vue.use(Moment, configs.moment);
-Vue.use(HTTP, configs.http);
-Vue.use(API, configs.api);
-Vue.use(Auth);
-Vue.use(VeeValidate);
-Vue.use(VueI18n);
-Vue.use(Toastr);
-Vue.use(JQuery);
+// Register global components
+Vue.component('loader-message', loaderMessage);
 
-new Vue({
-  i18n: new VueI18n(configs.i18n),
+// Create App instance
+export default new Vue({
   render: h => h(App),
   el: '#app',
+  version,
   router,
-  store
+  store,
+  i18n,
+  name
 }).$mount('#app');

@@ -5,8 +5,8 @@
  */
 
 const internalIp = require('internal-ip');
-const path = require('path');
 const crypto = require('crypto');
+const path = require('path');
 
 const PORT = process.env.PORT || 8081;
 
@@ -16,6 +16,13 @@ const CSP_NONE = "'none'";
 const CSP_SELF = "'self'";
 const CSP_DATA = 'data:';
 
+/**
+ * Generates a valid CSP policy header value from the policy object.
+ *
+ * @param {Object} policy The policy as object.
+ *
+ * @returns {String} The policy as a header value string.
+ */
 function generateCSP(policy) {
   let csp = '';
 
@@ -34,43 +41,31 @@ module.exports = {
   devServer: {
     port: PORT,
     headers: {
-      'strict-transport-security': 'max-age=31536000:includeSubDomains:preload',
-      'x-content-type-options': 'nosniff',
-      'x-xss-protection': '1;mode=block',
-      'referrer-policy': 'same-origin',
-      'x-frame-options': 'deny',
-      'content-security-policy': generateCSP({
-        'base-uri': [CSP_SELF],
-        'script-src': [
-          CSP_SELF,
-          `'nonce-${NONCE}'`,
-          'https://*.google.com',
-          'https://*.gstatic.com',
-          'https://*.facebook.net',
-          'https://*.facebook.com'
-        ],
-        'img-src': [
-          CSP_SELF,
-          CSP_DATA,
-          'https://*.cloudfront.net',
-          'https://*.google.com',
-          'https://*.googleapis.com',
-          'https://*.gstatic.com',
-          'https://*.facebook.com'
-        ],
-        'style-src': [CSP_SELF, CSP_UNSAFE_INLINE, 'https://*.googleapis.com'],
-        'font-src': [CSP_SELF, CSP_DATA, 'https://*.gstatic.com'],
-        'connect-src': [
-          CSP_SELF,
-          // Must allow local ip and port for HMR
-          `http://${internalIp.v4.sync()}:${PORT}`,
-          `ws://${internalIp.v4.sync()}:${PORT}`,
-          'http://localhost:*'
-        ],
-        'frame-src': ['https://*.facebook.com', 'https://*.google.com'],
+      'Strict-Transport-Security': 'max-age=31536000;includeSubDomains;preload',
+      'X-Content-Type-Options': 'nosniff',
+      'X-XSS-Protection': '1;mode=block',
+      'Referrer-Policy': 'same-origin',
+      'Content-Language': 'es-CL',
+      'Feature-Policy': '',
+      'X-Frame-Options': 'deny',
+      'Content-Security-Policy': generateCSP({
+        'script-src': [CSP_SELF, `'nonce-${NONCE}'`],
+        'style-src': [CSP_SELF, CSP_UNSAFE_INLINE],
+        'font-src': [CSP_SELF, CSP_DATA],
+        'img-src': [CSP_SELF, CSP_DATA],
         'manifest-src': [CSP_SELF],
         'default-src': [CSP_SELF],
-        'object-src': [CSP_NONE]
+        'object-src': [CSP_NONE],
+        'frame-src': [CSP_NONE],
+        'base-uri': [CSP_SELF],
+        'connect-src': [
+          CSP_SELF,
+          // Allow local IP and port for HMR
+          `http://${internalIp.v4.sync()}:${PORT}`,
+          `ws://${internalIp.v4.sync()}:${PORT}`,
+          // Allow local API server
+          'http://localhost:8080'
+        ]
       })
     }
   }
