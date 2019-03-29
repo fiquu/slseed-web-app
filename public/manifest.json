@@ -1,0 +1,21 @@
+{
+  "name": "Fi SLSeed App",
+  "short_name": "Fi SLSeed App",
+  "background_color": "#f7f6f6",
+  "theme_color": "#b9de3b",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icons/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icons/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
