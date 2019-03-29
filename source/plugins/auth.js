@@ -248,11 +248,12 @@ const $auth = {
             });
 
             user.confirmPassword(data.code, data.password, callbacks);
-          },
+          }
+        },
 
-          async onRouteChanged(to, from, next) {
-            console.log('auth', to, from);
-
+        created() {
+          /* Assign route auth guards */
+          router.beforeEach(async (to, from, next) => {
             try {
               const session = await this.authUser();
 
@@ -266,32 +267,28 @@ const $auth = {
                 next();
               }
             }
-          },
-
-          async apiInterceptor(config) {
-            try {
-              const token = await this.getAuthToken();
-
-              if (!token) {
-                throw new Error('JWT token is empty!');
-              }
-
-              config.headers.Authorization = token;
-
-              return config;
-            } catch (err) {
-              console.error(err);
-              return Promise.reject(err);
-            }
-          }
-        },
-
-        created() {
-          /* Assign route auth guards */
-          router.beforeEach(this.onRouteChanged);
+          });
 
           /* Add auth headers to every API request */
-          api.interceptors.request.use(this.apiInterceptor, console.error.bind(console));
+          api.interceptors.request.use(
+            async config => {
+              try {
+                const token = await this.getAuthToken();
+
+                if (!token) {
+                  throw new Error('JWT token is empty!');
+                }
+
+                config.headers.Authorization = token;
+
+                return config;
+              } catch (error) {
+                console.error(error);
+                return Promise.reject(error);
+              }
+            },
+            error => Promise.reject(error)
+          );
         }
       })
     });
