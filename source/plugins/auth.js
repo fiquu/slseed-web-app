@@ -7,8 +7,8 @@
 import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import AWS from 'aws-sdk';
 
+import router from '@/plugins/router';
 import config from '@/configs/auth';
-import router from '@/router';
 
 const defaults = {
   identityPoolId: config.identityPoolId,

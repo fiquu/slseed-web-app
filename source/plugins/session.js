@@ -4,7 +4,7 @@
  * @module plugins/session
  */
 
-import router from '@/router';
+import router from '@/plugins/router';
 
 export default {
   install: (Vue, config) => {
