@@ -5,6 +5,8 @@
  */
 
 export default {
-  // IMPORTANT: These values MUST be configured per-app.
-  baseURL: process.env.VUE_APP_API_ENDPOINT
+  baseURL: process.env.VUE_APP_API_ENDPOINT,
+  cache: {
+    maxAge: 15 * 60 * 1000
+  }
 };
