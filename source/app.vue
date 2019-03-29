@@ -16,7 +16,7 @@ main#app
       .ui.huge.loader(v-show="loading")
 
   transition
-    main-navbar(v-if="!loading")
+    navbar(v-if="!loading")
 
   transition(
     name="component-fade"
@@ -27,12 +27,12 @@ main#app
 </template>
 
 <script>
-import MainNavbar from '@/modules/core/components/navbar/main';
+import Navbar from '@/modules/core/components/navbar';
 import router from '@/plugins/router';
 
 export default {
   components: {
-    MainNavbar
+    Navbar
   },
 
   data() {
