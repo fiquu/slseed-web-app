@@ -45,7 +45,7 @@ section.view
                 .header {{ $t('FORM.ERROR.MESSAGE.TITLE') }}
                 p {{ $t('FORM.ERROR.MESSAGE.BODY') }}
 
-            .required.field(:class="formEmailfieldClass")
+            .required.field(:class="formEmailFieldClass")
               label(for="email-input")
                 | {{ $t('FORM.EMAIL.LABEL') }}
 
