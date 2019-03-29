@@ -2,29 +2,30 @@
 section.ui.container.view
   .ui.basic.vertical.segment
     .ui.segment
-      div(v-if=`isFetching`)
-        .ui.active.loader
+      .ui.active.loader(v-if="fetching")
 
       .ui.list
-        .item(v-for=`user in users`)
+        .item(v-for="user in users")
           i.user.icon
+
           .content
-            .header(v-text=`user.sub`)
+            .header(v-text="user.sub")
+
             .description
               .ui.tiny.olive.label
                 i.plus.circle.icon
-                span(v-text=`$moment(user.createdAt).format('L')`)
+                span(v-text="$moment(user.createdAt).format('L')")
 
               .ui.tiny.label
                 i.edit.icon
-                span(v-text=`$moment(user.modifiedAt).format('L')`)
+                span(v-text="$moment(user.modifiedAt).format('L')")
 </template>
 
 <script>
 export default {
   data() {
     return {
-      isFetching: false,
+      fetching: false,
 
       users: null
     };
@@ -36,7 +37,7 @@ export default {
 
   methods: {
     async fetch() {
-      this.isFetching = true;
+      this.fetching = true;
 
       try {
         const res = await this.$http.get('users');
@@ -45,7 +46,7 @@ export default {
         console.error(err);
       }
 
-      this.isFetching = false;
+      this.fetching = false;
     }
   }
 };

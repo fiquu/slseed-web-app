@@ -1,48 +1,39 @@
 <i18n>
-{
-  "en": {
-    "MESSAGES": {
-      "SUBMIT": {
-        "ERROR": "Couldn't update email."
-      }
-    }
-  }
-}
+en:
+  MESSAGES:
+    SUBMIT:
+      ERROR: "Couldn't update email."
 </i18n>
 
 <template lang="pug">
 .field(
-  v-if='user'
-  :class=`{
-    error: errors.any()
-  }`
+  :class="fieldClass"
+  v-if="user"
   )
 
   .ui.fluid.action.input
     input(
-      :disabled='!isEditing || isSubmitting'
-      v-validate.initial=`'required|email'`
-      @change='onValueChanged()'
-      @input='onValueChanged()'
-      :readonly='!isEditing'
-      v-model='data.email'
-      name='data-email'
-      minlength='5'
-      type='email'
+      v-validate.initial="'required|email'"
+      :disabled="!editing || submitting"
+      @change="onValueChanged"
+      @input="onValueChanged"
+      :readonly="!editing"
+      v-model="data.email"
+      name="data-email"
+      minlength="5"
+      type="email"
       )
 
     button.ui.icon.button(
-      :disabled=`isSubmitting`
-      @click='toggleEditing()'
-      :class=`{
-        negative: errors.any()
-      }`
+      @click="toggleEditing"
+      :disabled="submitting"
+      :class="buttonClass"
       )
 
-      i.notched.circle.loading.icon(v-if='isSubmitting')
-      i.cancel.icon(v-else-if=`errors.any() || isEditing && !isModified`)
-      i.save.icon(v-else-if=`!errors.any() && isEditing && isModified`)
-      i.edit.icon(v-else-if='!isEditing')
+      i.notched.circle.loading.icon(v-if="submitting")
+      i.cancel.icon(v-else-if="errors.any() || editing && !modified")
+      i.save.icon(v-else-if="!errors.any() && editing && modified")
+      i.edit.icon(v-else-if="!editing")
 </template>
 
 <script>
@@ -53,11 +44,25 @@ export default {
 
   props: ['params', 'user'],
 
+  computed: {
+    fieldsClass() {
+      return {
+        error: errors.any()
+      };
+    },
+
+    buttonClass() {
+      return {
+        negative: errors.any()
+      };
+    }
+  },
+
   data() {
     return {
-      isSubmitting: false,
-      isModified: false,
-      isEditing: false,
+      submitting: false,
+      modified: false,
+      editing: false,
 
       cognito: new AWS.CognitoIdentityServiceProvider(),
 
@@ -72,19 +77,19 @@ export default {
      * Toggles editing mode.
      */
     toggleEditing() {
-      if (this.isEditing) {
-        this.isEditing = false;
+      if (this.editing) {
+        this.editing = false;
 
-        if (this.isModified) {
+        if (this.modified) {
           if (this.errors.any()) {
             this.data.email = String(this.user.email);
-            this.isModified = false;
+            this.modified = false;
           } else {
             this.submit();
           }
         }
       } else {
-        this.isEditing = true;
+        this.editing = true;
       }
     },
 
@@ -92,7 +97,7 @@ export default {
      * On value modified callback.
      */
     onValueChanged() {
-      this.isModified = this.data.email !== this.user.email;
+      this.modified = this.data.email !== this.user.email;
     },
 
     /**
@@ -101,21 +106,21 @@ export default {
     onSubmit(err) {
       if (err) {
         this.$toastr.error(this.$t('MESSAGES.SUBMIT.ERROR'));
-        this.isEditing = true;
+        this.editing = true;
       } else {
         this.user.email = String(this.data.email);
       }
 
-      this.isSubmitting = false;
-      this.isModified = !!err;
+      this.submitting = false;
+      this.modified = !!err;
     },
 
     /**
      * Submits the new attribute data.
      */
     submit() {
-      this.isSubmitting = true;
-      this.isEditing = false;
+      this.submitting = true;
+      this.editing = false;
 
       this.params.Username = this.user.sub;
       this.params.UserAttributes = [

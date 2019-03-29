@@ -1,35 +1,34 @@
 <i18n>
-{
-  "en": {
-    "SIGN_OUT": "Sign out"
-  }
-}
+en:
+  SIGN_OUT: Sign out
 </i18n>
 
 <template lang="pug">
 header.ui.fixed.top.compact.menu
-  a.item(
-    v-if=`$route.path !== '/dashboard' && $auth.isSignedIn()`
-    href='#/dashboard'
+  router-link.item(
+    v-if="$route.path !== '/dashboard' && $auth.isSignedIn()"
+    to='/dashboard'
     )
 
     i.chevron.left.icon
 
   .header.item
     img(src='/static/images/navbar-icon.png')
-    span &ensp;{{ title }}
+    | &ensp;{{ title }}
 
   .right.menu
-    .item(v-if=`$auth.isSignedIn()`)
-      | {{ $auth.get('name') }}
+    .item(
+      v-text="$auth.get('name')"
+      v-if="$auth.isSignedIn()"
+      )
 
     a.item(
-      v-if=`$auth.isSignedIn()`
-      @click='$auth.signOut()'
+      v-if="$auth.isSignedIn()"
+      @click="$auth.signOut"
       )
 
       i.sign.out.icon
-      span(v-t=`'SIGN_OUT'`)
+      | {{ $t('SIGN_OUT') }}
 </template>
 
 <script>

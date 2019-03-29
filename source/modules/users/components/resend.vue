@@ -1,59 +1,44 @@
 <i18n>
-{
-  "en": {
-    "TITLE": "Resend temporary password",
-    "CONFIRM": {
-      "MESSAGE": "This will resend the temporary password to the user.",
-      "LABEL": "Confirm temporary password resend."
-    },
-    "MESSAGES": {
-      "ERROR": "Couldn't resend temporary password.",
-      "SUCCESS": "Temporary password resent."
-    },
-    "DISABLE": "Resend"
-  }
-}
+en:
+  TITLE: Resend temporary password
+  CONFIRM:
+    MESSAGE: This will resend the temporary password to the user.
+    LABEL: Confirm temporary password resend.
+  MESSAGES:
+    ERROR: "Couldn't resend temporary password."
+    SUCCESS: Temporary password resent.
+  RESEND: Resend
 </i18n>
 
 <template lang="pug">
 .ui.blue.left.aligned.segment
-  h4.ui.blue.header(v-t=`'TITLE'`)
-
-  p(v-t=`'CONFIRM.MESSAGE'`)
+  h4.ui.blue.header {{ $t('TITLE') }}
+  p {{ $t('CONFIRM.MESSAGE') }}
 
   .ui.basic.vertical.segment
     label.ui.fluid.labeled.basic.icon.button(
-      :disabled='isResending'
-      role='button'
+      :disabled="resending"
+      role="button"
       )
 
       input(
-        v-model='data.confirm'
-        type='checkbox'
-        v-show='false'
+        v-model="data.confirm"
+        type="checkbox"
+        v-show="false"
         )
 
-      i.icon(
-        :class=`{
-          'square outline': !data.confirm,
-          'checkmark box': data.confirm
-        }`
-        )
-
-      span(v-t=`'CONFIRM.LABEL'`)
+      i.icon(:class="iconClass")
+      | {{ $t('CONFIRM.LABEL') }}
 
   button.ui.fluid.right.labeled.blue.icon.button(
-    :disabled='!data.confirm || isResending'
-    @click='resend()'
-    type='button'
-    :class=`{
-      loading: isResending
-    }`
+    :disabled="!data.confirm || resending"
+    :class="buttonClass"
+    @click="resend"
+    type="button"
     )
 
     i.send.icon
-    span(v-t=`'DISABLE'`)
-
+    | {{ $t('RESEND') }}
 </template>
 
 <script>
@@ -64,9 +49,24 @@ export default {
 
   props: ['params', 'user'],
 
+  computed: {
+    iconClass() {
+      return {
+        'square outline': !this.data.confirm,
+        'checkmark box': this.data.confirm
+      };
+    },
+
+    buttonClass() {
+      return {
+        loading: this.resending
+      };
+    }
+  },
+
   data() {
     return {
-      isResending: false,
+      resending: false,
 
       cognito: new AWS.CognitoIdentityServiceProvider(),
 
@@ -83,7 +83,7 @@ export default {
      * @param {Object} err Error object.
      */
     onResend(err) {
-      this.isResending = false;
+      this.resending = false;
 
       if (err) {
         this.$toastr.error(this.$t('MESSAGES.ERROR'));
@@ -101,7 +101,7 @@ export default {
      */
     resend() {
       this.data.confirm = false;
-      this.isResending = true;
+      this.resending = true;
 
       const params = Object.assign({}, this.params, {
         Username: this.user.email,

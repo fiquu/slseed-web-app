@@ -1,57 +1,45 @@
 <i18n>
-{
-  "en": {
-    "TITLE": "Disable account",
-    "CONFIRM": {
-      "MESSAGE": "By disabling this account the user will no longer be able to sign in.",
-      "LABEL": "Confirm account disabling."
-    },
-    "MESSAGES": {
-      "SUCCESS": "Account disabled."
-    },
-    "DISABLE": "Disable"
-  }
-}
+en:
+  TITLE: Disable account
+  CONFIRM:
+    MESSAGE: By disabling this account the user will no longer be able to sign in.
+    LABEL: Confirm account disabling.
+  MESSAGES:
+    SUCCESS: Account disabled.
+  DISABLE: Disable
 </i18n>
 
 <template lang="pug">
 .ui.orange.left.aligned.segment
-  h4.ui.orange.header(v-t=`'TITLE'`)
+  h4.ui.orange.header
+    | {{ $t('TITLE') }}
 
-  p(v-t=`'CONFIRM.MESSAGE'`)
+  p {{ $t('CONFIRM.MESSAGE') }}
 
   .ui.basic.vertical.segment
     label.ui.fluid.labeled.basic.icon.button(
-      :disabled='isDisabling'
-      role='button'
+      :disabled="isDisabling"
+      role="button"
       )
 
       input(
-        v-model='data.confirm'
-        type='checkbox'
-        v-show='false'
+        v-model="data.confirm"
+        type="checkbox"
+        v-show="false"
         )
 
-      i.icon(
-        :class=`{
-          'square outline': !data.confirm,
-          'checkmark box': data.confirm
-        }`
-        )
-
-      span(v-t=`'CONFIRM.LABEL'`)
+      i.icon(:class="iconClass")
+      | {{ $t('CONFIRM.LABEL') }}
 
   button.ui.fluid.labeled.orange.icon.button(
-    :disabled='!data.confirm || isDisabling'
-    @click='disableUser()'
-    type='button'
-    :class=`{
-      loading: isDisabling
-    }`
+    :disabled="!data.confirm || disabling"
+    @click="disableUser"
+    :class="buttonClass"
+    type="button"
     )
 
     i.ban.icon
-    span(v-t=`'DISABLE'`)
+    | {{ $t('DISABLE') }}
 
 </template>
 
@@ -63,9 +51,24 @@ export default {
 
   props: ['params', 'user'],
 
+  computed: {
+    iconClass() {
+      return {
+        'square outline': !this.data.confirm,
+        'checkmark box': this.data.confirm
+      };
+    },
+
+    buttonClass() {
+      return {
+        loading: this.disabling
+      };
+    }
+  },
+
   data() {
     return {
-      isDisabling: false,
+      disabling: false,
 
       cognito: new AWS.CognitoIdentityServiceProvider(),
 
