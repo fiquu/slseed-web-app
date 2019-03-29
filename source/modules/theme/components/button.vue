@@ -114,7 +114,7 @@ section
         .ui.button Two
 
       .ui.attached.segment
-        img.ui.wireframe.image(:src="$assets('images/theme/wireframe/paragraph.png')")
+        img.ui.wireframe.image(src="/static/images/theme/wireframe/paragraph.png")
 
       .ui.two.bottom.attached.buttons
         .ui.button One

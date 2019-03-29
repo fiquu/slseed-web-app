@@ -8,7 +8,7 @@ export default [
   {
     component: () => import('../components/sign-in'),
     name: 'users-sign-in',
-    path: '/'
+    path: '/users/sign-in'
   },
   {
     component: () => import('../components/index'),
@@ -18,6 +18,6 @@ export default [
   {
     component: () => import('../components/password'),
     name: 'users-password',
-    path: '/password'
+    path: '/users/password'
   }
 ];

@@ -11,16 +11,17 @@ import i18n from '@/plugins/i18n';
 
 import '@/plugins/local-storage';
 import '@/plugins/validate';
-import '@/plugins/session';
 import '@/plugins/jquery';
 import '@/plugins/moment';
 import '@/plugins/toastr';
-import '@/plugins/auth';
 import '@/plugins/http';
 import '@/plugins/api';
 import '@/plugins/is';
 import '@/plugins/mq';
 import '@/plugins/op';
+
+// import '@/plugins/session';
+import '@/plugins/auth';
 
 // Register Service Worker
 // import 'registerServiceWorker';

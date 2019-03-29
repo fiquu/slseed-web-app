@@ -4,14 +4,9 @@
  * @module plugins/router
  */
 
-import VueRouter from 'vue-router';
+import router from '@/services/router';
 import Vue from 'vue';
 
-import config from '@/configs/router';
+Vue.use(router);
 
-const $router = new VueRouter(config);
-
-Vue.use(VueRouter);
-Vue.use($router);
-
-export default $router;
+export default router;

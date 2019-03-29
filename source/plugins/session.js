@@ -4,54 +4,62 @@
  * @module plugins/session
  */
 
-import router from '@/plugins/router';
+import Vue from 'vue';
 
-export default {
-  install: (Vue, config) => {
-    const $session = new Vue({
-      data() {
-        return {
-          root: (config && config.root) || '/',
-          loaded: false,
-          data: null
-        };
-      }
-    });
+import router from '@/services/router';
+import config from '@/configs/session';
+import api from '@/services/api';
 
-    /* Resolve session data */
-    router.beforeEach(async (to, from, next) => {
-      const signedIn = $session.$auth.isSignedIn();
-
-      if (!signedIn) {
-        /* Just delete session data if not signed in */
-        $session.data = null;
-      } else if (!$session.data) {
-        /* Fetch session data if signed in and not present */
-        try {
-          const res = await $session.$api.get('session');
-
-          $session.data = res.data;
-        } catch (err) {
-          if (signedIn) {
-            $session.$auth.signOut();
-            return;
-          }
-
-          if (to.path === $session.root) {
-            next();
-          } else {
-            next($session.root);
-          }
-        }
-      }
-
-      $session.loaded = true;
-
-      next();
-    });
-
+const $session = {
+  install(Vue) {
     Object.defineProperty(Vue.prototype, '$session', {
-      value: $session
+      value: new Vue({
+        data() {
+          return {
+            root: (config && config.root) || '/',
+            loaded: false,
+            data: null
+          };
+        },
+
+        created() {
+          /* Resolve session data */
+          router.beforeEach(async (to, from, next) => {
+            const signedIn = this.$auth.isSignedIn();
+
+            if (!signedIn) {
+              /* Just delete session data if not signed in */
+              this.data = null;
+            } else if (!this.data) {
+              /* Fetch session data if signed in and not present */
+              try {
+                const res = await api.get('session');
+
+                this.data = res.data;
+              } catch (err) {
+                if (signedIn) {
+                  this.$auth.signOut();
+                  return;
+                }
+
+                if (to.path === this.root) {
+                  next();
+                } else {
+                  next(this.root);
+                }
+              }
+            }
+
+            this.loaded = true;
+
+            next();
+          });
+        }
+      })
     });
   }
 };
+
+Vue.use($session);
+
+export default $session;

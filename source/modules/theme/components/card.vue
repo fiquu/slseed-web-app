@@ -8,7 +8,7 @@ section
           .content
             .center
               .ui.teal.button Add Friend
-        img(:src="$assets('images/theme/wireframe/image.png')")
+        img(src="/static/images/theme/wireframe/image.png'")
       .content
         .header Title
         .meta
@@ -23,7 +23,7 @@ section
           .content
             .center
               .ui.inverted.button Call to Action
-        img(:src="$assets('images/theme/wireframe/image.png')")
+        img(src="/static/images/theme/wireframe/image.png'")
       .content
         a.header Name
         .meta
@@ -35,19 +35,19 @@ section
     .ui.card
       .ui.slide.right.reveal.image
         .visible.content
-          img.ui.fluid.image(:src="$assets('images/theme/avatar/nan.jpg')")
+          img.ui.fluid.image(src="/static/images/theme/avatar/nan.jpg'")
         .hidden.content
-          img.ui.fluid.image(:src="$assets('images/theme/avatar/tom.jpg')")
+          img.ui.fluid.image(src="/static/images/theme/avatar/tom.jpg'")
       .content
-        img.ui.wireframe.image(:src="$assets('images/theme/wireframe/paragraph.png')")
+        img.ui.wireframe.image(src="/static/images/theme/wireframe/paragraph.png'")
     .ui.card
       .ui.move.reveal.image
         .visible.content
-          img.ui.fluid.image(:src="$assets('images/theme/avatar/tom.jpg')")
+          img.ui.fluid.image(src="/static/images/theme/avatar/tom.jpg'")
         .hidden.content
-          img.ui.fluid.image(:src="$assets('images/theme/avatar/nan.jpg')")
+          img.ui.fluid.image(src="/static/images/theme/avatar/nan.jpg'")
       .content
-        img.ui.wireframe.image(:src="$assets('images/theme/wireframe/paragraph.png')")
+        img.ui.wireframe.image(src="/static/images/theme/wireframe/paragraph.png'")
   .ui.four.cards
     .ui.card
       .extra.content
@@ -58,14 +58,14 @@ section
           i.fas.fa-star.icon
           | Favorite
       .content
-        img.ui.wireframe.image(:src="$assets('images/theme/wireframe/paragraph.png')")
+        img.ui.wireframe.image(src="/static/images/theme/wireframe/paragraph.png'")
     .ui.card
       .content
         .header
-          img.ui.avatar.right.spaced.image(:src="$assets('images/theme/wireframe/square-image.png')")
+          img.ui.avatar.right.spaced.image(src="/static/images/theme/wireframe/square-image.png'")
           |  Abbreviated Header
         .description
-          img.ui.wireframe.image(:src="$assets('images/theme/wireframe/paragraph.png')")
+          img.ui.wireframe.image(src="/static/images/theme/wireframe/paragraph.png'")
       .ui.two.bottom.attached.buttons
         .ui.button Action 1
         .ui.button Action 2
@@ -75,17 +75,17 @@ section
         .meta
           span.category Animals
         .description
-          img.ui.wireframe.image(:src="$assets('images/theme/wireframe/paragraph.png')")
+          img.ui.wireframe.image(src="/static/images/theme/wireframe/paragraph.png'")
       .extra.content
         .right.floated.author
-          img.ui.avatar.image(:src="$assets('images/theme/wireframe/square-image.png')")
+          img.ui.avatar.image(src="/static/images/theme/wireframe/square-image.png'")
           |  Username
     .ui.card
       .ui.two.top.attached.basic.buttons
         .ui.button Action 1
         .ui.button Action 2
       .content
-        img.ui.wireframe.image(:src="$assets('images/theme/wireframe/paragraph.png')")
+        img.ui.wireframe.image(src="/static/images/theme/wireframe/paragraph.png'")
       .ui.two.bottom.attached.basic.buttons
         .ui.button Action 3
         .ui.button Action 4
@@ -113,22 +113,22 @@ section
   .ui.four.cards
     .card
       .image
-        img(:src="$assets('images/theme/wireframe/image.png')")
+        img(src="/static/images/theme/wireframe/image.png'")
       .extra.center.aligned
         .ui.star.rating(data-rating='4')
     .card
       .image
-        img(:src="$assets('images/theme/wireframe/image.png')")
+        img(src="/static/images/theme/wireframe/image.png'")
       .extra.center.aligned
         .ui.star.rating(data-rating='2')
     .card
       .image
-        img(:src="$assets('images/theme/wireframe/image.png')")
+        img(src="/static/images/theme/wireframe/image.png'")
       .extra.center.aligned
         .ui.star.rating(data-rating='3')
     .card
       .image
-        img(:src="$assets('images/theme/wireframe/image.png')")
+        img(src="/static/images/theme/wireframe/image.png'")
       .extra.center.aligned
         .ui.star.rating(data-rating='4')
 </template>

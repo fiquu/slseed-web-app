@@ -9,7 +9,7 @@ main#app
   transition(name="dimmer-fade")
     .ui.active.inverted.dimmer(v-if="dim")
       img.ui.mini.image(
-        :src="$assets('images/navbar-icon.svg')"
+        src="/static/images/navbar-icon.svg"
         v-show="loading"
         )
 
@@ -28,7 +28,6 @@ main#app
 
 <script>
 import Navbar from '@/modules/core/components/navbar';
-import router from '@/plugins/router';
 
 export default {
   components: {
@@ -42,7 +41,7 @@ export default {
     };
   },
 
-  async created() {
+  created() {
     this.$auth.$on('update', () => {
       this.loading = this.$auth.loading;
       this.dim = this.$auth.loading;
@@ -52,12 +51,12 @@ export default {
       this.$toastr.success(this.$t('MESSAGES.SIGNED_OUT'));
     });
 
-    router.beforeEach((to, from, next) => {
+    this.$router.beforeEach((to, from, next) => {
       this.dim = true;
       next();
     });
 
-    router.afterEach(() => {
+    this.$router.afterEach(() => {
       this.dim = false;
     });
 
