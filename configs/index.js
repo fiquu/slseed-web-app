@@ -63,6 +63,7 @@ module.exports = {
           // Allow local IP and port for HMR
           `http://${internalIp.v4.sync()}:${PORT}`,
           `ws://${internalIp.v4.sync()}:${PORT}`,
+          'https://*.amazonaws.com',
           // Allow local API server
           'http://localhost:8080'
         ]
