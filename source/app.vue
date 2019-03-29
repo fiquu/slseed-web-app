@@ -27,8 +27,6 @@ main#app
 </template>
 
 <script>
-import VueScript from 'vue-script2';
-
 import MainNavbar from '@/modules/core/components/navbar/main';
 import router from '@/plugins/router';
 
@@ -62,12 +60,6 @@ export default {
     router.afterEach(() => {
       this.dim = false;
     });
-
-    try {
-      await VueScript.load(this.$assets('scripts/semantic.min.js'));
-    } catch (err) {
-      console.error(err);
-    }
 
     this.loading = false;
   }
