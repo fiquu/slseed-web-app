@@ -12,7 +12,6 @@ import i18n from '@/plugins/i18n';
 import '@/plugins/local-storage';
 import '@/plugins/validate';
 import '@/plugins/session';
-import '@/plugins/assets';
 import '@/plugins/jquery';
 import '@/plugins/moment';
 import '@/plugins/toastr';
@@ -25,7 +24,6 @@ import '@/plugins/op';
 
 // Register Service Worker
 // import 'registerServiceWorker';
-
 
 // Global components
 import loaderMessage from './modules/global/components/loader-message';
