@@ -5,7 +5,7 @@ section
   .ui.two.column.stackable.grid
     .column
       .ui.action.left.icon.input
-        i.fas.fa-search.icon
+        i.search.icon
         input(type='text', placeholder='Search...')
         .ui.teal.button Search
 
@@ -28,26 +28,26 @@ section
 
       .ui.transparent.icon.input
         input(placeholder='Search...', type='text')
-        i.fas.fa-search.icon
+        i.search.icon
 
       | &#32;
 
       .ui.transparent.left.icon.input
         input(placeholder='Search...', type='text')
-        i.fas.fa-search.icon
+        i.search.icon
 
       .ui.divider
 
       .ui.left.icon.input.loading
         input(placeholder='Loading...', type='text')
-        i.fas.fa-search.icon
+        i.search.icon
       .ui.icon.input.loading
         input(placeholder='Loading...', type='text')
-        i.fas.fa-search.icon
+        i.search.icon
 
     .column
       .ui.right.labeled.left.icon.input
-        i.fas.fa-tags.icon
+        i.tags.icon
         input(placeholder='Enter tags', type='text')
         a.ui.tag.label Add Tag
       .ui.divider
@@ -68,13 +68,13 @@ section
           .ui.fluid.labeled.icon.input
             .ui.label http://
             input(type='text', placeholder='domain.com')
-            i.fas.fa-add.circle.link.icon
+            i.add.circle.link.icon
 
         .field
           .ui.fluid.right.action.input
             input(type='text', placeholder='domain.com')
             .ui.teal.button
-              i.fas.fa-add.icon
+              i.add.icon
               | Add
 
       .ui.divider
@@ -82,7 +82,7 @@ section
       .ui.corner.labeled.input
         input(type='text', placeholder='Required Field')
         .ui.corner.label
-          i.fas.fa-asterisk.icon
+          i.asterisk.icon
 </template>
 
 <script>

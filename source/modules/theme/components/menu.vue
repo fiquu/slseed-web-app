@@ -24,7 +24,7 @@ section
     .right.menu
       .item
         .ui.action.left.icon.input
-          i.fas.fa-search.icon
+          i.search.icon
           input(type='text', placeholder='Search')
           button.ui.button Submit
 
@@ -53,7 +53,7 @@ section
     .right.menu
       .item
         .ui.transparent.inverted.icon.input
-          i.fas.fa-search.icon
+          i.search.icon
           input(type='text', placeholder='Search')
 
       a.item Link
@@ -79,7 +79,7 @@ section
     .right.menu
       .item
         .ui.action.left.icon.input
-          i.fas.fa-search.icon
+          i.search.icon
           input(type='text', placeholder='Search')
           button.ui.button Submit
 

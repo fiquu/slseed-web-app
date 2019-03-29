@@ -50,8 +50,8 @@ module.exports = {
       'X-Frame-Options': 'deny',
       'Content-Security-Policy': generateCSP({
         'script-src': [CSP_SELF, `'nonce-${NONCE}'`],
-        'style-src': [CSP_SELF, CSP_UNSAFE_INLINE],
-        'font-src': [CSP_SELF, CSP_DATA],
+        'style-src': [CSP_SELF, CSP_UNSAFE_INLINE, 'https://fonts.googleapis.com'],
+        'font-src': [CSP_SELF, CSP_DATA, 'https://fonts.gstatic.com'],
         'img-src': [CSP_SELF, CSP_DATA],
         'manifest-src': [CSP_SELF],
         'default-src': [CSP_SELF],

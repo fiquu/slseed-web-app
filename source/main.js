@@ -29,6 +29,10 @@ import '@/plugins/auth';
 // Global components
 import loaderMessage from './modules/global/components/loader-message';
 
+// Semantic UI
+import '../semantic/dist/semantic.min.css';
+import '../semantic/dist/semantic.min.js';
+
 // App component
 import App from '@/app';
 

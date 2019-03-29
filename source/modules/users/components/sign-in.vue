@@ -109,7 +109,7 @@ section.view
               i.sign.in.icon
 
             .ui.center.aligned.vertical.segment
-              router-link.ui.link(to="/password")
+              router-link.ui.link(to="/users/password")
                 | {{ $t('FORGOT_PASSWORD') }}
 </template>
 

@@ -13,14 +13,14 @@ section
       .ui.divider
 
       button.ui.icon.button
-        i.fas.fa-heart.icon
+        i.heart.icon
 
       button.ui.labeled.icon.button
-        i.fas.fa-heart.icon
+        i.heart.icon
         | Labeled
 
       button.ui.right.labeled.icon.button
-        i.fas.fa-heart.icon
+        i.heart.icon
         | Labeled
 
       .ui.divider
@@ -92,13 +92,13 @@ section
 
       .ui.icon.buttons
         button.ui.button
-          i.fas.fa-align-left.icon
+          i.align-left.icon
         button.ui.button
-          i.fas.fa-align-center.icon
+          i.align-center.icon
         button.ui.button
-          i.fas.fa-align-right.icon
+          i.align-right.icon
         button.ui.button
-          i.fas.fa-align-justify.icon
+          i.align-justify.icon
 
       | &#32;
 

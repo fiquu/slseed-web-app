@@ -27,31 +27,31 @@ section
 
     .column
       .ui.icon.message
-        i.fas.fa-circle.icon
+        i.circle.icon
         .content
           .header Welcome back!
           p This is a special notification which you can dismiss if you're bored with it.
 
       .ui.positive.icon.message
-        i.fas.fa-check-circle.icon
+        i.check-circle.icon
         .content
           .header Welcome back!
           p This is a very positive message!
 
       .ui.negative.icon.message
-        i.fas.fa-times-circle.icon
+        i.times-circle.icon
         .content
           .header Welcome back!
           p This is an awful, negative message!
 
       .ui.info.icon.message
-        i.fas.fa-info-circle.icon
+        i.info-circle.icon
         .content
           .header Welcome back!
           p This is an indiferent, information message!
 
       .ui.warning.icon.message
-        i.fas.fa-exclamation-circle.icon
+        i.exclamation-circle.icon
         .content
           .header Welcome back!
           p This is a cautonary, warning message!

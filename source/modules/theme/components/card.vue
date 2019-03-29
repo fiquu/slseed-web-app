@@ -30,7 +30,7 @@ section
           span.date Date
       .extra.content
         a
-          i.fas.fa-users.icon
+          i.users.icon
           | Users
     .ui.card
       .ui.slide.right.reveal.image
@@ -52,10 +52,10 @@ section
     .ui.card
       .extra.content
         span.left.floated.like
-          i.fas.fa-like.icon
+          i.like.icon
           | Like
         span.right.floated.star
-          i.fas.fa-star.icon
+          i.star.icon
           | Favorite
       .content
         img.ui.wireframe.image(src="/static/images/theme/wireframe/paragraph.png'")

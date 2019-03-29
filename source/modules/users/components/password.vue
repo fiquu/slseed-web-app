@@ -62,7 +62,7 @@ section.view
                 .sub.header {{ $t('SUBTITLE') }}
 
           form.ui.form(@submit.prevent="submit")
-            .ui.negative.icon.message(v-if="errors")
+            .ui.negative.icon.message(v-if="state.error")
               i.exclamation.triangle.icon
               .content
                 .header {{ $t('FORM.ERROR.MESSAGE.TITLE') }}
@@ -80,7 +80,7 @@ section.view
               input#email-input(
                 :placeholder="$t('FORM.EMAIL.PLACEHOLDER')"
                 v-validate.initial="'required|email'"
-                :disabled="submitting"
+                :disabled="state.submitting"
                 v-model="data.email"
                 name="email"
                 type="email"
@@ -88,7 +88,7 @@ section.view
                 )
 
             button.ui.primary.fluid.right.labeled.icon.submit.button(
-              :disabled="errors.has('email') || submitting"
+              :disabled="errors.has('email') || state.submitting"
               :class="buttonClass"
               type="submit"
               )
@@ -98,7 +98,7 @@ section.view
 
             .ui.basic.vertical.segment
               button.ui.fluid.basic.button(
-                :disabled="errors.has('email') || submitting"
+                :disabled="errors.has('email') || state.submitting"
                 @click="onInputVerificationCode"
                 type="button"
                 )
@@ -135,7 +135,7 @@ section.view
           input#code-input(
             :placeholder="$t('FORM.CODE.PLACEHOLDER')"
             v-validate.initial="'required|min:1'"
-            :disabled="confirming"
+            :disabled="state.confirming"
             v-model="data.code"
             type="number"
             name="code"
@@ -149,8 +149,8 @@ section.view
           input#password-input(
             :placeholder="$t('FORM.PASSWORD.PLACEHOLDER')"
             v-validate.initial="'required|min:8'"
+            :disabled="state.confirming"
             v-model="data.password"
-            :disabled="confirming"
             type="password"
             name="password"
             required
@@ -158,14 +158,14 @@ section.view
 
     .actions
       button.ui.cancel.basic.button(
-        :disabled="confirming"
+        :disabled="state.confirming"
         type="button"
         )
 
         | {{ $t('RESET.CANCEL') }}
 
       button.ui.primary.button(
-        :disabled="errors.has('code') || errors.has('password') || confirming"
+        :disabled="errors.has('code') || errors.has('password') || state.confirming"
         :class="formConfirmClass"
         @click="confirm"
         type="button"
@@ -180,43 +180,45 @@ export default {
     emailFieldClass() {
       return {
         error: this.fields.email && this.fields.email.dirty && this.errors.has('email'),
-        disabled: this.submitting
+        disabled: this.state.submitting
       };
     },
 
     buttonClass() {
       return {
-        loading: this.submitting
+        loading: this.state.submitting
       };
     },
 
     formCodeClass() {
       return {
         error: this.fields.code && this.fields.code.dirty && this.errors.has('code'),
-        disabled: this.confirming
+        disabled: this.state.confirming
       };
     },
 
     formPasswordClass() {
       return {
         error: this.fields.password && this.fields.password.dirty && this.errors.has('password'),
-        disabled: this.confirming
+        disabled: this.state.confirming
       };
     },
 
     formConfirmClass() {
       return {
-        loading: this.confirming
+        loading: this.state.confirming
       };
     }
   },
 
   data() {
     return {
-      submitting: false,
-      confirming: false,
-      codeSent: false,
-      errors: false,
+      state: {
+        submitting: false,
+        confirming: false,
+        codeSent: false,
+        error: false
+      },
 
       data: {
         email: null
@@ -250,7 +252,7 @@ export default {
      * Confirm success callback.
      */
     onConfirmSuccess() {
-      this.confirming = false;
+      this.state.confirming = false;
 
       this.$toastr.success(this.$t('MESSAGES.SUCCESS.BODY'), this.$t('MESSAGES.SUCCESS.TITLE'));
 
@@ -263,7 +265,7 @@ export default {
      * Confirms new password.
      */
     confirm() {
-      this.confirming = true;
+      this.state.confirming = true;
 
       this.$auth.confirmPassword(this.data, {
         onSuccess: res => this.onConfirmSuccess(res),
@@ -275,16 +277,16 @@ export default {
      * Cancels password confirm modal.
      */
     cancel() {
-      this.submitting = false;
-      this.codeSent = false;
+      this.state.submitting = false;
+      this.state.codeSent = false;
     },
 
     /**
      * Submit success callback.
      */
     onSubmitSuccess() {
-      this.submitting = false;
-      this.codeSent = true;
+      this.state.submitting = false;
+      this.state.codeSent = true;
 
       this.data.password = null;
       this.data.code = null;
@@ -294,9 +296,9 @@ export default {
      * After error callback.
      */
     afterError() {
-      this.submitting = false;
-      this.confirming = false;
-      this.codeSent = false;
+      this.state.submitting = false;
+      this.state.confirming = false;
+      this.state.codeSent = false;
     },
 
     /**
@@ -345,15 +347,15 @@ export default {
      * Signs the user in.
      */
     submit() {
-      this.codeSent = false;
-      this.errors = false;
+      this.state.codeSent = false;
+      this.state.error = false;
 
       this.$validator.validate('email').then(valid => {
         if (!valid) {
           return;
         }
 
-        this.submitting = true;
+        this.state.submitting = true;
 
         this.cognitoUser = this.$auth.forgotPassword(this.data, {
           inputVerificationCode: () => this.onInputVerificationCode(),
