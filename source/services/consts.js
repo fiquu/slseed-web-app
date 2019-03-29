@@ -4,8 +4,11 @@
  * @module services/consts
  */
 
-const GENDERS = process.env.CONST_GENDERS.split(',');
+import CONSTS from '@/configs/consts';
+
+export const STORE = CONSTS.STORE;
+export const KEYS = CONSTS.KEYS;
 
 export default {
-  GENDERS
+  ...CONSTS
 };

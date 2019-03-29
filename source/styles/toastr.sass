@@ -1,0 +1,60 @@
+@import '@/styles/_colors.sass'
+
+#toast-container
+  position: fixed
+  display: block
+  padding: 0
+  margin: 0
+  bottom: 0
+  right: 0
+  left: 0
+
+  & > .toast
+    background-color: $pageBackground
+    text-transform: uppercase
+    padding: 0.8em 0.5em
+    text-align: center
+    position: relative
+    font-weight: bold
+    font-size: 0.9em
+    overflow: hidden
+    min-width: 100%
+    display: block
+    color: $white
+
+    &:before
+      content: none
+
+    > div
+      padding-left: 0.5em
+      display: inline-block
+
+    > .toast-progress
+      position: absolute
+      height: 2px
+      bottom: 0
+      left: 0
+
+    &.toast-warning
+      background-color: $warningColor
+
+      & > .toast-progress
+        background-color: darken($warningColor, 25)
+
+    &.toast-error
+      background-color: $negativeColor
+
+      & > .toast-progress
+        background-color: darken($negativeColor, 22)
+
+    &.toast-info
+      background-color: $infoColor
+
+      & > .toast-progress
+        background-color: darken($infoColor, 25)
+
+    &.toast-success
+      background-color: $positiveColor
+
+      & > .toast-progress
+        background-color: darken($positiveColor, 20)

@@ -4,18 +4,18 @@
  * @module plugins/http
  */
 
-import axios from 'axios';
+import Vue from 'vue';
 
-export default {
-  install: (Vue, options) => {
-    axios.defaults.baseURL = options.baseURL;
-    axios.defaults.headers = {
-      ...axios.defaults.headers,
-      ...options.headers
-    };
+import http from '@/services/http';
 
+const $http = {
+  install(Vue) {
     Object.defineProperty(Vue.prototype, '$http', {
-      value: axios
+      value: http
     });
   }
 };
+
+Vue.use($http);
+
+export default $http;

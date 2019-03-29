@@ -4,14 +4,18 @@
  * @module plugins/moment
  */
 
-import moment from 'moment';
+import Vue from 'vue';
 
-export default {
-  install: (Vue, options = {}) => {
-    moment.locale(options.locale || 'en');
+import moment from '@/services/moment';
 
+const $moment = {
+  install(Vue) {
     Object.defineProperty(Vue.prototype, '$moment', {
       value: moment
     });
   }
 };
+
+Vue.use($moment);
+
+export default $moment;

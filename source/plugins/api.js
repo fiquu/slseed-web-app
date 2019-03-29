@@ -4,20 +4,18 @@
  * @module plugins/api
  */
 
-import axios from 'axios';
+import Vue from 'vue';
 
-export default {
-  install: (Vue, options) => {
-    const $api = axios.create({
-      baseURL: options.baseURL,
-      headers: {
-        ...axios.defaults.headers,
-        ...options.headers
-      }
-    });
+import api from '@/services/api';
 
+const $api = {
+  install(Vue) {
     Object.defineProperty(Vue.prototype, '$api', {
-      value: $api
+      value: api
     });
   }
 };
+
+Vue.use($api);
+
+export default $api;
