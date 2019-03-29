@@ -35,3 +35,7 @@ Repeat the last 2 steps to update your repo with the latest changes from this on
 `git fetch slseed && git merge slseed/master`
 
 And have fun resolving conflicts!
+
+# Favicons and App Icons
+
+All icons were generated with https://realfavicongenerator.net/.
