@@ -6,8 +6,8 @@ en:
 <template lang="pug">
 header.ui.fixed.top.compact.menu
   router-link.item(
-    v-if="$route.path !== '/dashboard' && $auth.isSignedIn()"
-    to='/dashboard'
+    v-if="$route.path !== '/' && $auth.isSignedIn()"
+    to='/'
     )
 
     i.chevron.left.icon

@@ -228,7 +228,7 @@ export default {
 
   beforeCreate() {
     if (this.$auth.isSignedIn()) {
-      this.$router.push('dashboard');
+      this.$router.push('/');
     }
   },
 

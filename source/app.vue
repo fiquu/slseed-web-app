@@ -43,8 +43,6 @@ export default {
 
   created() {
     this.$auth.$on('update', () => {
-      console.log('auth updated', this.$auth);
-
       this.loading = this.$auth.loading;
       this.dim = this.$auth.loading;
     });

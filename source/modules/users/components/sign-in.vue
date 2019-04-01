@@ -170,7 +170,7 @@ export default {
 
   beforeCreate() {
     if (this.$auth.isSignedIn()) {
-      this.$router.push('dashboard');
+      this.$router.replace('/');
     }
   },
 
@@ -188,7 +188,7 @@ export default {
         return;
       }
 
-      this.$router.push('/');
+      this.$router.replace('/');
     },
 
     /**
@@ -203,16 +203,17 @@ export default {
      * New password required callback.
      */
     onNewPasswordRequired(user, attributes) {
-      const data = Object.assign({}, attributes);
       const pwd = this.data.newPassword;
+      const data = {
+        ...attributes,
+        email_verified: undefined // The api doesn't accept this field back
+      };
 
       this.state.newPasswordRequired = true;
 
       /* User was signed up by an admin and must provide new
        * password and required attributes, if any, to complete
        * authentication. */
-
-      delete data.email_verified; /* The api doesn't accept this field back */
 
       /* Required fields */
       data.name = this.data.name;
@@ -227,7 +228,10 @@ export default {
 
           this.signIn();
         },
-        onFailure: err => this.onSignInError(err)
+
+        onFailure: err => {
+          this.onSignInError(err);
+        }
       });
     },
 
