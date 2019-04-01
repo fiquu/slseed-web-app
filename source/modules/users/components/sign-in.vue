@@ -188,7 +188,7 @@ export default {
         return;
       }
 
-      this.$router.push('dashboard');
+      this.$router.push('/');
     },
 
     /**

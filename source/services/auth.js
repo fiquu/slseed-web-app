@@ -6,6 +6,7 @@
 
 import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import AWS from 'aws-sdk';
+import is from 'fi-is';
 import Vue from 'vue';
 
 import config from '@/configs/auth';
@@ -14,8 +15,15 @@ import router from '@/services/router';
 import api from '@/services/api';
 
 export default new Vue({
+  watch: {
+    loading() {
+      this.$emit('update');
+    }
+  },
+
   data() {
     return {
+      loading: false,
       data: null
     };
   },
@@ -98,7 +106,9 @@ export default new Vue({
      *
      * @returns {CognitoUser} The cognito user instance.
      */
-    signIn(data, callbacks) {
+    async signIn(data, callbacks) {
+      this.loading = true;
+
       const userPool = new CognitoUserPool(config.credentials);
 
       const user = new CognitoUser({
@@ -111,7 +121,37 @@ export default new Vue({
         Username: data.email
       });
 
-      user.authenticateUser(authenticationDetails, callbacks);
+      await new Promise(resolve => {
+        user.authenticateUser(authenticationDetails, {
+          onFailure(err) {
+            if (is.function(callbacks.onFailure)) {
+              callbacks.onFailure(err);
+            }
+
+            resolve();
+          },
+
+          onSuccess(res) {
+            this.$emit('signedIn');
+
+            if (is.function(callbacks.onSuccess)) {
+              callbacks.onSuccess(res);
+            }
+
+            resolve();
+          },
+
+          newPasswordRequired(userAttributes) {
+            if (is.function(callbacks.onSuccess)) {
+              callbacks.newPasswordRequired(userAttributes);
+            }
+
+            resolve();
+          }
+        });
+      });
+
+      this.loading = false;
 
       return user;
     },
@@ -122,22 +162,20 @@ export default new Vue({
      * @param {Boolean} keep Whether to keep current URL.
      */
     signOut(keep) {
+      this.loading = true;
+
       const currentUser = this.getCurrentUser();
 
       if (currentUser) {
-        currentUser.signOut({
-          onFailure(err) {
-            console.log(err);
-          },
-          onSuccess(res) {
-            console.log('Sign out successful.', res);
-          }
-        });
+        currentUser.signOut();
+        this.$emit('signedOut');
       }
 
       if (!keep) {
-        window.location.href = config.paths.signIn;
+        router.replace(config.paths.signIn);
       }
+
+      this.loading = false;
     },
 
     /**

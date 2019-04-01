@@ -23,8 +23,9 @@ header.ui.fixed.top.compact.menu
       )
 
     a.item(
+      @click="$auth.signOut(false)"
       v-if="$auth.isSignedIn()"
-      @click="$auth.signOut"
+      role="button"
       )
 
       i.sign.out.icon

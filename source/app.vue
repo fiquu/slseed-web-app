@@ -1,5 +1,5 @@
 <i18n>
-es:
+en:
   MESSAGES:
     SIGNED_OUT: Come back soon!
 </i18n>
@@ -9,7 +9,7 @@ main#app
   transition(name="dimmer-fade")
     .ui.active.inverted.dimmer(v-if="dim")
       img.ui.mini.image(
-        src="/static/images/navbar-icon.svg"
+        src="/static/images/navbar-icon.png"
         v-show="loading"
         )
 
@@ -43,6 +43,8 @@ export default {
 
   created() {
     this.$auth.$on('update', () => {
+      console.log('auth updated', this.$auth);
+
       this.loading = this.$auth.loading;
       this.dim = this.$auth.loading;
     });
