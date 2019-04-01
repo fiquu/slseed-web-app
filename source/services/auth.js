@@ -121,7 +121,7 @@ export default new Vue({
 
       await new Promise(resolve => {
         user.authenticateUser(authenticationDetails, {
-          onFailure(err) {
+          onFailure: err => {
             if (is.function(callbacks.onFailure)) {
               callbacks.onFailure(err);
             }
@@ -129,7 +129,7 @@ export default new Vue({
             resolve();
           },
 
-          onSuccess(res) {
+          onSuccess: res => {
             this.$emit('signedIn');
 
             if (is.function(callbacks.onSuccess)) {
@@ -139,7 +139,7 @@ export default new Vue({
             resolve();
           },
 
-          newPasswordRequired(userAttributes) {
+          newPasswordRequired: userAttributes => {
             if (is.function(callbacks.newPasswordRequired)) {
               callbacks.newPasswordRequired(userAttributes);
             }
@@ -158,7 +158,9 @@ export default new Vue({
      * @param {Boolean} keep Whether to keep current URL.
      */
     signOut(keep) {
-      this.loading = true;
+      if (!keep) {
+        this.loading = true;
+      }
 
       const currentUser = this.getCurrentUser();
 
@@ -169,9 +171,8 @@ export default new Vue({
 
       if (!keep) {
         router.replace(config.paths.signIn);
+        this.loading = false;
       }
-
-      this.loading = false;
     },
 
     /**

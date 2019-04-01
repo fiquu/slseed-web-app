@@ -178,12 +178,12 @@ export default {
     /**
      * Sign in success callback.
      */
-    onSignInSuccess() {
+    async onSignInSuccess() {
       if (this.state.newPasswordRequired) {
         this.data.password = this.data.newPassword;
         this.state.newPasswordRequired = false;
 
-        this.signIn();
+        await this.signIn();
 
         return;
       }
@@ -195,6 +195,8 @@ export default {
      * Sign in error callback.
      */
     onSignInError(err) {
+      console.error(err);
+
       this.state.errored = err.message !== 'New password is required.';
       this.state.signingIn = false;
     },
@@ -205,9 +207,10 @@ export default {
     onNewPasswordRequired(user, attributes) {
       const pwd = this.data.newPassword;
       const data = {
-        ...attributes,
-        email_verified: undefined // The api doesn't accept this field back
+        ...attributes
       };
+
+      delete data.email_verified; // The API doesn't accept this field back
 
       this.state.newPasswordRequired = true;
 
@@ -238,18 +241,18 @@ export default {
     /**
      * Signs the user in.
      */
-    signIn() {
+    async signIn() {
       this.state.errored = false;
 
-      this.$validator.validateAll().then(valid => {
-        if (!valid) {
-          return;
-        }
+      const valid = await this.$validator.validateAll();
 
-        this.state.signingIn = true;
+      if (!valid) {
+        return;
+      }
 
-        this.cognitoUser = this.$auth.signIn(this.data, this.signInCallbacks);
-      });
+      this.state.signingIn = true;
+
+      this.cognitoUser = await this.$auth.signIn(this.data, this.signInCallbacks);
     }
   }
 };
