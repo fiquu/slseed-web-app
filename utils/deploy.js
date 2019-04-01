@@ -49,7 +49,7 @@ const pkg = require('../package.json');
 
   const results = await new Promise((resolve, reject) => {
     const params = {
-      Prefix: path.join(pkg.name, pkg.version),
+      Prefix: path.posix.join(pkg.name, pkg.version),
       Bucket: s3BucketName,
       MaxKeys: 1
     };
@@ -101,7 +101,7 @@ const pkg = require('../package.json');
   console.dir(files);
 
   for (let file of files) {
-    const Key = path.join(pkg.name, pkg.version, file.replace(path.join(process.cwd(), 'dist'), ''));
+    const Key = path.posix.join(pkg.name, pkg.version, file.replace(path.posix.join(process.cwd(), 'dist'), ''));
 
     spinner.info(`Uploading ${chalk.bold(`${s3BucketName}/${Key}`)}...`);
 
