@@ -140,7 +140,7 @@ export default new Vue({
           },
 
           newPasswordRequired(userAttributes) {
-            if (is.function(callbacks.onSuccess)) {
+            if (is.function(callbacks.newPasswordRequired)) {
               callbacks.newPasswordRequired(userAttributes);
             }
 
