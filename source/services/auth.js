@@ -107,8 +107,6 @@ export default new Vue({
      * @returns {CognitoUser} The cognito user instance.
      */
     async signIn(data, callbacks) {
-      this.loading = true;
-
       const userPool = new CognitoUserPool(config.credentials);
 
       const user = new CognitoUser({
@@ -150,8 +148,6 @@ export default new Vue({
           }
         });
       });
-
-      this.loading = false;
 
       return user;
     },
