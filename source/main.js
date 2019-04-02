@@ -20,7 +20,7 @@ import '@/plugins/is';
 import '@/plugins/mq';
 import '@/plugins/op';
 
-// import '@/plugins/session';
+import '@/plugins/session';
 import '@/plugins/auth';
 
 // Register Service Worker
