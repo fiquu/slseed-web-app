@@ -1,9 +1,9 @@
 <i18n>
 en:
   TITLE: Dashboard
-  GENDERS:
-    TITLE: Genders
-    LINK: View genders list
+  NOTIFICATIONS:
+    TITLE: Notifications
+    LINK: View notifications list
   USERS:
     TITLE: Users
     LINK: View users list
@@ -23,12 +23,12 @@ section.ui.vertical.segment.view
       .column
         .ui.top.attached.blue.segment
           .ui.center.aligned.blue.icon.header
-            i.circular.transgender.alternate.icon
-            | {{ $t('GENDERS.TITLE') }}
+            i.circular.exclamation.circle.icon
+            | {{ $t('NOTIFICATIONS.TITLE') }}
 
-        router-link.ui.bottom.attached.labeled.icon.blue.button(to="/genders")
+        router-link.ui.bottom.attached.labeled.icon.blue.button(to="/notifications")
           i.list.icon
-          | {{ $t('GENDERS.LINK') }}
+          | {{ $t('NOTIFICATIONS.LINK') }}
 
       .column
         .ui.top.attached.yellow.segment
