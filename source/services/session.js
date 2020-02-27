@@ -20,6 +20,11 @@ export default new Vue({
     };
   },
 
+  created() {
+    /* Resolve session data */
+    router.beforeEach(this.validateSession);
+  },
+
   methods: {
     async validateSession(to, from, next) {
       const signedIn = this.$auth.isSignedIn();
@@ -51,10 +56,5 @@ export default new Vue({
 
       next();
     }
-  },
-
-  created() {
-    /* Resolve session data */
-    router.beforeEach(this.validateSession);
   }
 });

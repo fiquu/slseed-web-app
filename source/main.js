@@ -31,11 +31,11 @@ Vue.component('loader-message', loaderMessage);
 
 // Create App instance
 export default new Vue({
-  render: h => h(App),
   el: '#app',
+  name,
+  render: h => h(App),
   version,
   router,
   store,
-  i18n,
-  name
+  i18n
 }).$mount('#app');

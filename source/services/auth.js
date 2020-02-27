@@ -15,17 +15,57 @@ import router from '@/services/router';
 import api from '@/services/api';
 
 export default new Vue({
+  data() {
+    return {
+      loading: false,
+      data: null
+    };
+  },
+
   watch: {
     loading() {
       this.$emit('update');
     }
   },
 
-  data() {
-    return {
-      loading: false,
-      data: null
-    };
+  created() {
+    /* Assign route auth guards */
+    router.beforeEach(async (to, from, next) => {
+      try {
+        const session = await this.authUser();
+
+        this.data = session.getIdToken().decodePayload();
+
+        next();
+      } catch (err) {
+        if (to.meta.requiresAuth) {
+          next(config.paths.signIn);
+        } else {
+          next();
+        }
+      }
+    });
+
+    /* Add auth headers to every API request */
+    api.interceptors.request.use(
+      async config => {
+        try {
+          const token = await this.getAuthToken();
+
+          if (!token) {
+            throw new Error('JWT token is empty!');
+          }
+
+          config.headers.Authorization = token;
+
+          return config;
+        } catch (error) {
+          console.error(error);
+          return Promise.reject(error);
+        }
+      },
+      error => Promise.reject(error)
+    );
   },
 
   methods: {
@@ -269,45 +309,5 @@ export default new Vue({
 
       user.confirmPassword(data.code, data.password, callbacks);
     }
-  },
-
-  created() {
-    /* Assign route auth guards */
-    router.beforeEach(async (to, from, next) => {
-      try {
-        const session = await this.authUser();
-
-        this.data = session.getIdToken().decodePayload();
-
-        next();
-      } catch (err) {
-        if (to.meta.requiresAuth) {
-          next(config.paths.signIn);
-        } else {
-          next();
-        }
-      }
-    });
-
-    /* Add auth headers to every API request */
-    api.interceptors.request.use(
-      async config => {
-        try {
-          const token = await this.getAuthToken();
-
-          if (!token) {
-            throw new Error('JWT token is empty!');
-          }
-
-          config.headers.Authorization = token;
-
-          return config;
-        } catch (error) {
-          console.error(error);
-          return Promise.reject(error);
-        }
-      },
-      error => Promise.reject(error)
-    );
   }
 });

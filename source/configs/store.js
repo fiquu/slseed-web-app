@@ -7,7 +7,8 @@
 import is from 'fi-is';
 
 const MOD_REGEX = /^.\/(.+)\/store\/(.+)\.js$/;
-const modules = {};
+
+export const modules = {};
 
 /* Import every module's `store/index.js` dynamically */
 const req = require.context('../modules/', true, /\/store\/.+\.js$/);

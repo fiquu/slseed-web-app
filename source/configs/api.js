@@ -4,10 +4,14 @@
  * @module configs/api
  */
 
+export const baseURL = process.env.VUE_APP_API_ENDPOINT;
+export const headers = {};
+export const cache = {
+  maxAge: 15 * 60 * 1000 // 15 minutes
+};
+
 export default {
-  baseURL: process.env.VUE_APP_API_ENDPOINT,
-  headers: {},
-  cache: {
-    maxAge: 15 * 60 * 1000 // 15 minutes
-  }
+  baseUrl,
+  headers,
+  cache
 };
