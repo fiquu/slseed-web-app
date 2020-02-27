@@ -44,4 +44,5 @@ And have fun resolving conflicts! :D
 # Reccomended Tools
 
 - **Icons:** https://realfavicongenerator.net/
-- **Image Optimization**: https://squoosh.app/
+- **Image Optimization:** https://squoosh.app/
+- **SVG Optimization:** https://jakearchibald.github.io/svgomg/

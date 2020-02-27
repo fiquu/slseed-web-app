@@ -42,7 +42,7 @@
     "home": "https://www.example.com",
     "display": "standalone",
     "background": "#f7f6f6",
-    "color": "#b5cc18",
+    "color": "#adb63c",
     "ogImage": "https://www.example.com/static/images/og-image.jpg"
   },
   "scripts": {

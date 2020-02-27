@@ -1,8 +1,8 @@
 {
-  "name": "Fi SLSeed App",
-  "short_name": "Fi SLSeed App",
+  "name": "Slseed Web App",
+  "short_name": "Slseed Web App",
   "background_color": "#f7f6f6",
-  "theme_color": "#b9de3b",
+  "theme_color": "#adb63c",
   "display": "standalone",
   "start_url": "/",
   "scope": "/",

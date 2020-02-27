@@ -14,10 +14,10 @@
    width="1000"
    id="svg14"
    sodipodi:docname="placeholder.svg"
-   inkscape:export-filename="/home/santiago/Workspace/Final/fi-slseed-app/public/static/images/placeholder.png"
+   inkscape:export-filename="/home/stgogm/Workspace/fiquu/slseed-web-app/resources/placeholder.png"
    inkscape:export-xdpi="48"
    inkscape:export-ydpi="48"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+   inkscape:version="0.92.4 (unknown)">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -28,16 +28,23 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="2560"
-     inkscape:window-height="988"
+     inkscape:window-height="981"
      id="namedview16"
-     showgrid="false"
-     inkscape:zoom="0.236"
-     inkscape:cx="500"
-     inkscape:cy="500"
-     inkscape:window-x="0"
+     showgrid="true"
+     inkscape:zoom="1.0275"
+     inkscape:cx="211.25495"
+     inkscape:cy="558.34579"
+     inkscape:window-x="1920"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg14" />
+     inkscape:current-layer="svg14"
+     inkscape:snap-nodes="false"
+     inkscape:snap-bbox="true"
+     inkscape:snap-bbox-edge-midpoints="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid821" />
+  </sodipodi:namedview>
   <defs
      id="defs4">
     <linearGradient
@@ -53,7 +60,7 @@
     </linearGradient>
     <radialGradient
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.83333333,0,0,0.83333332,0,-62.106294)"
+       gradientTransform="matrix(0.83333333,0,0,0.83333332,0,-114.46845)"
        r="600"
        fy="737.36212"
        fx="600"
@@ -74,34 +81,27 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     transform="translate(0,-52.36216)"
-     id="layer1">
-    <rect
-       y="52.362167"
-       x="0"
-       height="1000"
-       width="1000"
-       id="rect4821"
-       style="opacity:1;fill:url(#radialGradient4837);fill-opacity:1;stroke:none" />
-    <g
-       transform="matrix(1.5,0,0,1.5,945.7139,-122.81782)"
-       id="g4788">
-      <path
-         id="path4210"
-         d="m -137.1426,463.45331 c 0,88.36577 -71.63402,160.00001 -160.00083,160.00001 -88.36498,0 -159.99917,-71.63424 -159.99917,-160.00001 0,-88.36575 71.63419,-159.99999 159.99917,-159.99999 88.36681,0 160.00083,71.63424 160.00083,159.99999 z"
-         style="display:inline;fill:#f2f2f2;fill-opacity:1;fill-rule:nonzero;stroke:none" />
-      <ellipse
-         ry="93.864525"
-         rx="117.33064"
-         cy="463.45331"
-         cx="-296.94449"
-         id="path4223"
-         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0" />
-      <path
-         id="path4246"
-         d="m -437.74128,463.45332 c 0,0 70.39839,-70.39839 140.79678,-1e-5 70.39839,70.39838 140.79677,23.46614 140.79677,23.46614"
-         style="fill:none;fill-rule:evenodd;stroke:#f2f2f2;stroke-width:35.19919586;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    </g>
-  </g>
+  <rect
+     style="opacity:1;fill:url(#radialGradient4837);fill-opacity:1;stroke:none"
+     id="rect4821"
+     width="1000"
+     height="1000"
+     x="0"
+     y="7.3583983e-06" />
+  <circle
+     style="fill:#f2f2f2;fill-opacity:1;stroke-width:1.27777779"
+     id="path889"
+     cx="500"
+     cy="499.99997"
+     r="200"
+     inkscape:export-xdpi="436.91"
+     inkscape:export-ydpi="436.91" />
+  <path
+     style="fill:#ffffff;stroke-width:0.09152687"
+     d="m 487.80662,386.95648 c -54.60109,-2.30677 -68.52395,56.28813 -70.43264,101.46525 -1.90857,45.17712 6.02095,104.69475 61.62351,107.04437 52.12738,2.20277 66.04695,-107.48358 17.31208,-92.71464 -3.40039,3.95201 -7.81186,6.12757 -13.16866,5.58371 -11.71864,-1.18973 -18.56359,-11.08499 -17.84713,-21.4451 0.75985,-10.9952 9.11372,-19.66012 19.61989,-20.51475 85.22525,-6.93356 91.08437,128.56006 2.72047,147.02992 82.18204,1.02804 123.1725,-83.32957 90.62676,-137.81142 -32.54574,-54.48186 -82.52477,-29.11919 -90.45428,-88.63734 z"
+     id="path887"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="csscsssczc"
+     inkscape:export-xdpi="436.91"
+     inkscape:export-ydpi="436.91" />
 </svg>
