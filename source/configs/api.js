@@ -6,7 +6,8 @@
 
 export default {
   baseURL: process.env.VUE_APP_API_ENDPOINT,
+  headers: {},
   cache: {
-    maxAge: 15 * 60 * 1000
+    maxAge: 15 * 60 * 1000 // 15 minutes
   }
 };

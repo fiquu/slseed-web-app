@@ -32,7 +32,7 @@ const { group, name } = require('../../package.json');
   const spinner = ora();
 
   try {
-    const StackName = `${group.name}-${name}-${NODE_ENV}-main-stack`;
+    const StackName = `${group.name}-${name}-${NODE_ENV}-base-stack`;
 
     console.log(`${chalk.bold('Stack Name:  ')} ${StackName}\n`);
 
