@@ -124,7 +124,7 @@ export default {
 
         this.modified = false;
       } catch (err) {
-        this.$toastr.error(this.$t('MESSAGES.SUBMIT.ERROR'));
+        this.$toast.error(this.$t('MESSAGES.SUBMIT.ERROR'));
 
         this.modified = true;
         this.editing = true;

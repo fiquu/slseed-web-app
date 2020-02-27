@@ -8,11 +8,11 @@ import Vue from 'vue';
 
 import config from '@/configs/session';
 
-import router from '@/services/router';
-import api from '@/services/api';
+import router from './router';
+import api from './api';
 
 export default new Vue({
-  data() {
+  data () {
     return {
       root: (config && config.root) || '/',
       loaded: false,
@@ -20,13 +20,13 @@ export default new Vue({
     };
   },
 
-  created() {
+  created () {
     /* Resolve session data */
     router.beforeEach(this.validateSession);
   },
 
   methods: {
-    async validateSession(to, from, next) {
+    async validateSession (to, from, next) {
       const signedIn = this.$auth.isSignedIn();
 
       if (!signedIn) {

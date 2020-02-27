@@ -95,14 +95,14 @@ export default {
       this.resending = false;
 
       if (err) {
-        this.$toastr.error(this.$t('MESSAGES.ERROR'));
+        this.$toast.error(this.$t('MESSAGES.ERROR'));
 
         console.error(err);
 
         return;
       }
 
-      this.$toastr.success(this.$t('MESSAGES.SUCCESS'));
+      this.$toast.success(this.$t('MESSAGES.SUCCESS'));
     },
 
     /**

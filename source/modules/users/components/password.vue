@@ -255,7 +255,7 @@ export default {
     onConfirmSuccess() {
       this.state.confirming = false;
 
-      this.$toastr.success(this.$t('MESSAGES.SUCCESS.BODY'), this.$t('MESSAGES.SUCCESS.TITLE'));
+      this.$toast.success(this.$t('MESSAGES.SUCCESS.BODY'), this.$t('MESSAGES.SUCCESS.TITLE'));
 
       this.$$(this.$refs.resetPasswordModal).modal('hide');
 
@@ -314,32 +314,32 @@ export default {
 
       switch (err.code) {
         case 'LimitExceededException':
-          this.$toastr.error(this.$t('MESSAGES.LIMIT_EXCEEDED.BODY'));
+          this.$toast.error(this.$t('MESSAGES.LIMIT_EXCEEDED.BODY'));
           setTimeout(() => this.afterError(), 30000);
           break;
 
         case 'UserNotFoundException':
-          this.$toastr.error(this.$t('MESSAGES.USER_NOT_FOUND.BODY'));
+          this.$toast.error(this.$t('MESSAGES.USER_NOT_FOUND.BODY'));
           setTimeout(() => this.afterError(), 3000);
           break;
 
         case 'CodeMismatchException':
-          this.$toastr.error(this.$t('MESSAGES.INVALID_CODE.BODY'));
+          this.$toast.error(this.$t('MESSAGES.INVALID_CODE.BODY'));
           setTimeout(() => this.afterError(), 3000);
           break;
 
         case 'ExpiredCodeException':
-          this.$toastr.warning(this.$t('MESSAGES.EXPIRED_CODE.BODY'));
+          this.$toast.warning(this.$t('MESSAGES.EXPIRED_CODE.BODY'));
           setTimeout(() => this.afterError(), 3000);
           break;
 
         case 'NotAuthorizedException':
-          this.$toastr.warning(this.$t('MESSAGES.NOT_AUTHORIZED.BODY'));
+          this.$toast.warning(this.$t('MESSAGES.NOT_AUTHORIZED.BODY'));
           this.$router.push('/');
           break;
 
         default:
-          this.$toastr.error(this.$t('MESSAGES.ERROR.BODY'));
+          this.$toast.error(this.$t('MESSAGES.ERROR.BODY'));
           setTimeout(() => this.afterError(), 3000);
       }
     },

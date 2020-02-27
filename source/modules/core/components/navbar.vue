@@ -43,3 +43,8 @@ export default {
   }
 };
 </script>
+
+<style lang="sass" scoped>
+header.ui.fixed.top.compact.menu
+  position: static
+</style>

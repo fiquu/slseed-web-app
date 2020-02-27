@@ -5,29 +5,29 @@
  */
 
 
-import { createInstance, INDEXEDDB, LOCALSTORAGE } from 'localforage';
-import { setupCache } from 'axios-cache-adapter';
-import { create } from 'axios';
+import cacheAdapter from 'axios-cache-adapter';
+import localforage from 'localforage';
+import axios from 'axios';
 
-import { cache, baseURL, headers } from '@/configs/api';
+import config from '@/configs/api';
 import { name } from '@/../package.json';
 
-const store = createInstance({
-  driver: [INDEXEDDB, LOCALSTORAGE],
+const store = localforage.createInstance({
+  driver: [localforage.INDEXEDDB, localforage.LOCALSTORAGE],
   name
 });
 
-const { adapter } = setupCache({
-  maxAge: cache.maxAge,
+const cache = cacheAdapter.setupCache({
+  maxAge: config.cache.maxAge,
   store
 });
 
-export default create({
-  baseURL,
-  adapter,
+export default axios.create({
+  baseURL: config.baseURL,
+  adapter: cache.adapter,
   withCredentials: true,
   headers: {
     ...axios.defaults.headers,
-    ...headers
+    ...config.headers
   }
 });

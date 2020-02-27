@@ -48,7 +48,7 @@ export default {
     });
 
     this.$auth.$on('signedOut', () => {
-      this.$toastr.success(this.$t('MESSAGES.SIGNED_OUT'));
+      this.$toast.success(this.$t('MESSAGES.SIGNED_OUT'));
     });
 
     this.$router.beforeEach((to, from, next) => {
@@ -64,6 +64,12 @@ export default {
   }
 };
 </script>
+
+<style lang="sass" scoped>
+main#app
+  flex-direction: column
+  display: flex
+</style>
 
 <style lang="sass">
 // Global component fade transition
@@ -103,7 +109,7 @@ export default {
 </style>
 
 <style lang="sass" scoped>
-@import '@/styles/_colors.sass';
+@import @/styles/_colors
 
 .ui.inverted.dimmer
   background-color: transparentize($pageBackground, 0.1)

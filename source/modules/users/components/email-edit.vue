@@ -114,7 +114,7 @@ export default {
      */
     onSubmit(err) {
       if (err) {
-        this.$toastr.error(this.$t('MESSAGES.SUBMIT.ERROR'));
+        this.$toast.error(this.$t('MESSAGES.SUBMIT.ERROR'));
         this.editing = true;
       } else {
         this.user.email = String(this.data.email);

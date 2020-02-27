@@ -3,12 +3,11 @@ import Vue from 'vue';
 import { name, version } from '../package.json';
 
 // Plugins
-import './plugins';
-
 import router from './router';
 import store from './store';
 import i18n from './i18n';
 
+import './plugins';
 
 // Register Service Worker
 // import 'registerServiceWorker';

@@ -4,4 +4,7 @@
  * @module configs/http
  */
 
-export default {};
+export default {
+  headers: {},
+  baseURL: ''
+};
