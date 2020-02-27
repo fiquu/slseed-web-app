@@ -12,21 +12,21 @@ module.exports = [
     name: 'CognitoUserPoolId',
     type: 'input',
     message: 'Cognito User Pool Id',
-    default: '',
+    default: null,
     validate: val => is.not.empty(val)
   },
   {
     name: 'CognitoUserPoolClientId',
     type: 'input',
     message: 'Cognito User Pool Client Id',
-    default: '',
+    default: null,
     validate: val => is.not.empty(val)
   },
   {
     name: 'CognitoIdentityPoolId',
     type: 'input',
     message: 'Cognito Identity Pool Id',
-    default: '',
+    default: null,
     validate: val => is.not.empty(val)
   }
 ];

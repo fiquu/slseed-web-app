@@ -32,7 +32,7 @@ const { name, title } = require('../../package.json');
   const spinner = ora();
 
   try {
-    const nameSlug = `${name}`.replace(/\W+/g, '-').replace(/-+/g, '-').trim();
+    const nameSlug = name.replace(/\W+/g, ' ').trim().replace(/\s+/g, '-');
     const StackName = `${nameSlug}-${NODE_ENV}-base-stack`;
 
     console.log(`${chalk.bold('Stack Name:')}   ${StackName}\n`);

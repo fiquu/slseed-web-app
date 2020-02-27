@@ -13,7 +13,7 @@ module.exports = {
       },
       Type: 'String',
       Value: {
-        'Ref': '${CognitoIdentityPoolId}'
+        Ref: 'CognitoIdentityPoolId'
       }
     }
   },
@@ -32,7 +32,7 @@ module.exports = {
       },
       Type: 'String',
       Value: {
-        'Ref': '${CognitoUserPoolId}'
+        Ref: 'CognitoUserPoolId'
       }
     }
   },
@@ -51,7 +51,7 @@ module.exports = {
       },
       Type: 'String',
       Value: {
-        'Ref': '${CognitoUserPoolClientId}'
+        Ref: 'CognitoUserPoolClientId'
       }
     }
   }

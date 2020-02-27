@@ -27,9 +27,8 @@ const { name } = require('../package.json');
       region
     });
 
-    const nameSlug = name.replace(/\W+/g, '-').replace(/-+/g, '-').trim();
+    const nameSlug = name.replace(/\W+/g, ' ').trim().replace(/\s+/g, '-');
     const ssm = new AWS.SSM();
-
     const spinner = ora();
 
     spinner.start(`Setting env file for [${process.env.NODE_ENV}]...`);
@@ -52,9 +51,9 @@ const { name } = require('../package.json');
 
           const name = ssmPath.toUpperCase().replace(/[^A-Z0-9]+/g, '_');
 
-          spinner.info(`${name}=[ssm:${data.Parameter.Name}]`);
+          spinner.info(`VUE_APP_${name}=[ssm:${data.Parameter.Name}]`);
 
-          env += `\n${name}=${data.Parameter.Value}`;
+          env += `\nVUE_APP_${name}=${data.Parameter.Value}`;
 
           resolve();
         });
