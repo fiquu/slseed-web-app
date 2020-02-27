@@ -1,12 +1,14 @@
+const { basename } = require('path');
 const inquirer = require('inquirer');
+const glob = require('glob');
 
 (async () => {
-  const { setup } = await inquirer.prompt({
-    message: 'Select setup',
-    choices: ['env', 'stack'],
+  const { file } = await inquirer.prompt({
+    choices: glob.sync('./setup/!(index).js').map(file => basename(file, '.js')),
+    message: 'Select setup to run',
     type: 'list',
-    name: 'setup'
+    name: 'file'
   });
 
-  require(`./${setup}`);
+  require(`./${file}`);
 })();

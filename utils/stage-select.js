@@ -7,7 +7,7 @@
 const inquirer = require('inquirer');
 const AWS = require('aws-sdk');
 
-module.exports = async env => {
+module.exports = async (env = true) => {
   const { region, profiles } = require('../configs/aws');
 
   const { profile } = await inquirer.prompt({

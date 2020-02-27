@@ -1,25 +1,23 @@
 {
-  "name": "fi-slseed-app",
-  "title": "Fi Slseed App",
+  "name": "@fiquu/slseed-web-app",
+  "title": "Slseed Web App",
   "main": "npm start",
   "description": "Serveless Seed Web App project.",
-  "author": "Final Development Studio <sorcery@finaldevstudio.com> (http://finaldevstudio.com)",
-  "version": "2.0.4",
+  "author": "fiquu <hi@fiquu.com> (http://github.com/fiquu)",
+  "version": "0.0.0",
   "license": "MIT",
   "private": false,
-  "homepage": "https://github.com/FinalDevStudio/fi-slseed-app",
+  "homepage": "https://github.com/FinalDevStudio/fi-slseed-web-app",
   "bugs": {
-    "url": "https://github.com/FinalDevStudio/fi-slseed-app/issues"
+    "url": "https://github.com/FinalDevStudio/fi-slseed-web-app/issues"
   },
   "directories": {
     "test": "tests"
   },
   "contributors": [
-    "Santiago G. Marín <santiago@finaldevstudio.com> (https://github.com/stgogm)",
-    "JT Guzman <jtguzman@finaldevstudio.com> (https://github.com/jtguzman)"
+    "Santiago G. Marín <santiago.marin@final.cl> (https://github.com/stgogm)"
   ],
   "keywords": [
-    "fi",
     "vue",
     "cli",
     "vue-cli",
@@ -28,20 +26,20 @@
     "project"
   ],
   "group": {
-    "title": "Fi Slseed",
+    "title": "Slseed",
     "name": "slseed"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/FinalDevStudio/fi-slseed-app.git"
+    "url": "git+ssh://git@github.com/fiquu/slseed-web-app.git"
   },
   "engines": {
     "node": ">= 8.0.0",
     "npm": ">= 6.0.0"
   },
   "app": {
-    "name": "Web App - Fi Slseed",
-    "short": "Fi Slseed",
+    "name": "Web App (@fiquu/slseed-web-app)",
+    "short": "Slseed App",
     "description": "Serveless Seed Web App project.",
     "domain": "example.com",
     "subdomain": "www",
@@ -107,12 +105,12 @@
     "eslint-plugin-html": "^5.0.3",
     "eslint-plugin-vue": "^5.2.2",
     "favicons-webpack-plugin": "0.0.9",
+    "fomantic-ui": "^2.8.4",
     "node-sass": "^4.9.0",
     "pug": "^2.0.3",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.0.1",
-    "semantic-ui": "^2.4.2",
     "vue-template-compiler": "^2.6.10",
     "yaml-loader": "^0.5.0"
   }

@@ -1,13 +1,3 @@
 /*******************************
          Site Overrides
 *******************************/
-
-.ui.button {
-  text-transform: uppercase;
-}
-
-label.ui.button {
-  line-height: 1.21428571em;
-  font-weight: normal;
-  text-align: left;
-}
