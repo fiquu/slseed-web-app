@@ -47,26 +47,20 @@ en:
 import AWS from 'aws-sdk';
 
 export default {
-  name: 'user-disable',
+  name: 'UserDisable',
 
-  props: ['params', 'user'],
-
-  computed: {
-    iconClass() {
-      return {
-        'square outline': !this.data.confirm,
-        'checkmark box': this.data.confirm
-      };
+  props: {
+    params: {
+      type: Object,
+      required: true
     },
-
-    buttonClass() {
-      return {
-        loading: this.disabling
-      };
+    user: {
+      type: Object,
+      required: true
     }
   },
 
-  data() {
+  data () {
     return {
       disabling: false,
 
@@ -78,8 +72,23 @@ export default {
     };
   },
 
+  computed: {
+    iconClass () {
+      return {
+        'square outline': !this.data.confirm,
+        'checkmark box': this.data.confirm
+      };
+    },
+
+    buttonClass () {
+      return {
+        loading: this.disabling
+      };
+    }
+  },
+
   methods: {
-    onDisableUser(err) {
+    onDisableUser (err) {
       if (err) {
         console.error(err);
         return;
@@ -95,7 +104,7 @@ export default {
     /**
      * Disables the account.
      */
-    disableUser() {
+    disableUser () {
       this.data.confirm = false;
       this.isDisabling = true;
 

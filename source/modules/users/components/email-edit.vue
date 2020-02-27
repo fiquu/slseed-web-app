@@ -40,21 +40,16 @@ en:
 import AWS from 'aws-sdk';
 
 export default {
-  name: 'user-email-edit',
+  name: 'UserEmailEdit',
 
-  props: ['params', 'user'],
-
-  computed: {
-    fieldsClass() {
-      return {
-        error: errors.any()
-      };
+  props: {
+    params: {
+      type: Object,
+      required: true
     },
-
-    buttonClass() {
-      return {
-        negative: errors.any()
-      };
+    user: {
+      type: Object,
+      required: true
     }
   },
 
@@ -70,6 +65,20 @@ export default {
         email: String(this.user.email)
       }
     };
+  },
+
+  computed: {
+    fieldsClass() {
+      return {
+        error: errors.any()
+      };
+    },
+
+    buttonClass() {
+      return {
+        negative: errors.any()
+      };
+    }
   },
 
   methods: {

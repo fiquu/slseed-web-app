@@ -176,6 +176,22 @@ section.view
 
 <script>
 export default {
+
+  data() {
+    return {
+      state: {
+        submitting: false,
+        confirming: false,
+        codeSent: false,
+        error: false
+      },
+
+      data: {
+        email: null
+      }
+    };
+  },
+
   computed: {
     emailFieldClass() {
       return {
@@ -209,21 +225,6 @@ export default {
         loading: this.state.confirming
       };
     }
-  },
-
-  data() {
-    return {
-      state: {
-        submitting: false,
-        confirming: false,
-        codeSent: false,
-        error: false
-      },
-
-      data: {
-        email: null
-      }
-    };
   },
 
   beforeCreate() {

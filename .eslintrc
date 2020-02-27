@@ -1,13 +1,14 @@
 {
+  "extends": "eslint:recommended",
   "root": true,
-  "extends": ["plugin:vue/essential"],
   "env": {
-    "node": true
-  },
-  "rules": {
-    "no-console": "off"
+    "node": true,
+    "es6": true
   },
   "parserOptions": {
-    "parser": "babel-eslint"
+    "ecmaVersion": 10
+  },
+  "rules": {
+    "no-console": 0
   }
 }

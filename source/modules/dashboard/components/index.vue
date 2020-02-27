@@ -43,10 +43,6 @@ section.ui.vertical.segment.view
 
 <script>
 export default {
-  created() {
-    this.interval = setInterval(this.$forceUpdate, 1000);
-  },
-
   data() {
     return {
       interval: null
@@ -57,6 +53,10 @@ export default {
     currentTime() {
       return this.$moment().format('LLLL');
     }
+  },
+
+  created() {
+    this.interval = setInterval(this.$forceUpdate, 1000);
   },
 
   destroy() {

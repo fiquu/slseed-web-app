@@ -45,9 +45,30 @@ en:
 import AWS from 'aws-sdk';
 
 export default {
-  name: 'user-resend',
+  name: 'UserResend',
 
-  props: ['params', 'user'],
+  props: {
+    params: {
+      type: Object,
+      required: true
+    },
+    user: {
+      type: Object,
+      required: true
+    }
+  },
+
+  data() {
+    return {
+      resending: false,
+
+      cognito: new AWS.CognitoIdentityServiceProvider(),
+
+      data: {
+        confirm: false
+      }
+    };
+  },
 
   computed: {
     iconClass() {
@@ -62,18 +83,6 @@ export default {
         loading: this.resending
       };
     }
-  },
-
-  data() {
-    return {
-      resending: false,
-
-      cognito: new AWS.CognitoIdentityServiceProvider(),
-
-      data: {
-        confirm: false
-      }
-    };
   },
 
   methods: {

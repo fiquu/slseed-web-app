@@ -40,7 +40,27 @@ en:
 import AWS from 'aws-sdk';
 
 export default {
-  props: ['params', 'user'],
+  props: {
+    params: {
+      type: Object,
+      required: true
+    },
+    user: {
+      type: Object,
+      required: true
+    }
+  },
+
+  data() {
+    return {
+      submitting: false,
+      editing: false,
+
+      data: {
+        value: String(this.user.name)
+      }
+    };
+  },
 
   computed: {
     fieldClass() {
@@ -54,18 +74,6 @@ export default {
         negative: this.errors.has('value')
       };
     }
-  },
-
-  data() {
-    return {
-      submitting: false,
-      modified: false,
-      editing: false,
-
-      data: {
-        value: String(this.user.name)
-      }
-    };
   },
 
   computed: {

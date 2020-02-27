@@ -1,6 +1,6 @@
 {
+  "extends": ["plugin:vue/recommended"],
   "root": true,
-  "extends": ["plugin:vue/essential", "@fiquu"],
   "plugins": ["html", "vue"],
   "parserOptions": {
     "parser": "babel-eslint",

@@ -115,6 +115,31 @@ section.view
 
 <script>
 export default {
+
+  data() {
+    return {
+      cognitoUser: null,
+
+      signInCallbacks: {
+        newPasswordRequired: userAttributes => this.onNewPasswordRequired(userAttributes),
+        onSuccess: res => this.onSignInSuccess(res),
+        onFailure: err => this.onSignInError(err)
+      },
+
+      state: {
+        newPasswordRequired: false,
+        signingIn: false,
+        errored: false
+      },
+
+      data: {
+        newPassword: '',
+        password: '',
+        email: ''
+      }
+    };
+  },
+
   computed: {
     formEmailFieldClass() {
       return {
@@ -142,30 +167,6 @@ export default {
         loading: this.state.signingIn
       };
     }
-  },
-
-  data() {
-    return {
-      cognitoUser: null,
-
-      signInCallbacks: {
-        newPasswordRequired: userAttributes => this.onNewPasswordRequired(userAttributes),
-        onSuccess: res => this.onSignInSuccess(res),
-        onFailure: err => this.onSignInError(err)
-      },
-
-      state: {
-        newPasswordRequired: false,
-        signingIn: false,
-        errored: false
-      },
-
-      data: {
-        newPassword: '',
-        password: '',
-        email: ''
-      }
-    };
   },
 
   beforeCreate() {

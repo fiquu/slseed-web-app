@@ -47,9 +47,30 @@ en:
 import AWS from 'aws-sdk';
 
 export default {
-  name: 'user-enable',
+  name: 'UserEnable',
 
-  props: ['params', 'user'],
+  props: {
+    params: {
+      type: Object,
+      required: true
+    },
+    user: {
+      type: Object,
+      required: true
+    }
+  },
+
+  data() {
+    return {
+      enabling: false,
+
+      cognito: new AWS.CognitoIdentityServiceProvider(),
+
+      data: {
+        confirm: false
+      }
+    };
+  },
 
   computed: {
     iconClass() {
@@ -64,18 +85,6 @@ export default {
         loading: this.enabling
       };
     }
-  },
-
-  data() {
-    return {
-      enabling: false,
-
-      cognito: new AWS.CognitoIdentityServiceProvider(),
-
-      data: {
-        confirm: false
-      }
-    };
   },
 
   methods: {

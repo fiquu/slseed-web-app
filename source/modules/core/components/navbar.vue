@@ -34,7 +34,7 @@ header.ui.fixed.top.compact.menu
 
 <script>
 export default {
-  name: 'main-navbar',
+  name: 'MainNavbar',
 
   data() {
     return {
