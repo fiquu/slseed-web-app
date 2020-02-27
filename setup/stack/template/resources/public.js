@@ -14,7 +14,7 @@ module.exports = {
     Properties: {
       CloudFrontOriginAccessIdentityConfig: {
         Comment: {
-          'Fn::Sub': '${ProjectTitle} Public App Access Origin Identity [${Environment}]'
+          'Fn::Sub': '${GroupTitle} ${ProjectTitle} Public App Access Origin Identity [${Environment}]'
         }
       }
     }
@@ -32,7 +32,7 @@ module.exports = {
         PriceClass: 'PriceClass_All',
         Enabled: true,
         Comment: {
-          'Fn::Sub': '${ProjectTitle} Public App [${Environment}]'
+          'Fn::Sub': '${GroupTitle} ${ProjectTitle} Public App [${Environment}]'
         },
         Origins: [
           {
@@ -72,10 +72,10 @@ module.exports = {
     Properties: {
       Type: 'String',
       Name: {
-        'Fn::Sub': '/${ProjectName}/${Environment}/public-app-s3-bucket'
+        'Fn::Sub': '/${GroupName}/${ProjectName}/${Environment}/public-app-s3-bucket'
       },
       Description: {
-        'Fn::Sub': '${ProjectTitle} Public App S3 Bucket [${Environment}]'
+        'Fn::Sub': '${GroupTitle} ${ProjectTitle} Public App S3 Bucket [${Environment}]'
       },
       Value: {
         Ref: 'PublicAppS3Bucket'
@@ -92,10 +92,10 @@ module.exports = {
     Properties: {
       Type: 'String',
       Name: {
-        'Fn::Sub': '/${ProjectName}/${Environment}/public-app-cloudfront-dist-id'
+        'Fn::Sub': '/${GroupName}/${ProjectName}/${Environment}/public-app-cloudfront-dist-id'
       },
       Description: {
-        'Fn::Sub': '${ProjectTitle} Public App CloudFront Distribution Id [${Environment}]'
+        'Fn::Sub': '${GroupTitle} ${ProjectTitle} Public App CloudFront Distribution Id [${Environment}]'
       },
       Value: {
         Ref: 'PublicAppCloudFrontDist'

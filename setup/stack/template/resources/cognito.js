@@ -6,10 +6,10 @@ module.exports = {
     Type: 'AWS::SSM::Parameter',
     Properties: {
       Name: {
-        'Fn::Sub': '/${ProjectName}/${Environment}/cognito-identity-pool-id'
+        'Fn::Sub': '/${GroupName}/${ProjectName}/${Environment}/cognito-identity-pool-id'
       },
       Description: {
-        'Fn::Sub': '${ProjectTitle} Cognito Identity Pool Id [${Environment}]'
+        'Fn::Sub': '${GroupTitle} ${ProjectTitle} Cognito Identity Pool Id [${Environment}]'
       },
       Type: 'String',
       Value: {
@@ -27,10 +27,10 @@ module.exports = {
     Type: 'AWS::SSM::Parameter',
     Properties: {
       Name: {
-        'Fn::Sub': '/${ProjectName}/${Environment}/cognito-user-pool-id'
+        'Fn::Sub': '/${GroupName}/${ProjectName}/${Environment}/cognito-user-pool-id'
       },
       Description: {
-        'Fn::Sub': '${ProjectTitle} Cognito User Pool Id [${Environment}]'
+        'Fn::Sub': '${GroupTitle} ${ProjectTitle} Cognito User Pool Id [${Environment}]'
       },
       Type: 'String',
       Value: {
@@ -48,10 +48,10 @@ module.exports = {
     Type: 'AWS::SSM::Parameter',
     Properties: {
       Name: {
-        'Fn::Sub': '/${ProjectName}/${Environment}/cognito-user-pool-client-id'
+        'Fn::Sub': '/${GroupName}/${ProjectName}/${Environment}/cognito-user-pool-client-id'
       },
       Description: {
-        'Fn::Sub': '${ProjectTitle} Cognito User Pool Id [${Environment}]'
+        'Fn::Sub': '${GroupTitle} ${ProjectTitle} Cognito User Pool Id [${Environment}]'
       },
       Type: 'String',
       Value: {
