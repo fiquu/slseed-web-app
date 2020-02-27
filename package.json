@@ -7,9 +7,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "private": false,
-  "homepage": "https://github.com/FinalDevStudio/fi-slseed-web-app",
+  "homepage": "https://github.com/fiquu/slseed-web-app",
   "bugs": {
-    "url": "https://github.com/FinalDevStudio/fi-slseed-web-app/issues"
+    "url": "https://github.com/fiquu/slseed-web-app/issues"
   },
   "directories": {
     "test": "tests"
