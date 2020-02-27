@@ -13,9 +13,12 @@ Serveless Seed Web App project with [Vue](https://vuejs.org/) and [Fomantic UI](
 1. Wait for it to finish (it may take a while)...
 1. Configure your SSM to `.env` values on `configs/ssm.env.js` (these are the SSM param names only).
 1. Run `npm run setup`, select `env` and select stage to set your `.env.{stage}` file.
+1. Run `npm run semantic:build` to build Fomantic UI files.
 1. Run `npm start`.
 
 That's it. Your App should be running wherever it says it's running.
+
+See the `"scripts"` section on the `package.json` for more commands.
 
 ## Deploying
 
