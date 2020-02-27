@@ -2,6 +2,7 @@ const AWS = require('aws-sdk');
 
 const { name, title, group } = require('../../../package.json');
 const { profiles } = require('../../../configs/aws');
+const nameSlug = name.replace(/\W+/g, '-').replace(/-+/g, '-').trim();
 
 module.exports = {
   AwsRegion: {
@@ -18,8 +19,8 @@ module.exports = {
   },
   ProjectName: {
     Description: 'Project Name',
-    AllowedValues: [name],
-    Default: name,
+    AllowedValues: [nameSlug],
+    Default: nameSlug,
     Type: 'String'
   },
   ProjectTitle: {

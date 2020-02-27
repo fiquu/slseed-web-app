@@ -32,9 +32,10 @@ const { group, name } = require('../../package.json');
   const spinner = ora();
 
   try {
-    const StackName = `${group.name}-${name}-${NODE_ENV}-base-stack`;
+    const nameSlug = `${group.name}-${name}`.replace(/\W+/g, '-').replace(/-+/g, '-').trim();
+    const StackName = `${nameSlug}-${NODE_ENV}-base-stack`;
 
-    console.log(`${chalk.bold('Stack Name:  ')} ${StackName}\n`);
+    console.log(`${chalk.bold('Stack Name:')}   ${StackName}\n`);
 
     spinner.start('Checking for current CloudFormation Stack...');
 

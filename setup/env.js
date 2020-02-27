@@ -27,6 +27,7 @@ const ssmEnv = require('../configs/ssm.env');
       region
     });
 
+    const nameSlug = name.replace(/\W+/g, '-').replace(/-+/g, '-').trim();
     const ssm = new AWS.SSM();
 
     const spinner = ora();
@@ -38,7 +39,7 @@ const ssmEnv = require('../configs/ssm.env');
     for (let ssmPath of ssmEnv) {
       const promise = new Promise((resolve, reject) => {
         const params = {
-          Name: path.posix.join('/', group.name, name, process.env.NODE_ENV, ssmPath),
+          Name: path.posix.join('/', group.name, nameSlug, process.env.NODE_ENV, ssmPath),
           WithDecryption: true
         };
 
