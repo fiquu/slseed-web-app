@@ -1,8 +1,8 @@
 module.exports = {
   /**
-   * Cognito Identity Pool Id.
+   * Cognito Identity Pool Id SSM Parameter.
    */
-  CognitoIdentityPoolId: {
+  CognitoIdentityPoolIdParam: {
     Type: 'AWS::SSM::Parameter',
     Properties: {
       Name: {
@@ -19,9 +19,9 @@ module.exports = {
   },
 
   /**
-   * Cognito User Pool Id.
+   * Cognito User Pool Id SSM Parameter.
    */
-  CognitoUserPoolId: {
+  CognitoUserPoolIdParam: {
     Type: 'AWS::SSM::Parameter',
     Properties: {
       Name: {
@@ -38,9 +38,9 @@ module.exports = {
   },
 
   /**
-   * Cognito User Pool Client Id.
+   * Cognito User Pool Client Id SSM Parameter.
    */
-  CognitoUserPoolClientId: {
+  CognitoUserPoolClientIdParam: {
     Type: 'AWS::SSM::Parameter',
     Properties: {
       Name: {

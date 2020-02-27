@@ -1,6 +1,6 @@
 module.exports = {
   /**
-   * API endpoint URL.
+   * API endpoint URL SSM Parameter.
    */
   ApiEndpointParam: {
     Type: 'AWS::SSM::Parameter',
