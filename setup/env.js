@@ -12,8 +12,8 @@ const ora = require('ora');
 const fs = require('fs');
 
 const { apiVersions, region } = require('../configs/aws');
-const { name, group } = require('../package.json');
 const ssmEnv = require('../configs/ssm.env');
+const { name } = require('../package.json');
 
 (async () => {
   try {
@@ -39,7 +39,7 @@ const ssmEnv = require('../configs/ssm.env');
     for (let ssmPath of ssmEnv) {
       const promise = new Promise((resolve, reject) => {
         const params = {
-          Name: path.posix.join('/', group.name, nameSlug, process.env.NODE_ENV, ssmPath),
+          Name: path.posix.join('/', nameSlug, process.env.NODE_ENV, ssmPath),
           WithDecryption: true
         };
 

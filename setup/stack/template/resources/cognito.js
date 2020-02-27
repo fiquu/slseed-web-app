@@ -6,16 +6,14 @@ module.exports = {
     Type: 'AWS::SSM::Parameter',
     Properties: {
       Name: {
-        'Fn::Sub': '/${GroupName}/${ProjectName}/${Environment}/cognito-identity-pool-id'
+        'Fn::Sub': '/${ProjectName}/${Environment}/cognito-identity-pool-id'
       },
       Description: {
-        'Fn::Sub': '${GroupTitle} ${ProjectTitle} Cognito Identity Pool Id [${Environment}]'
+        'Fn::Sub': '${ProjectTitle} Cognito Identity Pool Id [${Environment}]'
       },
       Type: 'String',
       Value: {
-        'Fn::ImportValue': {
-          'Fn::Sub': '${ApiStackName}:cognito-identity-pool-id'
-        }
+        'Ref': '${CognitoIdentityPoolId}'
       }
     }
   },
@@ -27,16 +25,14 @@ module.exports = {
     Type: 'AWS::SSM::Parameter',
     Properties: {
       Name: {
-        'Fn::Sub': '/${GroupName}/${ProjectName}/${Environment}/cognito-user-pool-id'
+        'Fn::Sub': '/${ProjectName}/${Environment}/cognito-user-pool-id'
       },
       Description: {
-        'Fn::Sub': '${GroupTitle} ${ProjectTitle} Cognito User Pool Id [${Environment}]'
+        'Fn::Sub': '${ProjectTitle} Cognito User Pool Id [${Environment}]'
       },
       Type: 'String',
       Value: {
-        'Fn::ImportValue': {
-          'Fn::Sub': '${ApiStackName}:cognito-user-pool-id'
-        }
+        'Ref': '${CognitoUserPoolId}'
       }
     }
   },
@@ -48,16 +44,14 @@ module.exports = {
     Type: 'AWS::SSM::Parameter',
     Properties: {
       Name: {
-        'Fn::Sub': '/${GroupName}/${ProjectName}/${Environment}/cognito-user-pool-client-id'
+        'Fn::Sub': '/${ProjectName}/${Environment}/cognito-user-pool-client-id'
       },
       Description: {
-        'Fn::Sub': '${GroupTitle} ${ProjectTitle} Cognito User Pool Id [${Environment}]'
+        'Fn::Sub': '${ProjectTitle} Cognito User Pool Id [${Environment}]'
       },
       Type: 'String',
       Value: {
-        'Fn::ImportValue': {
-          'Fn::Sub': '${ApiStackName}:cognito-user-pool-client-id'
-        }
+        'Ref': '${CognitoUserPoolClientId}'
       }
     }
   }

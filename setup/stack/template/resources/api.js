@@ -6,10 +6,10 @@ module.exports = {
     Type: 'AWS::SSM::Parameter',
     Properties: {
       Name: {
-        'Fn::Sub': '/${GroupName}/${ProjectName}/${Environment}/api-endpoint'
+        'Fn::Sub': '/${ProjectName}/${Environment}/api-endpoint'
       },
       Description: {
-        'Fn::Sub': '${GroupTitle} ${ProjectTitle} Database URI [${Environment}]'
+        'Fn::Sub': '${ProjectTitle} Database URI [${Environment}]'
       },
       Type: 'String',
       Value: {
