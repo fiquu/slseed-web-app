@@ -18,9 +18,10 @@ header.ui.fixed.top.compact.menu
 
   .right.menu
     .item(
-      v-text="$auth.get('name')"
       v-if="$auth.isSignedIn()"
       )
+
+      i.user.circle.icon
 
     a.item(
       @click="$auth.signOut(false)"

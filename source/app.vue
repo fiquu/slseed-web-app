@@ -23,7 +23,7 @@ main#app
     mode="out-in"
     )
 
-    router-view(v-if="!loading")
+    router-view.router-view(v-if="!loading")
 </template>
 
 <script>
@@ -65,10 +65,24 @@ export default {
 };
 </script>
 
+<style lang="sass">
+@import @/styles/_colors
+
+html,
+body
+  background: $pageBackground
+</style>
+
 <style lang="sass" scoped>
 main#app
   flex-direction: column
   display: flex
+  height: 100vh
+  width: 100vw
+
+  > .router-view
+    overflow-y: scroll
+    flex: 1
 </style>
 
 <style lang="sass">

@@ -1,65 +1,77 @@
 <i18n>
 en:
   TITLE: Dashboard
-  NOTIFICATIONS:
-    TITLE: Notifications
-    LINK: View notifications list
   USERS:
-    TITLE: Users
-    LINK: View users list
+    HEADER: Users
+    DESCRIPTION: View all avaliable users list.
+  THEME:
+    HEADER: Theme
+    DESCRIPTION: View a collection of your theme elements.
+  NOT_FOUND:
+    HEADER: Not found
+    DESCRIPTION: View the not found page.
 </i18n>
 
 <template lang="pug">
 section.ui.vertical.segment.view
-  .ui.equal.width.grid.container
-    .column
-      .ui.red.segment
-        h4.ui.red.header
-          | {{ $t('TITLE') }}
+  .ui.container
+    .ui.red.segment
+      h4.ui.red.header
+        | {{ $t('TITLE') }}
 
-        p(v-text="currentTime")
+      p(v-text="currentTime")
 
-    .row
-      .column
-        .ui.top.attached.blue.segment
-          .ui.center.aligned.blue.icon.header
-            i.circular.exclamation.circle.icon
-            | {{ $t('NOTIFICATIONS.TITLE') }}
+    .ui.three.cards
+      link-card(
+        :description="$t('USERS.DESCRIPTION')"
+        :header="$t('USERS.HEADER')"
+        color="yellow"
+        icon="users"
+        to="/users"
+        )
 
-        router-link.ui.bottom.attached.labeled.icon.blue.button(to="/notifications")
-          i.list.icon
-          | {{ $t('NOTIFICATIONS.LINK') }}
+      link-card(
+        :description="$t('THEME.DESCRIPTION')"
+        :header="$t('THEME.HEADER')"
+        color="blue"
+        icon="brush"
+        to="/theme"
+        )
 
-      .column
-        .ui.top.attached.yellow.segment
-          .ui.center.aligned.yellow.icon.header
-            i.circular.users.icon
-            | {{ $t('USERS.TITLE') }}
-
-        router-link.ui.bottom.attached.labeled.icon.yellow.button(to="/users")
-          i.list.icon
-          | {{ $t('USERS.LINK') }}
+      link-card(
+        :description="$t('NOT_FOUND.DESCRIPTION')"
+        :header="$t('NOT_FOUND.HEADER')"
+        color="grey"
+        icon="meh"
+        to="/this-page-doesnt-exists"
+        )
 </template>
 
 <script>
+import LinkCard from './link-card';
+
 export default {
-  data() {
+  components: {
+    LinkCard
+  },
+
+  data () {
     return {
       interval: null
     };
   },
 
   computed: {
-    currentTime() {
+    currentTime () {
       return this.$moment().format('LLLL');
     }
   },
 
-  created() {
+  created () {
     this.interval = setInterval(this.$forceUpdate, 1000);
   },
 
-  destroy() {
+  destroy () {
     clearInterval(this.interval);
   }
 };
