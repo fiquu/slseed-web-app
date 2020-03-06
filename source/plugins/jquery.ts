@@ -19,7 +19,7 @@ function JQueryPlugin(V: typeof Vue): void {
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $$: JQuery;
+    $$: JQueryStatic;
   }
 }
 
