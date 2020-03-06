@@ -4,9 +4,11 @@
  * @module dashboard/routes
  */
 
-export default [
+import { RouteConfig } from 'vue-router';
+
+const routes: RouteConfig[] = [
   {
-    component: () => import('../components/index'),
+    component: () => import('../components/index.vue'),
     path: '/dashboard',
     name: 'dashboard',
     meta: {
@@ -14,3 +16,5 @@ export default [
     }
   }
 ];
+
+export default routes;

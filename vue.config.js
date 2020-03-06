@@ -1,18 +1,15 @@
 const { DefinePlugin } = require('webpack');
-const path = require('path');
+const { join } = require('path');
 
+const { sourceDir, outputDir, devServer } = require('./configs');
 const { version } = require('./package.json');
 const app = require('./app.json');
-const cfg = require('./configs');
-
-const { env } = process;
 
 module.exports = {
   productionSourceMap: false,
   lintOnSave: true,
   integrity: true,
-
-  outputDir: cfg.outputDir,
+  outputDir,
 
   pwa: {
     name: app.name,
@@ -33,25 +30,25 @@ module.exports = {
   },
 
   configureWebpack: {
-    devServer: cfg.devServer,
     devtool: false,
+    devServer,
 
     entry: {
-      app: path.join(cfg.sourceDir, 'main.ts')
+      app: join(sourceDir, 'main.ts')
     },
 
     resolve: {
       alias: {
-        '@': cfg.sourceDir
+        '@': sourceDir
       }
     },
 
     plugins: [
       new DefinePlugin({
         'process.env': {
-          PACKAGE_VERSION: `"${version}"`,
-          SHORT: `"${app.short}"`,
-          NAME: `"${app.name}"`
+          VUE_APP_VERSION: `"${version}"`,
+          VUE_APP_SHORT: `"${app.short}"`,
+          VUE_APP_NAME: `"${app.name}"`
         }
       })
     ]
@@ -74,10 +71,10 @@ module.exports = {
 
     // Load index.pug instead of index.html
     config.plugin('html').tap(args => {
-      args[0].template = `!!pug-loader!${path.join(cfg.sourceDir, 'index.pug')}`;
+      args[0].template = `!!pug-loader!${join(sourceDir, 'index.pug')}`;
       args[0].version = version;
+      args[0].env = process.env;
       args[0].app = app;
-      args[0].env = env;
 
       return args;
     });

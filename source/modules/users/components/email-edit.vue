@@ -40,6 +40,16 @@ en:
 import AWS from 'aws-sdk';
 import Vue from 'vue';
 
+interface ComponentData {
+  submitting: boolean;
+  modified: boolean;
+  editing: boolean;
+  cognito: AWS.CognitoIdentityServiceProvider;
+  data: {
+    email: string;
+  };
+}
+
 export default Vue.extend({
   name: 'UserEmailEdit',
 
@@ -54,30 +64,28 @@ export default Vue.extend({
     }
   },
 
-  data() {
+  data(): ComponentData {
     return {
+      cognito: new AWS.CognitoIdentityServiceProvider(),
       submitting: false,
       modified: false,
       editing: false,
-
-      cognito: new AWS.CognitoIdentityServiceProvider(),
-
       data: {
-        email: String(this.user.email)
+        email: this.user.email
       }
     };
   },
 
   computed: {
-    fieldsClass() {
+    fieldsClass(): any {
       return {
-        error: errors.any()
+        error: this.errors.any()
       };
     },
 
-    buttonClass() {
+    buttonClass(): any {
       return {
-        negative: errors.any()
+        negative: this.errors.any()
       };
     }
   },
@@ -115,12 +123,12 @@ export default Vue.extend({
      *
      * @param err
      */
-    onSubmit(err) {
+    onSubmit(err: Error) {
       if (err) {
         this.$toast.error(this.$t('MESSAGES.SUBMIT.ERROR'));
         this.editing = true;
       } else {
-        this.user.email = String(this.data.email);
+        this.user.email = this.data.email;
       }
 
       this.submitting = false;

@@ -6,53 +6,18 @@
 
 import Vue from 'vue';
 
-Vue.use({
-  install (Vue, options) {
-    Object.defineProperty(Vue.prototype, '$toast', {
-      value: new Vue({
-        data () {
-          return {
-            defaults: {
-              position: 'bottom center',
-              icons: {
-                info: 'fad fa-info-circle',
-                success: 'fad fa-check-circle',
-                warning: 'fad fa-exclamation-circle',
-                error: 'fad fa-exclamation-triangle'
-              },
-              ...options
-            }
-          };
-        },
+import toast, { ToastPlugin } from '../services/toast';
 
-        methods: {
-          _show (type, message, title, options = {}) {
-            this.$$('body').toast({
-              ...this.defaults,
-              class: type,
-              message,
-              title,
-              ...options
-            });
-          },
+function ToastPlugin(V: typeof Vue): void {
+  V.prototype.$toast = toast;
+}
 
-          info (message, title, options) {
-            this._show('info', message, title, options);
-          },
-
-          success (message, title, options) {
-            this._show('success', message, title, options);
-          },
-
-          warning (message, title, options) {
-            this._show('warning', message, title, options);
-          },
-
-          error (message, title, options) {
-            this._show('error', message, title, options);
-          }
-        }
-      })
-    });
+declare module 'vue/types/vue' {
+  interface Vue {
+    $toast: ToastPlugin;
   }
-});
+}
+
+Vue.use(ToastPlugin);
+
+export default ToastPlugin;

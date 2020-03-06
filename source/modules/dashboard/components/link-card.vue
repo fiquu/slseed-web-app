@@ -16,7 +16,7 @@ router-link.ui.card(
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
   props: {
@@ -34,11 +34,11 @@ export default Vue.extend({
     },
     icon: {
       type: String,
-      default: "link"
+      default: 'link'
     },
     color: {
       type: String,
-      default: "grey"
+      default: 'grey'
     }
   }
 });

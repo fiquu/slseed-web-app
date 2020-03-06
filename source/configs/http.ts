@@ -4,7 +4,12 @@
  * @module configs/http
  */
 
-export default {
-  headers: {},
-  baseURL: ''
+import Axios, { AxiosRequestConfig } from 'axios';
+
+const config: AxiosRequestConfig = {
+  headers: {
+    ...Axios.defaults.headers
+  }
 };
+
+export default config;

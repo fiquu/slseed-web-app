@@ -4,6 +4,7 @@
  * @module plugins/toast
  */
 
+import { TranslateResult } from 'vue-i18n';
 import Vue from 'vue';
 
 export interface ToastPluginOptions {
@@ -18,6 +19,42 @@ export interface ToastPluginOptions {
 
 export interface ToastOptions {
 
+}
+
+export interface ToastPlugin {
+  /**
+   * Sets the default options.
+   *
+   * @param {object} options The options to set as default.
+   *
+   * @see https://fomantic-ui.com/modules/toast.html#/settings
+   */
+  setDefaults(options: ToastPluginOptions): void;
+
+  /**
+   * Shows a toast.
+   */
+  show(type: string | TranslateResult, message: string, title?: string, options?: ToastPluginOptions): void;
+
+  /**
+   * Shows an info toast.
+   */
+  info(message: string | TranslateResult, title?: string, options?: ToastPluginOptions): void;
+
+  /**
+   * Shows a success toast.
+   */
+  success(message: string | TranslateResult, title?: string, options?: ToastPluginOptions): void;
+
+  /**
+   * Shows a warning toast.
+   */
+  warning(message: string | TranslateResult, title?: string, options?: ToastPluginOptions): void;
+
+  /**
+   * Shows an error toast.
+   */
+  error(message: string | TranslateResult, title?: string, options?: ToastPluginOptions): void;
 }
 
 interface JQueryToast extends JQuery {
@@ -40,13 +77,6 @@ const ToastComponent = new Vue({
   },
 
   methods: {
-    /**
-     * Sets the default options.
-     *
-     * @param {object} options The options to set as default.
-     *
-     * @see https://fomantic-ui.com/modules/toast.html#/settings
-     */
     setDefaults(options: ToastPluginOptions): void {
       this.defaults = {
         ...this.defaults,
@@ -54,10 +84,7 @@ const ToastComponent = new Vue({
       }
     },
 
-    /**
-     * Shows a toast.
-     */
-    show(type: string, message: string, title: string, options?: ToastPluginOptions): void {
+    show(type: string, message: string | TranslateResult, title?: string, options?: ToastPluginOptions): void {
       (this.$$('body') as JQueryToast).toast({
         ...this.defaults,
         class: type,
@@ -67,31 +94,19 @@ const ToastComponent = new Vue({
       });
     },
 
-    /**
-     * Shows an info toast.
-     */
-    info(message: string, title: string, options?: ToastPluginOptions) {
+    info(message: string | TranslateResult, title?: string, options?: ToastPluginOptions) {
       this.show('info', message, title, options);
     },
 
-    /**
-     * Shows a success toast.
-     */
-    success(message: string, title: string, options?: ToastPluginOptions) {
+    success(message: string | TranslateResult, title?: string, options?: ToastPluginOptions) {
       this.show('success', message, title, options);
     },
 
-    /**
-     * Shows a warning toast.
-     */
-    warning(message: string, title: string, options?: ToastPluginOptions) {
+    warning(message: string | TranslateResult, title?: string, options?: ToastPluginOptions) {
       this.show('warning', message, title, options);
     },
 
-    /**
-     * Shows an error toast.
-     */
-    error(message: string, title: string, options?: ToastPluginOptions) {
+    error(message: string | TranslateResult, title?: string, options?: ToastPluginOptions) {
       this.show('error', message, title, options);
     }
   }

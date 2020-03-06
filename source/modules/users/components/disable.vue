@@ -18,7 +18,7 @@ en:
 
   .ui.basic.vertical.segment
     label.ui.fluid.labeled.basic.icon.button(
-      :disabled="isDisabling"
+      :disabled="disabling"
       role="button"
       )
 
@@ -47,6 +47,14 @@ en:
 import AWS from 'aws-sdk';
 import Vue from 'vue';
 
+interface ComponentData {
+  cognito: AWS.CognitoIdentityServiceProvider;
+  disabling: boolean;
+  data: {
+    confirm: boolean;
+  };
+}
+
 export default Vue.extend({
   name: 'UserDisable',
 
@@ -61,12 +69,10 @@ export default Vue.extend({
     }
   },
 
-  data() {
+  data(): ComponentData {
     return {
-      disabling: false,
-
       cognito: new AWS.CognitoIdentityServiceProvider(),
-
+      disabling: false,
       data: {
         confirm: false
       }
@@ -74,14 +80,14 @@ export default Vue.extend({
   },
 
   computed: {
-    iconClass() {
+    iconClass(): any {
       return {
         'square outline': !this.data.confirm,
         'checkmark box': this.data.confirm
       };
     },
 
-    buttonClass() {
+    buttonClass(): any {
       return {
         loading: this.disabling
       };
@@ -89,7 +95,7 @@ export default Vue.extend({
   },
 
   methods: {
-    onDisableUser(err) {
+    onDisableUser(err: Error): void {
       if (err) {
         console.error(err);
         return;
@@ -99,15 +105,15 @@ export default Vue.extend({
 
       this.$toast.success(this.$t('MESSAGES.SUCCESS'));
 
-      this.isDisabling = false;
+      this.disabling = false;
     },
 
     /**
      * Disables the account.
      */
-    disableUser() {
+    disableUser(): void {
       this.data.confirm = false;
-      this.isDisabling = true;
+      this.disabling = true;
 
       this.cognito.adminDisableUser(this.params, this.onDisableUser);
     }

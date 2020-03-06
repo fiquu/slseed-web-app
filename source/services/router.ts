@@ -11,6 +11,6 @@ import config from '../configs/router';
 
 Vue.use(VueRouter);
 
-const router: VueRouter = new VueRouter(config);
+const router = new VueRouter(config);
 
 export default router;

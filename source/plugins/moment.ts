@@ -4,10 +4,16 @@
  * @module plugins/moment
  */
 
-import { Moment } from 'moment';
+import { Moment, MomentInput, MomentFormatSpecification } from 'moment';
 import Vue from 'vue';
 
 import moment from '../services/moment';
+
+interface MomentInterface extends Moment {
+  // Copied from the types because it gets dizzy for some reazon
+  (inp?: MomentInput, format?: MomentFormatSpecification, strict?: boolean): Moment;
+  (inp?: MomentInput, format?: MomentFormatSpecification, language?: string, strict?: boolean): Moment;
+}
 
 function MomentPlugin(V: typeof Vue): void {
   V.prototype.$moment = moment;
@@ -15,10 +21,10 @@ function MomentPlugin(V: typeof Vue): void {
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $moment: Moment;
+    $moment: MomentInterface;
   }
 }
 
 Vue.use(MomentPlugin);
 
-export default MomentPlugin;
+export default MomentInterface;

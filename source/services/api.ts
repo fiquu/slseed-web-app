@@ -4,28 +4,23 @@
  * @module service/api
  */
 
+import localforage, { INDEXEDDB, LOCALSTORAGE } from 'localforage';
 import cacheAdapter from 'axios-cache-adapter';
-import localforage from 'localforage';
-import axios from 'axios';
+import Axios from 'axios';
 
 import config from '../configs/api';
 
 const store = localforage.createInstance({
-  driver: [localforage.INDEXEDDB, localforage.LOCALSTORAGE],
-  name: `${process.env.NAME}-api-cache`
+  name: `${process.env.NAME}-api-cache`,
+  driver: [INDEXEDDB, LOCALSTORAGE]
 });
 
 const cache = cacheAdapter.setupCache({
-  maxAge: config.cache.maxAge,
+  maxAge: config.cache ? config.cache.maxAge : 0,
   store
 });
 
-export default axios.create({
-  baseURL: config.baseURL,
+export default Axios.create({
   adapter: cache.adapter,
-  withCredentials: true,
-  headers: {
-    ...axios.defaults.headers,
-    ...config.headers
-  }
+  ...config
 });

@@ -1,10 +1,10 @@
 {
+  "root": true,
   "extends": [
     "@fiquu",
     "plugin:vue/recommended",
-    "@vue/typescript/recommended"
+    "@vue/typescript/recommended",
   ],
-  "root": true,
   "plugins": [
     "html",
     "vue"
@@ -15,23 +15,12 @@
   },
   "env": {
     "browser": true,
-    "node": true,
+    "node": false,
     "es6": true
   },
   "settings": {
     "html/html-extensions": [
       ".html"
-    ]
-  },
-  "rules": {
-    "no-console": "off",
-    "no-var": "error",
-    "arrow-parens": [
-      "error",
-      "as-needed",
-      {
-        "requireForBlockBody": false
-      }
     ]
   }
 }

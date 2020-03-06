@@ -34,10 +34,10 @@ header.ui.fixed.top.compact.menu
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "MainNavbar",
+  name: 'MainNavbar',
 
   data() {
     return {

@@ -47,6 +47,14 @@ en:
 import AWS from 'aws-sdk';
 import Vue from 'vue';
 
+interface ComponentData {
+  cognito: AWS.CognitoIdentityServiceProvider;
+  enabling: boolean;
+  data: {
+    confirm: boolean;
+  };
+}
+
 export default Vue.extend({
   name: 'UserEnable',
 
@@ -61,12 +69,10 @@ export default Vue.extend({
     }
   },
 
-  data() {
+  data(): ComponentData {
     return {
-      enabling: false,
-
       cognito: new AWS.CognitoIdentityServiceProvider(),
-
+      enabling: false,
       data: {
         confirm: false
       }
@@ -74,14 +80,14 @@ export default Vue.extend({
   },
 
   computed: {
-    iconClass() {
+    iconClass(): any {
       return {
         'square outline': !this.data.confirm,
         'checkmark box': this.data.confirm
       };
     },
 
-    buttonClass() {
+    buttonClass(): any {
       return {
         loading: this.enabling
       };
@@ -89,7 +95,7 @@ export default Vue.extend({
   },
 
   methods: {
-    onEnableUser(err) {
+    onEnableUser(err: Error): void {
       if (err) {
         console.error(err);
         return;
@@ -102,10 +108,7 @@ export default Vue.extend({
       this.enabling = false;
     },
 
-    /**
-     * Disables the account.
-     */
-    enableUser() {
+    enableUser(): void {
       this.data.confirm = false;
       this.enabling = true;
 

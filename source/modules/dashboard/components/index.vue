@@ -48,32 +48,34 @@ section.ui.vertical.segment.view
 </template>
 
 <script lang="ts">
-import LinkCard from "./link-card";
-import Vue from "vue";
+import LinkCard from './link-card.vue';
+import Vue from 'vue';
+
+interface ComponentData {
+  interval?: number;
+}
 
 export default Vue.extend({
   components: {
     LinkCard
   },
 
-  data() {
-    return {
-      interval: null
-    };
+  data(): ComponentData {
+    return {};
   },
 
   computed: {
     currentTime() {
-      return this.$moment().format("LLLL");
+      return this.$moment().format('LLLL');
     }
   },
 
   created() {
-    this.interval = setInterval(this.$forceUpdate, 1000);
+    this.interval = window.setInterval(this.$forceUpdate, 1000);
   },
 
   beforeDestroy() {
-    clearInterval(this.interval);
+    window.clearInterval(this.interval);
   }
 });
 </script>
