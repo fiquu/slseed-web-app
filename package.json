@@ -6,7 +6,7 @@
   "author": "fiquu <hi@fiquu.com> (http://github.com/fiquu)",
   "version": "0.0.0",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "homepage": "https://github.com/fiquu/slseed-web-app",
   "bugs": {
     "url": "https://github.com/fiquu/slseed-web-app/issues"
@@ -33,24 +33,12 @@
     "node": ">= 12.0.0",
     "npm": ">= 6.0.0"
   },
-  "app": {
-    "name": "Web App (@fiquu/slseed-web-app)",
-    "short": "Slseed Web App",
-    "description": "Serveless Seed Web App project.",
-    "domain": "example.com",
-    "subdomain": "www",
-    "home": "https://www.example.com",
-    "display": "standalone",
-    "background": "#f7f6f6",
-    "color": "#adb63c",
-    "ogImage": "https://www.example.com/static/images/og-image.jpg"
-  },
   "scripts": {
     "semantic:build:css": "gulp build-css --gulpfile semantic/gulpfile.js",
     "semantic:build": "gulp build --gulpfile semantic/gulpfile.js",
     "semantic:watch": "gulp watch --gulpfile semantic/gulpfile.js",
     "semantic": "npm run semantic:build && npm run semantic:watch",
-    "test": "NODE_ENV=test npm run test:unit && npm run test:e2e",
+    "test": "cross-env NODE_ENV=test npm run test:unit && npm run test:e2e",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
@@ -58,17 +46,18 @@
     "postversion": "git push --tags",
     "build": "vue-cli-service build --mode production",
     "start": "vue-cli-service serve --mode local",
-    "check": "npm-check --update --ignore gulp",
+    "check": "npm-check --update",
     "deploy": "node utils/deploy",
-    "setup:stack": "node setup/stack",
-    "setup:env": "node setup/env",
-    "setup": "node setup"
+    "setup:stack": "slseed-utils --do setup-stack",
+    "setup:env": "slseed-utils --do setup-env",
+    "setup": "slseed-utils"
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^3.2.5",
     "aws-sdk": "^2.630.0",
     "axios": "^0.19.2",
     "axios-cache-adapter": "^2.5.0",
+    "core-js": "^3.6.4",
     "fi-is": "^4.0.0",
     "gulp": "^4.0.2",
     "jquery": "^3.4.1",
@@ -76,7 +65,6 @@
     "moment": "^2.24.0",
     "object-path": "^0.11.4",
     "register-service-worker": "^1.6.2",
-    "uuid": "^7.0.1",
     "vee-validate": "^2.2.15",
     "vue": "^2.6.11",
     "vue-i18n": "^8.15.4",
@@ -85,7 +73,13 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@fiquu/eslint-config": "^2.0.0",
     "@kazupon/vue-i18n-loader": "^0.5.0",
+    "@types/chai": "^4.2.10",
+    "@types/jquery": "^3.3.33",
+    "@types/node": "^13.7.7",
+    "@types/object-path": "^0.11.0",
+    "@types/webpack": "^4.41.7",
     "@vue/cli-plugin-babel": "^4.2.3",
     "@vue/cli-plugin-e2e-nightwatch": "^4.2.3",
     "@vue/cli-plugin-eslint": "^4.2.3",
@@ -97,6 +91,7 @@
     "autoprefixer": "^9.7.4",
     "babel-eslint": "^10.1.0",
     "chai": "^4.1.2",
+    "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-vue": "^6.2.1",
@@ -107,6 +102,7 @@
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^8.0.2",
+    "typescript": "^3.8.3",
     "vue-template-compiler": "^2.6.11",
     "yaml-loader": "^0.5.0"
   }

@@ -41,10 +41,11 @@ en:
     | {{ $t('RESEND') }}
 </template>
 
-<script>
+<script lang="ts">
 import AWS from 'aws-sdk';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   name: 'UserResend',
 
   props: {
@@ -89,7 +90,7 @@ export default {
     /**
      * Resend callback.
      *
-     * @param {Object} err Error object.
+     * @param {object} err Error object.
      */
     onResend(err) {
       this.resending = false;
@@ -112,13 +113,11 @@ export default {
       this.data.confirm = false;
       this.resending = true;
 
-      const params = Object.assign({}, this.params, {
-        Username: this.user.email,
-        MessageAction: 'RESEND'
-      });
+      const params = { ...this.params, Username: this.user.email,
+        MessageAction: 'RESEND'};
 
       this.cognito.adminCreateUser(params, this.onResend);
     }
   }
-};
+});
 </script>

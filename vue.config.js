@@ -1,6 +1,8 @@
+const { DefinePlugin } = require('webpack');
 const path = require('path');
 
-const pkg = require('./package.json');
+const { version } = require('./package.json');
+const app = require('./app.json');
 const cfg = require('./configs');
 
 const { env } = process;
@@ -13,10 +15,10 @@ module.exports = {
   outputDir: cfg.outputDir,
 
   pwa: {
-    name: pkg.title,
-    themeColor: pkg.app.color,
-    msTileColor: pkg.app.color,
-    assetsVersion: pkg.version,
+    name: app.name,
+    themeColor: app.color,
+    msTileColor: app.color,
+    assetsVersion: version,
     appleMobileWebAppCapable: 'yes',
 
     workboxPluginMode: 'InjectManifest',
@@ -35,14 +37,24 @@ module.exports = {
     devtool: false,
 
     entry: {
-      app: path.join(cfg.sourceDir, 'main.js')
+      app: path.join(cfg.sourceDir, 'main.ts')
     },
 
     resolve: {
       alias: {
         '@': cfg.sourceDir
       }
-    }
+    },
+
+    plugins: [
+      new DefinePlugin({
+        'process.env': {
+          PACKAGE_VERSION: `"${version}"`,
+          SHORT: `"${app.short}"`,
+          NAME: `"${app.name}"`
+        }
+      })
+    ]
   },
 
   chainWebpack: config => {
@@ -63,7 +75,8 @@ module.exports = {
     // Load index.pug instead of index.html
     config.plugin('html').tap(args => {
       args[0].template = `!!pug-loader!${path.join(cfg.sourceDir, 'index.pug')}`;
-      args[0].package = pkg;
+      args[0].version = version;
+      args[0].app = app;
       args[0].env = env;
 
       return args;

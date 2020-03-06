@@ -193,8 +193,10 @@ section
         button.ui.inverted.black.button Black
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
   mounted() {
     this.$$('.ui.dropdown').dropdown();
 
@@ -202,7 +204,7 @@ export default {
       action: 'combo'
     });
   }
-};
+});
 </script>
 
 <style lang="sass" scoped>

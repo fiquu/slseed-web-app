@@ -28,7 +28,9 @@ section.view
     ThemeCard
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
+
 import ThemeMessage from './message';
 import ThemeButton from './button';
 import ThemeInput from './input';
@@ -38,7 +40,7 @@ import ThemeCard from './card';
 import ThemeMenu from './menu';
 import ThemeSite from './site';
 
-export default {
+export default Vue.extend({
   components: {
     ThemeMessage,
     ThemeButton,
@@ -49,7 +51,7 @@ export default {
     ThemeMenu,
     ThemeSite
   }
-};
+});
 </script>
 
 <style lang="sass" scoped>

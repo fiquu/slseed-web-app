@@ -22,8 +22,10 @@ section
                   span(v-text="$moment(user.modifiedAt).format('L')")
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
   data() {
     return {
       fetching: false,
@@ -41,6 +43,7 @@ export default {
 
       try {
         const res = await this.$api.get('users');
+
         this.users = res.data;
       } catch (err) {
         console.error(err);
@@ -49,5 +52,5 @@ export default {
       this.fetching = false;
     }
   }
-};
+});
 </script>

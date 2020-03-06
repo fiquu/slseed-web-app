@@ -4,7 +4,7 @@
  * @module routes
  */
 
-import op from 'object-path';
+import * as op from 'object-path';
 
 const consts = {};
 

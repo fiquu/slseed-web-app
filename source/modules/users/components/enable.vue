@@ -43,10 +43,11 @@ en:
 
 </template>
 
-<script>
+<script lang="ts">
 import AWS from 'aws-sdk';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   name: 'UserEnable',
 
   props: {
@@ -111,6 +112,6 @@ export default {
       this.cognito.adminEnableUser(this.params, this.onEnableUser);
     }
   }
-};
+});
 </script>
 

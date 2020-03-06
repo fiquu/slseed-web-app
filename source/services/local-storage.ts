@@ -4,9 +4,17 @@
  * @module services/local-storage
  */
 
-import is from 'fi-is';
+const { localStorage } = window;
 
-export default {
+export interface LocalStorage {
+  key(index: number): string | null;
+  get(key: string, def?: any): any;
+  set(key: string, val: any): void;
+  remove(key: string): void;
+  clear(): void;
+}
+
+export default Object.freeze<LocalStorage>({
   /**
    * Sets a value into local storage. The value can be anything as it is
    * stringified to JSON, if possible, before being saved.
@@ -14,11 +22,7 @@ export default {
    * @param {String} key The local storage key name to set.
    * @param {Mixed} val The value to set the key to.
    */
-  set(key, val) {
-    if (typeof key !== 'string') {
-      throw new Error('The storage key must be a [String]!');
-    }
-
+  set(key: string, val: any) {
     let value;
 
     try {
@@ -27,7 +31,7 @@ export default {
       value = val;
     }
 
-    window.localStorage.setItem(key, value);
+    localStorage.setItem(key, value);
   },
 
   /**
@@ -38,13 +42,9 @@ export default {
    *
    * @returns {Mixed} The retrieved value parsed as JSON if possible.
    */
-  get(key, def) {
-    if (typeof key !== 'string') {
-      throw new Error('The storage key must be a [String]!');
-    }
-
-    const data = window.localStorage.getItem(key);
-    let parsed;
+  get(key: string, def?: any): any {
+    const data: string = String(localStorage.getItem(key));
+    let parsed: any;
 
     try {
       parsed = JSON.parse(data);
@@ -52,7 +52,7 @@ export default {
       parsed = data;
     }
 
-    if (is.empty(parsed)) {
+    if (!parsed) {
       return def;
     }
 
@@ -64,12 +64,8 @@ export default {
    *
    * @param {String} key The key to delete.
    */
-  remove(key) {
-    if (typeof key !== 'string') {
-      throw new Error('The storage key must be a [String]!');
-    }
-
-    window.localStorage.removeItem(key);
+  remove(key: string): void {
+    localStorage.removeItem(key);
   },
 
   /**
@@ -77,14 +73,14 @@ export default {
    *
    * @param {Number} index The index key name to retrieve.
    */
-  key(index) {
-    window.localStorage.key(index);
+  key(index: number): string | null {
+    return localStorage.key(index);
   },
 
   /**
    * Clears the local storage.
    */
-  clear() {
-    window.localStorage.clear();
+  clear(): void {
+    localStorage.clear();
   }
-};
+});

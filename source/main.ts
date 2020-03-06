@@ -1,7 +1,5 @@
 import Vue from 'vue';
 
-import { name, version } from '../package.json';
-
 // Plugins
 import router from './router';
 import store from './store';
@@ -20,7 +18,7 @@ import '../semantic/dist/semantic.min.css';
 import '../semantic/dist/semantic.min.js';
 
 // App component
-import App from '@/app';
+import App from './app.vue';
 
 // Set Vue config
 Vue.config.productionTip = false;
@@ -31,9 +29,7 @@ Vue.component('loader-message', loaderMessage);
 // Create App instance
 export default new Vue({
   el: '#app',
-  name,
   render: h => h(App),
-  version,
   router,
   store,
   i18n

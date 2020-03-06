@@ -133,8 +133,10 @@ section
         .ui.star.rating(data-rating='4')
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
   mounted() {
     this.$$('.special.card .image').dimmer({
       on: 'hover'
@@ -146,5 +148,5 @@ export default {
       on: 'hover'
     });
   }
-};
+});
 </script>

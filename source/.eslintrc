@@ -1,7 +1,14 @@
 {
-  "extends": ["plugin:vue/recommended"],
+  "extends": [
+    "@fiquu",
+    "plugin:vue/recommended",
+    "@vue/typescript/recommended"
+  ],
   "root": true,
-  "plugins": ["html", "vue"],
+  "plugins": [
+    "html",
+    "vue"
+  ],
   "parserOptions": {
     "parser": "babel-eslint",
     "sourceType": "module"
@@ -12,7 +19,9 @@
     "es6": true
   },
   "settings": {
-    "html/html-extensions": [".html"]
+    "html/html-extensions": [
+      ".html"
+    ]
   },
   "rules": {
     "no-console": "off",

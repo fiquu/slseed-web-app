@@ -4,7 +4,7 @@
  * @module services/consts
  */
 
-import CONSTS from '@/configs/consts';
+import CONSTS from '../configs/consts';
 
 export default {
   ...CONSTS

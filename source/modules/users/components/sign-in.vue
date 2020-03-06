@@ -113,15 +113,17 @@ section.view
                 | {{ $t('FORGOT_PASSWORD') }}
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
 
+export default Vue.extend({
   data() {
     return {
       cognitoUser: null,
 
       signInCallbacks: {
-        newPasswordRequired: userAttributes => this.onNewPasswordRequired(userAttributes),
+        newPasswordRequired: userAttributes =>
+          this.onNewPasswordRequired(userAttributes),
         onSuccess: res => this.onSignInSuccess(res),
         onFailure: err => this.onSignInError(err)
       },
@@ -143,21 +145,30 @@ export default {
   computed: {
     formEmailFieldClass() {
       return {
-        error: this.fields.email && this.fields.email.dirty && this.errors.has('email'),
+        error:
+          this.fields.email &&
+          this.fields.email.dirty &&
+          this.errors.has('email'),
         disabled: this.state.signingIn
       };
     },
 
     formPasswordFieldClass() {
       return {
-        error: this.fields.password && this.fields.password.dirty && this.errors.has('password'),
+        error:
+          this.fields.password &&
+          this.fields.password.dirty &&
+          this.errors.has('password'),
         disabled: this.state.signingIn
       };
     },
 
     formNewPasswordFieldClass() {
       return {
-        error: this.fields.newpassword && this.fields.newpassword.dirty && this.errors.has('newpassword'),
+        error:
+          this.fields.newpassword &&
+          this.fields.newpassword.dirty &&
+          this.errors.has('newpassword'),
         disabled: this.state.signingIn
       };
     },
@@ -194,6 +205,8 @@ export default {
 
     /**
      * Sign in error callback.
+     *
+     * @param err
      */
     onSignInError(err) {
       console.error(err);
@@ -204,6 +217,9 @@ export default {
 
     /**
      * New password required callback.
+     *
+     * @param user
+     * @param attributes
      */
     onNewPasswordRequired(user, attributes) {
       const pwd = this.data.newPassword;
@@ -253,10 +269,13 @@ export default {
 
       this.state.signingIn = true;
 
-      this.cognitoUser = await this.$auth.signIn(this.data, this.signInCallbacks);
+      this.cognitoUser = await this.$auth.signIn(
+        this.data,
+        this.signInCallbacks
+      );
     }
   }
-};
+});
 </script>
 
 <style lang="sass" scoped>

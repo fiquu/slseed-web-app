@@ -33,16 +33,18 @@ header.ui.fixed.top.compact.menu
       | {{ $t('SIGN_OUT') }}
 </template>
 
-<script>
-export default {
-  name: 'MainNavbar',
+<script lang="ts">
+import Vue from "vue";
+
+export default Vue.extend({
+  name: "MainNavbar",
 
   data() {
     return {
       title: process.env.VUE_APP_SHORT
     };
   }
-};
+});
 </script>
 
 <style lang="sass" scoped>

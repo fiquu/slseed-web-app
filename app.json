@@ -1,0 +1,12 @@
+{
+  "name": "Web App (@fiquu/slseed-web-app)",
+  "short": "Slseed Web App",
+  "description": "Serveless Seed Web App project.",
+  "domain": "example.com",
+  "subdomain": "www",
+  "home": "https://www.example.com",
+  "display": "standalone",
+  "background": "#f7f6f6",
+  "color": "#adb63c",
+  "ogImage": "https://www.example.com/static/images/og-image.jpg"
+}

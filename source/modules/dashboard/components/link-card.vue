@@ -15,8 +15,10 @@ router-link.ui.card(
       | {{ description }}
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+
+export default Vue.extend({
   props: {
     header: {
       type: String,
@@ -32,12 +34,12 @@ export default {
     },
     icon: {
       type: String,
-      default: 'link'
+      default: "link"
     },
     color: {
       type: String,
-      default: 'grey'
+      default: "grey"
     }
   }
-}
+});
 </script>

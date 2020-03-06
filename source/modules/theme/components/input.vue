@@ -85,14 +85,16 @@ section
           i.asterisk.icon
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
   mounted() {
     this.$$('.ui.dropdown').dropdown({
       on: 'click'
     });
   }
-};
+});
 </script>
 
 <style lang="sass" scoped>

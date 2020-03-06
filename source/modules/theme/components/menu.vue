@@ -135,23 +135,22 @@ section
         .right.item Right Text
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+export default Vue.extend({
   mounted() {
-    const $ = this.$$;
+    const $$ = this.$$;
 
-    this.$$('.ui.menu .ui.dropdown').dropdown({
+    $$('.ui.menu .ui.dropdown').dropdown({
       on: 'hover'
     });
 
-    this.$$('.ui.menu a.item').on('click', function() {
-      $(this)
-        .addClass('active')
-        .siblings()
+    $$('.ui.menu a.item').on('click', function() {
+      $$(this).addClass('active').siblings()
         .removeClass('active');
     });
   }
-};
+});
 </script>
 
 <style lang="sass" scoped>

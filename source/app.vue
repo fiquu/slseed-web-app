@@ -26,22 +26,23 @@ main#app
     router-view.router-view(v-if="!loading")
 </template>
 
-<script>
+<script lang="ts">
 import Navbar from '@/modules/core/components/navbar';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   components: {
     Navbar
   },
 
-  data() {
+  data () {
     return {
       loading: true,
       dim: true
     };
   },
 
-  created() {
+  created () {
     this.$auth.$on('update', () => {
       this.loading = this.$auth.loading;
       this.dim = this.$auth.loading;
@@ -62,7 +63,7 @@ export default {
 
     this.loading = false;
   }
-};
+});
 </script>
 
 <style lang="sass">

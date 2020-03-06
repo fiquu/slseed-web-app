@@ -43,10 +43,11 @@ en:
 
 </template>
 
-<script>
+<script lang="ts">
 import AWS from 'aws-sdk';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   name: 'UserDisable',
 
   props: {
@@ -60,7 +61,7 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       disabling: false,
 
@@ -73,14 +74,14 @@ export default {
   },
 
   computed: {
-    iconClass () {
+    iconClass() {
       return {
         'square outline': !this.data.confirm,
         'checkmark box': this.data.confirm
       };
     },
 
-    buttonClass () {
+    buttonClass() {
       return {
         loading: this.disabling
       };
@@ -88,7 +89,7 @@ export default {
   },
 
   methods: {
-    onDisableUser (err) {
+    onDisableUser(err) {
       if (err) {
         console.error(err);
         return;
@@ -104,12 +105,12 @@ export default {
     /**
      * Disables the account.
      */
-    disableUser () {
+    disableUser() {
       this.data.confirm = false;
       this.isDisabling = true;
 
       this.cognito.adminDisableUser(this.params, this.onDisableUser);
     }
   }
-};
+});
 </script>

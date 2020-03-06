@@ -36,10 +36,10 @@ en:
       i.edit.icon(v-else-if="!editing")
 </template>
 
-<script>
-import AWS from 'aws-sdk';
+<script lang="ts">
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   props: {
     params: {
       type: Object,
@@ -135,5 +135,5 @@ export default {
       this.submitting = false;
     }
   }
-};
+});
 </script>

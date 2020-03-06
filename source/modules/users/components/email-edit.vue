@@ -36,10 +36,11 @@ en:
       i.edit.icon(v-else-if="!editing")
 </template>
 
-<script>
+<script lang="ts">
 import AWS from 'aws-sdk';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   name: 'UserEmailEdit',
 
   props: {
@@ -111,6 +112,8 @@ export default {
 
     /**
      * Attribute update callback.
+     *
+     * @param err
      */
     onSubmit(err) {
       if (err) {
@@ -142,5 +145,5 @@ export default {
       this.cognito.adminUpdateUserAttributes(this.params, this.onSubmit);
     }
   }
-};
+});
 </script>

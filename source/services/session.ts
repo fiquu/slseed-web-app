@@ -6,15 +6,14 @@
 
 import Vue from 'vue';
 
-import config from '@/configs/session';
-
+import config from '../configs/session';
 import router from './router';
 import api from './api';
 
 export default new Vue({
   data () {
     return {
-      root: (config && config.root) || '/',
+      root: config && config.root || '/',
       loaded: false,
       data: null
     };

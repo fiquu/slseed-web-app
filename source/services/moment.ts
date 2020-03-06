@@ -6,7 +6,7 @@
 
 import moment from 'moment';
 
-import config from '@/configs/moment';
+import config from '../configs/moment';
 
 moment.locale(config.locale);
 

@@ -174,9 +174,10 @@ section.view
         | {{ $t('RESET.CONFIRM') }}
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
 
+export default Vue.extend({
   data() {
     return {
       state: {
@@ -195,7 +196,10 @@ export default {
   computed: {
     emailFieldClass() {
       return {
-        error: this.fields.email && this.fields.email.dirty && this.errors.has('email'),
+        error:
+          this.fields.email &&
+          this.fields.email.dirty &&
+          this.errors.has('email'),
         disabled: this.state.submitting
       };
     },
@@ -208,14 +212,18 @@ export default {
 
     formCodeClass() {
       return {
-        error: this.fields.code && this.fields.code.dirty && this.errors.has('code'),
+        error:
+          this.fields.code && this.fields.code.dirty && this.errors.has('code'),
         disabled: this.state.confirming
       };
     },
 
     formPasswordClass() {
       return {
-        error: this.fields.password && this.fields.password.dirty && this.errors.has('password'),
+        error:
+          this.fields.password &&
+          this.fields.password.dirty &&
+          this.errors.has('password'),
         disabled: this.state.confirming
       };
     },
@@ -255,7 +263,10 @@ export default {
     onConfirmSuccess() {
       this.state.confirming = false;
 
-      this.$toast.success(this.$t('MESSAGES.SUCCESS.BODY'), this.$t('MESSAGES.SUCCESS.TITLE'));
+      this.$toast.success(
+        this.$t('MESSAGES.SUCCESS.BODY'),
+        this.$t('MESSAGES.SUCCESS.TITLE')
+      );
 
       this.$$(this.$refs.resetPasswordModal).modal('hide');
 
@@ -305,7 +316,7 @@ export default {
     /**
      * Submit error callback.
      *
-     * @param {Object} err HTTP response object.
+     * @param {object} err HTTP response object.
      */
     onError(err) {
       console.error(err);
@@ -366,7 +377,7 @@ export default {
       });
     }
   }
-};
+});
 </script>
 
 <style lang="sass" scoped>
