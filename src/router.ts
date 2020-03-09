@@ -5,7 +5,7 @@
  */
 
 import router from './services/router';
-// import Vue from 'vue';
+import Vue from 'vue';
 
 // Vue.use(router);
 

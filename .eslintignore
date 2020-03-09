@@ -1,3 +1,8 @@
+# Never lint node modules
 node_modules
+# Never lint the SemanticUI sources
 semantic
+# Never lint the distributables
 dist
+# Creates conflicts with types definitions
+src/**/*.d.ts

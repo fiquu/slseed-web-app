@@ -4,9 +4,11 @@
  * @module configs/auth
  */
 
-import { Authconfig } from '@/services/auth';
+import { Authconfig } from '@/services/auth.d';
 
-const { VUE_APP_COGNITO_IDENTITY_POOL_ID, VUE_APP_COGNITO_USER_POOL_CLIENT_ID, VUE_APP_COGNITO_USER_POOL_ID } = process.env;
+const {
+  VUE_APP_COGNITO_IDENTITY_POOL_ID, VUE_APP_COGNITO_USER_POOL_CLIENT_ID, VUE_APP_COGNITO_USER_POOL_ID
+} = process.env;
 
 const config: Authconfig = {
   identityPoolId: String(VUE_APP_COGNITO_IDENTITY_POOL_ID),

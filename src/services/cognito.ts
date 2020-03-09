@@ -1,6 +1,11 @@
-import { AdminCreateUserRequest, AdminCreateUserResponse, AdminGetUserRequest, AdminGetUserResponse, AdminDeleteUserRequest, AdminUpdateUserAttributesRequest, AttributeListType, AdminUpdateUserAttributesResponse, AdminListGroupsForUserRequest, AdminListGroupsForUserResponse, AdminDisableUserRequest, AdminDisableUserResponse, AdminEnableUserRequest, AdminEnableUserResponse, AdminAddUserToGroupRequest, AdminRemoveUserFromGroupRequest } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import { CognitoIdentityServiceProvider, Response, AWSError } from 'aws-sdk';
 import Vue from 'vue';
+import {
+  AdminCreateUserRequest, AdminCreateUserResponse, AdminGetUserRequest, AdminGetUserResponse, AdminDeleteUserRequest,
+  AdminUpdateUserAttributesRequest, AttributeListType, AdminUpdateUserAttributesResponse, AdminListGroupsForUserRequest,
+  AdminListGroupsForUserResponse, AdminDisableUserRequest, AdminDisableUserResponse, AdminEnableUserRequest,
+  AdminEnableUserResponse, AdminAddUserToGroupRequest, AdminRemoveUserFromGroupRequest
+} from 'aws-sdk/clients/cognitoidentityserviceprovider';
 
 import auth from './auth';
 
@@ -51,8 +56,8 @@ export default new Vue({
     /**
      * Fetches a user's data.
      *
-     * @param {String} pool The pool name to fetch from.
-     * @param {String} sub The user's sub to fetch.
+     * @param {string} pool The pool name to fetch from.
+     * @param {string} sub The user's sub to fetch.
      *
      * @returns {Promise} A Promise that resolves to the user data.
      */
@@ -73,10 +78,13 @@ export default new Vue({
      *
      * @param {string} pool The pool name to fetch from.
      * @param {string} sub The user's sub to fetch.
+     * @param {object} attrs The user attributes.
      *
      * @returns {Promise} A Promise that resolves to the user data.
      */
-    async adminUpdateUserAttributes(pool: string, sub: string, attrs: AttributeListType): Promise<AdminUpdateUserAttributesResponse> {
+    async adminUpdateUserAttributes(
+      pool: string, sub: string, attrs: AttributeListType
+    ): Promise<AdminUpdateUserAttributesResponse> {
       await auth.setAWSCredentials();
 
       const cognito = new CognitoIdentityServiceProvider();
@@ -132,8 +140,8 @@ export default new Vue({
     /**
      * Enables a user's account.
      *
-     * @param {String} pool The pool name to enable from.
-     * @param {String} sub The user's sub to enable.
+     * @param {string} pool The pool name to enable from.
+     * @param {string} sub The user's sub to enable.
      *
      * @returns {Promise} A Promise.
      */
@@ -154,9 +162,10 @@ export default new Vue({
      *
      * @param {string} pool The pool name to enable from.
      * @param {string} sub The user's sub to enable.
+     * @param {string} group The group name.
      * @param {object} values Additional values.
      *
-     * @returns {Promise} A Promise.
+     * @returns {Promise} A Promise to the request.
      */
     async adminAddUserToGroup(pool: string, sub: string, group: string, values: object): Promise<AWSGenericResponse> {
       await auth.setAWSCredentials();
@@ -175,13 +184,16 @@ export default new Vue({
     /**
      * Removes a user's from a group.
      *
-     * @param {String} pool The pool name to enable from.
-     * @param {String} sub The user's sub to enable.
-     * @param {Object} values Additional values.
+     * @param {string} pool The pool name to enable from.
+     * @param {string} sub The user's sub to enable.
+     * @param {string} group The group name.
+     * @param {object} values Additional values.
      *
-     * @returns {Promise} A Promise.
+     * @returns {Promise} A Promise to the request.
      */
-    async adminRemoveUserFromGroup(pool: string, sub: string, group: string, values: object): Promise<AWSGenericResponse> {
+    async adminRemoveUserFromGroup(
+      pool: string, sub: string, group: string, values: object
+    ): Promise<AWSGenericResponse> {
       await auth.setAWSCredentials();
 
       const cognito = new CognitoIdentityServiceProvider();
@@ -198,8 +210,8 @@ export default new Vue({
     /**
      * Lists a pool's available groups.
      *
-     * @param {String} pool The pool name to enable from.
-     * @param {Object} values Optional additional values.
+     * @param {string} pool The pool name to enable from.
+     * @param {object} values Optional additional values.
      *
      * @returns {Promise} A Promise.
      */

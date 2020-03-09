@@ -1,3 +1,4 @@
+// Plugins load list
 
 import '@/plugins/local-storage';
 import '@/plugins/validate';

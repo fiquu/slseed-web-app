@@ -4,166 +4,22 @@
  * @module service/auth
  */
 
-import { CognitoUserPool, AuthenticationDetails, CognitoUser, CognitoUserSession, IAuthenticationCallback } from 'amazon-cognito-identity-js';
 import { AxiosRequestConfig } from 'axios';
 import AWS from 'aws-sdk';
 import Vue from 'vue';
+import {
+  CognitoUserPool, AuthenticationDetails, CognitoUser, CognitoUserSession, IAuthenticationCallback
+} from 'amazon-cognito-identity-js';
 
-import config from '../configs/auth';
-
-import router from '../services/router';
-import api from '../services/api';
-
-export interface Authconfig {
-  /**
-   * Cognito Identity Pool Id.
-   */
-  identityPoolId: string;
-
-  /**
-   * AWS region.
-   */
-  region: string;
-
-  /**
-   * Cognito credentials.
-   */
-  credentials: {
-    /**
-     * The Cognito Client Id.
-     */
-    ClientId: string;
-
-    /**
-     * The Cognito User Pool Id.
-     */
-    UserPoolId: string;
-  };
-
-  /**
-   * Auth paths.
-   */
-  paths: {
-    /**
-     * Application sign in path.
-     */
-    signIn: string;
-  }
-}
-
-export interface AuthService extends Vue {
-  /**
-   * Whether the service is loading the auth data.
-   */
-  loading: boolean;
-
-  /**
-   * The current auth data.
-   */
-  data: any;
-
-  /**
-   * Retrieves current user token.
-   *
-   * @param {object} currentUser The current user in session.
-   *
-   * @returns {Promise<CognitoUserSession>} A Promise to the session object.
-   */
-  getUserSession(currentUser: CognitoUser): Promise<CognitoUserSession>;
-
-  /**
-   * Retrieves current user in session.
-   *
-   * @returns {object|null} The current user in session.
-   */
-  getCurrentUser(): CognitoUser | null;
-
-  /**
-   * Authorizes current user.
-   *
-   * @returns {Promise<CognitoUserSession>} A Promise to the current user session.
-   */
-  authUser(): Promise<CognitoUserSession>;
-
-  /**
-   * Retrieves the appropriate token to perform HTTP requests.
-   *
-   * @returns {Promise<string>} A Promise to the JWT token.
-   */
-  getAuthToken(): Promise<string>;
-
-  /**
-   * Checks if the user has signed in.
-   *
-   * @returns {Boolean} Whether the user has signed in.
-   */
-  isSignedIn(): boolean;
-
-  /**
-   * Signs a user in.
-   *
-   * @param {Object} data The data to sign in with.
-   * @param {Object} callbacks The callbacks objects.
-   *
-   * @returns {Promise<CognitoUser>} A promise to the Cognito User.
-   */
-  signIn(data: AuthData, callbacks: IAuthenticationCallback): Promise<CognitoUser>;
-
-  /**
-   * Signs a user out and redirects.
-   *
-   * @param {boolean} keep Whether to keep current URL.
-   */
-  signOut(keep?: boolean): void;
-
-  /**
-   * Sets the proper AWS credentials for identity based actions.
-   *
-   * @returns {Promise<void>} An empty Promise.
-   */
-  setAWSCredentials(): Promise<void>;
-
-  /**
-   * Starts a password recovery flow.
-   *
-   * @param {object} data The user's data.
-   * @param {object} callbacks The callbacks object.
-   *
-   * @returns {object} The Cognito User object.
-   */
-  forgotPassword(data: AuthData, callbacks: ForgotPasswordCallbacks): CognitoUser;
-
-  /**
-   * Confirms a password change.
-   *
-   * @param {object} data The data to perform the password change.
-   * @param {object} callbacks The callbacks object.
-   */
-  confirmPassword(data: ConfirmNewPasswordData, callbacks: ConfirmPasswordCallbacks): void;
-}
-
-export interface ConfirmPasswordCallbacks {
-  onFailure: (err: Error) => void;
-  onSuccess: () => void;
-}
-
-export interface ForgotPasswordCallbacks {
-  inputVerificationCode?: ((data: any) => void) | undefined;
-  onFailure: (err: Error) => void;
-  onSuccess: (data: any) => void;
-}
-
-export interface AuthData {
-  password: string;
-  email: string;
-}
-
-export interface ConfirmNewPasswordData extends AuthData {
-  code: string;
-}
+import config from '@/configs/auth';
+import router from './router';
+import api from './api';
+import {
+  AuthServiceData, AuthData, ConfirmNewPasswordData, ConfirmPasswordCallbacks, ForgotPasswordCallbacks
+} from './auth.d';
 
 export default new Vue({
-  data() {
+  data(): AuthServiceData {
     return {
       loading: false,
       data: {}
@@ -171,47 +27,58 @@ export default new Vue({
   },
 
   watch: {
-    loading() {
+    loading(): void {
       this.$emit('update');
     }
   },
 
-  created() {
-    // Assign route auth guards
-    router.beforeEach(async (to, from, next) => {
-      try {
-        const session = await this.authUser();
-
-        this.data = session.getIdToken().decodePayload();
-
-        next();
-      } catch (err) {
-        if (to.meta.requiresAuth) {
-          next(config.paths.signIn);
-          return;
-        }
-
-        next();
-      }
-    });
-
-    // Add auth headers to every API request
-    const interceptor = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
-      const token = await this.getAuthToken();
-
-      if (!token) {
-        throw new Error('JWT token is empty!');
-      }
-
-      config.headers.Authorization = token;
-
-      return config;
-    };
-
-    api.interceptors.request.use(interceptor, err => Promise.reject(err));
+  created(): void {
+    this.addApiInterceptors();
+    this.addRouteGuards();
   },
 
   methods: {
+    addApiInterceptors(): void {
+      const interceptor = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
+        const token = await this.getAuthToken();
+
+        if (!token) {
+          throw new Error('JWT token is empty!');
+        }
+
+        config.headers.Authorization = token;
+
+        return config;
+      };
+
+      api.interceptors.request.use(interceptor, err => Promise.reject(err));
+    },
+
+    addRouteGuards(): void {
+      router.beforeEach(async (to, from, next) => {
+        try {
+          const session = await this.authUser();
+
+          this.data = session.getIdToken().decodePayload();
+
+          next();
+        } catch (err) {
+          if (to.meta.requiresAuth) {
+            next(config.paths.signIn);
+            return;
+          }
+
+          next();
+        }
+      });
+    },
+
+    createCognitoUser(Username: string): CognitoUser {
+      const Pool = new CognitoUserPool(config.credentials);
+
+      return new CognitoUser({ Username, Pool });
+    },
+
     getUserSession(currentUser: CognitoUser): Promise<CognitoUserSession> {
       return new Promise((resolve, reject) => {
         currentUser.getSession((err: Error, session: CognitoUserSession) => {
@@ -231,9 +98,9 @@ export default new Vue({
     },
 
     getCurrentUser(): CognitoUser | null {
-      const userPool = new CognitoUserPool(config.credentials);
+      const { getCurrentUser } = new CognitoUserPool(config.credentials);
 
-      return userPool.getCurrentUser();
+      return getCurrentUser();
     },
 
     authUser(): Promise<CognitoUserSession> {
@@ -247,7 +114,7 @@ export default new Vue({
     },
 
     getAuthToken(): Promise<string> {
-      return this.authUser().then(session => session.getIdToken().getJwtToken());
+      return this.authUser().then((session: any) => session.getIdToken().getJwtToken());
     },
 
     isSignedIn(): boolean {
@@ -255,11 +122,7 @@ export default new Vue({
     },
 
     async signIn({ email, password }: AuthData, callbacks: IAuthenticationCallback): Promise<CognitoUser> {
-      const userPool = new CognitoUserPool(config.credentials);
-      const user = new CognitoUser({
-        Username: email,
-        Pool: userPool
-      });
+      const user = this.createCognitoUser(email);
 
       const authenticationDetails = new AuthenticationDetails({
         Password: password,
@@ -342,12 +205,8 @@ export default new Vue({
       await credentials.refreshPromise();
     },
 
-    forgotPassword(data: AuthData, callbacks: ForgotPasswordCallbacks): CognitoUser {
-      const userPool = new CognitoUserPool(config.credentials);
-      const user = new CognitoUser({
-        Username: data.email,
-        Pool: userPool
-      });
+    forgotPassword({ email }: AuthData, callbacks: ForgotPasswordCallbacks): CognitoUser {
+      const user = this.createCognitoUser(email);
 
       user.forgotPassword(callbacks);
 
@@ -355,11 +214,7 @@ export default new Vue({
     },
 
     confirmPassword({ email, code, password }: ConfirmNewPasswordData, callbacks: ConfirmPasswordCallbacks): void {
-      const userPool = new CognitoUserPool(config.credentials);
-      const user = new CognitoUser({
-        Username: email,
-        Pool: userPool
-      });
+      const user = this.createCognitoUser(email);
 
       user.confirmPassword(code, password, callbacks);
     }
