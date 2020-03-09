@@ -1,7 +1,7 @@
 const { DefinePlugin } = require('webpack');
 const { join } = require('path');
 
-const { sourceDir, outputDir, devServer } = require('./configs');
+const { sourceDir, outputDir, devServer } = require('./configs/vue');
 const { version } = require('./package.json');
 const app = require('./app.json');
 
@@ -9,7 +9,7 @@ module.exports = {
   productionSourceMap: false,
   lintOnSave: true,
   integrity: true,
-  outputDir,
+  // outputDir,
 
   pwa: {
     name: app.name,
@@ -33,15 +33,15 @@ module.exports = {
     devtool: false,
     devServer,
 
-    entry: {
-      app: join(sourceDir, 'main.ts')
-    },
+    // entry: {
+    //   app: join(sourceDir, 'main.ts')
+    // },
 
-    resolve: {
-      alias: {
-        '@': sourceDir
-      }
-    },
+    // resolve: {
+    //   alias: {
+    //     '@': sourceDir
+    //   }
+    // },
 
     plugins: [
       new DefinePlugin({

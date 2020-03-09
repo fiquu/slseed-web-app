@@ -1,0 +1,16 @@
+en:
+  GENDER:
+    NONE: Not Specified
+    FEMALE: Female
+    MALE: Male
+  DISABLED: Disabled
+  ENABLED: Enabled
+  COGNITO:
+    STATUS:
+      UNCONFIRMED: Unconfirmed
+      CONFIRMED: Confirmed
+      ARCHIVED: Archived
+      COMPROMISED: Compromised
+      UNKNOWN: Unknown
+      RESET_REQUIRED: Reset required
+      FORCE_CHANGE_PASSWORD: Force password change

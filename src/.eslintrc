@@ -1,0 +1,28 @@
+{
+  "root": true,
+  "extends": [
+    "plugin:vue/recommended",
+    "@vue/typescript/recommended",
+    "@fiquu"
+  ],
+  "plugins": [
+    "html",
+    "vue"
+  ],
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "sourceType": "module",
+    "ecmaVersion": 2020
+  },
+  "env": {
+    "browser": true,
+    "node": false,
+    "es6": true
+  },
+  "settings": {
+    "html/html-extensions": [
+      ".html"
+    ]
+  }
+}
