@@ -11,5 +11,6 @@ import config from '../configs/validate';
 
 configure(config);
 
+// These are components but the module is a plugin...
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);

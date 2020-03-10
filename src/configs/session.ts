@@ -6,6 +6,6 @@
 
 import { SessionConfig } from '@/services/session';
 
-const config: SessionConfig = {}
+const config: SessionConfig = {};
 
 export default config;

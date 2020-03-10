@@ -16,15 +16,19 @@ export interface SessionConfig {
 }
 
 export interface SessionData {
-  loaded: boolean;
+  signedIn: boolean;
   data: any | null;
+  loaded: boolean;
   root: string;
 }
+
+export type SessionService = SessionData;
 
 export default new Vue({
   data(): SessionData {
     return {
       root: config && config.root || '/',
+      signedIn: false,
       loaded: false,
       data: null
     };
@@ -33,9 +37,9 @@ export default new Vue({
   created(): void {
     // Resolve session data
     router.beforeEach(async (to, from, next) => {
-      const signedIn = auth.isSignedIn();
+      this.signedIn = Boolean(await auth.currentSession());
 
-      if (!signedIn) {
+      if (!this.signedIn) {
         // Just delete session data if not signed in
         this.data = null;
       } else if (!this.data) {
@@ -45,8 +49,8 @@ export default new Vue({
 
           this.data = res.data;
         } catch (err) {
-          if (signedIn) {
-            auth.signOut();
+          if (this.signedIn) {
+            await auth.signOut();
             return;
           }
 

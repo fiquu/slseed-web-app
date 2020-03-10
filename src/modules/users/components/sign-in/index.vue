@@ -16,10 +16,11 @@ en:
         BODY: You must create a new password.
       PLACEHOLDER: Create your password...
       LABEL: New Password
-    ERROR:
-      MESSAGE:
-        TITLE: "Couldn't sign you in..."
-        BODY: Please verify that your email and password are correct.
+    ERRORS:
+      USER_NOT_CONFIRMED_EXCEPTION: Please verify your account first.
+      PASSWORD_RESET_REQUIRED_EXCEPTION: Please reset your password.
+      NOT_AUTHORIZED_EXCEPTION: Please verify that your email and password are correct.
+      UNKNOWN: Please check input values and internet connection.
     SUBMIT: Sign in
 </i18n>
 
@@ -37,25 +38,19 @@ section.view
 
           validation-observer.ui.form(
             @submit.prevent="signIn()"
-            v-slot="{ invalid }"
+            v-slot="{ classes }"
             ref="form"
             tag="form"
             )
 
-            .ui.negative.icon.message(v-if="errored")
-              i.exclamation.triangle.icon
-              .content
-                .header {{ $t('FORM.ERROR.MESSAGE.TITLE') }}
-                p {{ $t('FORM.ERROR.MESSAGE.BODY') }}
-
             validation-provider(
               rules="required|email"
-              v-slot="{ invalid }"
+              v-slot="{ classes }"
               slim
               )
 
               email-input.required.field(
-                :class="[invalid, formEmailFieldClass]"
+                :class="[classes, fieldClass]"
                 :disabled="signingIn"
                 v-model="data.email"
                 required
@@ -63,11 +58,11 @@ section.view
 
             validation-provider(
               rules="required|min:8"
-              v-slot="{ invalid }"
+              v-slot="{ classes }"
               slim
               )
 
-              .required.field(:class="[invalid, formPasswordFieldClass]")
+              .required.field(:class="[classes, fieldClass]")
                 label(for="password-input")
                   | {{ $t('FORM.PASSWORD.LABEL') }}
 
@@ -85,11 +80,11 @@ section.view
             validation-provider(
               v-if="newPasswordRequired"
               rules="required|min:8"
-              v-slot="{ invalid }"
+              v-slot="{ classes }"
               slim
               )
 
-              .required.field(:class="[invalid, formNewPasswordFieldClass]")
+              .required.field(:class="[classes, fieldClass]")
                 .ui.primary.icon.message
                   i.exclamation.circle.icon
                   .content
@@ -101,10 +96,9 @@ section.view
 
                 input#new-password-input(
                   :placeholder="$t('FORM.NEW_PASSWORD.PLACEHOLDER')"
-                  v-validate.initial="'required|min:8'"
-                  :disabled="signingIn"
                   v-model="data.newPassword"
-                  name="newpassword"
+                  :disabled="signingIn"
+                  name="new-password"
                   type="password"
                   minlength="8"
                   required
@@ -112,7 +106,7 @@ section.view
 
             button.ui.primary.fluid.right.labeled.icon.submit.button(
               :disabled="invalid || signingIn"
-              :class="formSubmitClass"
+              :class="submitClass"
               type="submit"
               )
 
@@ -125,59 +119,61 @@ section.view
 </template>
 
 <script lang="ts">
-import { CognitoUser, IAuthenticationCallback } from 'amazon-cognito-identity-js';
 import Vue from 'vue';
 
 interface ComponentData {
+  /**
+   * Whether a new password is required.
+   */
   newPasswordRequired: boolean;
-  signingIn: boolean;
-  errored: boolean;
 
+  /**
+   * Whether it's signing in (busy).
+   */
+  signingIn: boolean;
+
+  /**
+   * Form data.
+   */
   data: {
-    newPassword: string;
+    /**
+     * The new password value.
+     */
+    newPassword?: string;
+
+    /**
+     * The password value.
+     */
     password: string;
-    name?: string;
+
+    /**
+     * The email value.
+     */
     email: string;
   };
 }
 
 export default Vue.extend({
-  data() {
-    const data: ComponentData = {
+  data(): ComponentData {
+    return {
       newPasswordRequired: false,
       signingIn: false,
-      errored: false,
 
       data: {
-        newPassword: '',
         password: '',
         email: ''
       }
     };
-
-    return data;
   },
 
   computed: {
-    formEmailFieldClass(): any {
+    fieldClass(): any {
       return {
         disabled: this.signingIn
       };
     },
 
-    formPasswordFieldClass(): any {
-      return {
-        disabled: this.signingIn
-      };
-    },
-
-    formNewPasswordFieldClass(): any {
-      return {
-        disabled: this.signingIn
-      };
-    },
-
-    formSubmitClass(): any {
+    submitClass(): any {
       return {
         loading: this.signingIn
       };
@@ -185,7 +181,7 @@ export default Vue.extend({
   },
 
   beforeCreate() {
-    if (this.$auth.isSignedIn()) {
+    if (this.$session.signedIn) {
       this.$router.replace('/');
     }
   },
@@ -194,69 +190,34 @@ export default Vue.extend({
     /**
      * Sign in success callback.
      */
-    async onSignInSuccess() {
-      if (this.newPasswordRequired) {
-        this.data.password = this.data.newPassword;
-        this.newPasswordRequired = false;
-
-        await this.signIn();
-
-        return;
-      }
-
+    onSignInSuccess(): void {
       this.$router.replace('/');
     },
 
     /**
      * Sign in error callback.
      *
-     * @param {Error} err The error to handle.
+     * @param {any} err The error to handle.
      */
-    onSignInError(err: Error): void {
-      console.error(err);
+    onSignInError(err: any): void {
+      switch (err.code) {
+        case 'UserNotConfirmedException':
+          this.$toast.error(this.$t('ERRORS.USER_NOT_CONFIRMED_EXCEPTION'));
+          break;
 
-      this.errored = err.message !== 'New password is required.';
-      this.signingIn = false;
-    },
+        case 'PasswordResetRequiredException':
+          this.$t('ERRORS.PASSWORD_RESET_REQUIRED_EXCEPTION');
+          break;
 
-    /**
-     * New password required callback.
-     *
-     * @param {object} user The Cognito User object.
-     * @param {object} attributes The user attributes.
-     */
-    onNewPasswordRequired(user: CognitoUser, attributes: any): void {
-      const newPassword: string = String(this.data.newPassword);
-      const requiredAttributeData: any = {
-        ...attributes
-      };
+        case 'NotAuthorizedException':
+        case 'UserNotFoundException':
+          this.$toast.error(this.$t('ERRORS.NOT_AUTHORIZED_EXCEPTION'));
+          break;
 
-      delete requiredAttributeData.email_verified; // The API doesn't accept this field back
-
-      this.newPasswordRequired = true;
-
-      /* User was signed up by an admin and must provide new
-       * password and required attributes, if any, to complete
-       * authentication. */
-
-      // Required fields
-      requiredAttributeData.name = this.data.name;
-
-      user.completeNewPasswordChallenge(newPassword, requiredAttributeData, {
-        onSuccess: (): void => {
-          this.newPasswordRequired = false;
-
-          this.$auth.signOut(true);
-
-          this.data.password = this.data.newPassword;
-
-          this.signIn();
-        },
-
-        onFailure: (err: Error): void => {
-          this.onSignInError(err);
-        }
-      });
+        default:
+          this.$toast.error(this.$t('ERRORS.UNKNOWN'));
+          console.error(err);
+      }
     },
 
     /**
@@ -264,16 +225,27 @@ export default Vue.extend({
      */
     async signIn(): Promise<void> {
       this.signingIn = true;
-      this.errored = false;
 
-      const callbacks: IAuthenticationCallback = {
-        newPasswordRequired: (userAttributes: any) =>
-          this.onNewPasswordRequired(userAttributes, null),
-        onSuccess: () => this.onSignInSuccess(),
-        onFailure: (err: any) => this.onSignInError(err)
-      };
+      const { email, password, newPassword } = this.data;
 
-      await this.$auth.signIn(this.data, callbacks);
+      try {
+        if (this.newPasswordRequired && newPassword) {
+          await this.$auth.completeNewPassword(email, newPassword, { email });
+        } else {
+          const user = await this.$auth.signIn(email, password);
+
+          if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+            this.newPasswordRequired = true;
+            return;
+          }
+        }
+
+        this.onSignInSuccess();
+      } catch (err) {
+        this.onSignInError(err);
+      }
+
+      this.signingIn = false;
     }
   }
 });

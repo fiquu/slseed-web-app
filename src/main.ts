@@ -1,21 +1,16 @@
-import Vue from 'vue';
+import Vue, { CreateElement, VNode } from 'vue';
 
 // Plugins
-import router from './router';
-import store from './store';
-import i18n from './i18n';
-
-import './plugins';
-
-// Register Service Worker
-// import 'registerServiceWorker';
+import { router, store, i18n } from './plugins';
 
 // Global components
-import loaderMessage from './modules/global/components/loader-message.vue';
+import './components';
 
 // Semantic UI
-import '../semantic/dist/semantic.min.css';
-import '../semantic/dist/semantic.min.js';
+import './semantic';
+
+// Register Service Worker
+import './register-service-worker';
 
 // App component
 import App from './app.vue';
@@ -23,13 +18,10 @@ import App from './app.vue';
 // Set Vue config
 Vue.config.productionTip = false;
 
-// Register global components
-Vue.component('loader-message', loaderMessage);
-
 // Create App instance
 export default new Vue({
+  render: (h: CreateElement): VNode => h(App),
   el: '#app',
-  render: h => h(App),
   router,
   store,
   i18n

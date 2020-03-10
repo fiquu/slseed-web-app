@@ -35,22 +35,32 @@ export default Vue.extend({
     Navbar
   },
 
-  data () {
+  data() {
     return {
-      loading: true,
-      dim: true
+      loading: false,
+      dim: false
     };
   },
 
-  created () {
-    this.$auth.$on('update', () => {
-      this.loading = this.$auth.loading;
-      this.dim = this.$auth.loading;
-    });
+  computed: {
+    signedIn(): any {
+      if (!this.$session.signedIn) {
+        this.$toast.success(this.$t('MESSAGES.SIGNED_OUT'));
+      }
 
-    this.$auth.$on('signedOut', () => {
-      this.$toast.success(this.$t('MESSAGES.SIGNED_OUT'));
-    });
+      return this.$session.signedIn;
+    }
+  },
+
+  created() {
+    // This.$auth.$on('update', () => {
+    //   This.loading = this.$auth.loading;
+    //   This.dim = this.$auth.loading;
+    // });
+
+    // This.$auth.$on('signedOut', () => {
+    //   This.$toast.success(this.$t('MESSAGES.SIGNED_OUT'));
+    // });
 
     this.$router.beforeEach((to, from, next) => {
       this.dim = true;

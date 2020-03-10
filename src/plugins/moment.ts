@@ -15,6 +15,9 @@ interface MomentInterface extends Moment {
   (inp?: MomentInput, format?: MomentFormatSpecification, language?: string, strict?: boolean): Moment;
 }
 
+/**
+ * @param {Vue} V The vue instance.
+ */
 function MomentPlugin(V: typeof Vue): void {
   V.prototype.$moment = moment;
 }

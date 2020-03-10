@@ -6,7 +6,7 @@
 
 import Vue from 'vue';
 
-import { AuthService } from '@/services/auth.d';
+import { AuthClass } from '@aws-amplify/auth';
 import auth from '@/services/auth';
 
 /**
@@ -17,11 +17,10 @@ function AuthPlugin(V: typeof Vue): void {
 }
 
 declare module 'vue/types/vue' {
-  interface Vue { // eslint-disable-line
-    $auth: AuthService;
+  interface Vue {
+    $auth: AuthClass;
   }
 }
-
 
 Vue.use(AuthPlugin);
 

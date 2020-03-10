@@ -1,5 +1,5 @@
 /**
- * i18n config module.
+ * I18n config module.
  *
  * @module configs/i18n
  */

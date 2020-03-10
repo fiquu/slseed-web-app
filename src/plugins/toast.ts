@@ -8,6 +8,9 @@ import Vue from 'vue';
 
 import toast, { ToastPlugin } from '../services/toast';
 
+/**
+ * @param {Vue} V The vue instance.
+ */
 function ToastPlugin(V: typeof Vue): void {
   V.prototype.$toast = toast;
 }

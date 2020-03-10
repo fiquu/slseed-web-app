@@ -4,17 +4,20 @@
  * @module plugins/jquery
  */
 
-import jquery from 'jquery';
+import jQuery from 'jquery';
 import Vue from 'vue';
 
 // Register JQuery on the window
 Object.assign(window, {
-  $: jquery,
-  jquery
+  $: jQuery,
+  jQuery
 });
 
+/**
+ * @param {Vue} V The vue instance.
+ */
 function JQueryPlugin(V: typeof Vue): void {
-  V.prototype.$$ = jquery;
+  V.prototype.$$ = jQuery;
 }
 
 declare module 'vue/types/vue' {

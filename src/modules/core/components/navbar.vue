@@ -6,7 +6,7 @@ en:
 <template lang="pug">
 header.ui.fixed.top.compact.menu
   router-link.item(
-    v-if="$route.path !== '/dashboard' && $auth.isSignedIn()"
+    v-if="$route.path !== '/dashboard' && $session.signedIn"
     to='/dashboard'
     )
 
@@ -17,15 +17,12 @@ header.ui.fixed.top.compact.menu
     | &ensp;{{ title }}
 
   .right.menu
-    .item(
-      v-if="$auth.isSignedIn()"
-      )
-
+    .item(v-if="$session.signedIn")
       i.user.circle.icon
 
     a.item(
       @click="$auth.signOut(false)"
-      v-if="$auth.isSignedIn()"
+      v-if="$session.signedIn"
       role="button"
       )
 

@@ -4,8 +4,8 @@
  * @module plugins/router
  */
 
-import router from './services/router';
-import Vue from 'vue';
+import router from '../services/router';
+// Import Vue from 'vue';
 
 // Vue.use(router);
 

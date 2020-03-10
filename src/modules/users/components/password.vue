@@ -30,23 +30,16 @@ en:
     CONFIRM: Confirm
     CANCEL: Cancel
   MESSAGES:
-    INFO:
-      BODY: 'If you already have a recovery code, enter your email and press "I already have a recovery code".'
-    SUCCESS:
-      TITLE: 'Done!'
-      BODY: Please sign in with your new password.
-    LIMIT_EXCEEDED:
-      BODY: Please wai a while before retrying.
-    USER_NOT_FOUND:
-      BODY: Check your email is right.
-    INVALID_CODE:
-      BODY: That recovery code is not valid.
-    EXPIRED_CODE:
-      BODY: Please request a new recovery code.
-    NOT_AUTHORIZED:
-      BODY: Please contact your account administrator.
-    ERROR:
-      BODY: "Couldn't fulfill the request."
+    INFO: 'If you already have a recovery code, enter your email and press "I already have a recovery code".'
+    CONFIRM:
+      SUCCESS: Please sign in with your new password.
+    ERRORS:
+      LIMIT_EXCEEDED: Please wait a while before retrying.
+      USER_NOT_FOUND: Check your email is right.
+      INVALID_CODE: That recovery code is not valid.
+      EXPIRED_CODE: Please request a new recovery code.
+      NOT_AUTHORIZED: Please contact your account administrator.
+      UNKNOWN: "Couldn't fulfill the request."
 </i18n>
 
 <template lang="pug">
@@ -72,7 +65,7 @@ section.view
               i.info.circle.icon
               .content {{ $t('MESSAGES.INFO.BODY') }}
 
-            .required.field(:class="emailFieldClass")
+            .required.field(:class="fieldClass")
 
               label(for="email-input")
                 | {{ $t('FORM.EMAIL.LABEL') }}
@@ -142,7 +135,7 @@ section.view
             required
             )
 
-        .required.field(:class="formPasswordClass")
+        .required.field(:class="fieldClass")
           label(for="password-input")
             | {{ $t('FORM.PASSWORD.LABEL') }}
 
@@ -166,7 +159,7 @@ section.view
 
       button.ui.primary.button(
         :disabled="errors.has('code') || errors.has('password') || confirming"
-        :class="formConfirmClass"
+        :class="confirmClass"
         @click="confirm"
         type="button"
         )
@@ -176,12 +169,10 @@ section.view
 
 <script lang="ts">
 import Vue from 'vue';
-import { ConfirmNewPasswordData, AuthData } from '../../../services/auth';
 
 interface ComponentData {
   submitting: boolean;
   confirming: boolean;
-  codeSent: boolean;
   error: boolean;
   data: {
     password: string;
@@ -195,7 +186,6 @@ export default Vue.extend({
     const data: ComponentData = {
       submitting: false,
       confirming: false,
-      codeSent: false,
       error: false,
       data: {
         password: '',
@@ -208,31 +198,13 @@ export default Vue.extend({
   },
 
   computed: {
-    emailFieldClass(): any {
+    fieldClass(): any {
       return {
         disabled: this.submitting
       };
     },
 
-    buttonClass(): any {
-      return {
-        loading: this.submitting
-      };
-    },
-
-    formCodeClass(): any {
-      return {
-        disabled: this.confirming
-      };
-    },
-
-    formPasswordClass(): any {
-      return {
-        disabled: this.confirming
-      };
-    },
-
-    formConfirmClass(): any {
+    confirmClass(): any {
       return {
         loading: this.confirming
       };
@@ -240,7 +212,7 @@ export default Vue.extend({
   },
 
   beforeCreate() {
-    if (this.$auth.isSignedIn()) {
+    if (this.$session.signedIn) {
       this.$router.push('/');
     }
   },
@@ -259,7 +231,7 @@ export default Vue.extend({
     /**
      * Input verification code callback.
      */
-    onInputVerificationCode() {
+    onSubmitSuccess(): void {
       const $el: any = this.$$(this.$refs.resetPasswordModal);
 
       $el.modal('show');
@@ -268,13 +240,8 @@ export default Vue.extend({
     /**
      * Confirm success callback.
      */
-    onConfirmSuccess() {
-      this.confirming = false;
-
-      this.$toast.success(
-        this.$t('MESSAGES.SUCCESS.BODY'),
-        this.$t('MESSAGES.SUCCESS.TITLE')
-      );
+    onConfirmSuccess(): void {
+      this.$toast.success(this.$t('MESSAGES.CONFIRM.SUCCESS'));
 
       const $el: any = this.$$(this.$refs.resetPasswordModal);
 
@@ -286,47 +253,35 @@ export default Vue.extend({
     /**
      * Confirms new password.
      */
-    confirm() {
+    async confirm(): Promise<void> {
       this.confirming = true;
 
-      const data: ConfirmNewPasswordData = {
-        password: this.data.password,
-        email: this.data.email,
-        code: this.data.code
-      };
+      const { email, code, password } = this.data;
 
-      this.$auth.confirmPassword(data, {
-        onSuccess: () => this.onConfirmSuccess(),
-        onFailure: (err: Error) => this.onError(err)
-      });
+      try {
+        await this.$auth.forgotPasswordSubmit(email, code, password);
+
+        this.onConfirmSuccess();
+      } catch (err) {
+        console.error();
+      }
+
+      this.confirming = false;
     },
 
     /**
      * Cancels password confirm modal.
      */
-    cancel() {
+    cancel(): void {
       this.submitting = false;
-      this.codeSent = false;
-    },
-
-    /**
-     * Submit success callback.
-     */
-    onSubmitSuccess() {
-      this.submitting = false;
-      this.codeSent = true;
-
-      this.data.password = '';
-      this.data.code = '';
     },
 
     /**
      * After error callback.
      */
-    afterError() {
+    afterError(): void {
       this.submitting = false;
       this.confirming = false;
-      this.codeSent = false;
     },
 
     /**
@@ -334,7 +289,7 @@ export default Vue.extend({
      *
      * @param {object} err HTTP response object.
      */
-    onError(err: Error | any) {
+    onError(err: Error | any): void {
       console.error(err);
 
       const $el: any = this.$$(this.$refs.resetPasswordModal);
@@ -343,55 +298,52 @@ export default Vue.extend({
 
       switch (err.code) {
         case 'LimitExceededException':
-          this.$toast.error(this.$t('MESSAGES.LIMIT_EXCEEDED.BODY'));
+          this.$toast.error(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'));
           setTimeout(() => this.afterError(), 30000);
           break;
 
         case 'UserNotFoundException':
-          this.$toast.error(this.$t('MESSAGES.USER_NOT_FOUND.BODY'));
+          this.$toast.error(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'));
           setTimeout(() => this.afterError(), 3000);
           break;
 
         case 'CodeMismatchException':
-          this.$toast.error(this.$t('MESSAGES.INVALID_CODE.BODY'));
+          this.$toast.error(this.$t('MESSAGES.ERRORS.INVALID_CODE'));
           setTimeout(() => this.afterError(), 3000);
           break;
 
         case 'ExpiredCodeException':
-          this.$toast.warning(this.$t('MESSAGES.EXPIRED_CODE.BODY'));
+          this.$toast.warning(this.$t('MESSAGES.ERRORS.EXPIRED_CODE'));
           setTimeout(() => this.afterError(), 3000);
           break;
 
         case 'NotAuthorizedException':
-          this.$toast.warning(this.$t('MESSAGES.NOT_AUTHORIZED.BODY'));
+          this.$toast.warning(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'));
           this.$router.push('/');
           break;
 
         default:
-          this.$toast.error(this.$t('MESSAGES.ERROR.BODY'));
+          this.$toast.error(this.$t('MESSAGES.ERRORS.UNKNOWN'));
           setTimeout(() => this.afterError(), 3000);
       }
     },
 
     /**
-     * Signs the user in.
+     * Sends the recovery code.
      */
-    submit() {
-      this.codeSent = false;
-      this.error = false;
-
+    async submit(): Promise<void> {
       this.submitting = true;
 
-      const data: AuthData = {
-        password: this.data.password,
-        email: this.data.email
-      };
+      try {
+        await this.$auth.forgotPassword(this.data.email);
 
-      this.$auth.forgotPassword(data, {
-        inputVerificationCode: () => this.onInputVerificationCode(),
-        onSuccess: (): void => this.onSubmitSuccess(),
-        onFailure: (err: Error) => this.onError(err)
-      });
+        this.onSubmitSuccess();
+      } catch (err) {
+        console.error(err);
+        this.onError(err);
+      }
+
+      this.submitting = false;
     }
   }
 });

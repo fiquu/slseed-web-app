@@ -60,7 +60,7 @@ export default Object.freeze<LocalStorage>({
   },
 
   get(key: string, def?: any): any {
-    const data: string = String(localStorage.getItem(key));
+    const data = String(localStorage.getItem(key));
     let parsed: any;
 
     try {

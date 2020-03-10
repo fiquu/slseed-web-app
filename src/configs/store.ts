@@ -10,17 +10,17 @@ const modules: any = {};
 /* Import every module's `store/index.js` dynamically */
 const req = require.context('../modules/', true, /\/store\/.+\.ts$/);
 
-for (let path of req.keys()) {
+for (const path of req.keys()) {
   const name = path.replace(MOD_REGEX, '$1');
   const prop = path.replace(MOD_REGEX, '$2');
 
-  if (!modules[name]) {
-    modules[name] = {
+  if (!modules[String(name)]) {
+    modules[String(name)] = {
       namespaced: true
     };
   }
 
-  modules[name][prop] = req(path).default;
+  modules[String(name)][String(prop)] = req(path).default;
 }
 
 export default {
