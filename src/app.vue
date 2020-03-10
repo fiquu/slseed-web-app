@@ -58,9 +58,9 @@ export default Vue.extend({
     //   This.dim = this.$auth.loading;
     // });
 
-    // This.$auth.$on('signedOut', () => {
-    //   This.$toast.success(this.$t('MESSAGES.SIGNED_OUT'));
-    // });
+    this.$session.$on('signedOut', () => {
+      this.$toast.success(this.$t('MESSAGES.SIGNED_OUT'));
+    });
 
     // This.$router.beforeEach((to, from, next) => {
     //   This.dim = true;
