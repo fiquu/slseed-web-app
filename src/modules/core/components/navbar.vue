@@ -14,7 +14,7 @@ header.ui.fixed.top.compact.menu
 
   .header.item
     img(src='/static/images/navbar-icon.png')
-    | &ensp;{{ title }}
+    | {{ title }}
 
   .right.menu
     .item(v-if="$session.signedIn")
@@ -47,4 +47,8 @@ export default Vue.extend({
 <style lang="sass" scoped>
 header.ui.fixed.top.compact.menu
   position: static
+
+  .header.item
+    img
+      margin-right: 1rem
 </style>

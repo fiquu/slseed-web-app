@@ -6,9 +6,11 @@
 
 import { RouteConfig } from 'vue-router';
 
+type DashboardComponent = Promise<typeof import('../components/index.vue')>;
+
 const routes: RouteConfig[] = [
   {
-    component: () => import('../components/index.vue'),
+    component: (): DashboardComponent => import('../components/index.vue'),
     path: '/dashboard',
     name: 'dashboard',
     meta: {

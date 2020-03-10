@@ -90,7 +90,7 @@ import Vue from 'vue';
 
 export default Vue.extend({
   mounted() {
-    const $el: any = this.$$('.ui.dropdown');
+    const $el = this.$$('.ui.dropdown') as JQuery;
 
     $el.dropdown({
       on: 'click'

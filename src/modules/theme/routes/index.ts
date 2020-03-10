@@ -6,9 +6,11 @@
 
 import { RouteConfig } from 'vue-router';
 
+type ThemeComponent = Promise<typeof import('../components/index.vue')>;
+
 const routes: RouteConfig[] = [
   {
-    component: () => import('../components/index.vue'),
+    component: (): ThemeComponent => import('../components/index.vue'),
     path: '/theme',
     name: 'theme'
   }

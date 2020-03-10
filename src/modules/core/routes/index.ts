@@ -6,6 +6,8 @@
 
 import { RouteConfig } from 'vue-router';
 
+type NotFoundComponent = Promise<typeof import('../components/not-found.vue')>;
+
 const routes: RouteConfig[] = [
   {
     redirect: '/dashboard',
@@ -13,7 +15,7 @@ const routes: RouteConfig[] = [
     path: '/'
   },
   {
-    component: () => import('../components/not-found.vue'),
+    component: (): NotFoundComponent => import('../components/not-found.vue'),
     name: 'not-found',
     path: '*'
   }

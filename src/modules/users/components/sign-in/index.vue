@@ -153,6 +153,10 @@ interface ComponentData {
   };
 }
 
+interface SignInError extends Error {
+  code: string;
+}
+
 export default Vue.extend({
   data(): ComponentData {
     return {
@@ -167,13 +171,13 @@ export default Vue.extend({
   },
 
   computed: {
-    fieldClass(): any {
+    fieldClass(): object {
       return {
         disabled: this.signingIn
       };
     },
 
-    submitClass(): any {
+    submitClass(): object {
       return {
         loading: this.signingIn
       };
@@ -199,7 +203,7 @@ export default Vue.extend({
      *
      * @param {any} err The error to handle.
      */
-    onSignInError(err: any): void {
+    onSignInError(err: SignInError): void {
       switch (err.code) {
         case 'UserNotConfirmedException':
           this.$toast.error(this.$t('ERRORS.USER_NOT_CONFIRMED_EXCEPTION'));

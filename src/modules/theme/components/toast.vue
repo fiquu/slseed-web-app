@@ -14,7 +14,7 @@ section
     i.exclamation-circle.icon
     | Warning
 
-  button.ui.left.labeled.icon.negative.button(@click="$toast.error('There\'s something really wrong here...')")
+  button.ui.left.labeled.icon.negative.button(@click="$toast.error('There is something really wrong here...')")
     i.exclamation-triangle.icon
     | Error
 </template>

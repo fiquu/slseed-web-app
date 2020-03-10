@@ -140,7 +140,7 @@ import Vue from 'vue';
 export default Vue.extend({
   mounted() {
     const $$ = this.$$;
-    const $el: any = $$('.ui.menu .ui.dropdown');
+    const $el = $$('.ui.menu .ui.dropdown') as JQuery;
 
     $el.dropdown({
       on: 'hover'

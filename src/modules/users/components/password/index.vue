@@ -8,27 +8,7 @@ en:
     EMAIL:
       PLACEHOLDER: Enter your email...
       LABEL: Email
-    CODE:
-      PLACEHOLDER: Enter your recovery code...
-      LABEL: Recovery Code
-    PASSWORD:
-      PLACEHOLDER: Enter your new password...
-      LABEL: New Password
     SUBMIT: Request a recovery code
-  RESET:
-    TITLE: 'Attention!'
-    BODY: 'Follow this instructions to reset your password:'
-    INSTRUCTIONS:
-      - "Don't close this window."
-      - Go to your email inbox.
-      - "Open the message we've sent you."
-      - Search the recovery code and copy it.
-      - Come back to this window and paste the recovery code.
-      - Enter your new password.
-      - Confirm the modification.
-      - 'Done!'
-    CONFIRM: Confirm
-    CANCEL: Cancel
   MESSAGES:
     INFO: 'If you already have a recovery code, enter your email and press "I already have a recovery code".'
     CONFIRM:
@@ -102,73 +82,17 @@ section.view
               router-link.ui.link(to="/")
                 | {{ $t('HAVE_PASSWORD') }}
 
-  .ui.mini.modal(ref="resetPasswordModal")
-    .header {{ $t('RESET.TITLE') }}
-    .content
-      p
-        strong {{ $t('RESET.BODY') }}
-
-      ol.ui.list
-        li {{ $t('RESET.INSTRUCTIONS.0') }}
-        li {{ $t('RESET.INSTRUCTIONS.1') }}
-        li {{ $t('RESET.INSTRUCTIONS.2') }}
-        li {{ $t('RESET.INSTRUCTIONS.3') }}
-        li {{ $t('RESET.INSTRUCTIONS.4') }}
-        li {{ $t('RESET.INSTRUCTIONS.5') }}
-        li {{ $t('RESET.INSTRUCTIONS.6') }}
-        li {{ $t('RESET.INSTRUCTIONS.7') }}
-
-      .ui.divider
-
-      form.ui.form(@submit.prevent="")
-        .required.field(:class="formCodeClass")
-          label(for="code-input")
-            | {{ $t('FORM.CODE.LABEL') }}
-
-          input#code-input(
-            :placeholder="$t('FORM.CODE.PLACEHOLDER')"
-            v-validate.initial="'required|min:1'"
-            :disabled="confirming"
-            v-model="data.code"
-            type="number"
-            name="code"
-            required
-            )
-
-        .required.field(:class="fieldClass")
-          label(for="password-input")
-            | {{ $t('FORM.PASSWORD.LABEL') }}
-
-          input#password-input(
-            :placeholder="$t('FORM.PASSWORD.PLACEHOLDER')"
-            v-validate.initial="'required|min:8'"
-            :disabled="confirming"
-            v-model="data.password"
-            type="password"
-            name="password"
-            required
-            )
-
-    .actions
-      button.ui.cancel.basic.button(
-        :disabled="confirming"
-        type="button"
-        )
-
-        | {{ $t('RESET.CANCEL') }}
-
-      button.ui.primary.button(
-        :disabled="errors.has('code') || errors.has('password') || confirming"
-        :class="confirmClass"
-        @click="confirm"
-        type="button"
-        )
-
-        | {{ $t('RESET.CONFIRM') }}
+  reset-modal(ref="modal")
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+
+import ResetModal from './modal.vue';
+
+interface PasswordError extends Error {
+  code: string;
+}
 
 interface ComponentData {
   submitting: boolean;
@@ -182,8 +106,12 @@ interface ComponentData {
 }
 
 export default Vue.extend({
-  data() {
-    const data: ComponentData = {
+  components: {
+    ResetModal
+  },
+
+  data(): ComponentData {
+    return {
       submitting: false,
       confirming: false,
       error: false,
@@ -193,18 +121,16 @@ export default Vue.extend({
         code: ''
       }
     };
-
-    return data;
   },
 
   computed: {
-    fieldClass(): any {
+    fieldClass(): object {
       return {
         disabled: this.submitting
       };
     },
 
-    confirmClass(): any {
+    confirmClass(): object {
       return {
         loading: this.confirming
       };
@@ -218,13 +144,9 @@ export default Vue.extend({
   },
 
   mounted() {
-    const $el: any = this.$$(this.$refs.resetPasswordModal);
+    const $el = this.$$(this.$refs.modal) as JQuery;
 
-    $el.modal({
-      onApprove: this.confirm,
-      onDeny: this.cancel,
-      closable: false
-    });
+    $el.modal();
   },
 
   methods: {
@@ -232,7 +154,7 @@ export default Vue.extend({
      * Input verification code callback.
      */
     onSubmitSuccess(): void {
-      const $el: any = this.$$(this.$refs.resetPasswordModal);
+      const $el = this.$$(this.$refs.modal) as JQuery;
 
       $el.modal('show');
     },
@@ -243,7 +165,7 @@ export default Vue.extend({
     onConfirmSuccess(): void {
       this.$toast.success(this.$t('MESSAGES.CONFIRM.SUCCESS'));
 
-      const $el: any = this.$$(this.$refs.resetPasswordModal);
+      const $el = this.$$(this.$refs.modal) as JQuery;
 
       $el.modal('hide');
 
@@ -289,10 +211,10 @@ export default Vue.extend({
      *
      * @param {object} err HTTP response object.
      */
-    onError(err: Error | any): void {
+    onError(err: PasswordError): void {
       console.error(err);
 
-      const $el: any = this.$$(this.$refs.resetPasswordModal);
+      const $el = this.$$(this.$refs.modal) as JQuery;
 
       $el.modal('hide');
 

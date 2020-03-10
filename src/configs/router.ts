@@ -8,8 +8,8 @@ import { RouterOptions, RouteConfig } from 'vue-router';
 
 const routes: RouteConfig[] = [];
 
-// Import every module's `routes/index.js` dynamically...
-const req = require.context('../modules/', true, /\/routes\/.+\.js$/);
+// Import every module's `routes/*.ts` dynamically...
+const req = require.context('../modules/', true, /\/routes\/.+\.ts$/);
 
 for (const path of req.keys()) {
   routes.push(...req(path).default);

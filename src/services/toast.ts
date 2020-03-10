@@ -18,9 +18,24 @@ export interface ToastPluginOptions {
 }
 
 export interface ToastShowParams {
-  message: string | TranslateResult;
-  title?: string | TranslateResult;
   options?: ToastPluginOptions;
+  message: TranslateResult;
+  title?: TranslateResult;
+}
+
+export interface ToastOptions {
+  title?: TranslateResult;
+  message: TranslateResult;
+  showProgress?: string;
+  showIcon?: boolean;
+  progressUp?: boolean;
+  class?: string;
+  className?: object;
+  transition?: object;
+}
+
+interface Toast extends JQuery {
+  toast(options: ToastOptions): void;
 }
 
 export interface ToastPlugin {
@@ -41,22 +56,22 @@ export interface ToastPlugin {
   /**
    * Shows an info toast.
    */
-  info(message: string | TranslateResult, title?: string | TranslateResult, options?: ToastPluginOptions): void;
+  info(message: TranslateResult, title?: TranslateResult, options?: ToastPluginOptions): void;
 
   /**
    * Shows a success toast.
    */
-  success(message: string | TranslateResult, title?: string | TranslateResult, options?: ToastPluginOptions): void;
+  success(message: TranslateResult, title?: TranslateResult, options?: ToastPluginOptions): void;
 
   /**
    * Shows a warning toast.
    */
-  warning(message: string | TranslateResult, title?: string | TranslateResult, options?: ToastPluginOptions): void;
+  warning(message: TranslateResult, title?: TranslateResult, options?: ToastPluginOptions): void;
 
   /**
    * Shows an error toast.
    */
-  error(message: string | TranslateResult, title?: string | TranslateResult, options?: ToastPluginOptions): void;
+  error(message: TranslateResult, title?: TranslateResult, options?: ToastPluginOptions): void;
 }
 
 const ToastComponent = new Vue({
@@ -83,7 +98,7 @@ const ToastComponent = new Vue({
     },
 
     show(type: string, { message, title, options }: ToastShowParams): void {
-      const $body: any = this.$$('body');
+      const $body = this.$$('body') as Toast;
 
       $body.toast({
         ...this.defaults,
@@ -94,19 +109,19 @@ const ToastComponent = new Vue({
       });
     },
 
-    info(message: string | TranslateResult, title?: string | TranslateResult, options?: ToastPluginOptions): void {
+    info(message: TranslateResult, title?: TranslateResult, options?: ToastPluginOptions): void {
       this.show('info', { message, title, options });
     },
 
-    success(message: string | TranslateResult, title?: string | TranslateResult, options?: ToastPluginOptions): void {
+    success(message: TranslateResult, title?: TranslateResult, options?: ToastPluginOptions): void {
       this.show('success', { message, title, options });
     },
 
-    warning(message: string | TranslateResult, title?: string | TranslateResult, options?: ToastPluginOptions): void {
+    warning(message: TranslateResult, title?: TranslateResult, options?: ToastPluginOptions): void {
       this.show('warning', { message, title, options });
     },
 
-    error(message: string | TranslateResult, title?: string | TranslateResult, options?: ToastPluginOptions): void {
+    error(message: TranslateResult, title?: TranslateResult, options?: ToastPluginOptions): void {
       this.show('error', { message, title, options });
     }
   }

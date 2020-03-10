@@ -17,7 +17,7 @@ export interface SessionConfig {
 
 export interface SessionData {
   signedIn: boolean;
-  data: any | null;
+  data: object | null;
   loaded: boolean;
   root: string;
 }

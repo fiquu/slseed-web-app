@@ -130,7 +130,7 @@ export default Vue.extend({
     const $$ = this.$$;
 
     $$('.message .close').on('click', function() {
-      const $el: any = $$(this).closest('.message');
+      const $el = $$(this).closest('.message') as JQuery;
 
       $el.transition('fade');
     });

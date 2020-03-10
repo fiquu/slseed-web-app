@@ -25,8 +25,13 @@ section
 <script lang="ts">
 import Vue from 'vue';
 
+interface ComponentData {
+  users: object[] | null;
+  fetching: boolean;
+}
+
 export default Vue.extend({
-  data() {
+  data(): ComponentData {
     return {
       fetching: false,
       users: null
@@ -38,7 +43,7 @@ export default Vue.extend({
   },
 
   methods: {
-    async fetch() {
+    async fetch(): Promise<void> {
       this.fetching = true;
 
       try {

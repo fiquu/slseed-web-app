@@ -6,19 +6,23 @@
 
 import { RouteConfig } from 'vue-router';
 
+type UsersPasswordComponent = Promise<typeof import('../components/password/index.vue')>;
+type UsersSignInComponent = Promise<typeof import('../components/sign-in/index.vue')>;
+type UsersIndexComponent = Promise<typeof import('../components/index.vue')>;
+
 const routes: RouteConfig[] = [
   {
-    component: () => import('../components/sign-in.vue'),
+    component: (): UsersSignInComponent => import('../components/sign-in/index.vue'),
     name: 'users-sign-in',
     path: '/users/sign-in'
   },
   {
-    component: () => import('../components/index.vue'),
+    component: (): UsersIndexComponent => import('../components/index.vue'),
     name: 'users-index',
     path: '/users'
   },
   {
-    component: () => import('../components/password.vue'),
+    component: (): UsersPasswordComponent => import('../components/password/index.vue'),
     name: 'users-password',
     path: '/users/password'
   }

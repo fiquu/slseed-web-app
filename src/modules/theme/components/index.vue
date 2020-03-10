@@ -31,10 +31,10 @@ section.view
 <script lang="ts">
 import Vue from 'vue';
 
+import ThemeTable from './table/index.vue';
 import ThemeMessage from './message.vue';
 import ThemeButton from './button.vue';
 import ThemeInput from './input.vue';
-import ThemeTable from './table.vue';
 import ThemeToast from './toast.vue';
 import ThemeCard from './card.vue';
 import ThemeMenu from './menu.vue';

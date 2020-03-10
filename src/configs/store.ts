@@ -5,9 +5,17 @@
  */
 
 const MOD_REGEX = /^.\/(.+)\/store\/(.+)\.js$/;
-const modules: any = {};
+const modules: StoreModules = {};
 
-/* Import every module's `store/index.js` dynamically */
+export interface StoreModule {
+  [key: string]: StoreModule | boolean;
+}
+
+export interface StoreModules {
+  [key: string]: StoreModule;
+}
+
+// Import every module's `store/index.js` dynamically
 const req = require.context('../modules/', true, /\/store\/.+\.ts$/);
 
 for (const path of req.keys()) {

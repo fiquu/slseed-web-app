@@ -43,7 +43,7 @@ export default Vue.extend({
   },
 
   computed: {
-    signedIn(): any {
+    signedIn(): boolean {
       if (!this.$session.signedIn) {
         this.$toast.success(this.$t('MESSAGES.SIGNED_OUT'));
       }
@@ -62,16 +62,16 @@ export default Vue.extend({
     //   This.$toast.success(this.$t('MESSAGES.SIGNED_OUT'));
     // });
 
-    this.$router.beforeEach((to, from, next) => {
-      this.dim = true;
-      next();
-    });
+    // This.$router.beforeEach((to, from, next) => {
+    //   This.dim = true;
+    //   Next();
+    // });
 
-    this.$router.afterEach(() => {
-      this.dim = false;
-    });
+    // This.$router.afterEach(() => {
+    //   This.dim = false;
+    // });
 
-    this.loading = false;
+    // This.loading = false;
   }
 });
 </script>

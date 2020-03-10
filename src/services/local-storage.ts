@@ -6,6 +6,8 @@
 
 const { localStorage } = window;
 
+export type JSONValue = object | string | number | object[] | string[] | number[] | null | undefined;
+
 export interface LocalStorage {
   /**
    * Retrieves a key name by it's index.
@@ -22,7 +24,7 @@ export interface LocalStorage {
    *
    * @returns {any} The retrieved value parsed as JSON if possible.
    */
-  get(key: string, def?: any): any;
+  get(key: string, def?: JSONValue): JSONValue;
 
   /**
    * Sets a value into local storage. The value can be anything as it is
@@ -31,7 +33,7 @@ export interface LocalStorage {
    * @param {string} key The local storage key name to set.
    * @param {any} val The value to set the key to.
    */
-  set(key: string, val: any): void;
+  set(key: string, val: JSONValue): void;
 
   /**
    * Removes a key and its value.
@@ -47,21 +49,21 @@ export interface LocalStorage {
 }
 
 export default Object.freeze<LocalStorage>({
-  set(key: string, val: any): void {
-    let value;
+  set(key: string, val: JSONValue): void {
+    let value: string;
 
     try {
       value = JSON.stringify(val);
     } catch (ex) {
-      value = val;
+      value = String(val);
     }
 
     localStorage.setItem(key, value);
   },
 
-  get(key: string, def?: any): any {
+  get(key: string, def?: JSONValue): JSONValue {
     const data = String(localStorage.getItem(key));
-    let parsed: any;
+    let parsed: JSONValue;
 
     try {
       parsed = JSON.parse(data);

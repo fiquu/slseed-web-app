@@ -82,6 +82,7 @@
     "@types/semantic-ui": "^2.2.7",
     "@types/webpack": "^4.41.7",
     "@types/webpack-env": "^1.15.1",
+    "@types/zen-observable": "^0.8.0",
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
     "@vue/cli-plugin-babel": "^4.2.3",

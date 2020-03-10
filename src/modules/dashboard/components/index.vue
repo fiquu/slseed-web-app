@@ -52,7 +52,7 @@ import LinkCard from './link-card.vue';
 import Vue from 'vue';
 
 interface ComponentData {
-  interval?: number;
+  interval: number | null;
 }
 
 export default Vue.extend({
@@ -61,11 +61,13 @@ export default Vue.extend({
   },
 
   data(): ComponentData {
-    return {};
+    return {
+      interval: null
+    };
   },
 
   computed: {
-    currentTime() {
+    currentTime(): string {
       return this.$moment().format('LLLL');
     }
   },
@@ -75,7 +77,7 @@ export default Vue.extend({
   },
 
   beforeDestroy() {
-    window.clearInterval(this.interval);
+    window.clearInterval(this.interval as number);
   }
 });
 </script>

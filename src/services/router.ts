@@ -5,11 +5,10 @@
  */
 
 import VueRouter from 'vue-router';
-import Vue from 'vue';
 
 import config from '../configs/router';
 
-Vue.use(VueRouter);
+console.info(config);
 
 const router = new VueRouter(config);
 
