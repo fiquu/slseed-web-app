@@ -4,18 +4,10 @@ en:
   SUBTITLE: Please sign in with your credentials.
   FORGOT_PASSWORD: I forgot my password
   FORM:
-    PASSWORD:
-      PLACEHOLDER: Enter your password...
-      LABEL: Password
-    NAME:
-      PLACEHOLDER: Enter your full name...
-      LABEL: Full Name
     NEW_PASSWORD:
       MESSAGE:
         TITLE: "That's a temporary password!"
         BODY: You must create a new password.
-      PLACEHOLDER: Create your password...
-      LABEL: New Password
     ERRORS:
       USER_NOT_CONFIRMED_EXCEPTION: Please verify your account first.
       PASSWORD_RESET_REQUIRED_EXCEPTION: Please reset your password.
@@ -38,7 +30,7 @@ section.view
 
           validation-observer.ui.form(
             @submit.prevent="signIn()"
-            v-slot="{ classes }"
+            v-slot="{ invalid }"
             ref="form"
             tag="form"
             )
@@ -53,7 +45,6 @@ section.view
                 :class="[classes, fieldClass]"
                 :disabled="signingIn"
                 v-model="data.email"
-                required
                 )
 
             validation-provider(
@@ -62,20 +53,17 @@ section.view
               slim
               )
 
-              .required.field(:class="[classes, fieldClass]")
-                label(for="password-input")
-                  | {{ $t('FORM.PASSWORD.LABEL') }}
+              password-input.required.field(
+                :class="[classes, fieldClass]"
+                v-model="data.password"
+                :disabled="signingIn"
+                )
 
-                input#password-input(
-                  :placeholder="$t('FORM.PASSWORD.PLACEHOLDER')"
-                  v-validate.initial="'required|min:8'"
-                  :disabled="signingIn"
-                  v-model="data.password"
-                  name="password"
-                  type="password"
-                  minlength="8"
-                  required
-                  )
+            .ui.primary.icon.message(v-if="newPasswordRequired")
+              i.exclamation.circle.icon
+              .content
+                .header {{ $t('FORM.NEW_PASSWORD.MESSAGE.TITLE') }}
+                p {{ $t('FORM.NEW_PASSWORD.MESSAGE.BODY') }}
 
             validation-provider(
               v-if="newPasswordRequired"
@@ -85,23 +73,10 @@ section.view
               )
 
               .required.field(:class="[classes, fieldClass]")
-                .ui.primary.icon.message
-                  i.exclamation.circle.icon
-                  .content
-                    .header {{ $t('FORM.NEW_PASSWORD.MESSAGE.TITLE') }}
-                    p {{ $t('FORM.NEW_PASSWORD.MESSAGE.BODY') }}
-
-                label(for="new-password-input")
-                  | {{ $t('FORM.NEW_PASSWORD.LABEL') }}
-
-                input#new-password-input(
-                  :placeholder="$t('FORM.NEW_PASSWORD.PLACEHOLDER')"
+                new-password-input.required.field(
+                  :class="[classes, fieldClass]"
                   v-model="data.newPassword"
                   :disabled="signingIn"
-                  name="new-password"
-                  type="password"
-                  minlength="8"
-                  required
                   )
 
             button.ui.primary.fluid.right.labeled.icon.submit.button(
@@ -121,34 +96,16 @@ section.view
 <script lang="ts">
 import Vue from 'vue';
 
+import NewPasswordInput from './new-password-input.vue';
+import PasswordInput from './password-input.vue';
+import EmailInput from './email-input.vue';
+
 interface ComponentData {
-  /**
-   * Whether a new password is required.
-   */
   newPasswordRequired: boolean;
-
-  /**
-   * Whether it's signing in (busy).
-   */
   signingIn: boolean;
-
-  /**
-   * Form data.
-   */
   data: {
-    /**
-     * The new password value.
-     */
     newPassword?: string;
-
-    /**
-     * The password value.
-     */
     password: string;
-
-    /**
-     * The email value.
-     */
     email: string;
   };
 }
@@ -158,6 +115,12 @@ interface SignInError extends Error {
 }
 
 export default Vue.extend({
+  components: {
+    NewPasswordInput,
+    PasswordInput,
+    EmailInput
+  },
+
   data(): ComponentData {
     return {
       newPasswordRequired: false,

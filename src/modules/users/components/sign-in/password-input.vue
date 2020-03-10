@@ -1,7 +1,7 @@
 <i18n>
 en:
-  PLACEHOLDER: Enter your email...
-  LABEL: Email
+  PLACEHOLDER: Enter your password...
+  LABEL: Password
 </i18n>
 
 <template lang="pug">
@@ -12,8 +12,8 @@ form-input(
   :label="$t('LABEL')"
   :required="true"
   :value="value"
-  name="email"
-  type="email"
+  name="password"
+  type="password"
   )
 </template>
 

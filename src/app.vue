@@ -27,8 +27,9 @@ main#app
 </template>
 
 <script lang="ts">
-import Navbar from '@/modules/core/components/navbar.vue';
 import Vue from 'vue';
+
+import Navbar from '@/modules/core/components/navbar.vue';
 
 export default Vue.extend({
   components: {
@@ -37,8 +38,8 @@ export default Vue.extend({
 
   data() {
     return {
-      loading: false,
-      dim: false
+      loading: true,
+      dim: true
     };
   },
 
@@ -53,25 +54,29 @@ export default Vue.extend({
   },
 
   created() {
-    // This.$auth.$on('update', () => {
-    //   This.loading = this.$auth.loading;
-    //   This.dim = this.$auth.loading;
-    // });
-
-    this.$session.$on('signedOut', () => {
-      this.$toast.success(this.$t('MESSAGES.SIGNED_OUT'));
+    this.$session.$on('update', () => {
+      this.loading = this.$session.loading;
+      this.dim = this.$session.loading;
     });
 
-    // This.$router.beforeEach((to, from, next) => {
-    //   This.dim = true;
-    //   Next();
-    // });
+    this.$session.$on('signed-out', (signIn: string) => {
+      this.$toast.success(this.$t('MESSAGES.SIGNED_OUT'));
 
-    // This.$router.afterEach(() => {
-    //   This.dim = false;
-    // });
+      if (this.$route.meta.requiresAuth) {
+        this.$router.replace(signIn);
+      }
+    });
 
-    // This.loading = false;
+    this.$router.beforeEach((to, from, next) => {
+      this.dim = true;
+      next();
+    });
+
+    this.$router.afterEach(() => {
+      this.dim = false;
+    });
+
+    this.loading = false;
   }
 });
 </script>

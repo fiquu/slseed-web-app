@@ -6,11 +6,11 @@ en:
 <template lang="pug">
 header.ui.fixed.top.compact.menu
   router-link.item(
-    v-if="$route.path !== '/dashboard' && $session.signedIn"
-    to='/dashboard'
+    v-if="$route.path !== '/dashboard'"
+    to='/'
     )
 
-    i.chevron.left.icon
+    i.home.icon
 
   .header.item
     img(src='/static/images/navbar-icon.png')
@@ -21,7 +21,7 @@ header.ui.fixed.top.compact.menu
       i.user.circle.icon
 
     a.item(
-      @click="$auth.signOut(false)"
+      @click="$session.signOut()"
       v-if="$session.signedIn"
       role="button"
       )

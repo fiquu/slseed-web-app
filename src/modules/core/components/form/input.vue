@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   label(
-    :for="_uid"
+    :for="`form-input-${_uid}`"
     v-if="label"
     )
 
@@ -10,12 +10,12 @@ div
   input(
     @input="$emit('input', $event.target.value)"
     :placeholder="placeholder"
+    :id="`form-input-${_uid}`"
     :required="required"
     :disabled="disabled"
     :value="value"
     :type="type"
     :name="name"
-    :id="_uid"
     )
 </template>
 
@@ -39,9 +39,16 @@ export default Vue.extend({
       type: String,
       default: 'text'
     },
+    required: {
+      type: Boolean
+    },
     name: {
       type: String,
       default: null
+    },
+    value: {
+      type: [String, Number],
+      required: true
     }
   }
 });

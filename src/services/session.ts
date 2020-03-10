@@ -17,8 +17,9 @@ export interface SessionConfig {
 }
 
 export interface SessionData {
-  signedIn: boolean;
   data: object | null;
+  signedIn: boolean;
+  loading: boolean;
   loaded: boolean;
   root: string;
 }
@@ -32,6 +33,7 @@ export default new Vue({
     return {
       root: config && config.root || '/',
       signedIn: false,
+      loading: false,
       loaded: false,
       data: null
     };
@@ -40,14 +42,14 @@ export default new Vue({
   created(): void {
     // Resolve session data
     router.beforeEach(async (to, from, next) => {
+      this.loading = true;
+
+      this.$emit('update');
+
       let redirect: string | void;
 
       try {
-        const user = await auth.currentSession();
-
-        console.info(user);
-
-        this.signedIn = true;
+        this.signedIn = !!(await auth.currentSession());
       } catch (err) {
         this.signedIn = false;
       }
@@ -68,8 +70,6 @@ export default new Vue({
           if (this.signedIn) {
             await this.signOut();
 
-            this.signedIn = false;
-
             if (to.meta.requiresAuth) {
               redirect = config.signIn;
             }
@@ -79,7 +79,10 @@ export default new Vue({
         }
       }
 
+      this.loading = false;
       this.loaded = true;
+
+      this.$emit('update');
 
       next(redirect);
     });
@@ -91,7 +94,7 @@ export default new Vue({
 
       this.signedIn = false;
 
-      this.$emit('signedOut');
+      this.$emit('signed-out', config.signIn);
     }
   }
 });
