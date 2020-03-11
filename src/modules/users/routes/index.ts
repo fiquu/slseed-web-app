@@ -22,20 +22,23 @@ const routes: RouteConfig[] = [
     path: '/users/sign-in'
   },
   {
-    component: (): UsersIndexView => import(
-      /* webpackChunkName: "users-index" */
-      '../views/index.vue'
-    ),
-    name: 'users-index',
-    path: '/users'
-  },
-  {
     component: (): UsersForgotPasswordView => import(
       /* webpackChunkName: "users-forgot-password" */
       '../views/forgot-password.vue'
     ),
     name: 'users-forgot-password',
     path: '/users/forgot-password'
+  },
+  {
+    component: (): UsersIndexView => import(
+      /* webpackChunkName: "users-index" */
+      '../views/index.vue'
+    ),
+    name: 'users-index',
+    path: '/users',
+    meta: {
+      requiresAuth: true
+    }
   }
 ];
 

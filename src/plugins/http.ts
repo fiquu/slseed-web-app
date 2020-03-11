@@ -7,7 +7,7 @@
 import { AxiosInstance } from 'axios';
 import Vue from 'vue';
 
-import http from '../services/http';
+import http from '@/services/http';
 
 /**
  * @param {Vue} V The vue instance.
@@ -18,7 +18,7 @@ function HTTPPlugin(V: typeof Vue): void {
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $api: AxiosInstance;
+    $http: AxiosInstance;
   }
 }
 

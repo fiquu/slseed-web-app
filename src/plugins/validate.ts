@@ -6,20 +6,15 @@
  * @module plugins/validate
  */
 
-import { extend, configure, ValidationProvider, ValidationObserver } from 'vee-validate';
+import { extend, configure } from 'vee-validate';
 import * as rules from 'vee-validate/dist/rules';
-import Vue from 'vue';
 
-import config from '../configs/validate';
+import config from '@/configs/validate';
 
 // Automatically load all validation rules.
-// NOTE: You may want to load the one by one.
+// NOTE: You may want to load just the ones you need.
 for (const [rule, validation] of Object.entries(rules)) {
   extend(rule, { ...validation });
 }
 
 configure(config);
-
-// These are components but the module is a plugin...
-Vue.component('ValidationObserver', ValidationObserver);
-Vue.component('ValidationProvider', ValidationProvider);

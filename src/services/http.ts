@@ -6,6 +6,6 @@
 
 import axios from 'axios';
 
-import config from '../configs/http';
+import config from '@/configs/http';
 
 export default axios.create(config);

@@ -6,7 +6,7 @@
 
 import Vue from 'vue';
 
-import toast, { ToastPlugin } from '../services/toast';
+import toast, { ToastPlugin } from '@/services/toast';
 
 /**
  * @param {Vue} V The vue instance.

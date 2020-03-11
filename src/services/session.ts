@@ -6,10 +6,11 @@
 
 import Vue from 'vue';
 
-import config from '../configs/session';
 import router from './router';
 import auth from './auth';
 import api from './api';
+
+import config from '@/configs/session';
 
 export interface SessionConfig {
   signIn: string;
@@ -63,7 +64,7 @@ export default new Vue({
       } else if (!this.data) {
         // Fetch session data if signed in and not present
         try {
-          const res = await api.get('session');
+          const res = await api.get('WebApi', '/session', {});
 
           this.data = res.data;
         } catch (err) {

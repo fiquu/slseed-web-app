@@ -23,10 +23,12 @@ section
 </template>
 
 <script lang="ts">
+import { graphqlOperation, GraphQLResult } from '@aws-amplify/api';
+import Observable from 'zen-observable';
 import Vue from 'vue';
 
 interface ComponentData {
-  users: object[] | null;
+  users: GraphQLResult<object> | Observable<object> | null;
   fetching: boolean;
 }
 
@@ -47,9 +49,9 @@ export default Vue.extend({
       this.fetching = true;
 
       try {
-        const res = await this.$api.get('users');
+        const res = await this.$api.graphql(graphqlOperation('query { users { sub } }'));
 
-        this.users = res.data;
+        this.users = res;
       } catch (err) {
         console.error(err);
       }

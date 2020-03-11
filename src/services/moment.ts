@@ -6,7 +6,7 @@
 
 import moment from 'moment';
 
-import config from '../configs/moment';
+import config from '@/configs/moment';
 
 // Add more (or none) locales here as needed...
 // IMPORTANT: "EN" is loaded by default
