@@ -48,8 +48,9 @@ section.ui.vertical.segment.view
 </template>
 
 <script lang="ts">
-import LinkCard from './link-card.vue';
 import Vue from 'vue';
+
+import LinkCard from '../components/link-card.vue';
 
 interface ComponentData {
   interval: number | null;
@@ -72,11 +73,11 @@ export default Vue.extend({
     }
   },
 
-  created() {
+  mounted(): void {
     this.interval = window.setInterval(this.$forceUpdate, 1000);
   },
 
-  beforeDestroy() {
+  beforeDestroy(): void {
     window.clearInterval(this.interval as number);
   }
 });

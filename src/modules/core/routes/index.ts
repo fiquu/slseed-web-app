@@ -6,7 +6,9 @@
 
 import { RouteConfig } from 'vue-router';
 
-type NotFoundComponent = Promise<typeof import('../components/not-found.vue')>;
+type NotFoundView = Promise<typeof import('../views/not-found.vue')>;
+
+/* eslint-disable capitalized-comments */
 
 const routes: RouteConfig[] = [
   {
@@ -15,7 +17,10 @@ const routes: RouteConfig[] = [
     path: '/'
   },
   {
-    component: (): NotFoundComponent => import('../components/not-found.vue'),
+    component: (): NotFoundView => import(
+      /* webpackChunkName: "not-found" */
+      '../views/not-found.vue'
+    ),
     name: 'not-found',
     path: '*'
   }

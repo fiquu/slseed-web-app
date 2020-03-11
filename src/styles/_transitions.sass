@@ -1,0 +1,34 @@
+// Global component fade transition
+.component-fade-enter-active,
+.component-fade-leave-active
+  transition: opacity 100ms ease
+
+.component-fade-enter,
+.component-fade-leave-to
+  opacity: 0 !important
+
+// Global list transitions
+.list-enter-active,
+.list-leave-active
+  transition-property: width, opacity, transform
+  transition-timing-function: ease
+  transition-duration: 300ms
+
+.list-enter,
+.list-leave-to
+  opacity: 0 !important
+  width: 1px !important
+
+// Global List transition styles
+.list-item
+  transition-property: width, opacity, transform
+  transition-timing-function: ease
+  transition-duration: 300ms
+
+.list-item-enter,
+.list-item-leave-to
+  transform: translateY(3rem) !important
+  opacity: 0 !important
+
+.list-item-leave-active
+  position: absolute !important

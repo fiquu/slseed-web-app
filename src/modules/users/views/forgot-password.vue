@@ -88,7 +88,7 @@ section.view
 <script lang="ts">
 import Vue from 'vue';
 
-import ResetModal from './modal.vue';
+import ResetModal from '../components/forgot-password/reset-modal.vue';
 
 interface PasswordError extends Error {
   code: string;

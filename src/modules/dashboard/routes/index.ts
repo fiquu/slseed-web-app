@@ -6,11 +6,16 @@
 
 import { RouteConfig } from 'vue-router';
 
-type DashboardComponent = Promise<typeof import('../components/index.vue')>;
+type DashboardView = Promise<typeof import('../views/index.vue')>;
+
+/* eslint-disable capitalized-comments */
 
 const routes: RouteConfig[] = [
   {
-    component: (): DashboardComponent => import('../components/index.vue'),
+    component: (): DashboardView => import(
+      /* webpackChunkName: "dashboard" */
+      '../views/index.vue'
+    ),
     path: '/dashboard',
     name: 'dashboard',
     meta: {

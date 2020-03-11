@@ -18,15 +18,9 @@ form-input(
 </template>
 
 <script lang="ts">
-import FormInput from '@/modules/core/components/form/input.vue';
-
 import Vue from 'vue';
 
 export default Vue.extend({
-  components: {
-    FormInput
-  },
-
   props: {
     disabled: {
       type: Boolean

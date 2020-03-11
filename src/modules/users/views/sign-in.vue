@@ -89,16 +89,16 @@ section.view
               i.sign.in.icon
 
             .ui.center.aligned.vertical.segment
-              router-link.ui.link(to="/users/password")
+              router-link.ui.link(to="/users/forgot-password")
                 | {{ $t('FORGOT_PASSWORD') }}
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-import NewPasswordInput from './new-password-input.vue';
-import PasswordInput from './password-input.vue';
-import EmailInput from './email-input.vue';
+import NewPasswordInput from '../components/sign-in/new-password-input.vue';
+import PasswordInput from '../components/sign-in/password-input.vue';
+import EmailInput from '../components/sign-in/email-input.vue';
 
 interface ComponentData {
   newPasswordRequired: boolean;

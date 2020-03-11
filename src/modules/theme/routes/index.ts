@@ -6,11 +6,16 @@
 
 import { RouteConfig } from 'vue-router';
 
-type ThemeComponent = Promise<typeof import('../components/index.vue')>;
+type ThemeIndexView = Promise<typeof import('../views/index.vue')>;
+
+/* eslint-disable capitalized-comments */
 
 const routes: RouteConfig[] = [
   {
-    component: (): ThemeComponent => import('../components/index.vue'),
+    component: (): ThemeIndexView => import(
+      /* webpackChunkName: "theme-index" */
+      '../views/index.vue'
+    ),
     path: '/theme',
     name: 'theme'
   }

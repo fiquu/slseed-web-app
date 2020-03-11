@@ -18,3 +18,8 @@ section
     i.exclamation-triangle.icon
     | Error
 </template>
+
+<script lang="ts">
+import Vue from 'vue';
+export default Vue.extend({});
+</script>

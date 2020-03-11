@@ -6,25 +6,36 @@
 
 import { RouteConfig } from 'vue-router';
 
-type UsersPasswordComponent = Promise<typeof import('../components/password/index.vue')>;
-type UsersSignInComponent = Promise<typeof import('../components/sign-in/index.vue')>;
-type UsersIndexComponent = Promise<typeof import('../components/index.vue')>;
+type UsersForgotPasswordView = Promise<typeof import('../views/forgot-password.vue')>;
+type UsersSignInView = Promise<typeof import('../views/sign-in.vue')>;
+type UsersIndexView = Promise<typeof import('../views/index.vue')>;
+
+/* eslint-disable capitalized-comments */
 
 const routes: RouteConfig[] = [
   {
-    component: (): UsersSignInComponent => import('../components/sign-in/index.vue'),
+    component: (): UsersSignInView => import(
+      /* webpackChunkName: "users-sign-in" */
+      '../views/sign-in.vue'
+    ),
     name: 'users-sign-in',
     path: '/users/sign-in'
   },
   {
-    component: (): UsersIndexComponent => import('../components/index.vue'),
+    component: (): UsersIndexView => import(
+      /* webpackChunkName: "users-index" */
+      '../views/index.vue'
+    ),
     name: 'users-index',
     path: '/users'
   },
   {
-    component: (): UsersPasswordComponent => import('../components/password/index.vue'),
-    name: 'users-password',
-    path: '/users/password'
+    component: (): UsersForgotPasswordView => import(
+      /* webpackChunkName: "users-forgot-password" */
+      '../views/forgot-password.vue'
+    ),
+    name: 'users-forgot-password',
+    path: '/users/forgot-password'
   }
 ];
 
