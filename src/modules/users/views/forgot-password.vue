@@ -85,7 +85,7 @@ section.view
 import Vue from 'vue';
 
 import ResetModal from '../components/forgot-password/reset-modal.vue';
-import EmailInput from '../components/forgot-password/email-input.vue';
+import EmailInput from '../components/email-input.vue';
 
 interface SubmitError extends Error {
   code: string;

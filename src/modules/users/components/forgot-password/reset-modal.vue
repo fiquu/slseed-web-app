@@ -84,8 +84,8 @@ validation-observer.ui.mini.modal(
 <script lang="ts">
 import Vue from 'vue';
 
-import NewPasswordInput from './new-password-input.vue';
-import CodeInput from './code-input.vue';
+import NewPasswordInput from '../new-password-input.vue';
+import CodeInput from '../code-input.vue';
 
 interface SubmitError extends Error {
   code: string;
