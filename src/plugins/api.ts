@@ -4,10 +4,10 @@
  * @module plugins/api
  */
 
-import { AxiosInstance } from 'axios';
+import { APIClass } from '@aws-amplify/api';
 import Vue from 'vue';
 
-import api from '../services/api';
+import api from '@/services/api';
 
 /**
  * @param {Vue} V The vue instance.
@@ -18,7 +18,7 @@ function APIPlugin(V: typeof Vue): void {
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $api: AxiosInstance;
+    $api: APIClass;
   }
 }
 

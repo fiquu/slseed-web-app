@@ -1,22 +1,12 @@
-/**
- * API config module.
- *
- * @module configs/api
- */
+/* eslint-disable @typescript-eslint/camelcase */
 
-import Axios, { AxiosRequestConfig } from 'axios';
-
-const config: AxiosRequestConfig = {
-  baseURL: process.env.VUE_APP_API_ENDPOINT,
-  withCredentials: true,
-  headers: {
-    ...Axios.defaults.headers
-  },
-  cache: {
-    maxAge: process.env.NODE_ENV === 'local'
-      ? 0 // Let's not wait while developing...
-      : 1 * 60 * 1000 // 1 minute
-  }
+export default {
+  graphql_endpoint: `${process.env.VUE_APP_API_ENDPOINT}/graphql`,
+  graphql_endpoint_iam_region: 'us-east-1',
+  endpoints: [
+    {
+      name: 'WebApi',
+      endpoint: process.env.VUE_APP_API_ENDPOINT
+    }
+  ]
 };
-
-export default config;
