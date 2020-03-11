@@ -64,9 +64,6 @@ section.view
                 :class="fieldClass"
                 )
 
-            pre
-              code {{ invalid }}
-
             button.ui.primary.fluid.right.labeled.icon.submit.button(
               :disabled="invalid || signingIn"
               :class="submitClass"
