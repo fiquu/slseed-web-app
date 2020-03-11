@@ -1,22 +1,28 @@
 <template lang="pug">
-div
-  label(
-    :for="`form-input-${_uid}`"
-    v-if="label"
-    )
+validation-provider(
+  v-slot="{ classes }"
+  :rules="rules"
+  slim
+  )
 
-    | {{ label }}
+  div(:class="classes")
+    label(
+      :for="`form-input-${_uid}`"
+      v-if="label"
+      )
 
-  input(
-    @input="$emit('input', $event.target.value)"
-    :placeholder="placeholder"
-    :id="`form-input-${_uid}`"
-    :required="required"
-    :disabled="disabled"
-    :value="value"
-    :type="type"
-    :name="name"
-    )
+      | {{ label }}
+
+    input(
+      @input="$emit('input', $event.target.value)"
+      :placeholder="placeholder"
+      :id="`form-input-${_uid}`"
+      :required="required"
+      :disabled="disabled"
+      :value="value"
+      :type="type"
+      :name="name"
+      )
 </template>
 
 <script lang="ts">
@@ -49,6 +55,10 @@ export default Vue.extend({
     value: {
       type: [String, Number],
       required: true
+    },
+    rules: {
+      type: String,
+      default: ''
     }
   }
 });

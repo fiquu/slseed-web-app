@@ -8,6 +8,7 @@ en:
 form-input(
   @input="value => $emit('input', value)"
   :placeholder="$t('PLACEHOLDER')"
+  rules="required|min:8"
   :disabled="disabled"
   :label="$t('LABEL')"
   :required="true"

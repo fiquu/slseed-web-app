@@ -35,29 +35,17 @@ section.view
             tag="form"
             )
 
-            validation-provider(
-              rules="required|email"
-              v-slot="{ classes }"
-              slim
+            email-input.required.field(
+              :disabled="signingIn"
+              v-model="data.email"
+              :class="fieldClass"
               )
 
-              email-input.required.field(
-                :class="[classes, fieldClass]"
-                :disabled="signingIn"
-                v-model="data.email"
-                )
-
-            validation-provider(
-              rules="required|min:8"
-              v-slot="{ classes }"
-              slim
+            password-input.required.field(
+              v-model="data.password"
+              :disabled="signingIn"
+              :class="fieldClass"
               )
-
-              password-input.required.field(
-                :class="[classes, fieldClass]"
-                v-model="data.password"
-                :disabled="signingIn"
-                )
 
             .ui.primary.icon.message(v-if="newPasswordRequired")
               i.exclamation.circle.icon
@@ -65,19 +53,19 @@ section.view
                 .header {{ $t('FORM.NEW_PASSWORD.MESSAGE.TITLE') }}
                 p {{ $t('FORM.NEW_PASSWORD.MESSAGE.BODY') }}
 
-            validation-provider(
+            .required.field(
+              :class="[classes, fieldClass]"
               v-if="newPasswordRequired"
-              rules="required|min:8"
-              v-slot="{ classes }"
-              slim
               )
 
-              .required.field(:class="[classes, fieldClass]")
-                new-password-input.required.field(
-                  :class="[classes, fieldClass]"
-                  v-model="data.newPassword"
-                  :disabled="signingIn"
-                  )
+              new-password-input.required.field(
+                v-model="data.newPassword"
+                :disabled="signingIn"
+                :class="fieldClass"
+                )
+
+            pre
+              code {{ invalid }}
 
             button.ui.primary.fluid.right.labeled.icon.submit.button(
               :disabled="invalid || signingIn"
