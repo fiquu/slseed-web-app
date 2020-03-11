@@ -6,7 +6,9 @@
 
 module.exports = [
   /* This are the values to map from SSM parameters to env variables. */
-  /* IMPORTANT: You should comment the ones you're not using in your instance. */
+  /* IMPORTANT: Values starting with a ! will not be prefixed with VUE_APP_ (private). */
+  '!public-app-cloudfront-dist-id',
+  '!public-app-s3-bucket',
 
   'cognito-user-pool-client-id',
   'cognito-identity-pool-id',
