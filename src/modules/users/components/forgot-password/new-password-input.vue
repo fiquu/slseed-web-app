@@ -1,6 +1,6 @@
 <i18n>
 en:
-  PLACEHOLDER: Create your password...
+  PLACEHOLDER: Create your new password...
   LABEL: New Password
 </i18n>
 

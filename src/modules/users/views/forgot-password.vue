@@ -11,13 +11,9 @@ en:
     SUBMIT: Request a recovery code
   MESSAGES:
     INFO: 'If you already have a recovery code, enter your email and press "I already have a recovery code".'
-    CONFIRM:
-      SUCCESS: Please sign in with your new password.
     ERRORS:
       LIMIT_EXCEEDED: Please wait a while before retrying.
       USER_NOT_FOUND: Check your email is right.
-      INVALID_CODE: That recovery code is not valid.
-      EXPIRED_CODE: Please request a new recovery code.
       NOT_AUTHORIZED: Please contact your account administrator.
       UNKNOWN: "Couldn't fulfill the request."
 </i18n>
@@ -34,34 +30,31 @@ section.view
               .content {{ $t('TITLE') }}
                 .sub.header {{ $t('SUBTITLE') }}
 
-          form.ui.form(@submit.prevent="submit")
+          .ui.info.icon.message
+            i.info.circle.icon
+            p.content {{ $t('MESSAGES.INFO') }}
+
+          validation-observer.ui.form(
+            @submit.prevent="submit()"
+            v-slot="{ invalid }"
+            ref="form"
+            tag="form"
+            )
+
             .ui.negative.icon.message(v-if="error")
               i.exclamation.triangle.icon
               .content
                 .header {{ $t('FORM.ERROR.MESSAGE.TITLE') }}
                 p {{ $t('FORM.ERROR.MESSAGE.BODY') }}
 
-            .ui.info.icon.message
-              i.info.circle.icon
-              .content {{ $t('MESSAGES.INFO.BODY') }}
-
-            .required.field(:class="fieldClass")
-
-              label(for="email-input")
-                | {{ $t('FORM.EMAIL.LABEL') }}
-
-              input#email-input(
-                :placeholder="$t('FORM.EMAIL.PLACEHOLDER')"
-                v-validate.initial="'required|email'"
-                :disabled="submitting"
-                v-model="data.email"
-                name="email"
-                type="email"
-                required
-                )
+            email-input.required.field(
+              :disabled="submitting"
+              v-model="data.email"
+              :class="fieldClass"
+              )
 
             button.ui.primary.fluid.right.labeled.icon.submit.button(
-              :disabled="errors.has('email') || submitting"
+              :disabled="invalid || submitting"
               :class="buttonClass"
               type="submit"
               )
@@ -71,32 +64,35 @@ section.view
 
             .ui.basic.vertical.segment
               button.ui.fluid.basic.button(
-                :disabled="errors.has('email') || submitting"
-                @click="onInputVerificationCode"
+                :disabled="invalid || submitting"
+                @click="onSubmitSuccess()"
                 type="button"
                 )
 
                 | {{ $t('HAVE_CODE') }}
 
             .ui.center.aligned.basic.vertical.segment
-              router-link.ui.link(to="/")
+              router-link.ui.link(to="/users/sign-in")
                 | {{ $t('HAVE_PASSWORD') }}
 
-  reset-modal(ref="modal")
+  reset-modal(
+    :email="data.email"
+    ref="modal"
+    )
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
 import ResetModal from '../components/forgot-password/reset-modal.vue';
+import EmailInput from '../components/forgot-password/email-input.vue';
 
-interface PasswordError extends Error {
+interface SubmitError extends Error {
   code: string;
 }
 
 interface ComponentData {
   submitting: boolean;
-  confirming: boolean;
   error: boolean;
   data: {
     password: string;
@@ -107,13 +103,13 @@ interface ComponentData {
 
 export default Vue.extend({
   components: {
-    ResetModal
+    ResetModal,
+    EmailInput
   },
 
   data(): ComponentData {
     return {
       submitting: false,
-      confirming: false,
       error: false,
       data: {
         password: '',
@@ -130,9 +126,9 @@ export default Vue.extend({
       };
     },
 
-    confirmClass(): object {
+    buttonClass(): object {
       return {
-        loading: this.confirming
+        disabled: this.submitting
       };
     }
   },
@@ -143,59 +139,14 @@ export default Vue.extend({
     }
   },
 
-  mounted() {
-    const $el = this.$$(this.$refs.modal) as JQuery;
-
-    $el.modal();
-  },
-
   methods: {
     /**
      * Input verification code callback.
      */
     onSubmitSuccess(): void {
-      const $el = this.$$(this.$refs.modal) as JQuery;
+      const $modal: any = this.$refs.modal;
 
-      $el.modal('show');
-    },
-
-    /**
-     * Confirm success callback.
-     */
-    onConfirmSuccess(): void {
-      this.$toast.success(this.$t('MESSAGES.CONFIRM.SUCCESS'));
-
-      const $el = this.$$(this.$refs.modal) as JQuery;
-
-      $el.modal('hide');
-
-      this.$router.replace('/');
-    },
-
-    /**
-     * Confirms new password.
-     */
-    async confirm(): Promise<void> {
-      this.confirming = true;
-
-      const { email, code, password } = this.data;
-
-      try {
-        await this.$auth.forgotPasswordSubmit(email, code, password);
-
-        this.onConfirmSuccess();
-      } catch (err) {
-        console.error();
-      }
-
-      this.confirming = false;
-    },
-
-    /**
-     * Cancels password confirm modal.
-     */
-    cancel(): void {
-      this.submitting = false;
+      $modal.show();
     },
 
     /**
@@ -203,7 +154,6 @@ export default Vue.extend({
      */
     afterError(): void {
       this.submitting = false;
-      this.confirming = false;
     },
 
     /**
@@ -211,12 +161,8 @@ export default Vue.extend({
      *
      * @param {object} err HTTP response object.
      */
-    onError(err: PasswordError): void {
+    onSubmitError(err: SubmitError): void {
       console.error(err);
-
-      const $el = this.$$(this.$refs.modal) as JQuery;
-
-      $el.modal('hide');
 
       switch (err.code) {
         case 'LimitExceededException':
@@ -226,16 +172,6 @@ export default Vue.extend({
 
         case 'UserNotFoundException':
           this.$toast.error(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'));
-          setTimeout(() => this.afterError(), 3000);
-          break;
-
-        case 'CodeMismatchException':
-          this.$toast.error(this.$t('MESSAGES.ERRORS.INVALID_CODE'));
-          setTimeout(() => this.afterError(), 3000);
-          break;
-
-        case 'ExpiredCodeException':
-          this.$toast.warning(this.$t('MESSAGES.ERRORS.EXPIRED_CODE'));
           setTimeout(() => this.afterError(), 3000);
           break;
 
@@ -262,7 +198,7 @@ export default Vue.extend({
         this.onSubmitSuccess();
       } catch (err) {
         console.error(err);
-        this.onError(err);
+        this.onSubmitError(err);
       }
 
       this.submitting = false;

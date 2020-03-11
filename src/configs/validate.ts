@@ -12,7 +12,7 @@ const config: VeeValidateConfig = {
   defaultMessage: '{_field_} is not valid.',
   useConstraintAttrs: true,
   skipOptional: true,
-  mode: 'eager',
+  mode: 'aggressive',
   bails: true,
   classes: {
     invalid: 'error'

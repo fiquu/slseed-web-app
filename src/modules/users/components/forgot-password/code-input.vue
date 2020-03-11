@@ -1,20 +1,20 @@
 <i18n>
 en:
-  PLACEHOLDER: Create your password...
-  LABEL: New Password
+  PLACEHOLDER: Enter your recovery code...
+  LABEL: Recovery Code
 </i18n>
 
 <template lang="pug">
 form-input(
   @input="value => $emit('input', value)"
   :placeholder="$t('PLACEHOLDER')"
-  rules="required|min:8"
+  rules="required|min:1"
   :disabled="disabled"
   :label="$t('LABEL')"
   :required="true"
   :value="value"
-  name="password"
-  type="password"
+  name="email"
+  type="text"
   )
 </template>
 

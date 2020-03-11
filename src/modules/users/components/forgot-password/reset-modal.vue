@@ -12,19 +12,29 @@ en:
     - Confirm the modification.
     - 'Done!'
   FORM:
-    CODE:
-      PLACEHOLDER: Enter your recovery code...
-      LABEL: Recovery Code
-    PASSWORD:
-      PLACEHOLDER: Enter your new password...
-      LABEL: New Password
     CONFIRM: Confirm
     CANCEL: Cancel
+  MESSAGES:
+    SUBMIT:
+      SUCCESS: Please sign in with your new password.
+    ERRORS:
+      LIMIT_EXCEEDED: Please wait a while before retrying.
+      USER_NOT_FOUND: Check your email is right.
+      INVALID_CODE: That recovery code is not valid.
+      EXPIRED_CODE: Please request a new recovery code.
+      NOT_AUTHORIZED: Please contact your account administrator.
+      UNKNOWN: "Couldn't fulfill the request."
 </i18n>
 
 <template lang="pug">
-.ui.mini.modal
+validation-observer.ui.mini.modal(
+  @submit.prevent="submit()"
+  v-slot="{ invalid }"
+  tag="form"
+  )
+
   .header {{ $t('TITLE') }}
+
   .content
     p
       strong {{ $t('BODY') }}
@@ -41,57 +51,199 @@ en:
 
     .ui.divider
 
-    form.ui.form(@submit.prevent="")
-      .required.field(:class="formCodeClass")
-        label(for="code-input")
-          | {{ $t('FORM.CODE.LABEL') }}
+    .ui.form
+      code-input.required.field(
+        :disabled="submitting"
+        v-model="data.code"
+        :class="fieldClass"
+        )
 
-        input#code-input(
-          :placeholder="$t('FORM.CODE.PLACEHOLDER')"
-          v-validate.initial="'required|min:1'"
-          :disabled="confirming"
-          v-model="data.code"
-          type="number"
-          name="code"
-          required
-          )
-
-      .required.field(:class="fieldClass")
-        label(for="password-input")
-          | {{ $t('FORM.PASSWORD.LABEL') }}
-
-        input#password-input(
-          :placeholder="$t('FORM.PASSWORD.PLACEHOLDER')"
-          v-validate.initial="'required|min:8'"
-          :disabled="confirming"
-          v-model="data.password"
-          type="password"
-          name="password"
-          required
-          )
+      new-password-input.required.field(
+        :disabled="submitting"
+        v-model="data.password"
+        :class="fieldClass"
+        )
 
   .actions
     button.ui.cancel.basic.button(
-      :disabled="confirming"
+      :disabled="submitting"
       type="button"
       )
 
-      | {{ $t('CANCEL') }}
+      | {{ $t('FORM.CANCEL') }}
 
     button.ui.primary.button(
-      :disabled="errors.has('code') || errors.has('password') || confirming"
+      :disabled="invalid || submitting"
       :class="confirmClass"
-      @click="confirm"
-      type="button"
+      type="submit"
       )
 
-      | {{ $t('CONFIRM') }}
+      | {{ $t('FORM.CONFIRM') }}
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-export default Vue.extend({
+import NewPasswordInput from './new-password-input.vue';
+import CodeInput from './code-input.vue';
 
+interface SubmitError extends Error {
+  code: string;
+}
+
+interface ComponentData {
+  submitting: boolean;
+  data: {
+    password: string;
+    code: string;
+  };
+}
+
+export default Vue.extend({
+  components: {
+    NewPasswordInput,
+    CodeInput
+  },
+
+  data(): ComponentData {
+    return {
+      submitting: false,
+      data: {
+        password: '',
+        code: ''
+      }
+    };
+  },
+
+  computed: {
+    fieldClass(): object {
+      return {
+        disabled: this.submitting
+      };
+    },
+
+    confirmClass(): object {
+      return {
+        loading: this.submitting
+      };
+    }
+  },
+
+  props: {
+    email: {
+      type: String,
+      required: true
+    }
+  },
+
+  mounted() {
+    const $el = this.$$(this.$el) as JQuery;
+    const settings: SemanticUI.ModalSettings = {
+      closable: false
+    };
+
+    $el.modal(settings);
+  },
+
+  methods: {
+    show():  void {
+      const $el = this.$$(this.$el) as JQuery;
+
+      $el.modal('show');
+    },
+
+    /**
+     * Cancels password confirm modal.
+     */
+    cancel(): void {
+      const $el = this.$$(this.$el) as JQuery;
+
+      $el.modal('hide');
+    },
+
+    /**
+     * After error callback.
+     */
+    afterError(): void {
+      this.submitting = false;
+
+      const $el = this.$$(this.$refs.modal) as JQuery;
+
+      $el.modal('hide');
+    },
+
+    /**
+     * Submit error callback.
+     *
+     * @param {object} err HTTP response object.
+     */
+    onSubmitError(err: SubmitError): void {
+      console.error(err);
+
+      switch (err.code) {
+        case 'LimitExceededException':
+          this.$toast.error(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'));
+          setTimeout(() => this.afterError(), 30000);
+          break;
+
+        case 'UserNotFoundException':
+          this.$toast.error(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'));
+          setTimeout(() => this.afterError(), 3000);
+          break;
+
+        case 'CodeMismatchException':
+          this.$toast.error(this.$t('MESSAGES.ERRORS.INVALID_CODE'));
+          setTimeout(() => this.afterError(), 3000);
+          break;
+
+        case 'ExpiredCodeException':
+          this.$toast.warning(this.$t('MESSAGES.ERRORS.EXPIRED_CODE'));
+          setTimeout(() => this.afterError(), 3000);
+          break;
+
+        case 'NotAuthorizedException':
+          this.$toast.warning(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'));
+          this.$router.push('/');
+          break;
+
+        default:
+          this.$toast.error(this.$t('MESSAGES.ERRORS.UNKNOWN'));
+          setTimeout(() => this.afterError(), 3000);
+      }
+    },
+
+    /**
+     * Confirm success callback.
+     */
+    onSubmitSuccess(): void {
+      this.$toast.success(this.$t('MESSAGES.SUBMIT.SUCCESS'));
+
+      const $el = this.$$(this.$el) as JQuery;
+
+      $el.modal('hide');
+
+      this.$router.replace('/users/sign-in');
+    },
+
+    /**
+     * Confirms new password.
+     */
+    async submit(): Promise<void> {
+      this.submitting = true;
+
+      const { code, password } = this.data;
+
+      try {
+        await this.$auth.forgotPasswordSubmit(this.email, code, password);
+
+        this.onSubmitSuccess();
+      } catch (err) {
+        this.onSubmitError(err);
+        console.error(err);
+      }
+
+      this.submitting = false;
+    }
+  }
 });
 </script>

@@ -64,7 +64,7 @@ export default new Vue({
       } else if (!this.data) {
         // Fetch session data if signed in and not present
         try {
-          const res = await api.get('WebApi', '/session', {});
+          const res = await api.get('Web', '/session', {});
 
           this.data = res.data;
         } catch (err) {

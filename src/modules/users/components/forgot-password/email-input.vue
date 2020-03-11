@@ -1,20 +1,20 @@
 <i18n>
 en:
-  PLACEHOLDER: Create your password...
-  LABEL: New Password
+  PLACEHOLDER: Enter your email...
+  LABEL: Email
 </i18n>
 
 <template lang="pug">
 form-input(
   @input="value => $emit('input', value)"
   :placeholder="$t('PLACEHOLDER')"
-  rules="required|min:8"
+  rules="required|min:6"
   :disabled="disabled"
   :label="$t('LABEL')"
   :required="true"
   :value="value"
-  name="password"
-  type="password"
+  name="email"
+  type="email"
   )
 </template>
 
