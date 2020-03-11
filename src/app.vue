@@ -7,14 +7,14 @@ en:
 <template lang="pug">
 main#app
   transition
-    the-navbar(v-if="!loading")
+    the-navbar
 
   transition(
     name="component-fade"
     mode="out-in"
     )
 
-    router-view.router-view(v-if="!loading")
+    router-view.router-view
 
   transition(name="dimmer-fade")
     .ui.active.inverted.dimmer(v-if="dim")
