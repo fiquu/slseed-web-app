@@ -106,6 +106,7 @@
     "fi-is": "^4.0.0",
     "fomantic-ui": "^2.8.4",
     "gulp": "^4.0.2",
+    "internal-ip": "^6.0.0",
     "node-sass": "^4.13.1",
     "pug": "^2.0.4",
     "pug-loader": "^2.4.0",
