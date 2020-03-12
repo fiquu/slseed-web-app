@@ -144,7 +144,7 @@ export default Vue.extend({
      * Input verification code callback.
      */
     onSubmitSuccess(): void {
-      const $modal: any = this.$refs.modal;
+      const $modal: any = this.$refs.modal; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       $modal.show();
     },
