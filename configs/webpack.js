@@ -1,4 +1,10 @@
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+/**
+ * Webpack config.
+ *
+ * @module configs/webpack
+ */
+
+ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { DefinePlugin, IgnorePlugin } = require('webpack');
 
 const { version } = require('../package.json');

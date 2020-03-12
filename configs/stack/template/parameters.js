@@ -1,14 +1,13 @@
-const AWS = require('aws-sdk');
-
+const { profiles, region } = require('../../../configs/aws');
 const { name, title } = require('../../../package.json');
-const { profiles } = require('../../../configs/aws');
+
 const nameSlug = name.replace(/\W+/g, ' ').trim().replace(/\s+/g, '-');
 
 module.exports = {
   AwsRegion: {
     Description: 'Project AWS region',
-    AllowedValues: [AWS.config.region],
-    Default: AWS.config.region,
+    AllowedValues: [region],
+    Default: region,
     Type: 'String'
   },
   Environment: {

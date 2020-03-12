@@ -14,7 +14,7 @@ You may find the folders are self-explanatory and everythings is where it's supp
 
 ### Amazon Web Services
 
-[AWS](https://aws.amazon.com) provides great services at great prices, most of them have free tiers that you may never fully use. This way, you can have an account for your each stage of your project (ideally created with [AWS Organziations](https://aws.amazon.com/organizations)) so you don't use the free tier of your main account (`.env.production`) while developing on local (`.env.local`), developing on the cloud (`.env.development`), testing (`.env.testing`) or validating (`.env.staging`).
+[AWS](https://aws.amazon.com) provides great services at great prices, most of them have free tiers that you may never fully use. This way, you can have an account for your each stage of your project (ideally created with [AWS Organziations](https://aws.amazon.com/organizations)) so you don't use the free tier of your main account (`.env.production.local`) while developing on local (`.env.local.local`), developing on the cloud (`.env.development.local`), testing (`.env.testing.local`) or validating (`.env.staging.local`).
 
 ### Vue
 

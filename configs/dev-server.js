@@ -1,7 +1,7 @@
 /**
- * Main config.
+ * Development Server config.
  *
- * @module configs/index
+ * @module configs/dev-server
  */
 
 const internalIp = require('internal-ip');
