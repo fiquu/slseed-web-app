@@ -46,7 +46,7 @@
     "build": "vue-cli-service build --mode production",
     "start": "vue-cli-service serve --mode local",
     "check": "npm-check --update",
-    "deploy": "node utils/deploy",
+    "deploy": "slseed-utils --do deploy",
     "setup:stack": "slseed-utils --do setup-stack",
     "setup:env": "slseed-utils --do setup-env",
     "setup": "slseed-utils"
