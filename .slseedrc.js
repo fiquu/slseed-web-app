@@ -5,5 +5,6 @@ module.exports = {
   stack: name.replace(/\W+/g, ' ').trim().replace(/\s+/g, '-'),
   configs: join(__dirname, 'configs'),
   dist: join(__dirname, 'dist'),
+  root: __dirname,
   type: 'app'
 }
