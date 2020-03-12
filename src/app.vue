@@ -6,8 +6,7 @@ en:
 
 <template lang="pug">
 main#app
-  transition
-    the-navbar
+  the-navbar
 
   transition(
     name="component-fade"

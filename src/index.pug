@@ -1,26 +1,27 @@
 doctype html
 
 - const { options } = htmlWebpackPlugin;
+- const { version, app } = options;
 
 html(lang="en")
   head
     meta(name="viewport" content="width=device-width, initial-scale=1, user-scalable=no")
-    meta(name="version", content=options.version)
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(name="version", content=version)
     meta(charset="utf-8")
 
     //- Social sharing
-    meta(property="og:title" content=options.app.name)
-    meta(property="og:description" content=options.app.description)
+    meta(property="og:title" content=app.name)
+    meta(property="og:description" content=app.description)
     meta(property="og:type" content="website")
     meta(property="og:image:width" content="1200")
     meta(property="og:image:height" content="675")
-    meta(property="og:image" content=options.app.ogImage)
-    meta(property="og:url" content=options.app.home)
+    meta(property="og:image" content=app.ogImage)
+    meta(property="og:url" content=app.home)
 
     meta(name="twitter:card" content="summary")
 
-    title=options.app.name
+    title=app.name
 
   body
     #app
