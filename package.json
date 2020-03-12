@@ -3,7 +3,7 @@
   "title": "Slseed Web App",
   "description": "Serveless Seed Web App project.",
   "author": "fiquu <hi@fiquu.com> (http://github.com/fiquu)",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "private": true,
   "homepage": "https://github.com/fiquu/slseed-web-app",
