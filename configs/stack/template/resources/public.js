@@ -64,6 +64,38 @@ module.exports = {
   },
 
   /**
+   * Bucket Policy.
+   */
+  PublicAppBucketPolicy: {
+    type: 'AWS::S3::BucketPolicy',
+    DependsOn: ['PublicAppBucket', 'PublicAppCloudFrontDist'],
+    Properties: {
+      Bucket: {
+        Ref: 'PublicAppBucket'
+      }
+    },
+    PolicyDocument: {
+      Version: '2008-10-17',
+      Id: 'PolicyForCloudFrontPrivateContent',
+      Statement: [
+        {
+          Action: ['s3:GetObject'],
+          Effect: 'Allow',
+          Sid: '1',
+          Principal: {
+            AWS: {
+              'Fn::Sub': 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${PublicAppCloudFrontDist}'
+            }
+          },
+          Resource: {
+            'Fn::Sub': 'arn:aws:s3:::${PublicAppBucket}/*'
+          }
+        }
+      ]
+    }
+  },
+
+  /**
    * Public App Bucket SSM Parameter.
    */
   PublicAppBucketParam: {
