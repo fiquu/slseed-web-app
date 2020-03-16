@@ -1,6 +1,8 @@
 module.exports = {
   /**
-   * Public App Bucket (for app hosting).
+   * Public App Bucket.
+   *
+   * This is used for app storage.
    */
   PublicAppBucket: {
     Type: 'AWS::S3::Bucket'
@@ -8,6 +10,8 @@ module.exports = {
 
   /**
    * Public App CloudFront Origin Access Identity.
+   *
+   * This is used to allow CloudFront to access the bucket.
    */
   PublicAppBucketAccess: {
     Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity',
@@ -21,7 +25,43 @@ module.exports = {
   },
 
   /**
+   * Public App Bucket Policy.
+   *
+   * This is used to allow the distribution to read from the bucket.
+   */
+  PublicAppBucketPolicy: {
+    Type: 'AWS::S3::BucketPolicy',
+    DependsOn: ['PublicAppBucket', 'PublicAppBucketAccess'],
+    Properties: {
+      Bucket: {
+        Ref: 'PublicAppBucket'
+      },
+      PolicyDocument: {
+        Version: '2008-10-17',
+        Id: 'PolicyForCloudFrontPrivateContent',
+        Statement: [
+          {
+            Action: ['s3:GetObject'],
+            Effect: 'Allow',
+            Sid: '1',
+            Principal: {
+              CanonicalUser: {
+                'Fn::GetAtt': ['PublicAppBucketAccess', 'S3CanonicalUserId']
+              }
+            },
+            Resource: {
+              'Fn::Sub': '${PublicAppBucket.Arn}/*'
+            }
+          }
+        ]
+      }
+    }
+  },
+
+  /**
    * Public App CloudFront Distribution.
+   *
+   * This is used to serve the app.
    */
   PublicAppCloudFrontDist: {
     Type: 'AWS::CloudFront::Distribution',
@@ -64,39 +104,9 @@ module.exports = {
   },
 
   /**
-   * Bucket Policy.
-   */
-  PublicAppBucketPolicy: {
-    type: 'AWS::S3::BucketPolicy',
-    DependsOn: ['PublicAppBucket', 'PublicAppCloudFrontDist'],
-    Properties: {
-      Bucket: {
-        Ref: 'PublicAppBucket'
-      }
-    },
-    PolicyDocument: {
-      Version: '2008-10-17',
-      Id: 'PolicyForCloudFrontPrivateContent',
-      Statement: [
-        {
-          Action: ['s3:GetObject'],
-          Effect: 'Allow',
-          Sid: '1',
-          Principal: {
-            AWS: {
-              'Fn::Sub': 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${PublicAppCloudFrontDist}'
-            }
-          },
-          Resource: {
-            'Fn::Sub': 'arn:aws:s3:::${PublicAppBucket}/*'
-          }
-        }
-      ]
-    }
-  },
-
-  /**
    * Public App Bucket SSM Parameter.
+   *
+   * This is used to store the distribution id parameter.
    */
   PublicAppBucketParam: {
     Type: 'AWS::SSM::Parameter',
@@ -116,7 +126,9 @@ module.exports = {
   },
 
   /**
-   *  Public App CloudFront Distribution Id SSM Parameter.
+   * Public App CloudFront Distribution Id SSM Parameter.
+   *
+   * This is used to store the bucket name parameter.
    */
   PublicAppCloudFrontDistIdParam: {
     Type: 'AWS::SSM::Parameter',
