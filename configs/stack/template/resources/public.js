@@ -1,15 +1,15 @@
 module.exports = {
   /**
-   * Public App S3 Bucket (for app hosting).
+   * Public App Bucket (for app hosting).
    */
-  PublicAppS3Bucket: {
+  PublicAppBucket: {
     Type: 'AWS::S3::Bucket'
   },
 
   /**
    * Public App CloudFront Origin Access Identity.
    */
-  PublicAppS3BucketAccess: {
+  PublicAppBucketAccess: {
     Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity',
     Properties: {
       CloudFrontOriginAccessIdentityConfig: {
@@ -25,7 +25,7 @@ module.exports = {
    */
   PublicAppCloudFrontDist: {
     Type: 'AWS::CloudFront::Distribution',
-    DependsOn: ['PublicAppS3Bucket', 'PublicAppS3BucketAccess'],
+    DependsOn: ['PublicAppBucket', 'PublicAppBucketAccess'],
     Properties: {
       DistributionConfig: {
         DefaultRootObject: 'index.html',
@@ -37,14 +37,14 @@ module.exports = {
         Origins: [
           {
             DomainName: {
-              'Fn::GetAtt': ['PublicAppS3Bucket', 'DomainName']
+              'Fn::GetAtt': ['PublicAppBucket', 'DomainName']
             },
             Id: {
-              Ref: 'PublicAppS3Bucket'
+              Ref: 'PublicAppBucket'
             },
             S3OriginConfig: {
               OriginAccessIdentity: {
-                'Fn::Sub': 'origin-access-identity/cloudfront/${PublicAppS3BucketAccess}'
+                'Fn::Sub': 'origin-access-identity/cloudfront/${PublicAppBucketAccess}'
               }
             }
           }
@@ -56,7 +56,7 @@ module.exports = {
             QueryString: false
           },
           TargetOriginId: {
-            Ref: 'PublicAppS3Bucket'
+            Ref: 'PublicAppBucket'
           }
         }
       }
@@ -64,21 +64,21 @@ module.exports = {
   },
 
   /**
-   * Public App S3 Bucket SSM Parameter.
+   * Public App Bucket SSM Parameter.
    */
-  PublicAppS3BucketParam: {
+  PublicAppBucketParam: {
     Type: 'AWS::SSM::Parameter',
-    DependsOn: ['PublicAppS3Bucket'],
+    DependsOn: ['PublicAppBucket'],
     Properties: {
       Type: 'String',
       Name: {
-        'Fn::Sub': '/${ProjectName}/${Environment}/public-app-s3-bucket'
+        'Fn::Sub': '/${ProjectName}/${Environment}/public-app-bucket'
       },
       Description: {
-        'Fn::Sub': '${ProjectTitle} Public App S3 Bucket [${Environment}]'
+        'Fn::Sub': '${ProjectTitle} Public App Bucket [${Environment}]'
       },
       Value: {
-        Ref: 'PublicAppS3Bucket'
+        Ref: 'PublicAppBucket'
       }
     }
   },
@@ -92,10 +92,10 @@ module.exports = {
     Properties: {
       Type: 'String',
       Name: {
-        'Fn::Sub': '/${ProjectName}/${Environment}/public-app-cloudfront-dist-id'
+        'Fn::Sub': '/${ProjectName}/${Environment}/public-app-cloudfront-dist'
       },
       Description: {
-        'Fn::Sub': '${ProjectTitle} Public App CloudFront Distribution Id [${Environment}]'
+        'Fn::Sub': '${ProjectTitle} Public App CloudFront Distribution [${Environment}]'
       },
       Value: {
         Ref: 'PublicAppCloudFrontDist'
