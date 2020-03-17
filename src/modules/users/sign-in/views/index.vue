@@ -81,9 +81,9 @@ section.view
 <script lang="ts">
 import Vue from 'vue';
 
-import NewPasswordInput from '../components/new-password-input.vue';
-import PasswordInput from '../components/password-input.vue';
-import EmailInput from '../components/email-input.vue';
+import NewPasswordInput from '../../core/components/inputs/new-password.vue';
+import PasswordInput from '../../core/components/inputs/password.vue';
+import EmailInput from '../../core/components/inputs/email.vue';
 
 interface ComponentData {
   newPasswordRequired: boolean;

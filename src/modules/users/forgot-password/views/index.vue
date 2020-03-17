@@ -84,8 +84,8 @@ section.view
 <script lang="ts">
 import Vue from 'vue';
 
-import ResetModal from '../components/forgot-password/reset-modal.vue';
-import EmailInput from '../components/email-input.vue';
+import EmailInput from '../../core/components/inputs/email.vue';
+import ResetModal from '../components/reset-modal.vue';
 
 interface SubmitError extends Error {
   code: string;
@@ -103,8 +103,8 @@ interface ComponentData {
 
 export default Vue.extend({
   components: {
-    ResetModal,
-    EmailInput
+    EmailInput,
+    ResetModal
   },
 
   data(): ComponentData {
