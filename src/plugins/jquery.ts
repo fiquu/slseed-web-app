@@ -1,9 +1,3 @@
-/**
- * JQuery plugin module.
- *
- * @module plugins/jquery
- */
-
 import jQuery from 'jquery';
 import Vue from 'vue';
 

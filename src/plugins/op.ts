@@ -1,9 +1,3 @@
-/**
- * Object Patch plugin module.
- *
- * @module plugins/op
- */
-
 import op, { ObjectPathStatic } from 'object-path';
 import Vue from 'vue';
 

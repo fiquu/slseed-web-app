@@ -1,9 +1,3 @@
-/**
- * Local Storage plugin module.
- *
- * @module plugins/local-storage
- */
-
 import Vue from 'vue';
 
 import localStorage, { LocalStorage } from '../services/local-storage';

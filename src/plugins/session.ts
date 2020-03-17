@@ -1,9 +1,3 @@
-/**
- * Session plugin module.
- *
- * @module plugins/session
- */
-
 import Vue from 'vue';
 
 import session, { SessionService } from '@/services/session';

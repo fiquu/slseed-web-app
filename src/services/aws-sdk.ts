@@ -1,9 +1,3 @@
-/**
- * AWS SDK service module.
- *
- * @module services/aws-sdk
- */
-
 // Just include what we need from the AWS SDK
 import _CognitoIdentityServiceProvider from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import _CognitoIdentity from 'aws-sdk/clients/cognitoidentity';

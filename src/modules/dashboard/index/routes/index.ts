@@ -1,18 +1,11 @@
-/**
- * Dashboard routes module.
- *
- * @module dashboard/routes
- */
-
 import { RouteConfig } from 'vue-router';
 
 type DashboardView = Promise<typeof import('../views/index.vue')>;
 
-/* eslint-disable capitalized-comments */
-
 const routes: RouteConfig[] = [
   {
     component: (): DashboardView => import(
+      /* eslint-disable capitalized-comments */
       /* webpackChunkName: "dashboard" */
       '../views/index.vue'
     ),

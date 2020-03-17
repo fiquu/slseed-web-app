@@ -1,9 +1,3 @@
-/**
- * Router plugin module.
- *
- * @module plugins/router
- */
-
 import VueRouter from 'vue-router';
 import Vue from 'vue';
 

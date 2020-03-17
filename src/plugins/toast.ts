@@ -1,9 +1,3 @@
-/**
- * Toast plugin module.
- *
- * @module plugins/toast
- */
-
 import Vue from 'vue';
 
 import toast, { ToastPlugin } from '@/services/toast';

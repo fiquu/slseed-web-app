@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/camelcase */
-
 import Auth from '@aws-amplify/auth';
 
 export default {
+  /* eslint-disable @typescript-eslint/camelcase */
   graphql_endpoint: `${process.env.VUE_APP_API_ENDPOINT}/graphql`,
   graphql_endpoint_iam_region: 'us-east-1',
   endpoints: [

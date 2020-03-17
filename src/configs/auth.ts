@@ -1,9 +1,3 @@
-/**
- * Auth config module.
- *
- * @module configs/auth
- */
-
 const {
   VUE_APP_COGNITO_USER_POOL_CLIENT_ID,
   VUE_APP_COGNITO_IDENTITY_POOL_ID,

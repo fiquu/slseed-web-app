@@ -1,10 +1,10 @@
 import { RouteConfig } from 'vue-router';
 
-type UsersListView = Promise<typeof import('../views/index.vue')>;
+type UsersIndexView = Promise<typeof import('../views/index.vue')>;
 
 const routes: RouteConfig[] = [
   {
-    component: (): UsersListView => import(
+    component: (): UsersIndexView => import(
       /* eslint-disable capitalized-comments */
       /* webpackChunkName: "users-index" */
       '../views/index.vue'

@@ -1,9 +1,3 @@
-/**
- * API plugin module.
- *
- * @module plugins/api
- */
-
 import { APIClass } from '@aws-amplify/api';
 import Vue from 'vue';
 

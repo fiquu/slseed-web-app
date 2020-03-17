@@ -1,23 +1,17 @@
-/**
- * Core routes module.
- *
- * @module core/routes
- */
-
 import { RouteConfig } from 'vue-router';
 
 type NotFoundView = Promise<typeof import('../views/not-found.vue')>;
 
-/* eslint-disable capitalized-comments */
-
 const routes: RouteConfig[] = [
   {
+    // Redirect root to dashboard
     redirect: '/dashboard',
     name: 'index',
     path: '/'
   },
   {
     component: (): NotFoundView => import(
+      /* eslint-disable capitalized-comments */
       /* webpackChunkName: "not-found" */
       '../views/not-found.vue'
     ),

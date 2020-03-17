@@ -1,9 +1,3 @@
-/**
- * Local Storage service module.
- *
- * @module services/local-storage
- */
-
 const { localStorage } = window;
 
 export type JSONValue = object | string | number | object[] | string[] | number[] | null | undefined;

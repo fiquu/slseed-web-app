@@ -1,9 +1,3 @@
-/**
- * Router config module.
- *
- * @module configs/router
- */
-
 import { RouterOptions, RouteConfig } from 'vue-router';
 
 const routes: RouteConfig[] = [];

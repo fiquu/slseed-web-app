@@ -1,10 +1,3 @@
-/**
- * Routes module.
- *
- * @module routes
- */
-
-const MOD_REGEX = /^.\/(.+)\/store\/(.+)\.js$/;
 const modules: StoreModules = {};
 
 export interface StoreModule {
@@ -19,8 +12,8 @@ export interface StoreModules {
 const req = require.context('../modules/', true, /\/store\/.+\.ts$/);
 
 for (const path of req.keys()) {
-  const name = path.replace(MOD_REGEX, '$1');
-  const prop = path.replace(MOD_REGEX, '$2');
+  const name = path.replace(/^.\/(.+)\/store\/(.+)\.ts$/, '$1');
+  const prop = path.replace(/^.\/(.+)\/store\/(.+)\.ts$/, '$2');
 
   if (!modules[String(name)]) {
     modules[String(name)] = {

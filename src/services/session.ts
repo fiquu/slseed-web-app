@@ -1,9 +1,3 @@
-/**
- * Session service module.
- *
- * @module service/session
- */
-
 import Vue from 'vue';
 
 import router from './router';

@@ -1,9 +1,3 @@
-/**
- * I18n plugin module.
- *
- * @module plugins/i18n
- */
-
 import VueI18n from 'vue-i18n';
 import Vue from 'vue';
 

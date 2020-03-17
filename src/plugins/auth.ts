@@ -1,9 +1,3 @@
-/**
- * Auth plugin module.
- *
- * @module plugins/auth
- */
-
 import Vue from 'vue';
 
 import { AuthClass } from '@aws-amplify/auth';

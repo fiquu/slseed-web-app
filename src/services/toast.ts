@@ -1,9 +1,3 @@
-/**
- * Toast plugin module.
- *
- * @module plugins/toast
- */
-
 import { TranslateResult } from 'vue-i18n';
 import Vue from 'vue';
 

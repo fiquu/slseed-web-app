@@ -1,5 +1,3 @@
-// Plugins load list
-
 import _router from '@/plugins/router';
 import _store from '@/plugins/store';
 import _i18n from '@/plugins/i18n';
