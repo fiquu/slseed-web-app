@@ -7,7 +7,7 @@ const routes: RouteConfig[] = [
     component: (): UsersForgotPasswordView => import(
       /* eslint-disable capitalized-comments */
       /* webpackChunkName: "users-forgot-password" */
-      '../views/forgot-password.vue'
+      '../views/index.vue'
     ),
     name: 'users-forgot-password',
     path: '/users/forgot-password'

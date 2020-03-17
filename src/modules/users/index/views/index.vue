@@ -2,46 +2,55 @@
 section
   .ui.container.view
     .ui.basic.vertical.segment
-      .ui.segment
-        .ui.active.loader(v-if="fetching")
+      transition(
+        name="component-fade"
+        mode="out-in"
+        )
 
-        .ui.list
-          .item(v-for="user in users")
-            i.user.icon
+        users-placeholder(v-if="fetching")
 
-            .content
-              .header(v-text="user.sub")
-
-              .description
-                .ui.tiny.olive.label
-                  i.plus.circle.icon
-                  span(v-text="$moment(user.createdAt).format('L')")
-
-                .ui.tiny.label
-                  i.edit.icon
-                  span(v-text="$moment(user.modifiedAt).format('L')")
+        users-cards(
+          :users="users"
+          v-else
+          )
 </template>
 
 <script lang="ts">
-import { graphqlOperation, GraphQLResult } from '@aws-amplify/api';
-import Observable from 'zen-observable';
 import Vue from 'vue';
 
+import UsersPlaceholder from '../components/users-placeholder.vue';
+import UsersCards from '../components/users-cards.vue';
+import store from '../store';
+
 interface ComponentData {
-  users: GraphQLResult<object> | Observable<object> | null;
   fetching: boolean;
 }
 
 export default Vue.extend({
+  components: {
+    UsersPlaceholder,
+    UsersCards
+  },
+
   data(): ComponentData {
     return {
-      fetching: false,
-      users: null
+      fetching: true
     };
   },
 
   created() {
+    this.$store.registerModule('users', store);
     this.fetch();
+  },
+
+  beforeDestroy() {
+    this.$store.unregisterModule('users');
+  },
+
+  computed: {
+    users(): object[] {
+      return this.$store.getters.users;
+    }
   },
 
   methods: {
@@ -49,9 +58,7 @@ export default Vue.extend({
       this.fetching = true;
 
       try {
-        const res = await this.$api.graphql(graphqlOperation('query { users { sub } }'));
-
-        this.users = res;
+        await this.$store.dispatch('fetchAll');
       } catch (err) {
         console.error(err);
       }

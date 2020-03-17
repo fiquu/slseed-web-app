@@ -57,6 +57,7 @@
     "@aws-amplify/pubsub": "^2.1.7",
     "aws-sdk": "^2.640.0",
     "core-js": "^3.6.4",
+    "graphql-tag": "^2.10.3",
     "jquery": "^3.4.1",
     "localforage": "^1.7.3",
     "moment": "^2.24.0",

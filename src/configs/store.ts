@@ -1,28 +1,12 @@
-const modules: StoreModules = {};
-
-export interface StoreModule {
-  [key: string]: StoreModule | boolean;
-}
-
-export interface StoreModules {
-  [key: string]: StoreModule;
-}
-
-// Import every module's `store/index.js` dynamically
-const req = require.context('../modules/', true, /\/store\/.+\.ts$/);
-
-for (const path of req.keys()) {
-  const name = path.replace(/^.\/(.+)\/store\/(.+)\.ts$/, '$1');
-  const prop = path.replace(/^.\/(.+)\/store\/(.+)\.ts$/, '$2');
-
-  if (!modules[String(name)]) {
-    modules[String(name)] = {
-      namespaced: true
-    };
-  }
-
-  modules[String(name)][String(prop)] = req(path).default;
-}
+/**
+ * Add modules here by importing them.
+ *
+ * NOTE: It's recommended to lazy-load most of them.
+ *
+ * @see https://itnext.io/vue-js-app-performance-optimization-part-3-lazy-loading-vuex-modules-ed67cf555976
+ */
+const modules = {
+};
 
 export default {
   modules

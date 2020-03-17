@@ -1,9 +1,9 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 
-import config from '@/configs/store';
+Vue.use(Vuex); // Must be called before loading stores
 
-Vue.use(Vuex);
+import config from '@/configs/store';
 
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
