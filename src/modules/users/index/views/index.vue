@@ -1,3 +1,9 @@
+<i18n>
+en:
+  FETCH:
+    ERROR: Could not retrieve data.
+</i18n>
+
 <template lang="pug">
 section
   .ui.container.view
@@ -16,6 +22,7 @@ section
 </template>
 
 <script lang="ts">
+import { mapActions, mapState } from 'vuex';
 import Vue from 'vue';
 
 import UsersPlaceholder from '../components/users-placeholder.vue';
@@ -38,6 +45,8 @@ export default Vue.extend({
     };
   },
 
+  computed: mapState('users', ['users']),
+
   created() {
     this.$store.registerModule('users', store);
     this.fetch();
@@ -47,19 +56,16 @@ export default Vue.extend({
     this.$store.unregisterModule('users');
   },
 
-  computed: {
-    users(): object[] {
-      return this.$store.getters.users;
-    }
-  },
-
   methods: {
+    ...mapActions('users', ['fetchAll']),
+
     async fetch(): Promise<void> {
       this.fetching = true;
 
       try {
-        await this.$store.dispatch('fetchAll');
+        await this.fetchAll();
       } catch (err) {
+        this.$toast.error(this.$t('FETCH.ERROR'));
         console.error(err);
       }
 
