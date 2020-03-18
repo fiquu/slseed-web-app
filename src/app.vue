@@ -6,29 +6,19 @@ en:
 
 <template lang="pug">
 main#app
-  the-navbar
+  the-sidebar(ref="sidebar")
 
-  transition(
-    name="component-fade"
-    mode="out-in"
-    )
+  the-views.pusher(@toggle-the-sidebar="$refs.sidebar.toggle()")
 
-    router-view.router-view
-
-  transition(name="dimmer-fade")
-    .ui.active.inverted.dimmer(v-if="dim")
-      img.ui.mini.image(
-        src="/static/images/navbar-icon.png"
-        v-show="loading"
-        )
-
-      .ui.huge.loader(v-show="loading")
+  the-dimmer
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-import TheNavbar from '@/modules/core/components/the-navbar.vue';
+import TheSidebar from '@/modules/core/components/the-sidebar.vue';
+import TheDimmer from '@/modules/core/components/the-dimmer.vue';
+import TheViews from '@/modules/core/components/the-views.vue';
 
 interface ComponentData {
   loading: boolean;
@@ -37,7 +27,9 @@ interface ComponentData {
 
 export default Vue.extend({
   components: {
-    TheNavbar
+    TheSidebar,
+    TheDimmer,
+    TheViews
   },
 
   data(): ComponentData {
@@ -85,17 +77,18 @@ export default Vue.extend({
 });
 </script>
 
+<style src="@/styles/_breakpoints.sass" lang="sass"></style>
 <style src="@/styles/_transitions.sass" lang="sass"></style>
 <style src="@/styles/_dimmer.sass" lang="sass"></style>
 <style src="@/styles/_site.sass" lang="sass"></style>
 <style lang="sass" scoped>
 main#app
-  flex-direction: column
-  display: flex
-  height: 100vh
-  width: 100vw
+  overflow: hidden
+  height: 100%
+  width: 100%
 
-  > .router-view
-    overflow-y: scroll
-    flex: 1
+  ::v-deep section.view
+    > .ui.container
+      margin-right: auto
+      margin-left: auto
 </style>

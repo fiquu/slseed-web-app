@@ -6,8 +6,8 @@ en:
 </i18n>
 
 <template lang="pug">
-section.view
-  .ui.basic.center.aligned.vertical.text.container.segment
+section.ui.basic.segment
+  .ui.center.aligned.text.container
     .ui.grey.segment
       h1.ui.grey.icon.header
         i.meh.circular.icon

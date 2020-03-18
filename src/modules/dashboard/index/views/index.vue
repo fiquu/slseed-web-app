@@ -13,7 +13,7 @@ en:
 </i18n>
 
 <template lang="pug">
-section.ui.vertical.segment.view
+section.ui.basic.segment
   .ui.container
     .ui.red.segment
       h4.ui.red.header
@@ -21,7 +21,9 @@ section.ui.vertical.segment.view
 
       p(v-text="currentTime")
 
-    .ui.three.cards
+    .ui.hidden.divider
+
+    .ui.three.stackable.cards
       link-card(
         :description="$t('USERS.DESCRIPTION')"
         :header="$t('USERS.HEADER')"
