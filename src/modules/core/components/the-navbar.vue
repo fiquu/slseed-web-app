@@ -10,15 +10,25 @@ header.ui.fixed.top.compact.menu
     to='/'
     )
 
-    i.home.icon
+    i.chevron.left.icon
 
   .header.item
     img(src='/static/images/navbar-icon.png')
     | {{ title }}
 
-  .right.menu
-    .item(v-if="$session.signedIn")
+  .right.menu.mobile.tablet.only
+    a.item(
+      @click.stop="$emit('toggle-the-sidebar')"
+      v-if="$session.signedIn"
+      role="button"
+      )
+
+      i.bars.icon
+
+  .right.menu.tablet.or.lower.hidden
+    .item(v-if="$session.signedIn && $session.loaded")
       i.user.circle.icon
+      | {{ $session.data.name }}
 
     a.item(
       @click="$session.signOut()"
@@ -34,7 +44,7 @@ header.ui.fixed.top.compact.menu
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'MainNavbar',
+  name: 'TheNavbar',
 
   data() {
     return {
@@ -47,6 +57,9 @@ export default Vue.extend({
 <style lang="sass" scoped>
 header.ui.fixed.top.compact.menu
   position: static
+
+  > button
+    border: 0
 
   .header.item
     img
