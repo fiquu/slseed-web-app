@@ -1,6 +1,6 @@
 const { join } = require('path');
 
-const { version } = require('./package.json');
+const { name, version } = require('./package.json');
 const app = require('./app.json');
 
 module.exports = {
@@ -24,6 +24,20 @@ module.exports = {
       .use('yaml')
       .loader('yaml-loader')
       .end();
+
+    // Add ENV values
+    config.plugin('define')
+      .tap(args => {
+        args[0]['process.env'] = {
+          ...args[0]['process.env'],
+          VUE_APP_PROJECT_NAME: `"${name}"`,
+          VUE_APP_VERSION: `"${version}"`,
+          VUE_APP_SHORT: `"${app.short}"`,
+          VUE_APP_NAME: `"${app.name}"`
+        };
+
+        return args;
+      })
 
     // Load index.pug instead of index.html
     // You could also pass your Facebook App id or any other per-stage head tag
