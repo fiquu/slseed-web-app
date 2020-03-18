@@ -1,7 +1,7 @@
 <template lang="pug">
 section
   h2.ui.dividing.header Card
-  .ui.four.cards
+  .ui.four.stackable.cards
     .ui.card
       .image
         .ui.blurring.inverted.dimmer
@@ -63,7 +63,7 @@ section
       .content
         img.ui.wireframe.image(src="/static/images/theme/wireframe/paragraph.png")
 
-  .ui.four.cards
+  .ui.four.stackable.cards
     .ui.card
       .extra.content
         span.left.floated.like
@@ -116,7 +116,7 @@ section
         .ui.button Action 3
         .ui.button Action 4
 
-  .ui.four.cards
+  .ui.four.stackable.cards
     .card
       .content Content 1
       .content Content 2
@@ -141,7 +141,7 @@ section
       .content Content 3
       .extra.content Extra Content
 
-  .ui.four.cards
+  .ui.four.stackable.cards
     .card
       .image
         img(src="/static/images/theme/wireframe/image.png")

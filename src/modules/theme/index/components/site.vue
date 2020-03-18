@@ -11,6 +11,7 @@ section
       p
         | Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient
         |  montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
+
     .column
       h2 Example body text
       p
@@ -32,6 +33,7 @@ section
         | An abbreviation of the word attribute is
         abbr(title='attribute')  attr
         | .
+
     .column
       .ui.three.column.stackable.padded.middle.aligned.centered.color.grid
         .red.column Red
@@ -55,15 +57,6 @@ export default Vue.extend({});
 </script>
 
 <style lang="sass" scoped>
-.color.grid
-  margin: -1.5em
-  width: 400px
-
-  .column
-    margin: 0.5em
-    width: 50px
-    height: 50px
-
 .ui.table
   table-layout: fixed
 </style>

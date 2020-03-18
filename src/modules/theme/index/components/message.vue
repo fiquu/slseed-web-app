@@ -2,7 +2,7 @@
 section
   h2.ui.dividing.header Messages
 
-  .ui.two.column.grid
+  .ui.two.column.stackable.grid
     .column
       .ui.message
         i.close.icon
@@ -56,7 +56,7 @@ section
           .header Welcome back!
           p This is a cautonary, warning message!
 
-  .ui.four.column.grid
+  .ui.four.column.stackable.grid
     .column
       .ui.large.message
         p This is a special notification which you can dismiss if you're bored with it.
@@ -120,7 +120,6 @@ section
 
       .ui.mini.warning.message
         p This is a cautonary, warning message!
-
 </template>
 
 <script lang="ts">

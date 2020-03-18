@@ -2,7 +2,7 @@
 section
   h2.ui.dividing.header Menu
 
-  .ui.menu
+  .ui.stackable.menu
     .header.item Brand
 
     a.active.item Link
@@ -30,7 +30,7 @@ section
 
       a.item Link
 
-  .ui.inverted.menu
+  .ui.inverted.stackable.menu
     .header.item Brand
 
     .active.item Link
@@ -58,7 +58,7 @@ section
 
       a.item Link
 
-  .ui.secondary.menu
+  .ui.secondary.stackable.menu
     .active.item Link
 
     a.item Link
@@ -115,21 +115,21 @@ section
           a.item Link
       a.item Link
 
-  .ui.three.column.doubling.grid
+  .ui.three.column.doubling.stackable.grid
     .column
-      .ui.secondary.pointing.menu
+      .ui.secondary.pointing.stackable.menu
         .active.item Link
         a.item Link
         a.item Link
 
     .column
-      .ui.tabular.menu
+      .ui.tabular.stackable.menu
         .active.item Link
         a.item Link
         a.item Link
 
     .column
-      .ui.pointing.menu
+      .ui.pointing.stackable.menu
         .active.item Link
         a.item Link
         .right.item Right Text

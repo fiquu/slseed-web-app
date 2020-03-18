@@ -11,23 +11,37 @@ section.ui.basic.segment.view
     //- SITE
     theme-site
 
+    .ui.hidden.divider
+
     //- MENU
     theme-menu
+
+    .ui.hidden.divider
 
     //- BUTTONS
     theme-button
 
+    .ui.hidden.divider
+
     //- MESSAGES
     theme-message
+
+    .ui.hidden.divider
 
     //- TOASTS
     theme-toast
 
+    .ui.hidden.divider
+
     //- TABLE
     theme-table
 
+    .ui.hidden.divider
+
     //- INPUT
     theme-input
+
+    .ui.hidden.divider
 
     //- CARD
     theme-card

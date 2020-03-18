@@ -2,7 +2,7 @@
 section
   h2.ui.dividing.header Buttons
 
-  .ui.stackable.equal.width.grid
+  .ui.stackable.equal.width.stackable.grid
     .column
       button.ui.button Default
       button.ui.primary.button Primary

@@ -1,7 +1,7 @@
 <template lang="pug">
 section
   h2.ui.dividing.header Table
-  .ui.two.column.relaxed.grid
+  .ui.two.column.relaxed.stackable.grid
     .column
       simple-table
     .column
