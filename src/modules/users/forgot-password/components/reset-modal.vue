@@ -105,6 +105,13 @@ export default Vue.extend({
     CodeInput
   },
 
+  props: {
+    email: {
+      type: String,
+      required: true
+    }
+  },
+
   data(): ComponentData {
     return {
       submitting: false,
@@ -126,13 +133,6 @@ export default Vue.extend({
       return {
         loading: this.submitting
       };
-    }
-  },
-
-  props: {
-    email: {
-      type: String,
-      required: true
     }
   },
 

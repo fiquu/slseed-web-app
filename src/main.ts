@@ -12,8 +12,8 @@ import App from './app.vue';
 Vue.config.productionTip = false;
 
 export default new Vue({
-  render: (h: CreateElement): VNode => h(App),
   el: '#app',
+  render: (h: CreateElement): VNode => h(App),
   router,
   store,
   i18n
