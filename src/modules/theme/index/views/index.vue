@@ -4,8 +4,8 @@ en:
 </i18n>
 
 <template lang="pug">
-section.view
-  section.ui.basic.vertical.segment.container
+section.ui.basic.segment.view
+  section.ui.container
     h1 {{ $t('TITLE') }}
 
     //- SITE
