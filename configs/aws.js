@@ -1,9 +1,3 @@
-/**
- * AWS config.
- *
- * @module configs/aws
- */
-
 module.exports = {
   region: 'us-east-1' /* Default AWS region */,
   profiles: {

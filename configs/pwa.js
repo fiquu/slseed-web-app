@@ -1,9 +1,3 @@
-/**
- * PWA config.
- *
- * @module configs/pwa
- */
-
 const { version } = require('../package.json');
 const app = require('../app.json');
 

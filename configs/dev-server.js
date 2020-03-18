@@ -1,9 +1,3 @@
-/**
- * Development Server config.
- *
- * @module configs/dev-server
- */
-
 const internalIp = require('internal-ip');
 const crypto = require('crypto');
 
