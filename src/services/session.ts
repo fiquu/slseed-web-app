@@ -12,10 +12,10 @@ export interface SessionConfig {
 }
 
 export interface SessionData {
-  data: object | null;
   signedIn: boolean;
   loading: boolean;
   loaded: boolean;
+  data: object;
   root: string;
 }
 
@@ -30,7 +30,7 @@ export default new Vue({
       signedIn: false,
       loading: false,
       loaded: false,
-      data: null
+      data: {}
     };
   },
 
@@ -50,17 +50,15 @@ export default new Vue({
       }
 
       if (!this.signedIn) {
-        this.data = null; // Just delete session data if not signed in
+        this.data = {}; // Just delete session data if not signed in
 
         if (to.meta.requiresAuth) {
           redirect = config.signIn;
         }
-      } else if (!this.data) {
+      } else if (Object.keys(this.data).length < 1) {
         // Fetch session data if signed in and not present
         try {
-          const res = await api.get('Web', '/session', {});
-
-          this.data = res.data;
+          this.data = await api.get('Web', '/session', {});
         } catch (err) {
           if (this.signedIn) {
             await this.signOut();
