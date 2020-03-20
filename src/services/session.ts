@@ -1,3 +1,5 @@
+import { graphqlOperation, GraphQLResult } from '@aws-amplify/api';
+import Observable from 'zen-observable';
 import Vue from 'vue';
 
 import router from './router';
@@ -58,7 +60,7 @@ export default new Vue({
       } else if (Object.keys(this.data).length < 1) {
         // Fetch session data if signed in and not present
         try {
-          this.data = await api.get('Web', '/session', {});
+          this.data = await this.getSessionData();
         } catch (err) {
           if (this.signedIn) {
             await this.signOut();
@@ -82,6 +84,20 @@ export default new Vue({
   },
 
   methods: {
+    getSessionData(): Promise<GraphQLResult<object>> | Observable<Record<string, string>> {
+      return api.graphql(
+        graphqlOperation(`
+          {
+            session {
+              _id
+              firstname
+              lastname
+            }
+          }
+        `)
+      );
+    },
+
     async signOut(): Promise<void> {
       await this.$auth.signOut();
 
