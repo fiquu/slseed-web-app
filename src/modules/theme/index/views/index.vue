@@ -4,7 +4,7 @@ en:
 </i18n>
 
 <template lang="pug">
-section.ui.basic.segment.view
+section.ui.basic.segment
   section.ui.container
     h1 {{ $t('TITLE') }}
 
@@ -72,10 +72,3 @@ export default Vue.extend({
   }
 });
 </script>
-
-<style lang="sass" scoped>
-section.view
-  section.ui.basic.vertical.segment.container
-    section
-      margin-top: 2rem
-</style>

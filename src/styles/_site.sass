@@ -7,3 +7,9 @@ body
   &.pushable
     > .pusher
       background: $pageBackground
+
+  // Fix excessive side padding on mobile
+  @media screen and (max-width: 768px)
+    .ui.container:not(.fluid)
+      margin-right: auto !important
+      margin-left: auto !important

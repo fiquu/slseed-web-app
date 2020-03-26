@@ -13,7 +13,7 @@ en:
 </i18n>
 
 <template lang="pug">
-section.ui.vertical.segment
+section.ui.basic.segment
   .ui.container
     .ui.red.segment
       h4.ui.red.header

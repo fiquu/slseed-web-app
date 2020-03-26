@@ -48,6 +48,7 @@ nav.ui.menu(v-if="$session.signedIn")
     @click="$session.signOut()"
     v-if="$session.signedIn"
     role="button"
+    href=""
     )
 
     i.sign.out.icon

@@ -17,65 +17,63 @@ en:
 </i18n>
 
 <template lang="pug">
-section.ui.view.fluid.container
-  .ui.centered.grid
-    .doubling.four.column.row
-      .column
-        .ui.basic.vertical.segment
-          .ui.center.aligned.primary.segment
-            h3.ui.primary.icon.header
-              i.circular.id.badge.icon
-              .content {{ $t('TITLE') }}
-                .sub.header {{ $t('SUBTITLE') }}
+section.ui.basic.segment
+  .ui.text.container
+    .ui.basic.vertical.segment
+      .ui.center.aligned.primary.segment
+        h3.ui.primary.icon.header
+          i.circular.id.badge.icon
+          .content {{ $t('TITLE') }}
+            .sub.header {{ $t('SUBTITLE') }}
 
-          validation-observer.ui.form(
-            v-slot="{ classes, invalid }"
-            @submit.prevent="signIn()"
-            ref="form"
-            tag="form"
+      validation-observer.ui.form(
+        v-slot="{ classes, invalid }"
+        @submit.prevent="signIn()"
+        ref="form"
+        tag="form"
+        )
+
+        email-input.required.field(
+          :disabled="signingIn"
+          v-model="data.email"
+          :class="fieldClass"
+          )
+
+        password-input.required.field(
+          v-model="data.password"
+          :disabled="signingIn"
+          :class="fieldClass"
+          )
+
+        .ui.info.icon.message.visible(v-if="newPasswordRequired")
+          i.exclamation.circle.icon
+          .content
+            .header {{ $t('FORM.NEW_PASSWORD.MESSAGE.TITLE') }}
+            p {{ $t('FORM.NEW_PASSWORD.MESSAGE.BODY') }}
+
+        .required.field(
+          :class="[classes, fieldClass]"
+          v-if="newPasswordRequired"
+          )
+
+          new-password-input.required.field(
+            v-model="data.newPassword"
+            :disabled="signingIn"
+            :class="fieldClass"
             )
 
-            email-input.required.field(
-              :disabled="signingIn"
-              v-model="data.email"
-              :class="fieldClass"
-              )
+        button.ui.primary.fluid.right.labeled.icon.submit.button(
+          :disabled="invalid || signingIn"
+          :class="submitClass"
+          type="submit"
+          )
 
-            password-input.required.field(
-              v-model="data.password"
-              :disabled="signingIn"
-              :class="fieldClass"
-              )
+          | {{ $t('FORM.SUBMIT') }}
+          i.sign.in.icon
 
-            .ui.info.icon.message.visible(v-if="newPasswordRequired")
-              i.exclamation.circle.icon
-              .content
-                .header {{ $t('FORM.NEW_PASSWORD.MESSAGE.TITLE') }}
-                p {{ $t('FORM.NEW_PASSWORD.MESSAGE.BODY') }}
-
-            .required.field(
-              :class="[classes, fieldClass]"
-              v-if="newPasswordRequired"
-              )
-
-              new-password-input.required.field(
-                v-model="data.newPassword"
-                :disabled="signingIn"
-                :class="fieldClass"
-                )
-
-            button.ui.primary.fluid.right.labeled.icon.submit.button(
-              :disabled="invalid || signingIn"
-              :class="submitClass"
-              type="submit"
-              )
-
-              | {{ $t('FORM.SUBMIT') }}
-              i.sign.in.icon
-
-            .ui.center.aligned.vertical.segment
-              router-link.ui.link(to="/users/forgot-password")
-                | {{ $t('FORGOT_PASSWORD') }}
+        .ui.center.aligned.vertical.segment
+          router-link.ui.link(to="/users/forgot-password")
+            | {{ $t('FORGOT_PASSWORD') }}
 </template>
 
 <script lang="ts">

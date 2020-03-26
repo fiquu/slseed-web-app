@@ -34,6 +34,7 @@ header.ui.fixed.top.compact.menu
       @click="$session.signOut()"
       v-if="$session.signedIn"
       role="button"
+      href=""
       )
 
       i.sign.out.icon
