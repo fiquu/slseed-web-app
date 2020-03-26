@@ -93,10 +93,6 @@ export default new Vue({
         }
       }
 
-      // If (to.path !== this.root) {
-      //   Return this.root;
-      // }
-
       this.data = {}; // Just clear session data if not signed in
 
       if (to.meta.requiresAuth && to.path !== config.signIn) {
