@@ -8,12 +8,12 @@ en:
 form-input(
   @input="value => $emit('input', value)"
   :placeholder="$t('PLACEHOLDER')"
-  rules="required|min:1"
+  rules="required|digits:6"
   :disabled="disabled"
   :label="$t('LABEL')"
   :required="true"
   :value="value"
-  name="email"
+  name="code"
   type="text"
   )
 </template>

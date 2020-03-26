@@ -10,7 +10,9 @@ en:
       LABEL: Email
     SUBMIT: Request a recovery code
   MESSAGES:
-    INFO: 'If you already have a recovery code, enter your email and press "I already have a recovery code".'
+    INFO:
+      TEXT: "If you already have a recovery code, enter your email and press: {link}."
+      LINK: "I already have a recovery code"
     ERRORS:
       LIMIT_EXCEEDED: Please wait a while before retrying.
       USER_NOT_FOUND: Check your email is right.
@@ -19,61 +21,60 @@ en:
 </i18n>
 
 <template lang="pug">
-section.view
-  .ui.centered.grid.container
-    .doubling.two.column.row
-      .column
-        .ui.basic.vertical.segment
-          .ui.center.aligned.primary.segment
-            h3.ui.primary.icon.header
-              i.circular.asterisk.icon
-              .content {{ $t('TITLE') }}
-                .sub.header {{ $t('SUBTITLE') }}
+section.ui.basic.segment
+  .ui.text.container
+    .ui.center.aligned.primary.segment
+      h3.ui.primary.icon.header
+        i.circular.asterisk.icon
+        .content {{ $t('TITLE') }}
+          .sub.header {{ $t('SUBTITLE') }}
 
-          .ui.info.icon.message
-            i.info.circle.icon
-            p.content {{ $t('MESSAGES.INFO') }}
+    .ui.visible.info.icon.message
+      i.info.circle.icon
+      i18n.content(path="MESSAGES.INFO.TEXT" tag="div")
+        template(v-slot:link)
+          strong {{ $t('MESSAGES.INFO.LINK') }}
 
-          validation-observer.ui.form(
-            @submit.prevent="submit()"
-            v-slot="{ invalid }"
-            ref="form"
-            tag="form"
-            )
+    validation-observer.ui.form(
+      @submit.prevent="submit()"
+      v-slot="{ invalid }"
+      ref="form"
+      tag="form"
+      )
 
-            .ui.negative.icon.message(v-if="error")
-              i.exclamation.triangle.icon
-              .content
-                .header {{ $t('FORM.ERROR.MESSAGE.TITLE') }}
-                p {{ $t('FORM.ERROR.MESSAGE.BODY') }}
+      .ui.negative.icon.message(v-if="error")
+        i.exclamation.triangle.icon
+        .content
+          .header {{ $t('FORM.ERROR.MESSAGE.TITLE') }}
+          p {{ $t('FORM.ERROR.MESSAGE.BODY') }}
 
-            email-input.required.field(
-              :disabled="submitting"
-              v-model="data.email"
-              :class="fieldClass"
-              )
+      email-input.required.field(
+        :disabled="submitting"
+        v-model="data.email"
+        :class="fieldClass"
+        )
 
-            button.ui.primary.fluid.right.labeled.icon.submit.button(
-              :disabled="invalid || submitting"
-              :class="buttonClass"
-              type="submit"
-              )
+      button.ui.primary.fluid.right.labeled.icon.submit.button(
+        :disabled="invalid || submitting"
+        :class="buttonClass"
+        type="submit"
+        )
 
-              | {{ $t('FORM.SUBMIT') }}
-              i.chevron.right.icon
+        | {{ $t('FORM.SUBMIT') }}
+        i.chevron.right.icon
 
-            .ui.basic.vertical.segment
-              button.ui.fluid.basic.button(
-                :disabled="invalid || submitting"
-                @click="onSubmitSuccess()"
-                type="button"
-                )
+      .ui.basic.vertical.segment
+        button.ui.fluid.basic.button(
+          :disabled="invalid || submitting"
+          @click="onSubmitSuccess()"
+          type="button"
+          )
 
-                | {{ $t('HAVE_CODE') }}
+          | {{ $t('HAVE_CODE') }}
 
-            .ui.center.aligned.basic.vertical.segment
-              router-link.ui.link(to="/users/sign-in")
-                | {{ $t('HAVE_PASSWORD') }}
+      .ui.center.aligned.basic.vertical.segment
+        router-link.ui.link(to="/users/sign-in")
+          | {{ $t('HAVE_PASSWORD') }}
 
   reset-modal(
     :email="data.email"
@@ -128,7 +129,8 @@ export default Vue.extend({
 
     buttonClass(): object {
       return {
-        disabled: this.submitting
+        disabled: this.submitting,
+        loading: this.submitting
       };
     }
   },
