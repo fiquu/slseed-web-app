@@ -5,14 +5,10 @@ en:
   HAVE_PASSWORD: I have my password
   HAVE_CODE: I already have a recovery code
   FORM:
-    EMAIL:
-      PLACEHOLDER: Enter your email...
-      LABEL: Email
     SUBMIT: Request a recovery code
   MESSAGES:
     INFO:
       TEXT: "If you already have a recovery code, enter your email and press: {link}."
-      LINK: "I already have a recovery code"
     ERRORS:
       LIMIT_EXCEEDED: Please wait a while before retrying.
       USER_NOT_FOUND: Check your email is right.
@@ -33,7 +29,7 @@ section.ui.basic.segment
       i.info.circle.icon
       i18n.content(path="MESSAGES.INFO.TEXT" tag="div")
         template(v-slot:link)
-          strong {{ $t('MESSAGES.INFO.LINK') }}
+          strong {{ $t('HAVE_CODE') }}
 
     validation-observer.ui.form(
       @submit.prevent="submit()"
@@ -41,12 +37,6 @@ section.ui.basic.segment
       ref="form"
       tag="form"
       )
-
-      .ui.negative.icon.message(v-if="error")
-        i.exclamation.triangle.icon
-        .content
-          .header {{ $t('FORM.ERROR.MESSAGE.TITLE') }}
-          p {{ $t('FORM.ERROR.MESSAGE.BODY') }}
 
       email-input.required.field(
         :disabled="submitting"
@@ -94,7 +84,6 @@ interface SubmitError extends Error {
 
 interface ComponentData {
   submitting: boolean;
-  error: boolean;
   data: {
     password: string;
     email: string;
@@ -111,7 +100,6 @@ export default Vue.extend({
   data(): ComponentData {
     return {
       submitting: false,
-      error: false,
       data: {
         password: '',
         email: '',
