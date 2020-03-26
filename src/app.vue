@@ -84,11 +84,6 @@ export default Vue.extend({
 <style lang="sass" scoped>
 main#app
   overflow: hidden
-  height: 100%
-  width: 100%
-
-  ::v-deep section.view
-    > .ui.container
-      margin-right: auto
-      margin-left: auto
+  height: 100vh
+  width: 100vw
 </style>

@@ -48,17 +48,16 @@ section.views
   flex-direction: column
   overflow: hidden
   display: flex
-  height: 100%
-  width: 100%
+  height: 100vh
+  width: 100vw
 
   > header
     flex: 0 0 auto
 
   > section.contents
-    display: flex
-    // height: 100%
     overflow: hidden
-    flex: 1
+    flex: 1 0 auto
+    display: flex
 
     > nav.ui.left.fixed.menu
       position: static
@@ -66,11 +65,14 @@ section.views
 
     > section.view
       overflow-y: scroll
-      flex: 1
+      flex: 1 0 auto
 
       &.ui.segment
         margin-top: 0
 
       ::v-deep > .ui.grid
         margin: 0
+
+  > footer
+    flex: 0 0 auto
 </style>

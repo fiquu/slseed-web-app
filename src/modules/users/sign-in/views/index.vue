@@ -17,9 +17,9 @@ en:
 </i18n>
 
 <template lang="pug">
-section.view
-  .ui.centered.grid.container
-    .doubling.two.column.row
+section.ui.view.fluid.container
+  .ui.centered.grid
+    .doubling.four.column.row
       .column
         .ui.basic.vertical.segment
           .ui.center.aligned.primary.segment
@@ -29,8 +29,8 @@ section.view
                 .sub.header {{ $t('SUBTITLE') }}
 
           validation-observer.ui.form(
+            v-slot="{ classes, invalid }"
             @submit.prevent="signIn()"
-            v-slot="{ invalid }"
             ref="form"
             tag="form"
             )
@@ -47,7 +47,7 @@ section.view
               :class="fieldClass"
               )
 
-            .ui.primary.icon.message(v-if="newPasswordRequired")
+            .ui.info.icon.message.visible(v-if="newPasswordRequired")
               i.exclamation.circle.icon
               .content
                 .header {{ $t('FORM.NEW_PASSWORD.MESSAGE.TITLE') }}
@@ -181,15 +181,22 @@ export default Vue.extend({
       const { email, password, newPassword } = this.data;
 
       try {
-        if (this.newPasswordRequired && newPassword) {
-          await this.$auth.completeNewPassword(email, newPassword, { email });
-        } else {
-          const user = await this.$auth.signIn(email, password);
+        const user = await this.$auth.signIn(email, password);
 
-          if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
-            this.newPasswordRequired = true;
+        if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+          this.newPasswordRequired = true;
+
+          if (this.newPasswordRequired && newPassword) {
+            await this.$auth.completeNewPassword(user, newPassword, {});
+
+            this.onSignInSuccess();
+
             return;
           }
+
+          this.signingIn = false;
+
+          return;
         }
 
         this.onSignInSuccess();

@@ -9,7 +9,7 @@ en:
 </i18n>
 
 <template lang="pug">
-nav.ui.menu
+nav.ui.menu(v-if="$session.signedIn")
   .ui.header.item.mobile.tablet.only
     img.ui.tiny.image(src='/static/images/navbar-icon.png')
     | {{ title }}

@@ -24,8 +24,6 @@ export default Vue.extend({
 footer.ui.mini.menu
   position: static
   font-size: 11px
-  flex: 0 0 auto
-  min-height: 0
 
   .disabled.item
     text-transform: lowercase

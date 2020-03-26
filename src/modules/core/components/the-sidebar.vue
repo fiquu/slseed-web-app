@@ -1,5 +1,5 @@
 <template lang="pug">
-the-sidenav.ui.overlay.left.vertical.sidebar
+the-sidenav.ui.overlay.left.vertical.sidebar(v-if="$session.signedIn")
 </template>
 
 <script lang="ts">
@@ -14,7 +14,7 @@ export default Vue.extend({
 
   mounted() {
     this.$$(this.$el).sidebar({
-      context: 'main#app'
+      context: '#app'
     });
 
     this.$router.beforeEach((to, from, next) => {
