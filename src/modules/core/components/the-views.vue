@@ -56,7 +56,7 @@ section.views
 
   > section.contents
     overflow: hidden
-    flex: 1 0 auto
+    flex: 1 1 100%
     display: flex
 
     > nav.ui.left.fixed.menu
