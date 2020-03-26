@@ -62,10 +62,11 @@ section.views
     > nav.ui.left.fixed.menu
       position: static
       box-shadow: none
+      flex: 0 0 auto
 
     > section.view
       overflow-y: scroll
-      flex: 1 0 auto
+      flex: 1 1 auto
 
       &.ui.segment
         margin-top: 0

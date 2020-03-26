@@ -1,5 +1,4 @@
-import { graphqlOperation, GraphQLResult } from '@aws-amplify/api';
-import Observable from 'zen-observable';
+import { graphqlOperation } from '@aws-amplify/api';
 import Vue from 'vue';
 
 import router from './router';
@@ -13,7 +12,7 @@ export interface SessionConfig {
   root?: string;
 }
 
-export interface SessionData {
+export interface SessionComponentData {
   signedIn: boolean;
   loading: boolean;
   loaded: boolean;
@@ -21,12 +20,23 @@ export interface SessionData {
   root: string;
 }
 
-export interface SessionService extends SessionData, Vue {
+export interface SessionData {
+  name: string;
+  _id: string;
+}
+
+interface SessionResponse {
+  data: {
+    session: SessionData;
+  };
+}
+
+export interface SessionService extends SessionComponentData, Vue {
   signOut(): Promise<void>;
 }
 
 export default new Vue({
-  data(): SessionData {
+  data(): SessionComponentData {
     return {
       root: config && config.root || '/',
       signedIn: false,
@@ -43,36 +53,9 @@ export default new Vue({
 
       this.$emit('update');
 
-      let redirect: string | void;
+      this.signedIn = await this.setSignedIn();
 
-      try {
-        this.signedIn = !!(await auth.currentSession());
-      } catch (err) {
-        this.signedIn = false;
-      }
-
-      if (!this.signedIn) {
-        this.data = {}; // Just delete session data if not signed in
-
-        if (to.meta.requiresAuth) {
-          redirect = config.signIn;
-        }
-      } else if (Object.keys(this.data).length < 1) {
-        // Fetch session data if signed in and not present
-        try {
-          this.data = await this.getSessionData();
-        } catch (err) {
-          if (this.signedIn) {
-            await this.signOut();
-
-            if (to.meta.requiresAuth) {
-              redirect = config.signIn;
-            }
-          } else if (to.path !== this.root) {
-            redirect = this.root;
-          }
-        }
-      }
+      const redirect = await this.getRedirect(to);
 
       this.loading = false;
       this.loaded = true;
@@ -84,20 +67,66 @@ export default new Vue({
   },
 
   methods: {
-    getSessionData(): Promise<GraphQLResult<object>> | Observable<Record<string, string>> {
-      return api.graphql(
-        graphqlOperation(`
-          {
-            session {
-              _id
-              firstname
-              lastname
-            }
-          }
-        `)
-      );
+    /**
+     * Resolves the redirect path.
+     *
+     * @param {object} to The `to` route.
+     *
+     * @returns {Promise<string|void>} A promise to the redirection path.
+     */
+    async getRedirect(to): Promise<string | void> {
+      if (this.signedIn) {
+        // Check if session data is set
+        if (Object.keys(this.data).length > 0) {
+          return;
+        }
+
+        // Try and fetch session data
+        try {
+          this.data = await this.getSessionData();
+
+          return;
+        } catch (err) {
+          console.error(err);
+
+          await this.signOut();
+        }
+      }
+
+      // If (to.path !== this.root) {
+      //   Return this.root;
+      // }
+
+      this.data = {}; // Just clear session data if not signed in
+
+      if (to.meta.requiresAuth && to.path !== config.signIn) {
+        return config.signIn;
+      }
     },
 
+    /**
+     * Sets the signed in property.
+     */
+    async setSignedIn(): Promise<boolean> {
+      try {
+        return !!(await auth.currentSession());
+      } catch (err) {
+        return false;
+      }
+    },
+
+    /**
+     * @returns {object} The session data.
+     */
+    async getSessionData(): Promise<SessionData> {
+      const { data } = await api.graphql(graphqlOperation('{ session { _id name } }')) as unknown as SessionResponse;
+
+      return data.session;
+    },
+
+    /**
+     * Signs the user out.
+     */
     async signOut(): Promise<void> {
       await this.$auth.signOut();
 

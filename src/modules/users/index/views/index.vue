@@ -5,7 +5,7 @@ en:
 </i18n>
 
 <template lang="pug">
-section.ui.basic.segment
+section.ui.vertical.segment
   .ui.container
     transition(
       name="component-fade"

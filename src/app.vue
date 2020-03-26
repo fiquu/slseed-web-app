@@ -83,7 +83,11 @@ export default Vue.extend({
 <style src="@/styles/_site.sass" lang="sass"></style>
 <style lang="sass" scoped>
 main#app
+  user-select: none
   overflow: hidden
   height: 100vh
   width: 100vw
+
+  .selectable
+    user-select: auto
 </style>
