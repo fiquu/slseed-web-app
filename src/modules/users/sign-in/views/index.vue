@@ -3,17 +3,19 @@ en:
   TITLE: Welcome
   SUBTITLE: Please sign in with your credentials.
   FORGOT_PASSWORD: I forgot my password
+
   FORM:
     NEW_PASSWORD:
       MESSAGE:
         TITLE: "That's a temporary password!"
         BODY: You must create a new password.
-    ERRORS:
-      USER_NOT_CONFIRMED_EXCEPTION: Please verify your account first.
-      PASSWORD_RESET_REQUIRED_EXCEPTION: Please reset your password.
-      NOT_AUTHORIZED_EXCEPTION: Please verify that your email and password are correct.
-      UNKNOWN: Please check input values and internet connection.
     SUBMIT: Sign in
+
+  ERRORS:
+    USER_NOT_CONFIRMED_EXCEPTION: Please verify your account first.
+    PASSWORD_RESET_REQUIRED_EXCEPTION: Please reset your password.
+    NOT_AUTHORIZED_EXCEPTION: Please verify that your email and password are correct.
+    UNKNOWN: Please check input values and internet connection.
 </i18n>
 
 <template lang="pug">

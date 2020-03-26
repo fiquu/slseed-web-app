@@ -32,6 +32,7 @@ interface SessionResponse {
 }
 
 export interface SessionService extends SessionComponentData, Vue {
+  getSessionData(): Promise<SessionData>;
   signOut(): Promise<void>;
 }
 
@@ -51,16 +52,12 @@ export default new Vue({
     router.beforeEach(async (to, from, next) => {
       this.loading = true;
 
-      this.$emit('update');
-
-      this.signedIn = await this.setSignedIn();
+      this.signedIn = await this.getSignedIn();
 
       const redirect = await this.getRedirect(to);
 
       this.loading = false;
       this.loaded = true;
-
-      this.$emit('update');
 
       next(redirect);
     });
@@ -103,9 +100,9 @@ export default new Vue({
     /**
      * Sets the signed in property.
      */
-    async setSignedIn(): Promise<boolean> {
+    async getSignedIn(): Promise<boolean> {
       try {
-        return !!(await auth.currentSession());
+        return Boolean(await auth.currentAuthenticatedUser());
       } catch (err) {
         return false;
       }
@@ -124,11 +121,10 @@ export default new Vue({
      * Signs the user out.
      */
     async signOut(): Promise<void> {
+      this.loading = true;
+
+      // This will trigger a page reload
       await this.$auth.signOut();
-
-      this.signedIn = false;
-
-      this.$emit('signed-out', config.signIn);
     }
   }
 });

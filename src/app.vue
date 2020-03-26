@@ -1,9 +1,3 @@
-<i18n>
-en:
-  MESSAGES:
-    SIGNED_OUT: Come back soon!
-</i18n>
-
 <template lang="pug">
 main#app
   the-sidebar(ref="sidebar")
@@ -49,20 +43,17 @@ export default Vue.extend({
     }
   },
 
-  mounted(): void {
-    this.$session.$on('update', () => {
-      this.loading = this.$session.loading;
-      this.dim = this.$session.loading;
-    });
-
-    this.$session.$on('signed-out', (signIn: string) => {
-      this.$toast.success(this.$t('MESSAGES.SIGNED_OUT'));
-
-      if (this.$route.meta.requiresAuth) {
-        this.$router.replace(signIn);
+  watch: {
+    ['$session.loading']: {
+      immediate: true,
+      handler(loading: boolean): void {
+        this.loading = loading;
+        this.dim = loading;
       }
-    });
+    }
+  },
 
+  mounted(): void {
     this.$router.beforeEach((to, from, next) => {
       this.dim = true;
       next();

@@ -13,7 +13,13 @@ const config = {
     identityPoolId: VUE_APP_COGNITO_IDENTITY_POOL_ID,
     userPoolId: VUE_APP_COGNITO_USER_POOL_ID,
     mandatorySignIn: true,
-    region: 'us-east-1'
+    region: 'us-east-1',
+    oauth: {
+      redirectSignOut: null,
+      redirectSignIn: null,
+      returnTo: null,
+      domain: null
+    }
   }
 };
 
