@@ -37,7 +37,7 @@ module.exports = {
         };
 
         return args;
-      })
+      });
 
     // Load index.pug instead of index.html
     // You could also pass your Facebook App id or any other per-stage head tag

@@ -3,7 +3,7 @@
   "extends": [
     "plugin:vue/recommended",
     "@vue/typescript/recommended",
-    "@fiquu"
+    "@fiquu/eslint-config/typescript"
   ],
   "plugins": [
     "html",
