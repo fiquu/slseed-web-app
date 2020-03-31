@@ -10,6 +10,7 @@ import '@/plugins/moment';
 import '@/plugins/toast';
 import '@/plugins/auth';
 import '@/plugins/api';
+import '@/plugins/is';
 import '@/plugins/op';
 
 export const router = _router;
