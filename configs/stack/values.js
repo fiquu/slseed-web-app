@@ -1,4 +1,4 @@
-const is = require('fi-is');
+const is = require('@fiquu/is');
 
 module.exports = [
   {
@@ -13,20 +13,20 @@ module.exports = [
     type: 'input',
     message: 'Cognito User Pool Id',
     default: null,
-    validate: val => is.not.empty(val)
+    validate: val => !is.empty(val)
   },
   {
     name: 'CognitoUserPoolClientId',
     type: 'input',
     message: 'Cognito User Pool Client Id',
     default: null,
-    validate: val => is.not.empty(val)
+    validate: val => !is.empty(val)
   },
   {
     name: 'CognitoIdentityPoolId',
     type: 'input',
     message: 'Cognito Identity Pool Id',
     default: null,
-    validate: val => is.not.empty(val)
+    validate: val => !is.empty(val)
   }
 ];
