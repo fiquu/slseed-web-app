@@ -1,7 +1,8 @@
 module.exports = {
-  region: 'us-east-1' /* Default AWS region */,
+  region: 'us-east-1', // Default AWS region.
   profiles: {
-    /* This are the AWS profiles to use for each stage */
+    // These are the AWS profiles to use for each stage.
+    // Add or change as you see fit.
     development: 'default',
     production: 'default',
     staging: 'default',
