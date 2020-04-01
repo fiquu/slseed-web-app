@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-import localStorage, { LocalStorage } from '../services/local-storage';
+import localStorage from '../services/local-storage';
 
 /**
  * @param {Vue} V The vue instance.
@@ -11,7 +11,7 @@ function LocalStoragePlugin(V: typeof Vue): void {
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $storage: LocalStorage;
+    $storage: typeof localStorage;
   }
 }
 
