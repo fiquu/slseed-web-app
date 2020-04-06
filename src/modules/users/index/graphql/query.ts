@@ -1,10 +1,11 @@
 import gql from 'graphql-tag';
 
-export const FETCH_ALL = gql`
+export const QueryUsers = gql`
   query {
     users {
-      name,
+      _id
       sub
+      name
     }
   }
 `;
