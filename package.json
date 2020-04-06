@@ -42,7 +42,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "serve": "vue-cli-service serve",
-    "postversion": "git push --tags",
+    "postversion": "git push --follow-tags",
     "build": "vue-cli-service build --mode production",
     "start": "vue-cli-service serve --mode local",
     "check": "npm-check --update",
