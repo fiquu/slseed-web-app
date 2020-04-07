@@ -73,6 +73,7 @@
   },
   "devDependencies": {
     "@fiquu/eslint-config": "^3.0.3",
+    "@fiquu/slseed-web-utils": "^1.0.17",
     "@kazupon/vue-i18n-loader": "^0.5.0",
     "@types/chai": "^4.2.11",
     "@types/graphql": "^14.5.0",
