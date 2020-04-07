@@ -41,7 +41,7 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "serve": "BUNDLE_ANALYZER=server vue-cli-service serve",
+    "serve": "cross-env BUNDLE_ANALYZER=server vue-cli-service serve",
     "postversion": "git push --follow-tags",
     "build": "vue-cli-service build --mode production",
     "start": "vue-cli-service serve --mode local",
