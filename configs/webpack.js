@@ -7,7 +7,7 @@ module.exports = {
   plugins: [
     new IgnorePlugin(/^\.\/locale$/, /moment$/), // Don't load every Moment locale (many kbs!).
     new BundleAnalyzerPlugin({
-      analyzerMode: process.env.NODE_ENV === 'local' ? 'server' : 'disabled',
+      analyzerMode: process.env.BUNDLE_ANALYZER || 'disabled',
       openAnalyzer: false
     })
   ]
