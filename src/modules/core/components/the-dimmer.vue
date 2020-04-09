@@ -1,33 +1,97 @@
 <template lang="pug">
-transition(
-  name="dimmer-fade"
-  mode="out-in"
-  )
+transition(name="dimmer-fade")
+  .ui.active.inverted.dimmer(
+    v-show="loading || dim"
+    :key="Date.now()"
+    )
 
-  .ui.active.inverted.dimmer(v-if="!$session.loaded")
     .ui.big.loader
+      img(src='/static/images/navbar-icon.png')
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-export default Vue.extend({});
+
+interface ComponentData {
+  loading: boolean;
+  dim: boolean;
+}
+
+export default Vue.extend({
+  data(): ComponentData {
+    return {
+      loading: true,
+      dim: true
+    };
+  },
+
+  watch: {
+    ['$session.loading']: {
+      handler(loading: boolean): void {
+        this.loading = loading;
+      }
+    }
+  },
+
+  created(): void {
+    this.$router.beforeEach((to, from, next) => {
+      this.dim = true;
+      next();
+    });
+
+    this.$router.afterEach(() => {
+      this.dim = false;
+    });
+  }
+});
 </script>
 
 <style lang="sass" scoped>
-@import '@/styles/_colors'
+@import @/styles/_colors
 
-.ui.inverted.dimmer
+.ui.active.dimmer
+  background-color: transparentize($pageBackground, 0.1)
+  position: fixed
+
+  &.dimmer-fade-enter,
+  &.dimmer-fade-leave-to
+    opacity: 0 !important
+
+    > .ui.loader
+      opacity: 0 !important
+
+  &.dimmer-fade-enter-active,
+  &.dimmer-fade-leave-active
+    transition-timing-function: ease-in-out
+    transition-property: opacity
+    transition-duration: 300ms
+    transition-delay: 300ms
+
+    > .ui.loader
+      transition-timing-function: ease-in-out
+      transition-property: opacity
+      transition-duration: 400ms
+      transition-delay: 1.2s
+
+  &.dimmer-fade-leave-active
+    transition-delay: 0.1s
+
+    > .ui.loader
+      transition-delay: 0
+
   > .ui.loader
+    color: $primaryColor
+
     &:before
       border-color: transparentize($primaryColor, 0.5) !important
 
     &:after
       border-color: $primaryColor
 
-    > svg
+    > img
       display: inline-block
-      margin-top: 0.2em
+      margin-top: 0.65em
       margin-left: 0
-      width: 3.25rem
       height: auto
+      width: 2rem
 </style>

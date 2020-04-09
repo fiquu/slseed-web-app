@@ -6,7 +6,8 @@ en:
 <template lang="pug">
 header.ui.fixed.top.compact.menu
   router-link.item(
-    v-if="$route.path !== '/dashboard'"
+    :class="{ disabled: $route.path === '/dashboard' }"
+    v-if="$session.signedIn"
     to='/'
     )
 
