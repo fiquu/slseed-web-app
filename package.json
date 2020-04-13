@@ -16,14 +16,6 @@
   "contributors": [
     "Santiago G. Marín <santiago.marin@final.cl> (https://github.com/stgogm)"
   ],
-  "keywords": [
-    "vue",
-    "cli",
-    "vue-cli",
-    "app",
-    "seed",
-    "project"
-  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/fiquu/slseed-web-app.git"
