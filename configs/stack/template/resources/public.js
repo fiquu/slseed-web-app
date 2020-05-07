@@ -98,7 +98,16 @@ module.exports = {
           TargetOriginId: {
             Ref: 'PublicAppBucket'
           }
-        }
+        },
+        CustomErrorResponses: [{
+          ResponsePagePath: '/index.html',
+          ResponseCode: '200',
+          ErrorCode: '404'
+        }, {
+          ResponsePagePath: '/index.html',
+          ResponseCode: '200',
+          ErrorCode: '403'
+        }]
       }
     }
   },
