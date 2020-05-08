@@ -7,14 +7,14 @@ footer.ui.fluid.one.item.mini.bottom.fixed.fitted.menu
 <script lang="ts">
 import Vue from 'vue';
 
-const { VUE_APP_PROJECT_NAME, VUE_APP_VERSION, NODE_ENV } = process.env;
+const { VUE_APP_PROJECT_NAME, VUE_APP_VERSION, VUE_APP_ENV } = process.env;
 
 export default Vue.extend({
   data() {
     return {
       name: VUE_APP_PROJECT_NAME,
       version: VUE_APP_VERSION,
-      env: NODE_ENV
+      env: VUE_APP_ENV
     };
   }
 });
