@@ -21,8 +21,8 @@
     "url": "git+ssh://git@github.com/fiquu/slseed-web-app.git"
   },
   "engines": {
-    "node": ">= 12.0.0",
-    "npm": ">= 6.0.0"
+    "node": ">=12.0.0",
+    "npm": ">=6.0.0"
   },
   "scripts": {
     "semantic:build:css": "gulp build-css --gulpfile semantic/gulpfile.js",
