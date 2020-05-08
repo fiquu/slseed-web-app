@@ -7,6 +7,7 @@ module.exports = {
   configureWebpack: require('./configs/webpack'),
   pwa: require('./configs/pwa'),
   productionSourceMap: false,
+  filenameHashing: true,
   lintOnSave: true,
   integrity: true,
 
