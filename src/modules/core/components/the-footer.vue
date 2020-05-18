@@ -22,6 +22,7 @@ export default Vue.extend({
 
 <style lang="sass" scoped>
 footer.ui.mini.menu
+  min-height: auto
   position: static
   font-size: 11px
 
