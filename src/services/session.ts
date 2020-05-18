@@ -50,53 +50,43 @@ export default new Vue({
   created(): void {
     // Resolve session data
     router.beforeEach(async (to, from, next) => {
-      this.loading = true;
+      let goto: string | void | false;
 
-      this.signedIn = await this.getSignedIn();
+      if (to.meta.requiresAuth) {
+        this.loading = true;
 
-      const redirect = await this.getRedirect(to);
+        try {
+          this.signedIn = await this.getSignedIn();
 
-      this.loading = false;
-      this.loaded = true;
+          if (this.signedIn && this.$is.empty(this.data)) {
+            this.data = await this.getSessionData();
+          }
+        } catch (err) {
+          console.error(err);
+          this.$emit('error', err);
+          this.signedIn = false;
 
-      next(redirect);
+          if (to.meta.requiresAuth && to.path !== config.signIn) {
+            goto = config.signIn;
+          } else {
+            goto = false;
+          }
+        }
+
+        this.loading = false;
+        this.loaded = true;
+      }
+
+      next(goto);
+    });
+
+    router.onError(err => {
+      console.error('ROUTER ERROR');
+      console.error(err);
     });
   },
 
   methods: {
-    /**
-     * Resolves the redirect path.
-     *
-     * @param {object} to The `to` route.
-     *
-     * @returns {Promise<string|void>} A promise to the redirection path.
-     */
-    async getRedirect(to): Promise<string | void> {
-      if (this.signedIn) {
-        // Check if session data is set
-        if (Object.keys(this.data).length > 0) {
-          return;
-        }
-
-        // Try and fetch session data
-        try {
-          this.data = await this.getSessionData();
-
-          return;
-        } catch (err) {
-          console.error(err);
-
-          await this.signOut();
-        }
-      }
-
-      this.data = {}; // Just clear session data if not signed in
-
-      if (to.meta.requiresAuth && to.path !== config.signIn) {
-        return config.signIn;
-      }
-    },
-
     /**
      * Sets the signed in property.
      */
@@ -121,7 +111,9 @@ export default new Vue({
      * Signs the user out.
      */
     async signOut(): Promise<void> {
+      this.signedIn = false;
       this.loading = true;
+      this.data = {};
 
       // This will trigger a page reload
       await this.$auth.signOut();
