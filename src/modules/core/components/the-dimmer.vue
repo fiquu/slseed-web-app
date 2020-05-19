@@ -20,7 +20,7 @@ interface ComponentData {
 export default Vue.extend({
   data(): ComponentData {
     return {
-      loading: true,
+      loading: false,
       dim: true
     };
   },

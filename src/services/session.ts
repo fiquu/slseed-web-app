@@ -62,8 +62,6 @@ export default new Vue({
           this.$emit('error', err);
           this.signedIn = false;
           this.data = {};
-
-          return next(false);
         }
       }
 

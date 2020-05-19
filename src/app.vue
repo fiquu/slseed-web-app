@@ -1,3 +1,9 @@
+<i18n>
+en:
+  SESSION:
+    ERROR: Couldn't resolve session
+</i18n>
+
 <template lang="pug">
 main#app
   the-sidebar(ref="sidebar")
@@ -19,6 +25,12 @@ export default Vue.extend({
     TheSidebar,
     TheDimmer,
     TheViews
+  },
+
+  created() {
+    this.$session.$on('error', () => {
+      this.$toast.error(this.$t('SESSION.ERROR'));
+    });
   }
 });
 </script>
