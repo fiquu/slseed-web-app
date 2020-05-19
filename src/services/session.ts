@@ -16,7 +16,6 @@ export interface SessionConfig {
 export interface SessionComponentData {
   signedIn: boolean;
   loading: boolean;
-  loaded: boolean;
   data: object;
   root: string;
 }
@@ -43,7 +42,6 @@ export default new Vue({
       root: config && config.root || '/',
       signedIn: false,
       loading: false,
-      loaded: false,
       data: {}
     };
   },
@@ -51,8 +49,6 @@ export default new Vue({
   created(): void {
     // Resolve session data
     router.beforeEach(async (to, from, next) => {
-      let _to: string | void | false;
-
       if (to.meta.requiresAuth) {
         this.loading = true;
 
@@ -65,24 +61,19 @@ export default new Vue({
         } catch (err) {
           this.$emit('error', err);
           this.signedIn = false;
+          this.data = {};
 
-          if (to.meta.requiresAuth && to.path !== config.signIn) {
-            _to = config.signIn;
-          } else {
-            _to = false;
-          }
+          return next(false);
         }
-
-        this.loading = false;
-        this.loaded = true;
       }
 
-      next(_to);
-    });
+      this.loading = false;
 
-    router.onError(err => {
-      console.error('ROUTER ERROR');
-      console.error(err);
+      if (!this.signedIn && to.meta.requiresAuth && to.path !== config.signIn) {
+        return next(config.signIn);
+      }
+
+      next();
     });
   },
 
@@ -102,12 +93,14 @@ export default new Vue({
      * @returns {object} The session data.
      */
     async getSessionData(): Promise<SessionData> {
-      const { data } = await api.graphql(graphqlOperation(gql`{
-        session {
-          _id
-          name
+      const { data } = await api.graphql(graphqlOperation(gql`
+        query Session {
+          session {
+            _id
+            name
+          }
         }
-      }`)) as unknown as SessionResponse;
+      `)) as unknown as SessionResponse;
 
       return data.session;
     },
