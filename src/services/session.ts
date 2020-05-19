@@ -50,7 +50,7 @@ export default new Vue({
   created(): void {
     // Resolve session data
     router.beforeEach(async (to, from, next) => {
-      let goto: string | void | false;
+      let _to: string | void | false;
 
       if (to.meta.requiresAuth) {
         this.loading = true;
@@ -62,14 +62,13 @@ export default new Vue({
             this.data = await this.getSessionData();
           }
         } catch (err) {
-          console.error(err);
           this.$emit('error', err);
           this.signedIn = false;
 
           if (to.meta.requiresAuth && to.path !== config.signIn) {
-            goto = config.signIn;
+            _to = config.signIn;
           } else {
-            goto = false;
+            _to = false;
           }
         }
 
@@ -77,7 +76,7 @@ export default new Vue({
         this.loaded = true;
       }
 
-      next(goto);
+      next(_to);
     });
 
     router.onError(err => {
