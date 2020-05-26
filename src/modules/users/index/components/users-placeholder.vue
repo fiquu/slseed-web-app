@@ -18,9 +18,13 @@
 <script lang="ts">
 import Vue from 'vue';
 
-export default Vue.extend({
+interface Computed {
+  count: number[];
+}
+
+export default Vue.extend<{}, {}, Computed>({
   computed: {
-    count(): number[] {
+    count() {
       return [...new Array(3)].fill(0);
     }
   }

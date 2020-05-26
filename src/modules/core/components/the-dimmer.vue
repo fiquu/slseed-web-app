@@ -12,13 +12,13 @@ transition(name="dimmer-fade")
 <script lang="ts">
 import Vue from 'vue';
 
-interface ComponentData {
+interface Data {
   loading: boolean;
   dim: boolean;
 }
 
-export default Vue.extend({
-  data(): ComponentData {
+export default Vue.extend<Data, {}, {}>({
+  data() {
     return {
       loading: false,
       dim: true

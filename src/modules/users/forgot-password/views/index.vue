@@ -82,7 +82,7 @@ interface SubmitError extends Error {
   code: string;
 }
 
-interface ComponentData {
+interface Data {
   submitting: boolean;
   data: {
     password: string;
@@ -91,13 +91,31 @@ interface ComponentData {
   };
 }
 
-export default Vue.extend({
+interface Methods {
+  onSubmitError(err: SubmitError): void;
+  onSubmitSuccess(): void;
+  submit(): Promise<void>;
+  afterError(): void;
+}
+
+interface Computed {
+  fieldClass: {
+    disabled: boolean;
+  };
+
+  buttonClass: {
+    disabled: boolean;
+    loading: boolean;
+  };
+}
+
+export default Vue.extend<Data, Methods, Computed>({
   components: {
     EmailInput,
     ResetModal
   },
 
-  data(): ComponentData {
+  data() {
     return {
       submitting: false,
       data: {
@@ -109,13 +127,13 @@ export default Vue.extend({
   },
 
   computed: {
-    fieldClass(): object {
+    fieldClass() {
       return {
         disabled: this.submitting
       };
     },
 
-    buttonClass(): object {
+    buttonClass() {
       return {
         disabled: this.submitting,
         loading: this.submitting
@@ -130,28 +148,17 @@ export default Vue.extend({
   },
 
   methods: {
-    /**
-     * Input verification code callback.
-     */
-    onSubmitSuccess(): void {
+    onSubmitSuccess() {
       const $modal: any = this.$refs.modal; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       $modal.show();
     },
 
-    /**
-     * After error callback.
-     */
-    afterError(): void {
+    afterError() {
       this.submitting = false;
     },
 
-    /**
-     * Submit error callback.
-     *
-     * @param {object} err HTTP response object.
-     */
-    onSubmitError(err: SubmitError): void {
+    onSubmitError(err) {
       console.error(err);
 
       switch (err.code) {
@@ -176,10 +183,7 @@ export default Vue.extend({
       }
     },
 
-    /**
-     * Sends the recovery code.
-     */
-    async submit(): Promise<void> {
+    async submit() {
       this.submitting = true;
 
       try {

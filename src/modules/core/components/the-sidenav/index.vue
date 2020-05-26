@@ -15,28 +15,32 @@ nav.ui.menu(v-if="$session.signedIn")
     | {{ title }}
 
   sidenav-link(
-    :text="$t('LINKS.DASHBOARD')"
     icon="dashboard"
     to="/dashboard"
     )
 
+    | {{ $t('LINKS.DASHBOARD') }}
+
   sidenav-link(
-    :text="$t('LINKS.USERS')"
     icon="users"
     to="/users"
     )
 
+    | {{ $t('LINKS.USERS') }}
+
   sidenav-link(
-    :text="$t('LINKS.THEME')"
     icon="brush"
     to="/theme"
     )
 
+    | {{ $t('LINKS.THEME') }}
+
   sidenav-link(
-    :text="$t('LINKS.NOT_FOUND')"
     icon="meh"
     to="/not-found"
     )
+
+    | {{ $t('LINKS.NOT_FOUND') }}
 
   .divider.item
 
@@ -55,19 +59,23 @@ nav.ui.menu(v-if="$session.signedIn")
     | {{ $t('LINKS.SIGN_OUT') }}
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 
 import SidenavLink from './link.vue';
 
-export default Vue.extend({
+interface Data {
+  title: string;
+}
+
+export default Vue.extend<Data, {}, {}>({
   components: {
     SidenavLink
   },
 
   data() {
     return {
-      title: process.env.VUE_APP_SHORT
+      title: String(process.env.VUE_APP_SHORT)
     };
   }
 });

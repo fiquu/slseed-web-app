@@ -85,7 +85,11 @@ import NewPasswordInput from '../../core/components/inputs/new-password.vue';
 import PasswordInput from '../../core/components/inputs/password.vue';
 import EmailInput from '../../core/components/inputs/email.vue';
 
-interface ComponentData {
+interface SignInError extends Error {
+  code: string;
+}
+
+interface Data {
   newPasswordRequired: boolean;
   signingIn: boolean;
   data: {
@@ -95,22 +99,33 @@ interface ComponentData {
   };
 }
 
-interface SignInError extends Error {
-  code: string;
+interface Computed {
+  fieldClass: {
+    disabled: boolean;
+  };
+
+  submitClass: {
+    loading: boolean;
+  };
 }
 
-export default Vue.extend({
+interface Methods {
+  onSignInError(err: SignInError): void;
+  onSignInSuccess(): void;
+  signIn(): Promise<void>;
+}
+
+export default Vue.extend<Data, Methods, Computed>({
   components: {
     NewPasswordInput,
     PasswordInput,
     EmailInput
   },
 
-  data(): ComponentData {
+  data() {
     return {
       newPasswordRequired: false,
       signingIn: false,
-
       data: {
         password: '',
         email: ''
@@ -119,13 +134,13 @@ export default Vue.extend({
   },
 
   computed: {
-    fieldClass(): object {
+    fieldClass() {
       return {
         disabled: this.signingIn
       };
     },
 
-    submitClass(): object {
+    submitClass() {
       return {
         loading: this.signingIn
       };
@@ -139,19 +154,11 @@ export default Vue.extend({
   },
 
   methods: {
-    /**
-     * Sign in success callback.
-     */
-    onSignInSuccess(): void {
+    onSignInSuccess() {
       this.$router.replace('/');
     },
 
-    /**
-     * Sign in error callback.
-     *
-     * @param {any} err The error to handle.
-     */
-    onSignInError(err: SignInError): void {
+    onSignInError(err) {
       switch (err.code) {
         case 'UserNotConfirmedException':
           this.$toast.error(this.$t('ERRORS.USER_NOT_CONFIRMED_EXCEPTION'));
@@ -175,7 +182,7 @@ export default Vue.extend({
     /**
      * Signs the user in.
      */
-    async signIn(): Promise<void> {
+    async signIn() {
       this.signingIn = true;
 
       const { email, password, newPassword } = this.data;

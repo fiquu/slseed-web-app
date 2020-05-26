@@ -24,29 +24,29 @@ section.ui.basic.segment
     .ui.hidden.divider
 
     .ui.three.stackable.cards
-      link-card(
-        :description="$t('USERS.DESCRIPTION')"
+      link-card.yellow(
         :header="$t('USERS.HEADER')"
-        color="yellow"
         icon="users"
         to="/users"
         )
 
-      link-card(
-        :description="$t('THEME.DESCRIPTION')"
+        | {{ $t('USERS.DESCRIPTION') }}
+
+      link-card.blue(
         :header="$t('THEME.HEADER')"
-        color="blue"
         icon="brush"
         to="/theme"
         )
 
-      link-card(
-        :description="$t('NOT_FOUND.DESCRIPTION')"
+        | {{ $t('THEME.DESCRIPTION') }}
+
+      link-card.grey(
         :header="$t('NOT_FOUND.HEADER')"
-        color="grey"
         icon="meh"
         to="/this-page-doesnt-exists"
         )
+
+        | {{ $t('NOT_FOUND.DESCRIPTION') }}
 </template>
 
 <script lang="ts">
@@ -54,23 +54,25 @@ import Vue from 'vue';
 
 import LinkCard from '../components/link-card.vue';
 
-interface ComponentData {
-  interval: number | null;
+interface Data {
+  interval?: number;
 }
 
-export default Vue.extend({
+interface Computed {
+  currentTime: string;
+}
+
+export default Vue.extend<Data, {}, Computed>({
   components: {
     LinkCard
   },
 
-  data(): ComponentData {
-    return {
-      interval: null
-    };
+  data() {
+    return {};
   },
 
   computed: {
-    currentTime(): string {
+    currentTime() {
       return this.$moment().format('LLLL');
     }
   },
@@ -80,7 +82,7 @@ export default Vue.extend({
   },
 
   beforeDestroy(): void {
-    window.clearInterval(this.interval as number);
+    window.clearInterval(this.interval);
   }
 });
 </script>

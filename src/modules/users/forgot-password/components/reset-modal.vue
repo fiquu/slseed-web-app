@@ -91,7 +91,7 @@ interface SubmitError extends Error {
   code: string;
 }
 
-interface ComponentData {
+interface Data {
   submitting: boolean;
   data: {
     password: string;
@@ -99,7 +99,30 @@ interface ComponentData {
   };
 }
 
-export default Vue.extend({
+interface Methods {
+  onSubmitError(err: SubmitError): void;
+  onSubmitSuccess(): void;
+  submit(): Promise<void>;
+  afterError(): void;
+  cancel(): void;
+  show(): void;
+}
+
+interface Computed {
+  fieldClass: {
+    disabled: boolean;
+  };
+
+  confirmClass: {
+    loading: boolean;
+  };
+}
+
+interface Props {
+  email: string;
+}
+
+export default Vue.extend<Data, Methods, Computed, Props>({
   components: {
     NewPasswordInput,
     CodeInput
@@ -112,7 +135,7 @@ export default Vue.extend({
     }
   },
 
-  data(): ComponentData {
+  data() {
     return {
       submitting: false,
       data: {
@@ -123,13 +146,13 @@ export default Vue.extend({
   },
 
   computed: {
-    fieldClass(): object {
+    fieldClass() {
       return {
         disabled: this.submitting
       };
     },
 
-    confirmClass(): object {
+    confirmClass() {
       return {
         loading: this.submitting
       };
@@ -137,34 +160,28 @@ export default Vue.extend({
   },
 
   mounted() {
-    const $el = this.$$(this.$el) as JQuery;
+    const $modal = this.$$(this.$el) as JQuery;
     const settings: SemanticUI.ModalSettings = {
       closable: false
     };
 
-    $el.modal(settings);
+    $modal.modal(settings);
   },
 
   methods: {
-    show(): void {
+    show() {
       const $el = this.$$(this.$el) as JQuery;
 
       $el.modal('show');
     },
 
-    /**
-     * Cancels password confirm modal.
-     */
-    cancel(): void {
+    cancel() {
       const $el = this.$$(this.$el) as JQuery;
 
       $el.modal('hide');
     },
 
-    /**
-     * After error callback.
-     */
-    afterError(): void {
+    afterError() {
       this.submitting = false;
 
       const $el = this.$$(this.$refs.modal) as JQuery;
@@ -172,12 +189,7 @@ export default Vue.extend({
       $el.modal('hide');
     },
 
-    /**
-     * Submit error callback.
-     *
-     * @param {object} err HTTP response object.
-     */
-    onSubmitError(err: SubmitError): void {
+    onSubmitError(err) {
       console.error(err);
 
       switch (err.code) {
@@ -212,10 +224,7 @@ export default Vue.extend({
       }
     },
 
-    /**
-     * Confirm success callback.
-     */
-    onSubmitSuccess(): void {
+    onSubmitSuccess() {
       this.$toast.success(this.$t('MESSAGES.SUBMIT.SUCCESS'));
 
       const $el = this.$$(this.$el) as JQuery;
@@ -225,10 +234,7 @@ export default Vue.extend({
       this.$router.replace('/users/sign-in');
     },
 
-    /**
-     * Confirms new password.
-     */
-    async submit(): Promise<void> {
+    async submit() {
       this.submitting = true;
 
       const { code, password } = this.data;

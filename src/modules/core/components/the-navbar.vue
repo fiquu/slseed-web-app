@@ -45,12 +45,16 @@ header.ui.fixed.top.compact.menu
 <script lang="ts">
 import Vue from 'vue';
 
-export default Vue.extend({
+interface Data {
+  title: string;
+}
+
+export default Vue.extend<Data, {}, {}>({
   name: 'TheNavbar',
 
   data() {
     return {
-      title: process.env.VUE_APP_SHORT
+      title: String(process.env.VUE_APP_SHORT)
     };
   }
 });

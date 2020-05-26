@@ -21,30 +21,40 @@ section.ui.basic.segment
 </template>
 
 <script lang="ts">
-import { mapActions, mapState } from 'vuex';
+import { createNamespacedHelpers } from 'vuex';
 import Vue from 'vue';
 
 import UsersPlaceholder from '../components/users-placeholder.vue';
 import UsersCards from '../components/users-cards.vue';
+import { UsersState } from '../store/state';
 import store from '../store';
 
-interface ComponentData {
+const { mapActions, mapState } = createNamespacedHelpers('users');
+
+interface Data {
   fetching: boolean;
 }
 
-export default Vue.extend({
+interface Methods {
+  fetchAll(): Promise<void>;
+  fetch(): Promise<void>;
+}
+
+type Computed = UsersState;
+
+export default Vue.extend<Data, Methods, Computed>({
   components: {
     UsersPlaceholder,
     UsersCards
   },
 
-  data(): ComponentData {
+  data() {
     return {
       fetching: true
     };
   },
 
-  computed: mapState('users', ['users']),
+  computed: mapState(['users']),
 
   created() {
     this.$store.registerModule('users', store);
@@ -56,9 +66,9 @@ export default Vue.extend({
   },
 
   methods: {
-    ...mapActions('users', ['fetchAll']),
+    ...mapActions(['fetchAll']),
 
-    async fetch(): Promise<void> {
+    async fetch() {
       this.fetching = true;
 
       try {

@@ -1,9 +1,5 @@
 <template lang="pug">
-router-link.ui.card(
-  :class="color"
-  :to="to"
-  )
-
+router-link.ui.card(:to="to")
   .center.aligned.content
     i.big.circular.icon(:class="[color, icon]")
 
@@ -12,19 +8,21 @@ router-link.ui.card(
       | {{ header }}
 
     .description
-      | {{ description }}
+      slot
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-export default Vue.extend({
+interface Props {
+  header: string;
+  icon: string;
+  to: string;
+}
+
+export default Vue.extend<{}, {}, {}, Props>({
   props: {
     header: {
-      type: String,
-      required: true
-    },
-    description: {
       type: String,
       required: true
     },
@@ -35,10 +33,6 @@ export default Vue.extend({
     icon: {
       type: String,
       default: 'link'
-    },
-    color: {
-      type: String,
-      default: 'grey'
     }
   }
 });

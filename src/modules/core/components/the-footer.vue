@@ -9,12 +9,18 @@ import Vue from 'vue';
 
 const { VUE_APP_PROJECT_NAME, VUE_APP_VERSION, VUE_APP_ENV } = process.env;
 
-export default Vue.extend({
+interface Data {
+  version: string;
+  name: string;
+  env: string;
+}
+
+export default Vue.extend<Data, {}, {}>({
   data() {
     return {
-      name: VUE_APP_PROJECT_NAME,
-      version: VUE_APP_VERSION,
-      env: VUE_APP_ENV
+      name: String(VUE_APP_PROJECT_NAME),
+      version: String(VUE_APP_VERSION),
+      env: String(VUE_APP_ENV)
     };
   }
 });

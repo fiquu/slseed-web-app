@@ -1,9 +1,10 @@
 
 <script lang="ts">
+import { AdminUpdateUserAttributesRequest } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import { CognitoIdentityServiceProvider } from 'aws-sdk';
 import Vue from 'vue';
 
-interface ComponentData {
+interface Data {
   cognito: CognitoIdentityServiceProvider;
   submitting: boolean;
   modified: boolean;
@@ -14,7 +15,21 @@ interface ComponentData {
   };
 }
 
-export default Vue.extend({
+interface Methods {
+  submit(): Promise<void>;
+  onValueChanged(): void;
+  toggleEditing(): void;
+}
+
+interface Props {
+  params: AdminUpdateUserAttributesRequest;
+  user: {
+    email: string;
+    sub: string;
+  };
+}
+
+export default Vue.extend<Data, Methods, {}, Props>({
   name: 'UserEmailEdit',
 
   props: {
@@ -28,7 +43,7 @@ export default Vue.extend({
     }
   },
 
-  data(): ComponentData {
+  data() {
     return {
       cognito: new CognitoIdentityServiceProvider(),
       submitting: false,
@@ -70,12 +85,10 @@ export default Vue.extend({
       this.editing = false;
 
       this.params.Username = this.user.sub;
-      this.params.UserAttributes = [
-        {
-          Name: this.key,
-          Value: this.data.value
-        }
-      ];
+      this.params.UserAttributes = [{
+        Name: this.key,
+        Value: this.data.value
+      }];
 
       try {
         await this.cognito.adminUpdateUserAttributes(this.params).promise();

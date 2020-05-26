@@ -12,9 +12,10 @@ section.ui.basic.segment
       h1.ui.grey.icon.header
         i.meh.circular.icon
         | {{ $t('TITLE') }}
-        .sub.header {{ $t('SUBTITLE') }}
+        .sub.header
+          | {{ $t('SUBTITLE') }}
 
     router-link.ui.fluid.large.grey.labeled.icon.button(to="/")
       i.home.icon
-      span {{ $t('BACK') }}
+      | {{ $t('BACK') }}
 </template>

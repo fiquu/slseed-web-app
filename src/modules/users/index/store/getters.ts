@@ -1,5 +1,9 @@
+import { GetterTree } from 'vuex';
+
+import { UsersState } from './state';
+
 export default {
-  users: ({ users }): object[] => {
+  users: ({ users }) => {
     return users;
   }
-};
+} as GetterTree<UsersState, {}>;

@@ -5,19 +5,26 @@ router-link.link.item(
   )
 
   i.icon(:class="icon")
-  | {{ text }}
+  slot
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-export default Vue.extend({
+interface Props {
+  icon: string;
+  to: string;
+}
+
+interface Computed {
+  linkClass: {
+    active: boolean;
+  };
+}
+
+export default Vue.extend<{}, {}, Computed, Props>({
   props: {
     to: {
-      type: String,
-      required: true
-    },
-    text: {
       type: String,
       required: true
     },
@@ -28,7 +35,7 @@ export default Vue.extend({
   },
 
   computed: {
-    linkClass(): object {
+    linkClass() {
       return {
         active: this.$route.path === this.to
       };

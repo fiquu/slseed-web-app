@@ -8,7 +8,7 @@ section.views
   the-navbar(@toggle-the-sidebar="$emit('toggle-the-sidebar')")
 
   section.ui.fluid.contents.container
-    the-sidenav.left.fixed.vertical.tablet.or.lower.hidden(v-if="showSidenav")
+    the-sidenav.left.fixed.vertical.tablet.or.lower.hidden(v-if="$session.signedIn")
 
     transition(
       name="component-fade"
@@ -32,13 +32,6 @@ export default Vue.extend({
     TheSidenav,
     TheFooter,
     TheNavbar
-  },
-
-  computed: {
-    showSidenav(): boolean {
-      // Return this.$session.signedIn;
-      return true;
-    }
   }
 });
 </script>

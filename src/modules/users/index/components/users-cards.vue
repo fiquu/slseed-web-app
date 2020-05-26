@@ -24,7 +24,17 @@
 <script lang="ts">
 import Vue from 'vue';
 
-export default Vue.extend({
+interface UserModel {
+  name: string;
+  sub: string;
+  _id: string;
+}
+
+interface Props {
+  users: UserModel[];
+}
+
+export default Vue.extend<{}, {}, {}, Props>({
   props: {
     users: {
       type: Array,

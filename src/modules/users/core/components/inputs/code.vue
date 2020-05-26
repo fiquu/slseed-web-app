@@ -21,7 +21,12 @@ form-input(
 <script lang="ts">
 import Vue from 'vue';
 
-export default Vue.extend({
+interface Props {
+  disabled: boolean;
+  value: string;
+}
+
+export default Vue.extend<{}, {}, {}, Props>({
   props: {
     disabled: {
       type: Boolean

@@ -7,7 +7,14 @@ import Vue from 'vue';
 
 import TheSidenav from './the-sidenav/index.vue';
 
-export default Vue.extend({
+interface Methods {
+  /**
+   * Toggles the sidebar open state.
+   */
+  toggle(): void;
+}
+
+export default Vue.extend<{}, Methods, {}>({
   components: {
     TheSidenav
   },
@@ -24,10 +31,7 @@ export default Vue.extend({
   },
 
   methods: {
-    /**
-     * Toggles the sidebar open state.
-     */
-    toggle(): void {
+    toggle() {
       this.$$(this.$el).sidebar('toggle');
     }
   }
