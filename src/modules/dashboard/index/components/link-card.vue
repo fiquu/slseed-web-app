@@ -1,7 +1,7 @@
 <template lang="pug">
 router-link.ui.card(:to="to")
   .center.aligned.content
-    i.big.circular.icon(:class="[color, icon]")
+    i.big.circular.icon(:class="icon")
 
   .center.aligned.content
     .header
