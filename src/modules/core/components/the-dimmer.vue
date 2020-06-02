@@ -17,7 +17,7 @@ interface Data {
   dim: boolean;
 }
 
-export default Vue.extend<Data, {}, {}>({
+export default Vue.extend<Data, unknown, unknown>({
   data() {
     return {
       loading: false,

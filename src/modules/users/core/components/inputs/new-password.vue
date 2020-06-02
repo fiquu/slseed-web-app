@@ -26,7 +26,7 @@ interface Props {
   value: string;
 }
 
-export default Vue.extend<{}, {}, {}, Props>({
+export default Vue.extend<unknown, unknown, unknown, Props>({
   props: {
     disabled: {
       type: Boolean

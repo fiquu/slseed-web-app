@@ -15,7 +15,7 @@ interface Data {
   env: string;
 }
 
-export default Vue.extend<Data, {}, {}>({
+export default Vue.extend<Data, unknown, unknown>({
   data() {
     return {
       name: String(VUE_APP_PROJECT_NAME),

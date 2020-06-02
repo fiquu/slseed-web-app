@@ -24,8 +24,8 @@ export interface ToastOptions {
   showIcon?: boolean;
   progressUp?: boolean;
   class?: string;
-  className?: object;
-  transition?: object;
+  className?: Record<string, string>;
+  transition?: Record<string, string>;
 }
 
 interface Toast extends JQuery {

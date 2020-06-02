@@ -14,7 +14,7 @@ interface Methods {
   toggle(): void;
 }
 
-export default Vue.extend<{}, Methods, {}>({
+export default Vue.extend<unknown, Methods, unknown>({
   components: {
     TheSidenav
   },

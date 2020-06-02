@@ -34,7 +34,7 @@ interface Props {
   users: UserModel[];
 }
 
-export default Vue.extend<{}, {}, {}, Props>({
+export default Vue.extend<unknown, unknown, unknown, Props>({
   props: {
     users: {
       type: Array,

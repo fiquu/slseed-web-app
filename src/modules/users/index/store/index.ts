@@ -11,4 +11,4 @@ export default {
   actions,
   getters,
   state
-} as Module<typeof state, {}>;
+} as Module<typeof state, unknown>;

@@ -6,4 +6,4 @@ export default {
   users: ({ users }) => {
     return users;
   }
-} as GetterTree<UsersState, {}>;
+} as GetterTree<UsersState, unknown>;

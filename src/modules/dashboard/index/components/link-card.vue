@@ -20,7 +20,7 @@ interface Props {
   to: string;
 }
 
-export default Vue.extend<{}, {}, {}, Props>({
+export default Vue.extend<unknown, unknown, unknown, Props>({
   props: {
     header: {
       type: String,

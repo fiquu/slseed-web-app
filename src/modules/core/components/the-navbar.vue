@@ -49,7 +49,7 @@ interface Data {
   title: string;
 }
 
-export default Vue.extend<Data, {}, {}>({
+export default Vue.extend<Data, unknown, unknown>({
   name: 'TheNavbar',
 
   data() {

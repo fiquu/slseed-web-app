@@ -16,4 +16,4 @@ export default {
 
     commit('setUsers', data.users);
   }
-} as ActionTree<UsersState, {}>;
+} as ActionTree<UsersState, unknown>;

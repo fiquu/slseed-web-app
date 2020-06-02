@@ -22,7 +22,7 @@ interface Computed {
   count: number[];
 }
 
-export default Vue.extend<{}, {}, Computed>({
+export default Vue.extend<unknown, unknown, Computed>({
   computed: {
     count() {
       return [...new Array(3)].fill(0);
