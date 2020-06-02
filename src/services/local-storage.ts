@@ -1,6 +1,6 @@
 const { localStorage } = window;
 
-export type JSONValue = object | string | number | object[] | string[] | number[] | null | undefined;
+export type JSONValue = unknown | string | number | unknown[] | string[] | number[] | null | undefined;
 
 export default Object.freeze({
   /**

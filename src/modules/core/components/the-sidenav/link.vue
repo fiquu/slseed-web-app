@@ -22,7 +22,7 @@ interface Computed {
   };
 }
 
-export default Vue.extend<{}, {}, Computed, Props>({
+export default Vue.extend<unknown, unknown, Computed, Props>({
   props: {
     to: {
       type: String,
