@@ -10,8 +10,10 @@ function SessionPlugin(V: typeof Vue): void {
 }
 
 declare module 'vue/types/vue' {
+  type SessionType = typeof session;
+
   interface Vue {
-    $session: typeof session;
+    $session: SessionType;
   }
 }
 
