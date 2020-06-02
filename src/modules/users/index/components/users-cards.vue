@@ -14,31 +14,50 @@
 
     .extra.content
       i.plus.circle.icon
-      span {{ $moment(user.createdAt).format('L') }}
+      span {{ createdAt(user) }}
 
       .right.floated
-        span {{ $moment(user.modifiedAt).format('L') }}
+        span {{ updatedAt(user) }}
         i.edit.icon
 </template>
 
 <script lang="ts">
+import parse from 'date-fns/parseISO';
+import format from 'date-fns/format';
 import Vue from 'vue';
 
 interface UserModel {
+  createdAt: string;
+  updatedAt: string;
   name: string;
   sub: string;
   _id: string;
+}
+
+interface Methods {
+  updatedAt(user: UserModel): string;
+  createdAt(user: UserModel): string;
 }
 
 interface Props {
   users: UserModel[];
 }
 
-export default Vue.extend<unknown, unknown, unknown, Props>({
+export default Vue.extend<unknown, Methods, unknown, Props>({
   props: {
     users: {
       type: Array,
       required: true
+    }
+  },
+
+  methods: {
+    createdAt(user) {
+      return format(parse(user.createdAt), 'L');
+    },
+
+    updatedAt(user) {
+      return format(parse(user.updatedAt), 'L');
     }
   }
 });
