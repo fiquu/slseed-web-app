@@ -50,6 +50,7 @@ section.ui.basic.segment
 </template>
 
 <script lang="ts">
+import format from 'date-fns/format';
 import Vue from 'vue';
 
 import LinkCard from '../components/link-card.vue';
@@ -62,7 +63,7 @@ interface Computed {
   currentTime: string;
 }
 
-export default Vue.extend<Data, {}, Computed>({
+export default Vue.extend<Data, unknown, Computed>({
   components: {
     LinkCard
   },
@@ -73,7 +74,8 @@ export default Vue.extend<Data, {}, Computed>({
 
   computed: {
     currentTime() {
-      return this.$moment().format('LLLL');
+      format(new Date(), 'LLLL');
+      return '';
     }
   },
 

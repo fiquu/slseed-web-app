@@ -1,9 +1,11 @@
 import Auth from '@aws-amplify/auth';
 
+const { VUE_APP_API_ENDPOINT } = process.env;
+
 /**
  * Resolves the Cognito JWT auth token.
  */
-async function getAuthToken(): Promise<Record<string ,string>> {
+async function getAuthToken(): Promise<Record<string, string>> {
   const user = await Auth.currentAuthenticatedUser();
 
   return {
@@ -12,16 +14,13 @@ async function getAuthToken(): Promise<Record<string ,string>> {
 }
 
 export default {
-  /* eslint-disable @typescript-eslint/camelcase */
-  graphql_endpoint: `${process.env.VUE_APP_API_ENDPOINT}/graphql`,
+  graphql_endpoint: `${VUE_APP_API_ENDPOINT}/graphql`,
   graphql_endpoint_iam_region: 'us-east-1',
   graphql_headers: getAuthToken,
 
-  endpoints: [
-    {
-      name: 'Web',
-      endpoint: process.env.VUE_APP_API_ENDPOINT,
-      custom_header: getAuthToken
-    }
-  ]
+  endpoints: [{
+    endpoint: VUE_APP_API_ENDPOINT,
+    custom_header: getAuthToken,
+    name: 'Web'
+  }]
 };
