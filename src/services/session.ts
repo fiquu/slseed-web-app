@@ -1,4 +1,4 @@
-import { graphqlOperation } from '@aws-amplify/api';
+import { graphqlOperation, GraphQLResult } from '@aws-amplify/api';
 import gql from 'graphql-tag';
 import Vue from 'vue';
 
@@ -13,31 +13,30 @@ export interface SessionConfig {
   root?: string;
 }
 
-export interface SessionComponentData {
-  signedIn: boolean;
-  loading: boolean;
-  data: object;
-  root: string;
-}
-
-export interface SessionData {
+interface SessionData {
   name: string;
   _id: string;
 }
 
-interface SessionResponse {
-  data: {
-    session: SessionData;
-  };
+interface Data {
+  data: Partial<SessionData>;
+  signedIn: boolean;
+  loading: boolean;
+  root: string;
 }
 
-export interface SessionService extends SessionComponentData, Vue {
-  getSessionData(): Promise<SessionData>;
+interface SessionResponse {
+  session: SessionData;
+}
+
+interface Methods {
+  getSessionData(): Promise<SessionData | undefined>;
+  getSignedIn(): Promise<boolean>;
   signOut(): Promise<void>;
 }
 
-export default new Vue({
-  data(): SessionComponentData {
+export default new Vue<Data, Methods, unknown>({
+  data() {
     return {
       root: config && config.root || '/',
       signedIn: false,
@@ -56,7 +55,7 @@ export default new Vue({
           this.signedIn = await this.getSignedIn();
 
           if (this.signedIn && this.$is.empty(this.data)) {
-            this.data = await this.getSessionData();
+            this.data = (await this.getSessionData()) || {};
           }
         } catch (err) {
           this.$emit('error', err);
@@ -79,7 +78,7 @@ export default new Vue({
     /**
      * Sets the signed in property.
      */
-    async getSignedIn(): Promise<boolean> {
+    async getSignedIn() {
       try {
         return Boolean(await auth.currentAuthenticatedUser());
       } catch (err) {
@@ -90,7 +89,7 @@ export default new Vue({
     /**
      * @returns {object} The session data.
      */
-    async getSessionData(): Promise<SessionData> {
+    async getSessionData() {
       const { data } = await api.graphql(graphqlOperation(gql`
         query Session {
           session {
@@ -98,15 +97,15 @@ export default new Vue({
             name
           }
         }
-      `)) as unknown as SessionResponse;
+      `)) as GraphQLResult<SessionResponse>;
 
-      return data.session;
+      return data && data.session;
     },
 
     /**
      * Signs the user out.
      */
-    async signOut(): Promise<void> {
+    async signOut() {
       this.signedIn = false;
       this.loading = true;
       this.data = {};
