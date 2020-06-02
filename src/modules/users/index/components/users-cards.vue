@@ -53,11 +53,11 @@ export default Vue.extend<unknown, Methods, unknown, Props>({
 
   methods: {
     createdAt(user) {
-      return format(parse(user.createdAt), 'L');
+      return format(parse(user.createdAt), 'P');
     },
 
     updatedAt(user) {
-      return format(parse(user.updatedAt), 'L');
+      return format(parse(user.updatedAt), 'P');
     }
   }
 });

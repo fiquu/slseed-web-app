@@ -6,6 +6,8 @@ export const QueryUsers = gql`
       _id
       sub
       name
+      createdAt
+      updatedAt
     }
   }
 `;
