@@ -1,5 +1,4 @@
 import { graphqlOperation, GraphQLResult } from '@aws-amplify/api';
-import gql from 'graphql-tag';
 import Vue from 'vue';
 
 import router from './router';
@@ -11,6 +10,7 @@ import config from '@/configs/session';
 export interface SessionConfig {
   signIn: string;
   root?: string;
+  query: string;
 }
 
 interface SessionData {
@@ -90,14 +90,7 @@ export default new Vue<Data, Methods, unknown>({
      * @returns {object} The session data.
      */
     async getSessionData() {
-      const { data } = await api.graphql(graphqlOperation(gql`
-        query Session {
-          session {
-            _id
-            name
-          }
-        }
-      `)) as GraphQLResult<SessionResponse>;
+      const { data } = await api.graphql(graphqlOperation(config.query)) as GraphQLResult<SessionResponse>;
 
       return data && data.session;
     },
