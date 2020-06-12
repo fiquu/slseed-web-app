@@ -50,13 +50,16 @@ section.ui.basic.segment
 </template>
 
 <script lang="ts">
+import locale from 'date-fns/locale/en-US';
 import format from 'date-fns/format';
 import Vue from 'vue';
 
 import LinkCard from '../components/link-card.vue';
 
+let interval: number;
+
 interface Data {
-  interval?: number;
+  timestamp: number;
 }
 
 interface Computed {
@@ -69,22 +72,25 @@ export default Vue.extend<Data, unknown, Computed>({
   },
 
   data() {
-    return {};
+    return {
+      timestamp: Date.now()
+    };
   },
 
   computed: {
     currentTime() {
-      format(new Date(), 'LLLL');
-      return '';
+      return format(this.timestamp, 'PPPP - p', { locale });
     }
   },
 
   mounted(): void {
-    this.interval = window.setInterval(this.$forceUpdate, 1000);
+    interval = window.setInterval(() => {
+      this.timestamp = Date.now();
+    }, 1000);
   },
 
   beforeDestroy(): void {
-    window.clearInterval(this.interval);
+    window.clearInterval(interval);
   }
 });
 </script>
