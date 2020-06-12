@@ -76,7 +76,7 @@ export default new Vue<Data, Methods, unknown>({
 
   methods: {
     /**
-     * Sets the signed in property.
+     * @returns {boolean} Whether the user is signed in.
      */
     async getSignedIn() {
       try {

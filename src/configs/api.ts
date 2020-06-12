@@ -3,7 +3,7 @@ import Auth from '@aws-amplify/auth';
 const { VUE_APP_API_ENDPOINT } = process.env;
 
 /**
- * Resolves the Cognito JWT auth token.
+ * @returns {object} The headers object with Cognito JWT auth token.
  */
 async function getAuthToken(): Promise<Record<string, string>> {
   const user = await Auth.currentAuthenticatedUser();
