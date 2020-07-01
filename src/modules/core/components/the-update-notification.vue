@@ -2,7 +2,6 @@
 en:
   UPDATE_AVAILABLE: An update is available. Click here refresh the app.
   UPDATING: Refreshing...
-  UPDATE: Refresh
 </i18n>
 
 <template lang="pug">
