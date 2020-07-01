@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
       console.log('New content is downloading.');
     },
 
-    updated () {
+    updated (detail) {
       console.log('New content is available; please refresh.');
 
       const event = new CustomEvent('newContentAvailable', { detail });
