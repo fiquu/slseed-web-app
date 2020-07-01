@@ -1,7 +1,7 @@
 <i18n>
-es:
-  UPDATE_AVAILABLE: Hay una actualización disponible. Por favor refresca la aplicación.
-  UPDATE: Refrescar
+en:
+  UPDATE_AVAILABLE: An update is available. Please refresh the app.
+  UPDATE: Refresh
 </i18n>
 
 <template lang="pug">
