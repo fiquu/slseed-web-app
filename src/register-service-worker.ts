@@ -23,6 +23,10 @@ if (process.env.NODE_ENV === 'production') {
 
     updated () {
       console.log('New content is available; please refresh.');
+
+      const event = new CustomEvent('newContentAvailable', { detail });
+
+      document.dispatchEvent(event);
     },
 
     offline () {
