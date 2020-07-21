@@ -52,5 +52,19 @@ module.exports = {
         'Fn::GetAtt': ['HeadersLambdaEdgeFunctionRole', 'Arn']
       }
     }
+  },
+
+  /**
+   * Public App Headers lambda function CloudWatch logs.
+   */
+  LogGroup: {
+    Type: 'AWS::Logs::LogGroup',
+    DependsOn: ['HeadersLambdaEdgeFunction'],
+    Properties: {
+      RetentionInDays: 7, // Days
+      LogGroupName: {
+        'Fn::Sub': '/aws/lambda/${AwsRegion}.${HeadersLambdaEdgeFunction}'
+      }
+    }
   }
 };

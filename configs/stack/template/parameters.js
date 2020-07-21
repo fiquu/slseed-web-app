@@ -1,5 +1,5 @@
+const { name, title, version } = require('../../../package.json');
 const { profiles, region } = require('../../../configs/aws');
-const { name, title } = require('../../../package.json');
 
 const nameSlug = name.replace(/\W+/g, ' ').trim().replace(/\s+/g, '-');
 
@@ -26,6 +26,12 @@ module.exports = {
     Description: 'Project Title',
     AllowedValues: [title],
     Default: title,
+    Type: 'String'
+  },
+  AppVersion: {
+    Description: 'App Version',
+    AllowedValues: [version],
+    Default: version,
     Type: 'String'
   }
 };

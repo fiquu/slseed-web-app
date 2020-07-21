@@ -1,3 +1,5 @@
+'use strict';
+
 const CSP_UNSAFE_INLINE = '\'unsafe-inline\'';
 const CSP_NONE = '\'none\'';
 const CSP_SELF = '\'self\'';
@@ -54,10 +56,12 @@ exports.handler = async event => {
       'base-uri': [CSP_SELF],
       'connect-src': [
         CSP_SELF,
+        'https://storage.googleapis.com/workbox-cdn/releases/', // For service worker
+        'https://cognito-identity.us-east-1.amazonaws.com',
+        'https://cognito-idp.us-east-1.amazonaws.com',
         // Allow API endpoint (must be set as origin custom headers in CloudFront).
-        request.origin.custom.customHeaders['x-env-api-endpoint'][0].value,
-        // For Cognito, S3, etc.
-        'https://*.amazonaws.com'
+        request.headers['x-env-api-endpoint'][0].value
+        // Add other services here...
       ]
     }))
   };

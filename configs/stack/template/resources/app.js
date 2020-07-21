@@ -75,11 +75,14 @@ module.exports = {
           'Fn::Sub': '${ProjectTitle} Public App [${Environment}]'
         },
         Origins: [{
+          Id: {
+            'Fn::Sub': 'S3-${PublicAppBucket}/v${AppVersion}'
+          },
+          OriginPath: {
+            'Fn::Sub': '/v${AppVersion}'
+          },
           DomainName: {
             'Fn::GetAtt': ['PublicAppBucket', 'DomainName']
-          },
-          Id: {
-            Ref: 'PublicAppBucket'
           },
           S3OriginConfig: {
             OriginAccessIdentity: {
@@ -96,6 +99,9 @@ module.exports = {
         DefaultCacheBehavior: {
           ViewerProtocolPolicy: 'redirect-to-https',
           Compress: true,
+          TargetOriginId: {
+            'Fn::Sub': 'S3-${PublicAppBucket}/v${AppVersion}'
+          },
           LambdaFunctionAssociations: [{
             // Headers function ref
             EventType: 'origin-response',
@@ -105,9 +111,6 @@ module.exports = {
           }],
           ForwardedValues: {
             QueryString: false
-          },
-          TargetOriginId: {
-            Ref: 'PublicAppBucket'
           }
         }
       }
