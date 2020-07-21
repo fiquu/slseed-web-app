@@ -50,17 +50,20 @@ exports.handler = async event => {
       'img-src': [CSP_SELF, CSP_DATA],
       'manifest-src': [CSP_SELF],
       'default-src': [CSP_SELF],
-      'script-src': [CSP_SELF],
       'object-src': [CSP_NONE],
       'frame-src': [CSP_NONE],
       'base-uri': [CSP_SELF],
+      'script-src': [
+        CSP_SELF,
+        'https://storage.googleapis.com' // For service worker
+      ],
       'connect-src': [
         CSP_SELF,
-        'https://storage.googleapis.com/workbox-cdn/releases/', // For service worker
+        'https://storage.googleapis.com', // For service worker
         'https://cognito-identity.us-east-1.amazonaws.com',
         'https://cognito-idp.us-east-1.amazonaws.com',
         // Allow API endpoint (must be set as origin custom headers in CloudFront).
-        request.headers['x-env-api-endpoint'][0].value
+        new URL(request.headers['x-env-api-endpoint'][0].value).origin
         // Add other services here...
       ]
     }))
