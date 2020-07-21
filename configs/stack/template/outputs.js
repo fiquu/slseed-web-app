@@ -3,22 +3,18 @@ module.exports = {
     Description: 'Public App Bucket',
     Value: {
       Ref: 'PublicAppBucket'
-    },
-    Export: {
-      Name: {
-        'Fn::Sub': '${AWS::StackName}:public-app-bucket'
-      }
     }
   },
   PublicAppCloudFrontDist: {
-    Description: 'Public App CloudFront Dist',
+    Description: 'Public App CloudFront Distribution',
     Value: {
       Ref: 'PublicAppCloudFrontDist'
-    },
-    Export: {
-      Name: {
-        'Fn::Sub': '${AWS::StackName}:public-app-cloudfront-dist'
-      }
     }
   },
+  PublicAppCloudFrontDistDomain: {
+    Description: 'Public App Cloudfront Distribution Domain Name',
+    Value: {
+      GetAtt: 'PublicAppCloudFrontDist.DomainName'
+    }
+  }
 };

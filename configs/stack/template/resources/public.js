@@ -65,7 +65,7 @@ module.exports = {
    */
   PublicAppCloudFrontDist: {
     Type: 'AWS::CloudFront::Distribution',
-    DependsOn: ['PublicAppBucket', 'PublicAppBucketAccess'],
+    DependsOn: ['PublicAppBucket', 'PublicAppBucketAccess', 'CspHeadersLambdaEdgeFunction'],
     Properties: {
       DistributionConfig: {
         DefaultRootObject: 'index.html',
@@ -92,22 +92,20 @@ module.exports = {
         DefaultCacheBehavior: {
           ViewerProtocolPolicy: 'redirect-to-https',
           Compress: true,
+          LambdaFunctionAssociations: [{
+            // CSP headers function ref
+            EventType: 'origin-response',
+            LambdaFunctionARN: {
+              Ref: 'CspHeadersLambdaEdgeFunction.Version'
+            }
+          }],
           ForwardedValues: {
             QueryString: false
           },
           TargetOriginId: {
             Ref: 'PublicAppBucket'
           }
-        },
-        CustomErrorResponses: [{
-          ResponsePagePath: '/index.html',
-          ResponseCode: '200',
-          ErrorCode: '404'
-        }, {
-          ResponsePagePath: '/index.html',
-          ResponseCode: '200',
-          ErrorCode: '403'
-        }]
+        }
       }
     }
   },

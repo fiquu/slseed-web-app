@@ -10,7 +10,6 @@ for (const path of req.keys()) {
 }
 
 const config: RouterOptions = {
-  mode: 'history',
   routes
 };
 
