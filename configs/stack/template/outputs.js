@@ -14,7 +14,7 @@ module.exports = {
   PublicAppCloudFrontDistDomain: {
     Description: 'Public App Cloudfront Distribution Domain Name',
     Value: {
-      GetAtt: 'PublicAppCloudFrontDist.DomainName'
+      'Fn::GetAtt': ['PublicAppCloudFrontDist', 'DomainName']
     }
   }
 };

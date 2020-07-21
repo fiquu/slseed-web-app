@@ -65,7 +65,7 @@ module.exports = {
    */
   PublicAppCloudFrontDist: {
     Type: 'AWS::CloudFront::Distribution',
-    DependsOn: ['PublicAppBucket', 'PublicAppBucketAccess', 'CspHeadersLambdaEdgeFunction'],
+    DependsOn: ['PublicAppBucket', 'PublicAppBucketAccess', 'HeadersLambdaEdgeFunction'],
     Properties: {
       DistributionConfig: {
         DefaultRootObject: 'index.html',
@@ -93,10 +93,10 @@ module.exports = {
           ViewerProtocolPolicy: 'redirect-to-https',
           Compress: true,
           LambdaFunctionAssociations: [{
-            // CSP headers function ref
+            // Headers function ref
             EventType: 'origin-response',
             LambdaFunctionARN: {
-              Ref: 'CspHeadersLambdaEdgeFunction.Version'
+              Ref: 'HeadersLambdaEdgeFunction.Version'
             }
           }],
           ForwardedValues: {

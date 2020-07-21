@@ -33,21 +33,23 @@ module.exports = {
    * Public App HEaders lambda function.
    */
   HeadersLambdaEdgeFunction: {
-    Type: 'AWS::Lambda::Function',
-    DependsOn: ['CspHeadersLambdaEdgeFunctionRole'],
+    Type: 'AWS::Serverless::Function',
+    DependsOn: ['HeadersLambdaEdgeFunctionRole'],
     Properties: {
+      InlineCode: readFileSync(join('functions', 'headers.js')).toString(),
+      AutoPublishAlias: 'live',
       Handler: 'index.handler',
       Runtime: 'nodejs12.x',
       MemorySize: 128,
       Timeout: 5,
+      Description: {
+        'Fn::Sub': '${ProjectTitle} Public App Security headers edge function [${Environment}]'
+      },
       FunctionName: {
         'Fn::Sub': '${ProjectName}-${Environment}-headers-fn'
       },
-      Code: {
-        ZipFile: readFileSync(join('functions', 'headers.js')).toString()
-      },
       Role: {
-        GetAtt: 'CspHeadersLambdaEdgeFunctionRole.Arn'
+        'Fn::GetAtt': ['HeadersLambdaEdgeFunctionRole', 'Arn']
       }
     }
   }
