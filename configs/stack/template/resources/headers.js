@@ -30,7 +30,7 @@ module.exports = {
   },
 
   /**
-   * Public App HEaders lambda function.
+   * Public App Headers lambda function.
    */
   HeadersLambdaEdgeFunction: {
     Type: 'AWS::Serverless::Function',

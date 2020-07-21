@@ -74,21 +74,25 @@ module.exports = {
         Comment: {
           'Fn::Sub': '${ProjectTitle} Public App [${Environment}]'
         },
-        Origins: [
-          {
-            DomainName: {
-              'Fn::GetAtt': ['PublicAppBucket', 'DomainName']
-            },
-            Id: {
-              Ref: 'PublicAppBucket'
-            },
-            S3OriginConfig: {
-              OriginAccessIdentity: {
-                'Fn::Sub': 'origin-access-identity/cloudfront/${PublicAppBucketAccess}'
-              }
+        Origins: [{
+          DomainName: {
+            'Fn::GetAtt': ['PublicAppBucket', 'DomainName']
+          },
+          Id: {
+            Ref: 'PublicAppBucket'
+          },
+          S3OriginConfig: {
+            OriginAccessIdentity: {
+              'Fn::Sub': 'origin-access-identity/cloudfront/${PublicAppBucketAccess}'
             }
-          }
-        ],
+          },
+          OriginCustomHeaders: [{
+            HeaderName: 'X-Env-Api-Endpoint',
+            HeaderValue: {
+              Ref: 'ApiEndpoint'
+            }
+          }]
+        }],
         DefaultCacheBehavior: {
           ViewerProtocolPolicy: 'redirect-to-https',
           Compress: true,

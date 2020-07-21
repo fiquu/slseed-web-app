@@ -1,5 +1,3 @@
-'use strict';
-
 const CSP_UNSAFE_INLINE = '\'unsafe-inline\'';
 const CSP_NONE = '\'none\'';
 const CSP_SELF = '\'self\'';
@@ -35,7 +33,7 @@ function getHeader (key, value) {
 }
 
 exports.handler = async event => {
-  const { response } = event.Records[0].cf;
+  const { request, response } = event.Records[0].cf;
   const headers = {
     ...getHeader('Strict-Transport-Security', 'max-age=63072000; includeSubdomains; preload'),
     ...getHeader('X-Content-Type-Options', 'nosniff'),
@@ -56,7 +54,10 @@ exports.handler = async event => {
       'base-uri': [CSP_SELF],
       'connect-src': [
         CSP_SELF,
-        'https://*.amazonaws.com' // For Cognito, S3, etc
+        // Allow API endpoint (header must be set as custom origin in CloudFront).
+        request.origin.custom.customHeaders['x-env-api-endpoint'][0].value,
+        // For Cognito, S3, etc.
+        'https://*.amazonaws.com'
       ]
     }))
   };
