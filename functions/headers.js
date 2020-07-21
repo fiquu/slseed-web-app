@@ -54,7 +54,7 @@ exports.handler = async event => {
       'base-uri': [CSP_SELF],
       'connect-src': [
         CSP_SELF,
-        // Allow API endpoint (header must be set as custom origin in CloudFront).
+        // Allow API endpoint (must be set as origin custom headers in CloudFront).
         request.origin.custom.customHeaders['x-env-api-endpoint'][0].value,
         // For Cognito, S3, etc.
         'https://*.amazonaws.com'
