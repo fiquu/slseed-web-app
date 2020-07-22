@@ -6,8 +6,6 @@ en:
 
 <template lang="pug">
 main#app
-  the-update-notification
-
   the-views
 
   the-dimmer
@@ -18,13 +16,11 @@ import '../semantic/dist/semantic.min.js';
 
 import Vue from 'vue';
 
-import TheUpdateNotification from './modules/core/components/the-update-notification.vue';
 import TheDimmer from '@/modules/core/components/the-dimmer.vue';
 import TheViews from '@/modules/core/components/the-views.vue';
 
 export default Vue.extend({
   components: {
-    TheUpdateNotification,
     TheDimmer,
     TheViews
   },

@@ -5,7 +5,7 @@ en:
 
 <template lang="pug">
 header.ui.fixed.top.compact.menu
-  router-link.item(
+  router-link.icon.item.tablet.or.lower.hidden(
     :class="{ disabled: $route.path === '/dashboard' }"
     v-if="$session.signedIn"
     to='/'
@@ -16,16 +16,6 @@ header.ui.fixed.top.compact.menu
   router-link.header.item(to='/')
     img(src='/static/images/navbar-icon.png')
     | {{ title }}
-
-  .right.menu.mobile.tablet.only(v-show="$session.signedIn")
-    a.ui.dropdown.icon.item(
-      role="button"
-      ref="menu"
-      )
-
-      i.bars.icon
-
-      the-sidenav.transition.hidden
 
   .right.menu.tablet.or.lower.hidden
     .item(v-if="$session.signedIn && $session.loaded")
@@ -46,8 +36,6 @@ header.ui.fixed.top.compact.menu
 <script lang="ts">
 import Vue from 'vue';
 
-import TheSidenav from './the-sidenav/index.vue';
-
 interface Data {
   title: string;
 }
@@ -55,18 +43,10 @@ interface Data {
 export default Vue.extend<Data, unknown, unknown>({
   name: 'TheNavbar',
 
-  components: {
-    TheSidenav
-  },
-
   data() {
     return {
       title: String(process.env.VUE_APP_SHORT)
     };
-  },
-
-  mounted() {
-    this.$$(this.$refs.menu).dropdown('hide');
   }
 });
 </script>
@@ -81,11 +61,6 @@ header.ui.fixed.top.compact.menu
   .header.item
     img
       margin-right: 1rem
-
-  .ui.inline.popup
-    padding: 0
-
-    .menu
-      box-shadow: none
-      border: 0
+      height: 1.5em
+      width: auto
 </style>

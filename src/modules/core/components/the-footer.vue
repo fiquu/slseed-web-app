@@ -1,7 +1,6 @@
 <template lang="pug">
 footer.ui.fluid.one.item.mini.bottom.fixed.fitted.menu
-  .disabled.item
-    | {{ name }}-{{ env }}-v{{ version }}
+  .disabled.item {{ name }}-{{ env }}-v{{ version }}
 </template>
 
 <script lang="ts">
@@ -16,6 +15,8 @@ interface Data {
 }
 
 export default Vue.extend<Data, unknown, unknown>({
+  name: 'TheFooter',
+
   data() {
     return {
       name: String(VUE_APP_PROJECT_NAME),
@@ -30,7 +31,7 @@ export default Vue.extend<Data, unknown, unknown>({
 footer.ui.mini.menu
   min-height: auto
   position: static
-  font-size: 11px
+  font-size: 10px
 
   .disabled.item
     text-transform: lowercase

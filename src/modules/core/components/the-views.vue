@@ -5,17 +5,18 @@ es:
 
 <template lang="pug">
 section.views
+  the-update-notification
   the-navbar
 
   section.ui.fluid.contents.container
-    the-sidenav.left.fixed.vertical.tablet.or.lower.hidden(v-if="$session.signedIn")
+    the-nav-menu.left.fixed.vertical.tablet.or.lower.hidden(
+      v-if="$session.signedIn"
+    )
 
-    transition(
-      name="component-fade"
-      mode="out-in"
-      )
-
+    transition(name="component-fade", mode="out-in")
       router-view.view(:key="$route.fullPath")
+
+  the-footer-nav.mobile.tablet.only(v-show="$session.signedIn")
 
   the-footer
 </template>
@@ -23,13 +24,19 @@ section.views
 <script lang="ts">
 import Vue from 'vue';
 
-import TheSidenav from './the-sidenav/index.vue';
+import TheUpdateNotification from './the-update-notification.vue';
+import TheNavMenu from './the-nav-menu/index.vue';
+import TheFooterNav from './the-footer-nav.vue';
 import TheFooter from './the-footer.vue';
 import TheNavbar from './the-navbar.vue';
 
 export default Vue.extend({
+  name: 'TheViews',
+
   components: {
-    TheSidenav,
+    TheUpdateNotification,
+    TheFooterNav,
+    TheNavMenu,
     TheFooter,
     TheNavbar
   }
