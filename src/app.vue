@@ -39,6 +39,8 @@ export default Vue.extend({
 });
 </script>
 
+<style src="../semantic/dist/semantic.min.css" lang="css"></style>
+
 <style src="@/styles/_breakpoints.sass" lang="sass"></style>
 <style src="@/styles/_transitions.sass" lang="sass"></style>
 <style src="@/styles/_site.sass" lang="sass"></style>

@@ -3,7 +3,8 @@ import Vue, { CreateElement, VNode } from 'vue';
 import { router, store, i18n } from './plugins';
 
 import './components';
-import './semantic';
+
+import '../semantic/dist/semantic.min.js';
 
 import './register-service-worker';
 
