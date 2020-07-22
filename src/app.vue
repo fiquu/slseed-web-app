@@ -16,6 +16,8 @@ main#app
 </template>
 
 <script lang="ts">
+import '../semantic/dist/semantic.min.js';
+
 import Vue from 'vue';
 
 import TheUpdateNotification from './modules/core/components/the-update-notification.vue';
@@ -39,8 +41,7 @@ export default Vue.extend({
 });
 </script>
 
-<style src="../semantic/dist/semantic.min.css" lang="css"></style>
-
+<style src="../semantic/dist/semantic.min.css"></style>
 <style src="@/styles/_breakpoints.sass" lang="sass"></style>
 <style src="@/styles/_transitions.sass" lang="sass"></style>
 <style src="@/styles/_site.sass" lang="sass"></style>

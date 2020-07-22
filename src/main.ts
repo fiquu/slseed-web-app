@@ -4,8 +4,6 @@ import { router, store, i18n } from './plugins';
 
 import './components';
 
-import '../semantic/dist/semantic.min.js';
-
 import './register-service-worker';
 
 import App from './app.vue';
