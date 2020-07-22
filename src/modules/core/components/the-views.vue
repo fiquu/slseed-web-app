@@ -5,7 +5,7 @@ es:
 
 <template lang="pug">
 section.views
-  the-navbar(@toggle-the-sidebar="$emit('toggle-the-sidebar')")
+  the-navbar
 
   section.ui.fluid.contents.container
     the-sidenav.left.fixed.vertical.tablet.or.lower.hidden(v-if="$session.signedIn")

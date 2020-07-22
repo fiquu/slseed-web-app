@@ -9,11 +9,7 @@ en:
 </i18n>
 
 <template lang="pug">
-nav.ui.menu(v-if="$session.signedIn")
-  .ui.header.item.mobile.tablet.only
-    img.ui.tiny.image(src='/static/images/navbar-icon.png')
-    | {{ title }}
-
+nav.ui.menu
   sidenav-link(
     icon="dashboard"
     to="/dashboard"
@@ -44,7 +40,7 @@ nav.ui.menu(v-if="$session.signedIn")
 
   .divider.item
 
-  .item(v-if="$session.signedIn && $session.loaded")
+  .item
     i.user.circle.icon
     | {{ $session.data.name }}
 
@@ -64,19 +60,9 @@ import Vue from 'vue';
 
 import SidenavLink from './link.vue';
 
-interface Data {
-  title: string;
-}
-
-export default Vue.extend<Data, unknown, unknown>({
+export default Vue.extend<unknown, unknown, unknown>({
   components: {
     SidenavLink
-  },
-
-  data() {
-    return {
-      title: String(process.env.VUE_APP_SHORT)
-    };
   }
 });
 </script>
@@ -93,4 +79,10 @@ nav.ui.menu
 
   .divider
     flex: 1
+
+    &.active.selected
+      max-height: 1px
+      min-height: 0
+      height: 1px
+      padding: 0 !important
 </style>

@@ -8,9 +8,7 @@ en:
 main#app
   the-update-notification
 
-  the-sidebar(ref="sidebar")
-
-  the-views.pusher(@toggle-the-sidebar="$refs.sidebar.toggle()")
+  the-views
 
   the-dimmer
 </template>
@@ -21,14 +19,12 @@ import '../semantic/dist/semantic.min.js';
 import Vue from 'vue';
 
 import TheUpdateNotification from './modules/core/components/the-update-notification.vue';
-import TheSidebar from '@/modules/core/components/the-sidebar.vue';
 import TheDimmer from '@/modules/core/components/the-dimmer.vue';
 import TheViews from '@/modules/core/components/the-views.vue';
 
 export default Vue.extend({
   components: {
     TheUpdateNotification,
-    TheSidebar,
     TheDimmer,
     TheViews
   },
