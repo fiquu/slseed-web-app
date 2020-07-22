@@ -70,7 +70,7 @@
     "@types/chai": "^4.2.11",
     "@types/graphql": "^14.5.0",
     "@types/jquery": "^3.5.0",
-    "@types/mocha": "^7.0.2",
+    "@types/mocha": "^8.0.0",
     "@types/node": "^12.12.51",
     "@types/object-path": "^0.11.0",
     "@types/semantic-ui": "^2.2.7",
