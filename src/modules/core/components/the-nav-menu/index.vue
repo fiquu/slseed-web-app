@@ -38,7 +38,8 @@ nav.ui.menu
 
     | {{ $t('LINKS.NOT_FOUND') }}
 
-  .divider.item
+  .item.tablet.or.lower.hidden
+  .divider
 
   .item
     i.user.circle.icon
@@ -79,10 +80,4 @@ nav.ui.menu
 
   .divider
     flex: 1
-
-    &.active.selected
-      max-height: 1px
-      min-height: 0
-      height: 1px
-      padding: 0 !important
 </style>

@@ -14,14 +14,14 @@ en:
   .fluid.disabled.item
     strong {{ $t('TITLE') }}
 
-  .ui.dropdown.icon.item(
+  .ui.floating.dropdown.icon.item(
     v-show="$session.signedIn",
     ref="dropdown",
     role="button"
   )
     i.bars.icon
 
-    the-nav-menu.transition.hidden
+    the-nav-menu.vertical.transition.hidden
 </template>
 
 <script lang="ts">
@@ -53,4 +53,8 @@ export default Vue.extend({
     justify-content: center
     font-size: 0.7em
     flex: 1
+
+  .ui.dropdown.item
+    .menu
+      margin-right: 0.5rem !important
 </style>
