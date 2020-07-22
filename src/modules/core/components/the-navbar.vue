@@ -13,7 +13,7 @@ header.ui.fixed.top.compact.menu
 
     i.chevron.left.icon
 
-  .header.item
+  router-link.header.item(to='/')
     img(src='/static/images/navbar-icon.png')
     | {{ title }}
 

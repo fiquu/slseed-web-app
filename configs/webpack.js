@@ -3,7 +3,7 @@ const { IgnorePlugin } = require('webpack');
 
 module.exports = {
   devServer: require('./dev-server'),
-  devtool: false,
+  devtool: 'source-map',
   plugins: [
     new IgnorePlugin(/^\.\/locale$/, /moment$/), // Don't load every Moment locale (many kbs!).
     new BundleAnalyzerPlugin({

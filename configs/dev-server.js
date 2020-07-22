@@ -1,9 +1,7 @@
 const internalIp = require('internal-ip');
-const crypto = require('crypto');
 
 const PORT = process.env.PORT || 8081;
 
-const NONCE = crypto.randomBytes(16).toString('base64');
 const CSP_UNSAFE_INLINE = '\'unsafe-inline\'';
 const CSP_NONE = '\'none\'';
 const CSP_SELF = '\'self\'';
@@ -29,30 +27,36 @@ function generateCSP (policy) {
 module.exports = {
   port: PORT,
   headers: {
-    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+    'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
     'X-Content-Type-Options': 'nosniff',
     'X-XSS-Protection': '1; mode=block',
     'Referrer-Policy': 'same-origin',
     'Content-Language': 'en-US',
+    'X-Frame-Options': 'DENY',
     'Feature-Policy': '',
-    'X-Frame-Options': 'deny',
     'Content-Security-Policy': generateCSP({
-      'script-src': [CSP_SELF, `'nonce-${NONCE}'`],
-      'style-src': [CSP_SELF, CSP_UNSAFE_INLINE, 'https://fonts.googleapis.com'],
       'font-src': [CSP_SELF, CSP_DATA, 'https://fonts.gstatic.com'],
       'img-src': [CSP_SELF, CSP_DATA],
       'manifest-src': [CSP_SELF],
       'default-src': [CSP_SELF],
+      'script-src': [CSP_SELF],
       'object-src': [CSP_NONE],
       'frame-src': [CSP_NONE],
       'base-uri': [CSP_SELF],
+      'style-src': [
+        CSP_SELF,
+        CSP_UNSAFE_INLINE, // https://github.com/vuejs/vue-style-loader/issues/33
+        'https://fonts.googleapis.com'
+      ],
       'connect-src': [
         CSP_SELF,
-        // Allow local IP and port for HMR
+        // Allow Cognito.
+        'https://cognito-identity.us-east-1.amazonaws.com',
+        'https://cognito-idp.us-east-1.amazonaws.com',
+        // Allow local IP and port for HMR.
         `http://${internalIp.v4.sync()}:${PORT}`,
         `ws://${internalIp.v4.sync()}:${PORT}`,
-        'https://*.amazonaws.com',
-        // Allow local API server
+        // Allow local API endpoint.
         'http://localhost:8080'
       ]
     })

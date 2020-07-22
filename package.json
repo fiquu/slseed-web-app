@@ -36,7 +36,7 @@
     "serve": "cross-env BUNDLE_ANALYZER=server vue-cli-service serve",
     "postversion": "git push --follow-tags",
     "build": "vue-cli-service build --modern --no-unsafe-inline",
-    "start": "vue-cli-service serve --mode local",
+    "start": "vue-cli-service serve --mode local --no-unsafe-inline",
     "check": "npm-check --update",
     "deploy": "slseed-utils --do deploy",
     "setup:stack": "slseed-utils --do setup-stack",
