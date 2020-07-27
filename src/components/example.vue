@@ -1,20 +1,13 @@
 <template lang="pug">
 .ui.icon.message
   span.ui.active.inverted.mini.inline.loader
-  span(v-text="message")
+  slot
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-export default Vue.extend({
-  props: {
-    message: {
-      required: true,
-      type: String
-    }
-  }
-});
+export default Vue.extend({});
 </script>
 
 <style lang="sass" scoped>

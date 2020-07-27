@@ -1,13 +1,17 @@
-import { expect } from 'chai'
-import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+import { shallowMount } from '@vue/test-utils';
+import { expect } from 'chai';
 
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      propsData: { msg }
-    })
-    expect(wrapper.text()).to.include(msg)
-  })
-})
+import ExampleComponent from '@/components/example.vue';
+
+describe('loader-message.vue', function() {
+  it('renders with provided message', function() {
+    const message = 'new message';
+    const wrapper = shallowMount(ExampleComponent, {
+      slots: {
+        default: [message]
+      }
+    });
+
+    expect(wrapper.text()).to.include(message);
+  });
+});
