@@ -25,7 +25,6 @@
     "npm": ">=6.0.0"
   },
   "scripts": {
-    "semantic:build:css": "gulp build-css --gulpfile semantic/gulpfile.js",
     "semantic:build": "gulp build --gulpfile semantic/gulpfile.js",
     "semantic:watch": "gulp watch --gulpfile semantic/gulpfile.js",
     "semantic": "npm run semantic:build && npm run semantic:watch",
@@ -33,11 +32,9 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "serve": "cross-env BUNDLE_ANALYZER=server vue-cli-service serve",
     "postversion": "git push --follow-tags",
     "build": "vue-cli-service build --modern --no-unsafe-inline",
-    "start": "vue-cli-service serve --mode local --no-unsafe-inline",
-    "check": "npm-check --update",
+    "start": "cross-env BUNDLE_ANALYZER=server vue-cli-service serve --mode local --no-unsafe-inline",
     "deploy": "slseed-utils --do deploy",
     "setup:stack": "slseed-utils --do setup-stack",
     "setup:env": "slseed-utils --do setup-env",
@@ -60,8 +57,7 @@
     "vue": "^2.6.11",
     "vue-i18n": "^8.18.2",
     "vue-router": "^3.3.4",
-    "vuex": "^3.5.1",
-    "zen-observable": "^0.8.15"
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@fiquu/eslint-config": "^3.0.8",
@@ -76,7 +72,6 @@
     "@types/semantic-ui": "^2.2.7",
     "@types/webpack": "^4.41.21",
     "@types/webpack-env": "^1.15.2",
-    "@types/zen-observable": "^0.8.0",
     "@typescript-eslint/eslint-plugin": "^3.7.0",
     "@typescript-eslint/parser": "^3.7.0",
     "@vue/cli-plugin-babel": "^4.4.6",
@@ -100,7 +95,6 @@
     "eslint-plugin-html": "^6.0.2",
     "eslint-plugin-vue": "^6.2.2",
     "favicons-webpack-plugin": "^3.0.1",
-    "fi-is": "^4.0.0",
     "file-loader": "^6.0.0",
     "fomantic-ui": "^2.8.6",
     "gulp": "^4.0.2",
