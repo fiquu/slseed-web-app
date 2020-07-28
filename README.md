@@ -55,6 +55,14 @@ That's it. Your App should be running wherever it says it's running.
 
 See the `"scripts"` section on the `package.json` for more commands.
 
+## Versioning
+
+Versioning is made following the `package.json` version and using it to create a folder in the S3 bucket for each version and pointing the CloudFront distribution to the last version as origin when a deploy is made.
+
+### Pruning
+
+The deploy script can automatically or manually prune old versions by listing the version folders (prefixes) in the deploy bucket and keeping the last 3 deployed versions.
+
 ## Deploying
 
 ### Manual
