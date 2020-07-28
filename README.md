@@ -1,14 +1,14 @@
 # @fiquu/slseed-web-app
 
-Serveless Seed Web App project with [Vue](https://vuejs.org), [Fomantic UI](https://fomantic-ui.com), automated setup and deploy with many other goodies.
+Serveless Seed Web App project with [Vue](https://vuejs.org), [Fomantic UI](https://fomantic-ui.com), [AWS Amplify](https://aws.amazon.com/amplify/), automated setup and deploy with [AWS CloudFormation](https://aws.amazon.com/cloudformation/), [Amazon S3](https://aws.amazon.com/s3/), [Amazon CloudFront](https://aws.amazon.com/cloudfront/) and some other goodies.
 
 ## Description
 
-This project aims to provide a template with sensible defaults and structure, using a set of technologies that ease development and improve usability with a strong focus on providing a great end-user experience.
+This project aims to provide a template with sensible defaults and structure, using a set of technologies that ease development and improve usability with a strong focus on providing a secure and great end-user experience.
 
-This seed or boilerplate does not ties you to any particular stack or backend, it just provides a comprehensive structure that you can use to connect to any endpoint you choose to as you can easily replace the default Amplify Auth and API Client with any other module you choose to. Adding or removing plugins is just as easy.
+This seed or boilerplate does not ties you to any particular stack or backend, it just provides a comprehensive structure that you can use to connect to any endpoint you choose to as you can easily replace the default AWS Amplify Auth and API Client with any other module of your choosing (e.g., [Axios](https://github.com/axios/axios), [Vue Apollo Client](https://hasura.io/learn/graphql/vue/apollo-client/)). Adding or removing plugins is just as easy.
 
-You may find the folders are self-explanatory and everythings is where it's supposed to be.
+The folder structure is intended for scalability into even very large applications in an intuitive and predictable way.
 
 ## Technologies
 
@@ -38,15 +38,16 @@ It's worth noting that it may get in your way sometimes but it may be that you j
 
 Most of these steps apply to any project, but we're assuming you'll also be using [Slseed Web API](https://github.com/fiquu/slseed-web-api) for your backend.
 
-1. You need to configure the [Slseed Web API](https://github.com/fiquu/slseed-web-api) first to get the Cognito values, if you need them.
+**Important:** You may need to configure the [Slseed Web API](https://github.com/fiquu/slseed-web-api) project first to get the [AWS Cognito](https://aws.amazon.com/cognito/) values. If you don't need that, then you can just add a [Cognito User Pool](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpool.html) into the app's CloudFormation stack template.
+
 1. Configure your AWS profiles on `configs/aws.js` for each stage.
 1. Run `npm i` and update as needed.
 1. Set the input values to use on the CloudFormation template on `configs/stack/values.js`.
 1. Configure your CloudFormation template on the `configs/stack/template/` folder.
 1. Run `npm run setup` and select `stack` (or `npm run setup:stack`), select stage and enter the template values.
 1. Wait for it to finish (it may take a while)...
-1. Configure your SSM to `.env` values on `configs/ssm-env.js`. These are the SSM param names only as the prefix is taken from the `.slseedrc.js` file.
-1. Run `npm run setup` and select `env` (or `npm run setup:env`) and select stage to set your `.env.{stage}` file.
+1. Configure your [AWS Systems Manager](https://aws.amazon.com/systems-manager/) parameters to `.env` values on `configs/ssm-env.js`. These are the SSM parameter names only as the prefix is taken from the `.slseedrc.js` file and from the `package.json` `name` and `title` properties by default.
+1. Run `npm run setup` and select `env` (or `npm run setup:env`) and select stage to set your `.env.{stage}.local` file.
 1. Run `npm run semantic` to build and watch (or `npm run semantic:build` to just build) the Fomantic UI files.
 1. Run `npm start`.
 
@@ -56,9 +57,24 @@ See the `"scripts"` section on the `package.json` for more commands.
 
 ## Deploying
 
-1. Make sure you have the `.env` file for the stage you want to deploy by running `npm run setup:env`, selecting the stage and checking if the `.env.{stage}` exists.
+### Manual
+
+1. Make sure you have the `.env` file for the stage you want to deploy by running `npm run setup:env`, selecting the stage and checking if the `.env.{stage}.local` exists.
 1. Run `npm version patch|minor|major` accordingly to make sure you're deploying a new version.
 1. Run `npm run deploy`, select stage and follow the prompts.
+
+### CI/CD
+
+1. Add your AWS credentials environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_REGION`).
+1. Add the env setup script: `npm run setup:env -- --stage <stage> --useAwsProfiles false`.
+1. Run the deploy script: `npm run deploy -- --useAwsProfiles false --autoDeploy true --stage <stage>`.
+
+- The `stage` flag must match the stage names in your project (`development`, `staging`, etc.).
+- The `useAwsProfiles` disables the configuration of an AWS profile thus using the env vars.
+- The `autoDeploy` flag skips all deploy prompts and doing the following by default:
+  - Builds distributable files.
+  - Checks for deployed version and aborting if already deployed.
+  - 
 
 ## Using as seed
 
