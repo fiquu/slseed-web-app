@@ -74,7 +74,7 @@ See the `"scripts"` section on the `package.json` for more commands.
 - The `autoDeploy` flag skips all deploy prompts and doing the following by default:
   - Builds distributable files.
   - Checks for deployed version and aborting if already deployed.
-  - 
+  - Pruning old versions and keeping the last 3.
 
 ## Using as seed
 
