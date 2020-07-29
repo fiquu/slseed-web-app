@@ -41,7 +41,7 @@ nav.ui.menu
   .item.tablet.or.lower.hidden
   .divider
 
-  .item
+  .disabled.item
     i.user.circle.icon
     | {{ $session.data.name }}
 

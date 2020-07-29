@@ -8,7 +8,8 @@ en:
   router-link.icon.item(
     :class="{ disabled: $route.path === '/dashboard' }",
     to="/"
-  )
+    )
+
     i.chevron.left.icon
 
   .fluid.disabled.item
@@ -18,7 +19,8 @@ en:
     v-show="$session.signedIn",
     ref="dropdown",
     role="button"
-  )
+    )
+
     i.bars.icon
 
     the-nav-menu.vertical.transition.hidden

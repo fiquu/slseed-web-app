@@ -17,8 +17,8 @@ header.ui.fixed.top.compact.menu
     img(src='/static/images/navbar-icon.png')
     | {{ title }}
 
-  .right.menu.tablet.or.lower.hidden
-    .item(v-if="$session.signedIn && $session.loaded")
+  .right.menu.tablet.or.lower.hidden(v-if="$session.signedIn")
+    .disabled.item
       i.user.circle.icon
       | {{ $session.data.name }}
 
