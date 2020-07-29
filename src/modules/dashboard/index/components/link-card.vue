@@ -4,9 +4,7 @@ router-link.ui.card(:to="to")
     i.big.circular.icon(:class="icon")
 
   .center.aligned.content
-    .header
-      | {{ header }}
-
+    .header {{ header }}
     .description
       slot
 </template>

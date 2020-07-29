@@ -1,19 +1,20 @@
-import { graphqlOperation } from '@aws-amplify/api';
+import { graphqlOperation, GraphQLResult } from '@aws-amplify/api';
 import { ActionTree } from 'vuex';
 
 import api from '@/services/api';
 
 import { UsersState, UserModel } from './state';
-import { QueryUsers } from '../graphql/query';
+
+import { USERS } from '@/modules/users/core/graphql/queries';
+
+interface FetchResult {
+  users: UserModel[];
+}
 
 export default {
   async fetchAll({ commit }): Promise<void> {
-    const { data } = await api.graphql(graphqlOperation(QueryUsers)) as {
-      data: {
-        users: UserModel[];
-      };
-    };
+    const { data }: GraphQLResult<FetchResult> = await api.graphql(graphqlOperation(USERS));
 
-    commit('setUsers', data.users);
+    commit('setUsers', data?.users);
   }
 } as ActionTree<UsersState, unknown>;
