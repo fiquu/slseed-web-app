@@ -4,7 +4,7 @@ es:
 </i18n>
 
 <template lang="pug">
-section.views
+section.views.p-d-flex
   the-update-notification
   the-navbar
 

@@ -5,15 +5,13 @@ en:
 </i18n>
 
 <template lang="pug">
-main#app
+main#app.p-d-flex
   the-views
 
   the-dimmer
 </template>
 
 <script lang="ts">
-import '../semantic/dist/semantic.min.js';
-
 import Vue from 'vue';
 
 import TheDimmer from '@/modules/core/components/the-dimmer.vue';
@@ -27,16 +25,21 @@ export default Vue.extend({
 
   created() {
     this.$session.$on('error', () => {
-      this.$toast.error(this.$t('SESSION.ERROR'));
+      this.$toast.add({
+        summary: this.$t('SESSION.ERROR'),
+        severity: 'error'
+      });
     });
   }
 });
 </script>
 
-<style src="../semantic/dist/semantic.min.css"></style>
-<style src="@/styles/_breakpoints.sass" lang="sass"></style>
-<style src="@/styles/_transitions.sass" lang="sass"></style>
-<style src="@/styles/_site.sass" lang="sass"></style>
+<style src="primevue/resources/primevue.min.css"></style>
+<style src="primeflex/primeflex.min.css"></style>
+<style src="primeicons/primeicons.css"></style>
+
+<style src="primevue/resources/themes/saga-green/theme.css"></style>
+
 <style lang="sass" scoped>
 main#app
   user-select: none

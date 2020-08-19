@@ -3,14 +3,14 @@ en:
   TITLE: 'Attention!'
   BODY: 'Follow this instructions to reset your password:'
   INSTRUCTIONS:
-    - "Don't close this window."
+    - Don't close this window.
     - Go to your email inbox.
-    - "Open the message we've sent you."
+    - Open the message we've sent you.
     - Search the recovery code and copy it.
     - Come back to this window and paste the recovery code.
     - Enter your new password.
     - Confirm the modification.
-    - 'Done!'
+    - Done!
   FORM:
     CONFIRM: Confirm
     CANCEL: Cancel
@@ -27,58 +27,54 @@ en:
 </i18n>
 
 <template lang="pug">
-validation-observer.ui.mini.modal(
-  @submit.prevent="submit()"
-  v-slot="{ invalid }"
-  tag="form"
+p-dialog(:visible.sync="visible")
+  validation-observer(
+    @submit.prevent="submit()",
+    v-slot="{ invalid }",
+    tag="form"
   )
 
-  .header {{ $t('TITLE') }}
+    .header {{ $t('TITLE') }}
 
-  .content
-    p
-      strong {{ $t('BODY') }}
+    .content
+      p
+        strong {{ $t('BODY') }}
 
-    ol.ui.list
-      li {{ $t('INSTRUCTIONS.0') }}
-      li {{ $t('INSTRUCTIONS.1') }}
-      li {{ $t('INSTRUCTIONS.2') }}
-      li {{ $t('INSTRUCTIONS.3') }}
-      li {{ $t('INSTRUCTIONS.4') }}
-      li {{ $t('INSTRUCTIONS.5') }}
-      li {{ $t('INSTRUCTIONS.6') }}
-      li {{ $t('INSTRUCTIONS.7') }}
+      ol.ui.list
+        li {{ $t('INSTRUCTIONS.0') }}
+        li {{ $t('INSTRUCTIONS.1') }}
+        li {{ $t('INSTRUCTIONS.2') }}
+        li {{ $t('INSTRUCTIONS.3') }}
+        li {{ $t('INSTRUCTIONS.4') }}
+        li {{ $t('INSTRUCTIONS.5') }}
+        li {{ $t('INSTRUCTIONS.6') }}
+        li {{ $t('INSTRUCTIONS.7') }}
 
-    .ui.divider
+      .ui.divider
 
-    .ui.form
-      code-input.required.field(
-        :disabled="submitting"
-        v-model="data.code"
-        :class="fieldClass"
+      .ui.form
+        code-input.required.field(
+          :disabled="submitting",
+          v-model="data.code",
+          :class="fieldClass"
         )
 
-      new-password-input.required.field(
-        :disabled="submitting"
-        v-model="data.password"
-        :class="fieldClass"
+        new-password-input.required.field(
+          :disabled="submitting",
+          v-model="data.password",
+          :class="fieldClass"
         )
 
-  .actions
-    button.ui.cancel.basic.button(
-      :disabled="submitting"
-      type="button"
+    .actions
+      button.ui.cancel.basic.button(:disabled="submitting", type="button")
+        | {{ $t('FORM.CANCEL') }}
+
+      button.ui.primary.button(
+        :disabled="invalid || submitting",
+        :class="confirmClass",
+        type="submit"
       )
-
-      | {{ $t('FORM.CANCEL') }}
-
-    button.ui.primary.button(
-      :disabled="invalid || submitting"
-      :class="confirmClass"
-      type="submit"
-      )
-
-      | {{ $t('FORM.CONFIRM') }}
+        | {{ $t('FORM.CONFIRM') }}
 </template>
 
 <script lang="ts">
@@ -104,8 +100,6 @@ interface Methods {
   onSubmitSuccess(): void;
   submit(): Promise<void>;
   afterError(): void;
-  cancel(): void;
-  show(): void;
 }
 
 interface Computed {
@@ -119,6 +113,7 @@ interface Computed {
 }
 
 interface Props {
+  visible: boolean;
   email: string;
 }
 
@@ -129,6 +124,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   },
 
   props: {
+    visible: {
+      type: Boolean
+    },
     email: {
       type: String,
       required: true
@@ -159,77 +157,67 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     }
   },
 
-  mounted() {
-    const $modal = this.$$(this.$el) as JQuery;
-    const settings: SemanticUI.ModalSettings = {
-      closable: false
-    };
-
-    $modal.modal(settings);
-  },
-
   methods: {
-    show() {
-      const $el = this.$$(this.$el) as JQuery;
-
-      $el.modal('show');
-    },
-
-    cancel() {
-      const $el = this.$$(this.$el) as JQuery;
-
-      $el.modal('hide');
-    },
-
     afterError() {
       this.submitting = false;
-
-      const $el = this.$$(this.$refs.modal) as JQuery;
-
-      $el.modal('hide');
     },
 
     onSubmitError(err) {
+      const timeout = setTimeout(() => this.afterError(), 3000);
+
       console.error(err);
 
       switch (err.code) {
         case 'LimitExceededException':
-          this.$toast.error(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'));
-          setTimeout(() => this.afterError(), 30000);
+          this.$toast.add({
+            detail: this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'),
+            severity: 'error'
+          });
           break;
 
         case 'UserNotFoundException':
-          this.$toast.error(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'));
-          setTimeout(() => this.afterError(), 3000);
+          this.$toast.add({
+            detail: this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'),
+            severity: 'error'
+          });
           break;
 
         case 'CodeMismatchException':
-          this.$toast.error(this.$t('MESSAGES.ERRORS.INVALID_CODE'));
-          setTimeout(() => this.afterError(), 3000);
+          this.$toast.add({
+            detail: this.$t('MESSAGES.ERRORS.INVALID_CODE'),
+            severity: 'error'
+          });
           break;
 
         case 'ExpiredCodeException':
-          this.$toast.warning(this.$t('MESSAGES.ERRORS.EXPIRED_CODE'));
-          setTimeout(() => this.afterError(), 3000);
+          this.$toast.add({
+            detail: this.$t('MESSAGES.ERRORS.EXPIRED_CODE'),
+            severity: 'warn'
+          });
           break;
 
         case 'NotAuthorizedException':
-          this.$toast.warning(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'));
+          clearTimeout(timeout);
           this.$router.push('/');
+          this.$toast.add({
+            detail: this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'),
+            severity: 'warn'
+          });
           break;
 
         default:
-          this.$toast.error(this.$t('MESSAGES.ERRORS.UNKNOWN'));
-          setTimeout(() => this.afterError(), 3000);
+          this.$toast.add({
+            detail: this.$t('MESSAGES.ERRORS.UNKNOWN'),
+            severity: 'error'
+          });
       }
     },
 
     onSubmitSuccess() {
-      this.$toast.success(this.$t('MESSAGES.SUBMIT.SUCCESS'));
-
-      const $el = this.$$(this.$el) as JQuery;
-
-      $el.modal('hide');
+      this.$toast.add({
+        detail: this.$t('MESSAGES.SUBMIT.SUCCESS'),
+        severity: 'success'
+      });
 
       this.$router.replace('/users/sign-in');
     },

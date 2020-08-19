@@ -10,7 +10,7 @@ const config: VeeValidateConfig = {
   mode: 'aggressive',
   bails: true,
   classes: {
-    invalid: 'error'
+    invalid: 'p-invalid'
   }
 };
 

@@ -74,8 +74,11 @@ export default Vue.extend<Data, Methods, Computed>({
       try {
         await this.fetchAll();
       } catch (err) {
-        this.$toast.error(this.$t('FETCH.ERROR'));
         console.error(err);
+        this.$toast.add({
+          detail: this.$t('FETCH.ERROR'),
+          severity: 'error'
+        });
       }
 
       this.fetching = false;

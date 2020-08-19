@@ -27,49 +27,43 @@ section.ui.basic.segment
 
     .ui.visible.info.icon.message
       i.info.circle.icon
-      i18n.content(path="MESSAGES.INFO.TEXT" tag="div")
+      i18n.content(path="MESSAGES.INFO.TEXT", tag="div")
         template(v-slot:link)
           strong {{ $t('HAVE_CODE') }}
 
     validation-observer.ui.form(
-      @submit.prevent="submit()"
-      v-slot="{ invalid }"
-      ref="form"
+      @submit.prevent="submit()",
+      v-slot="{ invalid }",
+      ref="form",
       tag="form"
+    )
+      email-input.required.field(
+        :disabled="submitting",
+        v-model="data.email",
+        :class="fieldClass"
       )
 
-      email-input.required.field(
-        :disabled="submitting"
-        v-model="data.email"
-        :class="fieldClass"
-        )
-
       button.ui.primary.fluid.right.labeled.icon.submit.button(
-        :disabled="invalid || submitting"
-        :class="buttonClass"
+        :disabled="invalid || submitting",
+        :class="buttonClass",
         type="submit"
-        )
-
+      )
         | {{ $t('FORM.SUBMIT') }}
         i.chevron.right.icon
 
       .ui.basic.vertical.segment
         button.ui.fluid.basic.button(
-          :disabled="invalid || submitting"
-          @click="onSubmitSuccess()"
+          :disabled="invalid || submitting",
+          @click="onSubmitSuccess()",
           type="button"
-          )
-
+        )
           | {{ $t('HAVE_CODE') }}
 
       .ui.center.aligned.basic.vertical.segment
         router-link.ui.link(to="/users/sign-in")
           | {{ $t('HAVE_PASSWORD') }}
 
-  reset-modal(
-    :email="data.email"
-    ref="modal"
-    )
+  reset-modal(:email="data.email", ref="modal", display="showModal")
 </template>
 
 <script lang="ts">
@@ -118,6 +112,7 @@ export default Vue.extend<Data, Methods, Computed>({
   data() {
     return {
       submitting: false,
+      showModal: false,
       data: {
         password: '',
         email: '',
@@ -159,27 +154,39 @@ export default Vue.extend<Data, Methods, Computed>({
     },
 
     onSubmitError(err) {
+      const timeout = setTimeout(() => this.afterError(), 30000);
+
       console.error(err);
 
       switch (err.code) {
         case 'LimitExceededException':
-          this.$toast.error(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'));
-          setTimeout(() => this.afterError(), 30000);
+          this.$toast.add({
+            detail: this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'),
+            severity: 'error'
+          });
           break;
 
         case 'UserNotFoundException':
-          this.$toast.error(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'));
-          setTimeout(() => this.afterError(), 3000);
+          this.$toast.add({
+            detail: this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'),
+            severity: 'error'
+          });
           break;
 
         case 'NotAuthorizedException':
-          this.$toast.warning(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'));
+          clearTimeout(timeout);
           this.$router.push('/');
+          this.$toast.add({
+            detail: this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'),
+            severity: 'warn'
+          });
           break;
 
         default:
-          this.$toast.error(this.$t('MESSAGES.ERRORS.UNKNOWN'));
-          setTimeout(() => this.afterError(), 3000);
+          this.$toast.add({
+            detail: this.$t('MESSAGES.ERRORS.UNKNOWN'),
+            severity: 'error'
+          });
       }
     },
 

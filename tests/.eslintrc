@@ -1,7 +1,12 @@
 {
-  "extends": "@fiquu/eslint-config/typescript",
+  "extends": "@fiquu",
   "env": {
     "mocha": true
+  },
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module",
+    "ecmaVersion": 2020
   },
   "rules": {
     "node/no-unpublished-import": "off",

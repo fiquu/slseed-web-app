@@ -1,3 +1,5 @@
+/* eslint-disable node/no-unsupported-features/es-syntax, node/no-unpublished-require */
+
 // ***********************************************************
 // This example support/index.js is processed and
 // loaded automatically before your test files.
@@ -14,7 +16,9 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import './commands';
 
 // Alternatively you can use CommonJS syntax:
-// require('./commands')
+// require('./commands');
+
+import '@cypress/code-coverage/support';

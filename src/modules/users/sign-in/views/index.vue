@@ -28,23 +28,28 @@ section.ui.basic.segment
           .content {{ $t('TITLE') }}
             .sub.header {{ $t('SUBTITLE') }}
 
-      validation-observer.ui.form(
-        v-slot="{ classes, invalid }"
-        @submit.prevent="signIn()"
-        ref="form"
+      validation-observer.p-fluid(
+        v-slot="{ classes, invalid }",
+        @submit.prevent="signIn()",
+        ref="form",
         tag="form"
-        )
-
-        email-input.required.field(
-          :disabled="signingIn"
-          v-model="data.email"
-          :class="fieldClass"
+      )
+        validation-provider.p-field(:rules="'email|required'", tag="div", v-slot="{ classes }")
+          label wer
+          p-input-text(
+            type="email",
+            :class="classes",
+            v-model="data.email",
+            :disabled="signingIn"
           )
 
-        password-input.required.field(
-          v-model="data.password"
-          :disabled="signingIn"
-          :class="fieldClass"
+        validation-provider.p-field(:rules="'min:8|required'", tag="div", v-slot="{ classes }")
+          label wer
+          p-input-text(
+            type="password",
+            :class="classes",
+            v-model="data.password",
+            :disabled="signingIn"
           )
 
         .ui.info.icon.message.visible(v-if="newPasswordRequired")
@@ -54,22 +59,20 @@ section.ui.basic.segment
             p {{ $t('FORM.NEW_PASSWORD.MESSAGE.BODY') }}
 
         .required.field(
-          :class="[classes, fieldClass]"
+          :class="[classes, fieldClass]",
           v-if="newPasswordRequired"
-          )
-
+        )
           new-password-input.required.field(
-            v-model="data.newPassword"
-            :disabled="signingIn"
+            v-model="data.newPassword",
+            :disabled="signingIn",
             :class="fieldClass"
-            )
-
-        button.ui.primary.fluid.right.labeled.icon.submit.button(
-          :disabled="invalid || signingIn"
-          :class="submitClass"
-          type="submit"
           )
 
+        p-button(
+          :disabled="invalid || signingIn",
+          :class="submitClass",
+          type="submit"
+        )
           | {{ $t('FORM.SUBMIT') }}
           i.sign.in.icon
 
@@ -161,7 +164,10 @@ export default Vue.extend<Data, Methods, Computed>({
     onSignInError(err) {
       switch (err.code) {
         case 'UserNotConfirmedException':
-          this.$toast.error(this.$t('ERRORS.USER_NOT_CONFIRMED_EXCEPTION'));
+          this.$toast.add({
+            detail: this.$t('ERRORS.USER_NOT_CONFIRMED_EXCEPTION'),
+            severity: 'error'
+          });
           break;
 
         case 'PasswordResetRequiredException':
@@ -170,12 +176,18 @@ export default Vue.extend<Data, Methods, Computed>({
 
         case 'NotAuthorizedException':
         case 'UserNotFoundException':
-          this.$toast.error(this.$t('ERRORS.NOT_AUTHORIZED_EXCEPTION'));
+          this.$toast.add({
+            detail: this.$t('ERRORS.NOT_AUTHORIZED_EXCEPTION'),
+            severity: 'error'
+          });
           break;
 
         default:
-          this.$toast.error(this.$t('ERRORS.UNKNOWN'));
           console.error(err);
+          this.$toast.add({
+            detail: this.$t('ERRORS.UNKNOWN'),
+            severity: 'error'
+          });
       }
     },
 

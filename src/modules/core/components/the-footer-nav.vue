@@ -36,12 +36,6 @@ export default Vue.extend({
 
   components: {
     TheNavMenu
-  },
-
-  mounted() {
-    this.$$(this.$refs.dropdown).dropdown({
-      action: 'hide'
-    });
   }
 });
 </script>

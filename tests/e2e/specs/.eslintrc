@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "../.eslintrc",
+    "@fiquu/eslint-config/typescript"
+  ]
+}
