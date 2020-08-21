@@ -34,11 +34,22 @@ export default Vue.extend({
 });
 </script>
 
+<style src="reset-css/reset.css"></style>
 <style src="primevue/resources/primevue.min.css"></style>
 <style src="primeflex/primeflex.min.css"></style>
 <style src="primeicons/primeicons.css"></style>
 
 <style src="primevue/resources/themes/saga-green/theme.css"></style>
+<style src="./styles/transitions.sass" lang="sass"></style>
+
+<style lang="sass">
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap")
+@import @/styles/variables
+
+body
+  font-family: $fontFamily
+  background: #f7f7f6
+</style>
 
 <style lang="sass" scoped>
 main#app

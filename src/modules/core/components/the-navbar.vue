@@ -1,36 +1,39 @@
 <i18n>
 en:
   SIGN_OUT: Sign out
+es:
+  SIGN_OUT: Salir
 </i18n>
 
 <template lang="pug">
-header.ui.fixed.top.compact.menu
-  router-link.icon.item.tablet.or.lower.hidden(
-    :class="{ disabled: $route.path === '/dashboard' }"
-    v-if="$session.signedIn"
-    to='/'
+p-toolbar.p-shadow-1
+  template(#left)
+    router-link.p-button.p-button-text.p-button-plain(
+      :class="backButtonClass",
+      v-if="$session.signedIn",
+      to="/"
     )
+      i.pi.pi-chevron-left
 
-    i.chevron.left.icon
+    router-link.p-button.p-button-text.p-button-plain(to="/")
+      .p-button-icon.p-mr-2
+        img(src="/static/images/navbar-icon.png")
+      .p-button-label {{ title }}
 
-  router-link.header.item(to='/')
-    img(src='/static/images/navbar-icon.png')
-    | {{ title }}
+  template(#right)
+    .right.menu.tablet.or.lower.hidden(v-if="$session.signedIn")
+      .disabled.item
+        i.user.circle.icon
+        | {{ $session.data.name }}
 
-  .right.menu.tablet.or.lower.hidden(v-if="$session.signedIn")
-    .disabled.item
-      i.user.circle.icon
-      | {{ $session.data.name }}
-
-    a.item(
-      @click="$session.signOut()"
-      v-if="$session.signedIn"
-      role="button"
-      href=""
+      a.item(
+        @click="$session.signOut()",
+        v-if="$session.signedIn",
+        role="button",
+        href=""
       )
-
-      i.sign.out.icon
-      | {{ $t('SIGN_OUT') }}
+        i.sign.out.icon
+        | {{ $t('SIGN_OUT') }}
 </template>
 
 <script lang="ts">
@@ -40,6 +43,10 @@ interface Data {
   title: string;
 }
 
+interface Computed {
+  backButtonClass(): { disabled: boolean }
+}
+
 export default Vue.extend<Data, unknown, unknown>({
   name: 'TheNavbar',
 
@@ -47,20 +54,27 @@ export default Vue.extend<Data, unknown, unknown>({
     return {
       title: String(process.env.VUE_APP_SHORT)
     };
+  },
+
+  computed: {
+    backButtonClass() {
+      return {
+        disabled: this.$route.path === '/dashboard'
+      };
+    }
   }
 });
 </script>
 
 <style lang="sass" scoped>
-header.ui.fixed.top.compact.menu
-  position: static
+.p-toolbar
+  background: white
+  border-radius: 0
 
-  > button
-    border: 0
+  a
+    text-decoration: none
 
-  .header.item
-    img
-      margin-right: 1rem
-      height: 1.5em
-      width: auto
+  img
+    height: 1.5em
+    width: auto
 </style>

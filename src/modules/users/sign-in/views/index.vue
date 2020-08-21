@@ -19,66 +19,56 @@ en:
 </i18n>
 
 <template lang="pug">
-section.ui.basic.segment
-  .ui.text.container
-    .ui.basic.vertical.segment
-      .ui.center.aligned.primary.segment
-        h3.ui.primary.icon.header
-          i.circular.id.badge.icon
-          .content {{ $t('TITLE') }}
-            .sub.header {{ $t('SUBTITLE') }}
+section.p-grid.p-justify-center.p-p-4
+  .p-col-2
+    p-card.p-mb-4.p-text-center
+      template(#header)
+        i.pi.pi-user.p-mt-4(style={ fontSize: '2rem' })
 
-      validation-observer.p-fluid(
-        v-slot="{ classes, invalid }",
-        @submit.prevent="signIn()",
-        ref="form",
-        tag="form"
-      )
-        validation-provider.p-field(:rules="'email|required'", tag="div", v-slot="{ classes }")
-          label wer
-          p-input-text(
-            type="email",
-            :class="classes",
-            v-model="data.email",
-            :disabled="signingIn"
-          )
+      template(#title)
+        | {{ $t('TITLE') }}
 
-        validation-provider.p-field(:rules="'min:8|required'", tag="div", v-slot="{ classes }")
-          label wer
-          p-input-text(
-            type="password",
-            :class="classes",
-            v-model="data.password",
-            :disabled="signingIn"
-          )
+      template(#content)
+        p {{ $t('SUBTITLE') }}
 
-        .ui.info.icon.message.visible(v-if="newPasswordRequired")
-          i.exclamation.circle.icon
-          .content
-            .header {{ $t('FORM.NEW_PASSWORD.MESSAGE.TITLE') }}
-            p {{ $t('FORM.NEW_PASSWORD.MESSAGE.BODY') }}
-
-        .required.field(
-          :class="[classes, fieldClass]",
-          v-if="newPasswordRequired"
+    p-card
+      template(#content)
+        validation-observer.p-fluid(
+          v-slot="{ classes, invalid }",
+          @submit.prevent="signIn()",
+          ref="form",
+          tag="form"
         )
-          new-password-input.required.field(
-            v-model="data.newPassword",
-            :disabled="signingIn",
-            :class="fieldClass"
+          email-input(v-model="input.email")
+          password-input(v-model="input.password")
+
+          .ui.info.icon.message.visible(v-if="newPasswordRequired")
+            i.exclamation.circle.icon
+            .content
+              .header {{ $t('FORM.NEW_PASSWORD.MESSAGE.TITLE') }}
+              p {{ $t('FORM.NEW_PASSWORD.MESSAGE.BODY') }}
+
+          .required.field(
+            :class="[classes, fieldClass]",
+            v-if="newPasswordRequired"
           )
+            new-password-input.required.field(
+              v-model="input.newPassword",
+              :disabled="signingIn",
+              :class="fieldClass"
+            )
 
-        p-button(
-          :disabled="invalid || signingIn",
-          :class="submitClass",
-          type="submit"
-        )
-          | {{ $t('FORM.SUBMIT') }}
-          i.sign.in.icon
+          p-button(
+            :disabled="invalid || signingIn",
+            :class="submitClass",
+            type="submit"
+          )
+            | {{ $t('FORM.SUBMIT') }}
+            i.sign.in.icon
 
-        .ui.center.aligned.vertical.segment
-          router-link.ui.link(to="/users/forgot-password")
-            | {{ $t('FORGOT_PASSWORD') }}
+    .p-text-center.p-m-4
+      router-link(to="/users/forgot-password")
+        | {{ $t('FORGOT_PASSWORD') }}
 </template>
 
 <script lang="ts">
@@ -95,7 +85,7 @@ interface SignInError extends Error {
 interface Data {
   newPasswordRequired: boolean;
   signingIn: boolean;
-  data: {
+  input: {
     newPassword?: string;
     password: string;
     email: string;
@@ -129,7 +119,7 @@ export default Vue.extend<Data, Methods, Computed>({
     return {
       newPasswordRequired: false,
       signingIn: false,
-      data: {
+      input: {
         password: '',
         email: ''
       }
@@ -162,6 +152,7 @@ export default Vue.extend<Data, Methods, Computed>({
     },
 
     onSignInError(err) {
+      console.log(err);
       switch (err.code) {
         case 'UserNotConfirmedException':
           this.$toast.add({
@@ -171,7 +162,10 @@ export default Vue.extend<Data, Methods, Computed>({
           break;
 
         case 'PasswordResetRequiredException':
-          this.$t('ERRORS.PASSWORD_RESET_REQUIRED_EXCEPTION');
+          this.$toast.add({
+            detail: this.$t('ERRORS.PASSWORD_RESET_REQUIRED_EXCEPTION'),
+            severity: 'error'
+          });
           break;
 
         case 'NotAuthorizedException':
@@ -183,7 +177,6 @@ export default Vue.extend<Data, Methods, Computed>({
           break;
 
         default:
-          console.error(err);
           this.$toast.add({
             detail: this.$t('ERRORS.UNKNOWN'),
             severity: 'error'
@@ -197,7 +190,7 @@ export default Vue.extend<Data, Methods, Computed>({
     async signIn() {
       this.signingIn = true;
 
-      const { email, password, newPassword } = this.data;
+      const { email, password, newPassword } = this.input;
 
       try {
         const user = await this.$auth.signIn(email, password);
@@ -228,10 +221,3 @@ export default Vue.extend<Data, Methods, Computed>({
   }
 });
 </script>
-
-<style lang="sass" scoped>
-.ui.centered.grid.container
-  .doubling.two.column.row
-    .column
-      padding: 0
-</style>

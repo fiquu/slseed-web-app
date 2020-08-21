@@ -47,7 +47,6 @@ export default Vue.extend({
 section.views
   flex-direction: column
   overflow: hidden
-  display: flex
   height: 100vh
   width: 100vw
 

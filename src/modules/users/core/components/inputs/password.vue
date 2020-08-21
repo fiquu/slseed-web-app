@@ -6,27 +6,30 @@ en:
 
 <template lang="pug">
 form-input(
-  @input="value => $emit('input', value)"
-  :placeholder="$t('PLACEHOLDER')"
-  rules="required|min:8"
-  :disabled="disabled"
-  :label="$t('LABEL')"
-  :required="true"
-  :value="value"
-  name="password"
+  :placeholder="$t('PLACEHOLDER')",
+  rules="required|min:8",
+  :disabled="disabled",
+  v-model="inputValue",
+  :label="$t('LABEL')",
+  :required="true",
+  name="password",
   type="password"
-  )
+)
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+
+interface Computed {
+  inputValue: string;
+}
 
 interface Props {
   disabled: boolean;
   value: string;
 }
 
-export default Vue.extend<unknown, unknown, unknown, Props>({
+export default Vue.extend<unknown, unknown, Computed, Props>({
   props: {
     disabled: {
       type: Boolean
@@ -34,6 +37,18 @@ export default Vue.extend<unknown, unknown, unknown, Props>({
     value: {
       type: String,
       required: true
+    }
+  },
+
+  computed: {
+    inputValue: {
+      get() {
+        return this.value;
+      },
+
+      set(value) {
+        this.$emit('input', value);
+      }
     }
   }
 });
