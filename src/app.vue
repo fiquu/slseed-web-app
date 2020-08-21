@@ -1,46 +1,63 @@
 <i18n>
 en:
   SESSION:
-    ERROR: Couldn't resolve session
+    ERROR:
+      TITLE: Couldn't resolve session.
+      BODY: Please check your internet connection.
 </i18n>
 
 <template lang="pug">
-main#app.p-d-flex
-  the-views
+main#app.p-d-flex.p-flex-column
+  the-update-notification
+  the-navbar
 
-  the-dimmer
+  transition(name="component-fade", mode="out-in")
+    router-view.router-view(:key="$route.fullPath")
+
+  the-footer-nav(v-show="$session.signedIn")
+
+  the-footer
+
+  p-toast
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-import TheDimmer from '@/modules/core/components/the-dimmer.vue';
-import TheViews from '@/modules/core/components/the-views.vue';
+import TheUpdateNotification from '@/modules/core/components/the-update-notification.vue';
+import TheFooterNav from '@/modules/core/components/the-footer-nav.vue';
+import TheFooter from '@/modules/core/components/the-footer.vue';
+import TheNavbar from '@/modules/core/components/the-navbar.vue';
 
 export default Vue.extend({
   components: {
-    TheDimmer,
-    TheViews
+    TheUpdateNotification,
+    TheFooterNav,
+    TheFooter,
+    TheNavbar
   },
 
   created() {
     this.$session.$on('error', () => {
       this.$toast.add({
-        summary: this.$t('SESSION.ERROR'),
-        severity: 'error'
+        summary: this.$t('SESSION.ERROR.TITLE'),
+        detail: this.$t('SESSION.ERROR.BODY'),
+        severity: 'error',
+        life: 5000
       });
     });
   }
 });
 </script>
 
-<style src="reset-css/reset.css"></style>
+<style src="normalize.css/normalize.css"></style>
 <style src="primevue/resources/primevue.min.css"></style>
 <style src="primeflex/primeflex.min.css"></style>
 <style src="primeicons/primeicons.css"></style>
 
-<style src="primevue/resources/themes/saga-green/theme.css"></style>
-<style src="./styles/transitions.sass" lang="sass"></style>
+<style src="@/styles/transitions.sass" lang="sass"></style>
+<style src="@/styles/overrides.sass" lang="sass"></style>
+<style src="@/styles/theme.sass" lang="sass"></style>
 
 <style lang="sass">
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap")
@@ -48,7 +65,9 @@ export default Vue.extend({
 
 body
   font-family: $fontFamily
-  background: #f7f7f6
+  background: $backgroundColor
+  padding: 0
+  margin: 0
 </style>
 
 <style lang="sass" scoped>
@@ -57,6 +76,10 @@ main#app
   overflow: hidden
   height: 100vh
   width: 100vw
+
+  .router-view
+    overflow-y: scroll
+    flex: 1
 
   .selectable
     user-select: auto

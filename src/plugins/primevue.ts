@@ -2,6 +2,7 @@ import Vue from 'vue';
 
 import ToastService from 'primevue/toastservice';
 import InputText from 'primevue/inputtext';
+import Message from 'primevue/message';
 import Toolbar from 'primevue/toolbar';
 import Menubar from 'primevue/menubar';
 import Button from 'primevue/button';
@@ -17,6 +18,7 @@ Vue.use(ToastService);
 
 Vue.component('PInputText', InputText);
 Vue.component('PMenubar', Menubar);
+Vue.component('PMessage', Message);
 Vue.component('PToolbar', Toolbar);
 Vue.component('PDialog', Dialog);
 Vue.component('PButton', Button);

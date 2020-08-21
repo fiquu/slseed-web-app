@@ -12,6 +12,7 @@ en:
     SUBMIT: Sign in
 
   ERRORS:
+    TITLE: There's a problem...
     USER_NOT_CONFIRMED_EXCEPTION: Please verify your account first.
     PASSWORD_RESET_REQUIRED_EXCEPTION: Please reset your password.
     NOT_AUTHORIZED_EXCEPTION: Please verify that your email and password are correct.
@@ -19,8 +20,8 @@ en:
 </i18n>
 
 <template lang="pug">
-section.p-grid.p-justify-center.p-p-4
-  .p-col-2
+section.p-grid.p-justify-center.p-nogutter.p-p-3
+  .p-col.p-md-8.p-lg-6.p-xl-2
     p-card.p-mb-4.p-text-center
       template(#header)
         i.pi.pi-user.p-mt-4(style={ fontSize: '2rem' })
@@ -31,8 +32,8 @@ section.p-grid.p-justify-center.p-p-4
       template(#content)
         p {{ $t('SUBTITLE') }}
 
-    p-card
-      template(#content)
+    .p-card
+      .p-card-body
         validation-observer.p-fluid(
           v-slot="{ classes, invalid }",
           @submit.prevent="signIn()",
@@ -60,14 +61,14 @@ section.p-grid.p-justify-center.p-p-4
 
           p-button(
             :disabled="invalid || signingIn",
+            :label="$t('FORM.SUBMIT')",
             :class="submitClass",
+            icon="pi pi-sign-in",
             type="submit"
           )
-            | {{ $t('FORM.SUBMIT') }}
-            i.sign.in.icon
 
     .p-text-center.p-m-4
-      router-link(to="/users/forgot-password")
+      router-link.p-button.p-button-link(to="/users/forgot-password")
         | {{ $t('FORGOT_PASSWORD') }}
 </template>
 
@@ -152,34 +153,41 @@ export default Vue.extend<Data, Methods, Computed>({
     },
 
     onSignInError(err) {
-      console.log(err);
       switch (err.code) {
         case 'UserNotConfirmedException':
           this.$toast.add({
+            summary: this.$t('ERRORS.TITLE'),
             detail: this.$t('ERRORS.USER_NOT_CONFIRMED_EXCEPTION'),
-            severity: 'error'
+            severity: 'error',
+            life: 5000
           });
           break;
 
         case 'PasswordResetRequiredException':
           this.$toast.add({
+            summary: this.$t('ERRORS.TITLE'),
             detail: this.$t('ERRORS.PASSWORD_RESET_REQUIRED_EXCEPTION'),
-            severity: 'error'
+            severity: 'error',
+            life: 5000
           });
           break;
 
         case 'NotAuthorizedException':
         case 'UserNotFoundException':
           this.$toast.add({
+            summary: this.$t('ERRORS.TITLE'),
             detail: this.$t('ERRORS.NOT_AUTHORIZED_EXCEPTION'),
-            severity: 'error'
+            severity: 'error',
+            life: 5000
           });
           break;
 
         default:
           this.$toast.add({
+            summary: this.$t('ERRORS.TITLE'),
             detail: this.$t('ERRORS.UNKNOWN'),
-            severity: 'error'
+            severity: 'error',
+            life: 5000
           });
       }
     },

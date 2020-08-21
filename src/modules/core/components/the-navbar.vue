@@ -6,34 +6,31 @@ es:
 </i18n>
 
 <template lang="pug">
-p-toolbar.p-shadow-1
-  template(#left)
-    router-link.p-button.p-button-text.p-button-plain(
-      :class="backButtonClass",
-      v-if="$session.signedIn",
-      to="/"
-    )
+.p-menubar.p-shadow-2
+  router-link.p-button.p-button-text.p-button-plain.p-menuitem(
+    :class="backButtonClass",
+    v-if="$session.signedIn",
+    to="/"
+  )
+    .p-menuitem-icon
       i.pi.pi-chevron-left
 
-    router-link.p-button.p-button-text.p-button-plain(to="/")
-      .p-button-icon.p-mr-2
-        img(src="/static/images/navbar-icon.png")
-      .p-button-label {{ title }}
+  router-link.p-button.p-button-text.p-button-plain.p-menuitem(to="/")
+    .p-button-icon.p-mr-2
+      img(src="/static/images/navbar-icon.png")
+    .p-button-label {{ title }}
 
-  template(#right)
-    .right.menu.tablet.or.lower.hidden(v-if="$session.signedIn")
-      .disabled.item
-        i.user.circle.icon
-        | {{ $session.data.name }}
+  .p-menuitem(v-if="$session.signedIn")
+    .p-menuitem-text {{ $session.data.name }}
+    .p-menuitem-icon
+      i.user.circle.icon
 
-      a.item(
-        @click="$session.signOut()",
-        v-if="$session.signedIn",
-        role="button",
-        href=""
-      )
-        i.sign.out.icon
-        | {{ $t('SIGN_OUT') }}
+  .p-button.p-button-plain.p-menuitem(
+    @click="$session.signOut()",
+    v-if="$session.signedIn"
+  )
+    i.sign.out.icon
+    | {{ $t('SIGN_OUT') }}
 </template>
 
 <script lang="ts">
@@ -67,7 +64,8 @@ export default Vue.extend<Data, unknown, unknown>({
 </script>
 
 <style lang="sass" scoped>
-.p-toolbar
+.p-menubar
+  position: relative
   background: white
   border-radius: 0
 

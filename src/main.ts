@@ -12,7 +12,7 @@ Vue.config.productionTip = false;
 
 export default new Vue({
   el: '#app',
-  render: (h: CreateElement): VNode => h(App),
+  render: (createElement: CreateElement): VNode => createElement(App),
   router,
   store,
   i18n
