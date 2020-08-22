@@ -7,6 +7,7 @@ en:
 <template lang="pug">
 form-input(
   :placeholder="$t('PLACEHOLDER')",
+  autocomplete="recovery-code",
   rules="required|digits:6",
   :disabled="disabled",
   v-model="inputValue",

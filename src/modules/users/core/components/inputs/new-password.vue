@@ -7,6 +7,7 @@ en:
 <template lang="pug">
 form-input(
   :placeholder="$t('PLACEHOLDER')",
+  autocomplete="new-password",
   rules="required|min:8",
   :disabled="disabled",
   v-model="inputValue",
@@ -20,12 +21,16 @@ form-input(
 <script lang="ts">
 import Vue from 'vue';
 
+interface Computed {
+  inputValue: string | number;
+}
+
 interface Props {
   disabled: boolean;
   value: string;
 }
 
-export default Vue.extend<unknown, unknown, unknown, Props>({
+export default Vue.extend<unknown, unknown, Computed, Props>({
   props: {
     disabled: {
       type: Boolean
@@ -33,6 +38,18 @@ export default Vue.extend<unknown, unknown, unknown, Props>({
     value: {
       type: String,
       required: true
+    }
+  },
+
+  computed: {
+    inputValue: {
+      get() {
+        return this.value;
+      },
+
+      set(value) {
+        this.$emit('input', value);
+      }
     }
   }
 });

@@ -7,6 +7,7 @@ en:
 <template lang="pug">
 form-input(
   :placeholder="$t('PLACEHOLDER')",
+  autocomplete="username",
   rules="required|min:6",
   :disabled="disabled",
   v-model="inputValue",

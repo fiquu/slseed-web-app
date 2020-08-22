@@ -43,20 +43,20 @@ section.p-grid.p-justify-center.p-nogutter.p-p-3
           tag="form"
         )
           email-input.p-field(
-            :disabled="submitting",
-            v-model="data.email",
+            :disabled="submitting || showModal",
+            v-model="data.email"
           )
 
           p-button(
             :icon="submitting ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in'",
-            :disabled="invalid || submitting",
+            :disabled="invalid || submitting || showModal",
             :label="$t('FORM.SUBMIT')",
             icon-pos="right",
             type="submit"
           )
 
           p-button.p-button.p-button-link.p-mt-2(
-            :disabled="invalid || submitting",
+            :disabled="invalid || submitting || showModal",
             @click="onSubmitSuccess()",
             :label="$t('HAVE_CODE')",
             type="button"
@@ -66,7 +66,11 @@ section.p-grid.p-justify-center.p-nogutter.p-p-3
       router-link.p-button.p-button-link(to="/users/sign-in")
         | {{ $t('HAVE_PASSWORD') }}
 
-  reset-modal(:email="data.email", ref="modal", display="showModal")
+  reset-modal(
+    @hide="showModal = false",
+    :email="data.email",
+    :show="showModal"
+  )
 </template>
 
 <script lang="ts">
@@ -81,6 +85,7 @@ interface SubmitError extends Error {
 
 interface Data {
   submitting: boolean;
+  showModal: boolean;
   data: {
     password: string;
     email: string;
@@ -121,9 +126,7 @@ export default Vue.extend<Data, Methods, unknown>({
 
   methods: {
     onSubmitSuccess() {
-      const $modal: any = this.$refs.modal; // eslint-disable-line @typescript-eslint/no-explicit-any
-
-      $modal.show();
+      this.showModal = true;
     },
 
     afterError() {
@@ -139,28 +142,32 @@ export default Vue.extend<Data, Methods, unknown>({
           this.$router.push('/');
           this.$toast.add({
             detail: this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'),
-            severity: 'warn'
+            severity: 'warn',
+            life: 5000
           });
           break;
 
         case 'LimitExceededException':
           this.$toast.add({
             detail: this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'),
-            severity: 'error'
+            severity: 'error',
+            life: 5000
           });
           break;
 
         case 'UserNotFoundException':
           this.$toast.add({
             detail: this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'),
-            severity: 'error'
+            severity: 'error',
+            life: 5000
           });
           break;
 
         default:
           this.$toast.add({
             detail: this.$t('MESSAGES.ERRORS.UNKNOWN'),
-            severity: 'error'
+            severity: 'error',
+            life: 5000
           });
       }
     },
@@ -173,7 +180,6 @@ export default Vue.extend<Data, Methods, unknown>({
 
         this.onSubmitSuccess();
       } catch (err) {
-        console.error(err);
         this.onSubmitError(err);
       }
 

@@ -1,7 +1,7 @@
 <i18n>
 en:
   TITLE: 'Attention!'
-  BODY: 'Follow this instructions to reset your password:'
+  BODY: 'Follow the instructions to reset your password:'
   INSTRUCTIONS:
     - Don't close this window.
     - Go to your email inbox.
@@ -27,20 +27,21 @@ en:
 </i18n>
 
 <template lang="pug">
-p-dialog(:visible.sync="visible")
-  validation-observer(
-    @submit.prevent="submit()",
-    v-slot="{ invalid }",
-    tag="form"
-  )
+p-dialog(:visible="show", :modal="true")
+  template(#header)
+    h3 {{ $t('TITLE') }}
 
-    .header {{ $t('TITLE') }}
+  template
+    validation-observer(
+      :name="`password-reset-${_uid}`"
+      @submit.prevent="submit()",
+      v-slot="{ invalid }",
+      autocomplete="off",
+      tag="form"
+    )
+      strong {{ $t('BODY') }}
 
-    .content
-      p
-        strong {{ $t('BODY') }}
-
-      ol.ui.list
+      ol
         li {{ $t('INSTRUCTIONS.0') }}
         li {{ $t('INSTRUCTIONS.1') }}
         li {{ $t('INSTRUCTIONS.2') }}
@@ -50,31 +51,23 @@ p-dialog(:visible.sync="visible")
         li {{ $t('INSTRUCTIONS.6') }}
         li {{ $t('INSTRUCTIONS.7') }}
 
-      .ui.divider
+      .p-fluid
+        code-input(:disabled="submitting", v-model="data.code", autofocus)
+        new-password-input(:disabled="submitting", v-model="data.password")
 
-      .ui.form
-        code-input.required.field(
-          :disabled="submitting",
-          v-model="data.code",
-          :class="fieldClass"
+      .p-field
+        p-button(
+          :disabled="invalid || submitting",
+          :label="$t('FORM.CONFIRM')",
+          @click="submit()"
         )
 
-        new-password-input.required.field(
-          :disabled="submitting",
-          v-model="data.password",
-          :class="fieldClass"
-        )
-
-    .actions
-      button.ui.cancel.basic.button(:disabled="submitting", type="button")
-        | {{ $t('FORM.CANCEL') }}
-
-      button.ui.primary.button(
-        :disabled="invalid || submitting",
-        :class="confirmClass",
-        type="submit"
+      p-button.p-button-outlined(
+        :label="$t('FORM.CANCEL')",
+        :disabled="submitting",
+        @click="$emit('hide')",
+        type="button"
       )
-        | {{ $t('FORM.CONFIRM') }}
 </template>
 
 <script lang="ts">
@@ -102,29 +95,19 @@ interface Methods {
   afterError(): void;
 }
 
-interface Computed {
-  fieldClass: {
-    disabled: boolean;
-  };
-
-  confirmClass: {
-    loading: boolean;
-  };
-}
-
 interface Props {
-  visible: boolean;
+  show: boolean;
   email: string;
 }
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default Vue.extend<Data, Methods, unknown, Props>({
   components: {
     NewPasswordInput,
     CodeInput
   },
 
   props: {
-    visible: {
+    show: {
       type: Boolean
     },
     email: {
@@ -143,17 +126,9 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     };
   },
 
-  computed: {
-    fieldClass() {
-      return {
-        disabled: this.submitting
-      };
-    },
-
-    confirmClass() {
-      return {
-        loading: this.submitting
-      };
+  watch: {
+    show(value) {
+      console.log('Show:', value);
     }
   },
 
@@ -163,52 +138,52 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     },
 
     onSubmitError(err) {
-      const timeout = setTimeout(() => this.afterError(), 3000);
-
-      console.error(err);
-
       switch (err.code) {
         case 'LimitExceededException':
           this.$toast.add({
             detail: this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'),
-            severity: 'error'
+            severity: 'error',
+            life: 5000
           });
           break;
 
         case 'UserNotFoundException':
           this.$toast.add({
             detail: this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'),
-            severity: 'error'
+            severity: 'error',
+            life: 5000
           });
           break;
 
         case 'CodeMismatchException':
           this.$toast.add({
             detail: this.$t('MESSAGES.ERRORS.INVALID_CODE'),
-            severity: 'error'
+            severity: 'error',
+            life: 5000
           });
           break;
 
         case 'ExpiredCodeException':
           this.$toast.add({
             detail: this.$t('MESSAGES.ERRORS.EXPIRED_CODE'),
-            severity: 'warn'
+            severity: 'warn',
+            life: 5000
           });
           break;
 
         case 'NotAuthorizedException':
-          clearTimeout(timeout);
-          this.$router.push('/');
           this.$toast.add({
             detail: this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'),
-            severity: 'warn'
+            severity: 'warn',
+            life: 5000
           });
           break;
 
         default:
           this.$toast.add({
             detail: this.$t('MESSAGES.ERRORS.UNKNOWN'),
-            severity: 'error'
+            severity: 'error',
+            life: 5000
           });
       }
     },
@@ -216,7 +191,8 @@ export default Vue.extend<Data, Methods, Computed, Props>({
     onSubmitSuccess() {
       this.$toast.add({
         detail: this.$t('MESSAGES.SUBMIT.SUCCESS'),
-        severity: 'success'
+        severity: 'success',
+        life: 5000
       });
 
       this.$router.replace('/users/sign-in');
@@ -233,7 +209,6 @@ export default Vue.extend<Data, Methods, Computed, Props>({
         this.onSubmitSuccess();
       } catch (err) {
         this.onSubmitError(err);
-        console.error(err);
       }
 
       this.submitting = false;

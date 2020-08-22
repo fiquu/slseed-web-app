@@ -6,6 +6,7 @@ validation-provider(v-slot="{ classes }", :rules="rules", slim)
 
     component(
       :id="`form-input-${_uid}`",
+      :autocomplete="autocomplete",
       :placeholder="placeholder",
       v-model="inputValue",
       :required="required",
@@ -26,6 +27,7 @@ interface Computed {
 
 interface Props {
   value: string | number;
+  autocomplete: string;
   placeholder: string;
   inputType: string;
   disabled: boolean;
@@ -42,6 +44,10 @@ export default Vue.extend<unknown, unknown, Computed, Props>({
       type: Boolean
     },
     label: {
+      type: String,
+      default: null
+    },
+    autocomplete: {
       type: String,
       default: null
     },
