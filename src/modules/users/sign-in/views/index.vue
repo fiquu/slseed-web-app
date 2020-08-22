@@ -30,7 +30,7 @@ section.p-grid.p-justify-center.p-nogutter.p-p-3
         | {{ $t('TITLE') }}
 
       template(#content)
-        p {{ $t('SUBTITLE') }}
+        | {{ $t('SUBTITLE') }}
 
     .p-card
       .p-card-body
@@ -40,8 +40,8 @@ section.p-grid.p-justify-center.p-nogutter.p-p-3
           ref="form",
           tag="form"
         )
-          email-input(v-model="input.email")
-          password-input(v-model="input.password")
+          email-input(v-model="input.email", :disabled="submitting")
+          password-input(v-model="input.password", :disabled="submitting")
 
           .ui.info.icon.message.visible(v-if="newPasswordRequired")
             i.exclamation.circle.icon
@@ -49,21 +49,17 @@ section.p-grid.p-justify-center.p-nogutter.p-p-3
               .header {{ $t('FORM.NEW_PASSWORD.MESSAGE.TITLE') }}
               p {{ $t('FORM.NEW_PASSWORD.MESSAGE.BODY') }}
 
-          .required.field(
-            :class="[classes, fieldClass]",
-            v-if="newPasswordRequired"
-          )
-            new-password-input.required.field(
+          .p-field(v-if="newPasswordRequired")
+            new-password-input(
               v-model="input.newPassword",
-              :disabled="signingIn",
-              :class="fieldClass"
+              :disabled="submitting"
             )
 
           p-button(
-            :disabled="invalid || signingIn",
+            :icon="submitting ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in'",
+            :disabled="invalid || submitting",
             :label="$t('FORM.SUBMIT')",
-            :class="submitClass",
-            icon="pi pi-sign-in",
+            icon-pos="right",
             type="submit"
           )
 
@@ -85,21 +81,11 @@ interface SignInError extends Error {
 
 interface Data {
   newPasswordRequired: boolean;
-  signingIn: boolean;
+  submitting: boolean;
   input: {
     newPassword?: string;
     password: string;
     email: string;
-  };
-}
-
-interface Computed {
-  fieldClass: {
-    disabled: boolean;
-  };
-
-  submitClass: {
-    loading: boolean;
   };
 }
 
@@ -109,7 +95,7 @@ interface Methods {
   signIn(): Promise<void>;
 }
 
-export default Vue.extend<Data, Methods, Computed>({
+export default Vue.extend<Data, Methods, unknown>({
   components: {
     NewPasswordInput,
     PasswordInput,
@@ -119,26 +105,12 @@ export default Vue.extend<Data, Methods, Computed>({
   data() {
     return {
       newPasswordRequired: false,
-      signingIn: false,
+      submitting: false,
       input: {
         password: '',
         email: ''
       }
     };
-  },
-
-  computed: {
-    fieldClass() {
-      return {
-        disabled: this.signingIn
-      };
-    },
-
-    submitClass() {
-      return {
-        loading: this.signingIn
-      };
-    }
   },
 
   beforeCreate() {
@@ -196,7 +168,7 @@ export default Vue.extend<Data, Methods, Computed>({
      * Signs the user in.
      */
     async signIn() {
-      this.signingIn = true;
+      this.submitting = true;
 
       const { email, password, newPassword } = this.input;
 
@@ -214,7 +186,7 @@ export default Vue.extend<Data, Methods, Computed>({
             return;
           }
 
-          this.signingIn = false;
+          this.submitting = false;
 
           return;
         }
@@ -224,7 +196,7 @@ export default Vue.extend<Data, Methods, Computed>({
         this.onSignInError(err);
       }
 
-      this.signingIn = false;
+      this.submitting = false;
     }
   }
 });

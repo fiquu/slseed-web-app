@@ -17,51 +17,54 @@ en:
 </i18n>
 
 <template lang="pug">
-section.ui.basic.segment
-  .ui.text.container
-    .ui.center.aligned.primary.segment
-      h3.ui.primary.icon.header
-        i.circular.asterisk.icon
-        .content {{ $t('TITLE') }}
-          .sub.header {{ $t('SUBTITLE') }}
+section.p-grid.p-justify-center.p-nogutter.p-p-3
+  .p-col.p-md-8.p-lg-6.p-xl-2
+    p-card.p-mb-4.p-text-center
+      template(#header)
+        i.pi.pi-key.p-mt-4(style={ fontSize: '2rem' })
 
-    .ui.visible.info.icon.message
-      i.info.circle.icon
-      i18n.content(path="MESSAGES.INFO.TEXT", tag="div")
-        template(v-slot:link)
-          strong {{ $t('HAVE_CODE') }}
+      template(#title)
+        | {{ $t('TITLE') }}
 
-    validation-observer.ui.form(
-      @submit.prevent="submit()",
-      v-slot="{ invalid }",
-      ref="form",
-      tag="form"
-    )
-      email-input.required.field(
-        :disabled="submitting",
-        v-model="data.email",
-        :class="fieldClass"
-      )
+      template(#content)
+        | {{ $t('SUBTITLE') }}
 
-      button.ui.primary.fluid.right.labeled.icon.submit.button(
-        :disabled="invalid || submitting",
-        :class="buttonClass",
-        type="submit"
-      )
-        | {{ $t('FORM.SUBMIT') }}
-        i.chevron.right.icon
+    .p-card
+      .p-card-body
+        p-message(:closable="false")
+          i18n(path="MESSAGES.INFO.TEXT", tag="div")
+            template(#link)
+              strong {{ $t('HAVE_CODE') }}
 
-      .ui.basic.vertical.segment
-        button.ui.fluid.basic.button(
-          :disabled="invalid || submitting",
-          @click="onSubmitSuccess()",
-          type="button"
+        validation-observer.p-fluid(
+          @submit.prevent="submit()",
+          v-slot="{ invalid }",
+          ref="form",
+          tag="form"
         )
-          | {{ $t('HAVE_CODE') }}
+          email-input.p-field(
+            :disabled="submitting",
+            v-model="data.email",
+          )
 
-      .ui.center.aligned.basic.vertical.segment
-        router-link.ui.link(to="/users/sign-in")
-          | {{ $t('HAVE_PASSWORD') }}
+          p-button(
+            :icon="submitting ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in'",
+            :disabled="invalid || submitting",
+            :label="$t('FORM.SUBMIT')",
+            icon-pos="right",
+            type="submit"
+          )
+
+          p-button.p-button.p-button-link.p-mt-2(
+            :disabled="invalid || submitting",
+            @click="onSubmitSuccess()",
+            :label="$t('HAVE_CODE')",
+            type="button"
+          )
+
+    .p-text-center.p-m-4
+      router-link.p-button.p-button-link(to="/users/sign-in")
+        | {{ $t('HAVE_PASSWORD') }}
 
   reset-modal(:email="data.email", ref="modal", display="showModal")
 </template>
@@ -92,18 +95,7 @@ interface Methods {
   afterError(): void;
 }
 
-interface Computed {
-  fieldClass: {
-    disabled: boolean;
-  };
-
-  buttonClass: {
-    disabled: boolean;
-    loading: boolean;
-  };
-}
-
-export default Vue.extend<Data, Methods, Computed>({
+export default Vue.extend<Data, Methods, unknown>({
   components: {
     EmailInput,
     ResetModal
@@ -119,21 +111,6 @@ export default Vue.extend<Data, Methods, Computed>({
         code: ''
       }
     };
-  },
-
-  computed: {
-    fieldClass() {
-      return {
-        disabled: this.submitting
-      };
-    },
-
-    buttonClass() {
-      return {
-        disabled: this.submitting,
-        loading: this.submitting
-      };
-    }
   },
 
   beforeCreate() {
@@ -156,9 +133,16 @@ export default Vue.extend<Data, Methods, Computed>({
     onSubmitError(err) {
       const timeout = setTimeout(() => this.afterError(), 30000);
 
-      console.error(err);
-
       switch (err.code) {
+        case 'NotAuthorizedException':
+          clearTimeout(timeout);
+          this.$router.push('/');
+          this.$toast.add({
+            detail: this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'),
+            severity: 'warn'
+          });
+          break;
+
         case 'LimitExceededException':
           this.$toast.add({
             detail: this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'),
@@ -170,15 +154,6 @@ export default Vue.extend<Data, Methods, Computed>({
           this.$toast.add({
             detail: this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'),
             severity: 'error'
-          });
-          break;
-
-        case 'NotAuthorizedException':
-          clearTimeout(timeout);
-          this.$router.push('/');
-          this.$toast.add({
-            detail: this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'),
-            severity: 'warn'
           });
           break;
 

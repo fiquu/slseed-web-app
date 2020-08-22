@@ -64,8 +64,8 @@ export default Vue.extend({
 @import @/styles/variables
 
 body
-  font-family: $fontFamily
   background: $backgroundColor
+  font-family: $fontFamily
   padding: 0
   margin: 0
 </style>
