@@ -5,17 +5,23 @@ en:
 </i18n>
 
 <template lang="pug">
-form-input(
-  :placeholder="$t('PLACEHOLDER')",
-  autocomplete="username",
-  rules="required|min:6",
-  :disabled="disabled",
-  v-model="inputValue",
-  :label="$t('LABEL')",
-  :required="true",
-  name="email",
-  type="email"
-)
+validation-provider(v-slot="{ classes }", rules="required|min:6|email", slim)
+  .p-field(:class="classes")
+    label(:for="`email-input-${_uid}`")
+      | {{ $t('LABEL') }}
+
+    p-input-text(
+      :placeholder="$t('PLACEHOLDER')",
+      :id="`email-input-${_uid}`",
+      autocomplete="username",
+      :disabled="disabled",
+      v-model="inputValue",
+      :label="$t('LABEL')",
+      :class="classes",
+      name="email",
+      type="email",
+      required
+    )
 </template>
 
 <script lang="ts">

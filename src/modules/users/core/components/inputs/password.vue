@@ -5,17 +5,22 @@ en:
 </i18n>
 
 <template lang="pug">
-form-input(
-  :placeholder="$t('PLACEHOLDER')",
-  autocomplete="current-password",
-  rules="required|min:8",
-  :disabled="disabled",
-  v-model="inputValue",
-  :label="$t('LABEL')",
-  :required="true",
-  name="password",
-  type="password"
-)
+validation-provider(v-slot="{ classes }", rules="required|min:8", slim)
+  .p-field(:class="classes")
+    label(:for="`password-input-${_uid}`")
+      | {{ $t('LABEL') }}
+
+    p-password(
+      :placeholder="$t('PLACEHOLDER')",
+      autocomplete="current-password",
+      :id="`password-input-${_uid}`",
+      :disabled="disabled",
+      v-model="inputValue",
+      :feedback="false",
+      :class="classes",
+      name="password",
+      required
+    )
 </template>
 
 <script lang="ts">

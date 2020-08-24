@@ -2,21 +2,32 @@
 en:
   PLACEHOLDER: Create your new password...
   LABEL: New Password
+  PROMPT_LABEL: Enter a password...
+  WEAK_LABEL: Too weak...
+  MEDIUM_LABEL: Fair...
+  STRONG_LABEL: Perfect!
 </i18n>
 
 <template lang="pug">
-form-input(
-  :placeholder="$t('PLACEHOLDER')",
-  autocomplete="new-password",
-  input-type="p-password",
-  rules="required|min:8",
-  :disabled="disabled",
-  v-model="inputValue",
-  :label="$t('LABEL')",
-  :required="true",
-  name="password",
-  type="password"
-)
+validation-provider(v-slot="{ classes }", rules="required|min:8", slim)
+  .p-field(:class="classes")
+    label(:for="`new-password-input-${_uid}`")
+      | {{ $t('LABEL') }}
+
+    p-password(
+      :id="`new-password-input-${_uid}`",
+      :prompt-label="$t('PROMPT_LABEL')",
+      :medium-label="$t('MEDIUM_LABEL')",
+      :strong-label="$t('STRONG_LABEL')",
+      :placeholder="$t('PLACEHOLDER')",
+      :weak-label="$t('WEAK_LABEL')",
+      autocomplete="new-password",
+      :disabled="disabled",
+      v-model="inputValue",
+      name="new-password",
+      :class="classes",
+      required
+    )
 </template>
 
 <script lang="ts">

@@ -6,19 +6,24 @@ en:
 </i18n>
 
 <template lang="pug">
-form-input(
-  :placeholder="$t('PLACEHOLDER')",
-  autocomplete="recovery-code",
-  rules="required|digits:6",
-  :disabled="disabled",
-  v-model="inputValue",
-  :label="$t('LABEL')",
-  :required="true",
-  name="code",
-  type="text"
-)
+validation-provider(v-slot="{ classes }", rules="required|digits:6", slim)
+  .p-field(:class="classes")
+    label(:for="`code-input-${_uid}`")
+      | {{ $t('LABEL') }}
 
-  small {{ $t('HELP') }}
+    p-input-text(
+      :placeholder="$t('PLACEHOLDER')",
+      autocomplete="recovery-code",
+      :id="`code-input-${_uid}`",
+      :disabled="disabled",
+      v-model="inputValue",
+      :class="classes",
+      name="code",
+      type="text",
+      required
+    )
+
+    small {{ $t('HELP') }}
 </template>
 
 <script lang="ts">
