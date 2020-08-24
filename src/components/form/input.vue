@@ -16,6 +16,8 @@ validation-provider(v-slot="{ classes }", :rules="rules", slim)
       :type="type",
       :name="name"
     )
+
+    slot
 </template>
 
 <script lang="ts">

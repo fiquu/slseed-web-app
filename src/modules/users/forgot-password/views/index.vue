@@ -8,7 +8,7 @@ en:
     SUBMIT: Request a recovery code
   MESSAGES:
     INFO:
-      TEXT: "If you already have a recovery code, enter your email and press: {link}."
+      TEXT: "If you already have a recovery code, enter your email and press {link}."
     ERRORS:
       LIMIT_EXCEEDED: Please wait a while before retrying.
       USER_NOT_FOUND: Check your email is right.
@@ -19,23 +19,21 @@ en:
 <template lang="pug">
 section.p-grid.p-justify-center.p-nogutter.p-p-3
   .p-col.p-md-8.p-lg-6.p-xl-2
-    p-card.p-mb-4.p-text-center
-      template(#header)
+    .p-card.p-text-center
+      .p-card-title
         i.pi.pi-key.p-mt-4(style={ fontSize: '2rem' })
+        .p-mt-3 {{ $t('TITLE') }}
 
-      template(#title)
-        | {{ $t('TITLE') }}
-
-      template(#content)
+      .p-card-body
         | {{ $t('SUBTITLE') }}
+
+    p-message(:closable="false")
+      i18n(path="MESSAGES.INFO.TEXT")
+        template(#link)
+          strong {{ $t('HAVE_CODE') }}
 
     .p-card
       .p-card-body
-        p-message(:closable="false")
-          i18n(path="MESSAGES.INFO.TEXT", tag="div")
-            template(#link)
-              strong {{ $t('HAVE_CODE') }}
-
         validation-observer.p-fluid(
           @submit.prevent="submit()",
           v-slot="{ invalid }",
@@ -55,7 +53,7 @@ section.p-grid.p-justify-center.p-nogutter.p-p-3
             type="submit"
           )
 
-          p-button.p-button.p-button-link.p-mt-2(
+          p-button.p-button.p-button-link.p-mt-3(
             :disabled="invalid || submitting || showModal",
             @click="onSubmitSuccess()",
             :label="$t('HAVE_CODE')",

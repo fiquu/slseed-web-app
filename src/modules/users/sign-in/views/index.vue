@@ -22,14 +22,12 @@ en:
 <template lang="pug">
 section.p-grid.p-justify-center.p-nogutter.p-p-3
   .p-col.p-md-8.p-lg-6.p-xl-2
-    p-card.p-mb-4.p-text-center
-      template(#header)
+    .p-card.p-text-center.p-mb-3
+      .p-card-title
         i.pi.pi-user.p-mt-4(style={ fontSize: '2rem' })
+        .p-mt-3 {{ $t('TITLE') }}
 
-      template(#title)
-        | {{ $t('TITLE') }}
-
-      template(#content)
+      .p-card-body
         | {{ $t('SUBTITLE') }}
 
     .p-card

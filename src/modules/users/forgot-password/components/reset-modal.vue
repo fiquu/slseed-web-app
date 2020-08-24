@@ -27,7 +27,7 @@ en:
 </i18n>
 
 <template lang="pug">
-p-dialog(:visible="show", :modal="true")
+p-dialog(:visible="show", :modal="true", :closable="false")
   template(#header)
     h3 {{ $t('TITLE') }}
 
