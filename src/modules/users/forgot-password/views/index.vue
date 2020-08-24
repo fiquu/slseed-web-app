@@ -48,7 +48,7 @@ section.p-grid.p-justify-center.p-nogutter.p-p-3
           )
 
           p-button(
-            :icon="submitting ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in'",
+            :icon="submitting ? 'pi pi-spin pi-spinner' : 'pi pi-chevron-circle-right'",
             :disabled="invalid || submitting || showModal",
             :label="$t('FORM.SUBMIT')",
             icon-pos="right",

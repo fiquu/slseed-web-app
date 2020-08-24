@@ -33,7 +33,7 @@ p-dialog(:visible="show", :modal="true")
 
   template
     validation-observer(
-      :name="`password-reset-${_uid}`"
+      :name="`password-reset-${_uid}`",
       @submit.prevent="submit()",
       v-slot="{ invalid }",
       autocomplete="off",
@@ -55,19 +55,20 @@ p-dialog(:visible="show", :modal="true")
         code-input(:disabled="submitting", v-model="data.code", autofocus)
         new-password-input(:disabled="submitting", v-model="data.password")
 
-      .p-field
         p-button(
           :disabled="invalid || submitting",
+          icon="pi pi-chevron-circle-right",
           :label="$t('FORM.CONFIRM')",
-          @click="submit()"
+          @click="submit()",
+          icon-pos="right"
         )
 
-      p-button.p-button-outlined(
-        :label="$t('FORM.CANCEL')",
-        :disabled="submitting",
-        @click="$emit('hide')",
-        type="button"
-      )
+        p-button.p-mt-3.p-button-text(
+          :label="$t('FORM.CANCEL')",
+          :disabled="submitting",
+          @click="$emit('hide')",
+          type="button"
+        )
 </template>
 
 <script lang="ts">
@@ -124,12 +125,6 @@ export default Vue.extend<Data, Methods, unknown, Props>({
         code: ''
       }
     };
-  },
-
-  watch: {
-    show(value) {
-      console.log('Show:', value);
-    }
   },
 
   methods: {
