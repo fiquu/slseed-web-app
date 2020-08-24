@@ -20,21 +20,22 @@ p-menubar.p-shadow-2(:model="items")
 <script lang="ts">
 import Vue from 'vue';
 
-interface Data {
+interface Computed {
+  username: string | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items: any[];
 }
 
-interface Computed {
-  username: string | undefined;
-}
-
-export default Vue.extend<Data, unknown, Computed>({
+export default Vue.extend<unknown, unknown, Computed>({
   name: 'TheNavbar',
 
-  data() {
-    return {
-      items: [{
+  computed: {
+    username() {
+      return this.$session.data.name;
+    },
+
+    items() {
+      return [{
         label: this.$t('HOME'),
         icon: 'pi pi-home',
         to: '/'
@@ -61,13 +62,7 @@ export default Vue.extend<Data, unknown, Computed>({
         icon: 'pi pi-sign-out',
         command: () => this.$session.signOut(),
         visible: () => this.$session.signedIn
-      }]
-    };
-  },
-
-  computed: {
-    username() {
-      return this.$session.data.name;
+      }];
     }
   }
 });
