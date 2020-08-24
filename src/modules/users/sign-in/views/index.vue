@@ -5,10 +5,7 @@ en:
   FORGOT_PASSWORD: I forgot my password
 
   FORM:
-    NEW_PASSWORD:
-      MESSAGE:
-        TITLE: "That's a temporary password!"
-        BODY: You must create a new password.
+    NEW_PASSWORD: That's a temporary password! You must create a new one to sign in.
     SUBMIT: Sign in
 
   ERRORS:
@@ -41,11 +38,12 @@ section.p-grid.p-justify-center.p-nogutter.p-p-3
           email-input(v-model="input.email", :disabled="submitting")
           password-input(v-model="input.password", :disabled="submitting")
 
-          .ui.info.icon.message.visible(v-if="newPasswordRequired")
-            i.exclamation.circle.icon
-            .content
-              .header {{ $t('FORM.NEW_PASSWORD.MESSAGE.TITLE') }}
-              p {{ $t('FORM.NEW_PASSWORD.MESSAGE.BODY') }}
+          p-message(
+            v-if="newPasswordRequired",
+            severity="warn",
+            :closable="false"
+          )
+            | {{ $t('FORM.NEW_PASSWORD') }}
 
           .p-field(v-if="newPasswordRequired")
             new-password-input(
