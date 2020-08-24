@@ -8,6 +8,7 @@ import Toolbar from 'primevue/toolbar';
 import Menubar from 'primevue/menubar';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
+import Panel from 'primevue/panel';
 import Toast from 'primevue/toast';
 import Card from 'primevue/card';
 
@@ -24,5 +25,6 @@ Vue.component('PMessage', Message);
 Vue.component('PToolbar', Toolbar);
 Vue.component('PDialog', Dialog);
 Vue.component('PButton', Button);
+Vue.component('PPanel', Panel);
 Vue.component('PToast', Toast);
 Vue.component('PCard', Card);

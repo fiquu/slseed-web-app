@@ -13,37 +13,25 @@ en:
 </i18n>
 
 <template lang="pug">
-section.ui.basic.segment
-  .ui.container
-    .ui.red.segment
-      h4.ui.red.header
-        | {{ $t('TITLE') }}
+section.p-p-3
+  p-panel(:header="$t('TITLE')")
+    span(v-text="currentTime")
 
-      p(v-text="currentTime")
-
-    .ui.hidden.divider
-
-    .ui.three.stackable.cards
-      link-card.yellow(
+  .p-grid.p-mt-2
+    .p-col
+      link-card(
         :header="$t('USERS.HEADER')"
-        icon="users"
+        icon="pi-users"
         to="/users"
         )
 
         | {{ $t('USERS.DESCRIPTION') }}
 
-      link-card.blue(
-        :header="$t('THEME.HEADER')"
-        icon="brush"
-        to="/theme"
-        )
-
-        | {{ $t('THEME.DESCRIPTION') }}
-
-      link-card.grey(
+    .p-col
+      link-card(
         :header="$t('NOT_FOUND.HEADER')"
-        icon="meh"
-        to="/this-page-doesnt-exists"
+        icon="pi-ban"
+        to="/this-page-does-not-exists"
         )
 
         | {{ $t('NOT_FOUND.DESCRIPTION') }}
