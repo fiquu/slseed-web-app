@@ -25,14 +25,12 @@ main#app.p-d-flex.p-flex-column
 import Vue from 'vue';
 
 import TheUpdateNotification from '@/modules/core/components/the-update-notification.vue';
-import TheFooterNav from '@/modules/core/components/the-footer-nav.vue';
 import TheFooter from '@/modules/core/components/the-footer.vue';
 import TheNavbar from '@/modules/core/components/the-navbar.vue';
 
 export default Vue.extend({
   components: {
     TheUpdateNotification,
-    TheFooterNav,
     TheFooter,
     TheNavbar
   },

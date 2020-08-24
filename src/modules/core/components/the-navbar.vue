@@ -1,63 +1,73 @@
 <i18n>
 en:
+  HOME: Home
+  USERS: Users
+  NOT_FOUND: Not Found
   SIGN_OUT: Sign out
 es:
+  HOME: Inicio
+  USERS: Usuarios
+  NOT_FOUND: No Encontrado
   SIGN_OUT: Salir
 </i18n>
 
 <template lang="pug">
-.p-menubar.p-shadow-2
-  router-link.p-button.p-button-text.p-button-plain.p-menuitem(
-    :class="backButtonClass",
-    v-if="$session.signedIn",
-    to="/"
-  )
-    .p-menuitem-icon
-      i.pi.pi-chevron-left
-
-  router-link.p-button.p-button-text.p-button-plain.p-menuitem(to="/")
-    .p-button-icon.p-mr-2
-      img(src="/static/images/navbar-icon.png")
-    .p-button-label {{ title }}
-
-  .p-menuitem(v-if="$session.signedIn")
-    .p-menuitem-text {{ $session.data.name }}
-    .p-menuitem-icon
-      i.user.circle.icon
-
-  .p-button.p-button-plain.p-menuitem(
-    @click="$session.signOut()",
-    v-if="$session.signedIn"
-  )
-    i.sign.out.icon
-    | {{ $t('SIGN_OUT') }}
+p-menubar.p-shadow-2(:model="items")
+  template(#start)
+    img.p-mr-2(src="/static/images/navbar-icon.png")
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
 interface Data {
-  title: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  items: any[];
 }
 
 interface Computed {
-  backButtonClass(): { disabled: boolean }
+  username: string | undefined;
 }
 
-export default Vue.extend<Data, unknown, unknown>({
+export default Vue.extend<Data, unknown, Computed>({
   name: 'TheNavbar',
 
   data() {
     return {
-      title: String(process.env.VUE_APP_SHORT)
+      items: [{
+        label: this.$t('HOME'),
+        icon: 'pi pi-home',
+        to: '/'
+      }, {
+        label: this.$t('USERS'),
+        icon: 'pi pi-users',
+        to: '/users',
+        visible: () => this.$session.signedIn
+      }, {
+        label: this.$t('NOT_FOUND'),
+        icon: 'pi pi-ban',
+        to: '/no-a-real-route-path',
+        visible: () => this.$session.signedIn
+      }, {
+        separator: true,
+        visible: () => this.$session.signedIn
+      }, {
+        label: this.username,
+        disabled: true,
+        icon: 'pi pi-user',
+        visible: () => this.$session.signedIn
+      }, {
+        label: this.$t('SIGN_OUT'),
+        icon: 'pi pi-sign-out',
+        command: () => this.$session.signOut(),
+        visible: () => this.$session.signedIn
+      }]
     };
   },
 
   computed: {
-    backButtonClass() {
-      return {
-        disabled: this.$route.path === '/dashboard'
-      };
+    username() {
+      return this.$session.data.name;
     }
   }
 });
@@ -68,6 +78,7 @@ export default Vue.extend<Data, unknown, unknown>({
   position: relative
   background: white
   border-radius: 0
+  border: 0
 
   a
     text-decoration: none

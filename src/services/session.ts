@@ -105,6 +105,8 @@ export default new Vue<Data, Methods, unknown>({
 
       // This will trigger a page reload
       await this.$auth.signOut();
+
+      window.location.reload();
     }
   }
 });
