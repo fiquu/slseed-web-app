@@ -2,6 +2,7 @@ import Vue from 'vue';
 
 import ToastService from 'primevue/toastservice';
 import InputText from 'primevue/inputtext';
+import Password from 'primevue/password';
 import Message from 'primevue/message';
 import Toolbar from 'primevue/toolbar';
 import Menubar from 'primevue/menubar';
@@ -17,6 +18,7 @@ Vue.prototype.$primevue = {
 Vue.use(ToastService);
 
 Vue.component('PInputText', InputText);
+Vue.component('PPassword', Password);
 Vue.component('PMenubar', Menubar);
 Vue.component('PMessage', Message);
 Vue.component('PToolbar', Toolbar);

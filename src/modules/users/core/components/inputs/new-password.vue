@@ -8,6 +8,7 @@ en:
 form-input(
   :placeholder="$t('PLACEHOLDER')",
   autocomplete="new-password",
+  input-type="p-password",
   rules="required|min:8",
   :disabled="disabled",
   v-model="inputValue",

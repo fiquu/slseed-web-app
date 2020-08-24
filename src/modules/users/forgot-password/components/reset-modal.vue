@@ -59,15 +59,15 @@ p-dialog(:visible="show", :modal="true", :closable="false")
           :disabled="invalid || submitting",
           icon="pi pi-chevron-circle-right",
           :label="$t('FORM.CONFIRM')",
-          @click="submit()",
-          icon-pos="right"
+          icon-pos="right",
+          type="submit"
         )
 
         p-button.p-mt-3.p-button-text(
           :label="$t('FORM.CANCEL')",
           :disabled="submitting",
-          @click="$emit('hide')",
-          type="button"
+          @click="cancel()",
+          type="reset"
         )
 </template>
 
@@ -94,6 +94,7 @@ interface Methods {
   onSubmitSuccess(): void;
   submit(): Promise<void>;
   afterError(): void;
+  cancel(): void;
 }
 
 interface Props {
@@ -207,6 +208,13 @@ export default Vue.extend<Data, Methods, unknown, Props>({
       }
 
       this.submitting = false;
+    },
+
+    cancel() {
+      this.data.password = '';
+      this.data.code = '';
+
+      this.$emit('hide');
     }
   }
 });
