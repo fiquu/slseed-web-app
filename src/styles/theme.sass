@@ -1,21 +1,10 @@
-// :root
-//   --surface-a: #ffffff
-//   --surface-b: #f8f9fa
-//   --surface-c: #e9ecef
-//   --surface-d: #dee2e6
-//   --surface-e: #ffffff
-//   --surface-f: #ffffff
-//   --text-color: #495057
-//   --text-color-secondary: #6c757d
-//   --primary-color: #4CAF50
-//   --primary-color-text: #ffffff
-//   --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol
+@import ./variables
 
 *
   box-sizing: border-box
 
 .p-component
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+  font-family: $fontFamily
   font-size: 1rem
   font-weight: normal
 
@@ -37,7 +26,7 @@
 
 .p-link
   font-size: 1rem
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+  font-family: $fontFamily
   border-radius: 3px
 
 .p-link:focus
@@ -55,19 +44,19 @@
   padding: 0.25rem 0.5rem
 
 .p-autocomplete.p-autocomplete-multiple .p-autocomplete-multiple-container:not(.p-disabled):hover
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-autocomplete.p-autocomplete-multiple .p-autocomplete-multiple-container:not(.p-disabled).p-focus
   outline: 0 none
   outline-offset: 0
   box-shadow: 0 0 0 0.2rem #b7e0b8
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-autocomplete.p-autocomplete-multiple .p-autocomplete-multiple-container .p-autocomplete-input-token
   padding: 0.25rem 0
 
 .p-autocomplete.p-autocomplete-multiple .p-autocomplete-multiple-container .p-autocomplete-input-token input
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+  font-family: $fontFamily
   font-size: 1rem
   color: #495057
   padding: 0
@@ -76,8 +65,8 @@
 .p-autocomplete.p-autocomplete-multiple .p-autocomplete-multiple-container .p-autocomplete-token
   padding: 0.25rem 0.5rem
   margin-right: 0.5rem
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
   border-radius: 3px
 
 .p-autocomplete.p-autocomplete-multiple .p-autocomplete-multiple-container .p-autocomplete-token .p-autocomplete-token-icon
@@ -87,7 +76,7 @@
   border-color: #f44336
 
 .p-autocomplete-panel
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   border: 0 none
   border-radius: 3px
@@ -107,37 +96,37 @@
 
 .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:hover
   color: #495057
-  background: #e9ecef
+  background: $surfaceC
 
 .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item.p-highlight
-  color: #ffffff
-  background: #4CAF50
+  color: $surfaceA
+  background: $primaryColor
 
 .p-calendar.p-error > .p-inputtext, .p-calendar.p-invalid > .p-inputtext
   border-color: #f44336
 
 .p-datepicker
   padding: 0.5rem
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   border: 1px solid #ced4da
   border-radius: 3px
 
 .p-datepicker:not(.p-datepicker-inline)
-  background: #ffffff
+  background: $surfaceA
   border: 0 none
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
 
 .p-datepicker:not(.p-datepicker-inline) .p-datepicker-header
-  background: #ffffff
+  background: $surfaceA
 
 .p-datepicker .p-datepicker-header
   padding: 0.5rem
   color: #495057
-  background: #ffffff
+  background: $surfaceA
   font-weight: 600
   margin: 0
-  border-bottom: 1px solid #dee2e6
+  border-bottom: 1px solid $surfaceD
   border-top-right-radius: 3px
   border-top-left-radius: 3px
 
@@ -155,7 +144,7 @@
 .p-datepicker .p-datepicker-header .p-datepicker-next:enabled:hover
   color: #495057
   border-color: transparent
-  background: #e9ecef
+  background: $surfaceC
 
 .p-datepicker .p-datepicker-header .p-datepicker-prev:focus,
 .p-datepicker .p-datepicker-header .p-datepicker-next:focus
@@ -173,7 +162,7 @@
   outline: 0 none
   outline-offset: 0
   box-shadow: 0 0 0 0.2rem #b7e0b8
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month
   margin-right: 0.5rem
@@ -200,8 +189,8 @@
   border: 1px solid transparent
 
 .p-datepicker table td > span.p-highlight
-  color: #ffffff
-  background: #4CAF50
+  color: $surfaceA
+  background: $primaryColor
 
 .p-datepicker table td > span:focus
   outline: 0 none
@@ -214,18 +203,18 @@
   border-color: transparent
 
 .p-datepicker table td.p-datepicker-today > span.p-highlight
-  color: #ffffff
-  background: #4CAF50
+  color: $surfaceA
+  background: $primaryColor
 
 .p-datepicker .p-datepicker-buttonbar
   padding: 1rem 0
-  border-top: 1px solid #dee2e6
+  border-top: 1px solid $surfaceD
 
 .p-datepicker .p-datepicker-buttonbar .p-button
   width: auto
 
 .p-datepicker .p-timepicker
-  border-top: 1px solid #dee2e6
+  border-top: 1px solid $surfaceD
   padding: 0.5rem
 
 .p-datepicker .p-timepicker button
@@ -240,7 +229,7 @@
 .p-datepicker .p-timepicker button:enabled:hover
   color: #495057
   border-color: transparent
-  background: #e9ecef
+  background: $surfaceC
 
 .p-datepicker .p-timepicker button:focus
   outline: 0 none
@@ -268,11 +257,11 @@
   border-radius: 3px
 
 .p-datepicker .p-monthpicker .p-monthpicker-month.p-highlight
-  color: #ffffff
-  background: #4CAF50
+  color: $surfaceA
+  background: $primaryColor
 
 .p-datepicker.p-datepicker-multiple-month .p-datepicker-group
-  border-right: 1px solid #dee2e6
+  border-right: 1px solid $surfaceD
   padding-right: 0.5rem
   padding-left: 0.5rem
   padding-top: 0
@@ -286,7 +275,7 @@
   border-right: 0 none
 
 .p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
 
 .p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):focus
   outline: 0 none
@@ -294,7 +283,7 @@
   box-shadow: 0 0 0 0.2rem #b7e0b8
 
 .p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-highlight):not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
 
 .p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-highlight):not(.p-disabled):focus
   outline: 0 none
@@ -314,7 +303,7 @@
 
 .p-checkbox .p-checkbox-box
   border: 2px solid #ced4da
-  background: #ffffff
+  background: $surfaceA
   width: 20px
   height: 20px
   color: #495057
@@ -323,62 +312,62 @@
 
 .p-checkbox .p-checkbox-box .p-checkbox-icon
   transition-duration: 0.2s
-  color: #ffffff
+  color: $surfaceA
   font-size: 14px
 
 .p-checkbox .p-checkbox-box:not(.p-disabled):hover
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-checkbox .p-checkbox-box:not(.p-disabled).p-focus
   outline: 0 none
   outline-offset: 0
   box-shadow: 0 0 0 0.2rem #b7e0b8
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-checkbox .p-checkbox-box.p-highlight
-  border-color: #4CAF50
-  background: #4CAF50
+  border-color: $primaryColor
+  background: $primaryColor
 
 .p-checkbox .p-checkbox-box.p-highlight:not(.p-disabled):hover
-  border-color: #3d8c40
-  background: #3d8c40
-  color: #ffffff
+  border-color: $primaryColor
+  background: $primaryColor
+  color: $surfaceA
 
 .p-checkbox.p-error > .p-checkbox-box, .p-checkbox.p-invalid > .p-checkbox-box
   border-color: #f44336
 
 .p-input-filled .p-checkbox .p-checkbox-box
-  background-color: #f8f9fa
+  background-color: $surfaceB
 
 .p-input-filled .p-checkbox .p-checkbox-box:not(.p-disabled):hover
-  background-color: #f8f9fa
+  background-color: $surfaceB
 
 .p-input-filled .p-checkbox .p-checkbox-box.p-highlight
-  background: #4CAF50
+  background: $primaryColor
 
 .p-input-filled .p-checkbox .p-checkbox-box.p-highlight:not(.p-disabled):hover
-  background: #3d8c40
+  background: $primaryColor
 
 .p-highlight .p-checkbox .p-checkbox-box
-  border-color: #ffffff
+  border-color: $surfaceA
 
 .p-chips .p-chips-multiple-container
   padding: 0.25rem 0.5rem
 
 .p-chips .p-chips-multiple-container:not(.p-disabled):hover
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-chips .p-chips-multiple-container:not(.p-disabled).p-focus
   outline: 0 none
   outline-offset: 0
   box-shadow: 0 0 0 0.2rem #b7e0b8
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-chips .p-chips-multiple-container .p-chips-token
   padding: 0.25rem 0.5rem
   margin-right: 0.5rem
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
   border-radius: 3px
 
 .p-chips .p-chips-multiple-container .p-chips-token .p-chips-token-icon
@@ -388,7 +377,7 @@
   padding: 0.25rem 0
 
 .p-chips .p-chips-multiple-container .p-chips-input-token input
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+  font-family: $fontFamily
   font-size: 1rem
   color: #495057
   padding: 0
@@ -407,25 +396,25 @@
 
 .p-colorpicker-panel .p-colorpicker-color-handle,
 .p-colorpicker-panel .p-colorpicker-hue-handle
-  border-color: #ffffff
+  border-color: $surfaceA
 
 .p-colorpicker-overlay-panel
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
 
 .p-dropdown
-  background: #ffffff
+  background: $surfaceA
   border: 1px solid #ced4da
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s
   border-radius: 3px
 
 .p-dropdown:not(.p-disabled):hover
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-dropdown:not(.p-disabled).p-focus
   outline: 0 none
   outline-offset: 0
   box-shadow: 0 0 0 0.2rem #b7e0b8
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-dropdown.p-dropdown-clearable .p-dropdown-label
   padding-right: 1.5rem
@@ -456,7 +445,7 @@
   border-color: #f44336
 
 .p-dropdown-panel
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   border: 0 none
   border-radius: 3px
@@ -466,7 +455,7 @@
   padding: 0.5rem 1rem
   border-bottom: 0 none
   color: #495057
-  background: #f8f9fa
+  background: $surfaceB
   margin: 0
   border-top-right-radius: 3px
   border-top-left-radius: 3px
@@ -491,29 +480,29 @@
   border-radius: 0
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight
-  color: #ffffff
-  background: #4CAF50
+  color: $surfaceA
+  background: $primaryColor
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover
   color: #495057
-  background: #e9ecef
+  background: $surfaceC
 
 .p-input-filled .p-dropdown
-  background: #f8f9fa
+  background: $surfaceB
 
 .p-input-filled .p-dropdown:not(.p-disabled):hover
-  background-color: #f8f9fa
+  background-color: $surfaceB
 
 .p-input-filled .p-dropdown:not(.p-disabled).p-focus
-  background-color: #ffffff
+  background-color: $surfaceA
 
 .p-editor-container .p-editor-toolbar
-  background: #f8f9fa
+  background: $surfaceB
   border-top-right-radius: 3px
   border-top-left-radius: 3px
 
 .p-editor-container .p-editor-toolbar.ql-snow
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
 
 .p-editor-container .p-editor-toolbar.ql-snow .ql-stroke
   stroke: #6c757d
@@ -544,7 +533,7 @@
   fill: #495057
 
 .p-editor-container .p-editor-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options
-  background: #ffffff
+  background: $surfaceA
   border: 0 none
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
   border-radius: 3px
@@ -556,17 +545,17 @@
 
 .p-editor-container .p-editor-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options .ql-picker-item:hover
   color: #495057
-  background: #e9ecef
+  background: $surfaceC
 
 .p-editor-container .p-editor-content
   border-bottom-right-radius: 3px
   border-bottom-left-radius: 3px
 
 .p-editor-container .p-editor-content.ql-snow
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
 
 .p-editor-container .p-editor-content .ql-editor
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   border-bottom-right-radius: 3px
   border-bottom-left-radius: 3px
@@ -586,25 +575,25 @@
 .p-editor-container .ql-snow.ql-toolbar button.ql-active,
 .p-editor-container .ql-snow.ql-toolbar .ql-picker-label.ql-active,
 .p-editor-container .ql-snow.ql-toolbar .ql-picker-item.ql-selected
-  color: #4CAF50
+  color: $primaryColor
 
 .p-editor-container .ql-snow.ql-toolbar button.ql-active .ql-stroke,
 .p-editor-container .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
 .p-editor-container .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke
-  stroke: #4CAF50
+  stroke: $primaryColor
 
 .p-editor-container .ql-snow.ql-toolbar button.ql-active .ql-fill,
 .p-editor-container .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,
 .p-editor-container .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill
-  fill: #4CAF50
+  fill: $primaryColor
 
 .p-editor-container .ql-snow.ql-toolbar button.ql-active .ql-picker-label,
 .p-editor-container .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-picker-label,
 .p-editor-container .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-picker-label
-  color: #4CAF50
+  color: $primaryColor
 
 .p-inputgroup-addon
-  background: #e9ecef
+  background: $surfaceC
   color: #6c757d
   border-top: 1px solid #ced4da
   border-left: 1px solid #ced4da
@@ -671,7 +660,7 @@
   border-radius: 30px
 
 .p-inputswitch .p-inputswitch-slider:before
-  background: #ffffff
+  background: $surfaceA
   width: 1.25rem
   height: 1.25rem
   left: 0.25rem
@@ -691,10 +680,10 @@
   background: #b6bfc8
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider
-  background: #4CAF50
+  background: $primaryColor
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before
-  background: #ffffff
+  background: $surfaceA
 
 .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider
   background: #449e48
@@ -703,10 +692,10 @@
   border-color: #f44336
 
 .p-inputtext
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+  font-family: $fontFamily
   font-size: 1rem
   color: #495057
-  background: #ffffff
+  background: $surfaceA
   padding: 0.5rem 0.5rem
   border: 1px solid #ced4da
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s
@@ -714,13 +703,13 @@
   border-radius: 3px
 
 .p-inputtext:enabled:hover
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-inputtext:enabled:focus
   outline: 0 none
   outline-offset: 0
   box-shadow: 0 0 0 0.2rem #b7e0b8
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-inputtext.p-error, .p-inputtext.p-invalid
   border-color: #f44336
@@ -765,13 +754,13 @@
   color: #6c757d
 
 .p-input-filled .p-inputtext
-  background-color: #f8f9fa
+  background-color: $surfaceB
 
 .p-input-filled .p-inputtext:enabled:hover
-  background-color: #f8f9fa
+  background-color: $surfaceB
 
 .p-input-filled .p-inputtext:enabled:focus
-  background-color: #ffffff
+  background-color: $surfaceA
 
 .p-inputtext-sm .p-inputtext
   font-size: 0.875rem
@@ -782,7 +771,7 @@
   padding: 0.625rem 0.625rem
 
 .p-listbox
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   border: 1px solid #ced4da
   border-radius: 3px
@@ -791,7 +780,7 @@
   padding: 0.5rem 1rem
   border-bottom: 0 none
   color: #495057
-  background: #f8f9fa
+  background: $surfaceB
   margin: 0
   border-top-right-radius: 3px
   border-top-left-radius: 3px
@@ -815,8 +804,8 @@
   border-radius: 0
 
 .p-listbox .p-listbox-list .p-listbox-item.p-highlight
-  color: #ffffff
-  background: #4CAF50
+  color: $surfaceA
+  background: $primaryColor
 
 .p-listbox .p-listbox-list .p-listbox-item:focus
   outline: 0 none
@@ -825,25 +814,25 @@
 
 .p-listbox:not(.p-disabled) .p-listbox-item:not(.p-highlight):not(.p-disabled):hover
   color: #495057
-  background: #e9ecef
+  background: $surfaceC
 
 .p-listbox.p-error, .p-listbox.p-invalid
   border-color: #f44336
 
 .p-multiselect
-  background: #ffffff
+  background: $surfaceA
   border: 1px solid #ced4da
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s
   border-radius: 3px
 
 .p-multiselect:not(.p-disabled):hover
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-multiselect:not(.p-disabled).p-focus
   outline: 0 none
   outline-offset: 0
   box-shadow: 0 0 0 0.2rem #b7e0b8
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-multiselect .p-multiselect-label
   padding: 0.5rem 0.5rem
@@ -863,7 +852,7 @@
   border-color: #f44336
 
 .p-multiselect-panel
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   border: 0 none
   border-radius: 3px
@@ -873,7 +862,7 @@
   padding: 0.5rem 1rem
   border-bottom: 0 none
   color: #495057
-  background: #f8f9fa
+  background: $surfaceB
   margin: 0
   border-top-right-radius: 3px
   border-top-left-radius: 3px
@@ -901,7 +890,7 @@
 .p-multiselect-panel .p-multiselect-header .p-multiselect-close:enabled:hover
   color: #495057
   border-color: transparent
-  background: #e9ecef
+  background: $surfaceC
 
 .p-multiselect-panel .p-multiselect-header .p-multiselect-close:focus
   outline: 0 none
@@ -921,12 +910,12 @@
   border-radius: 0
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight
-  color: #ffffff
-  background: #4CAF50
+  color: $surfaceA
+  background: $primaryColor
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover
   color: #495057
-  background: #e9ecef
+  background: $surfaceC
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus
   outline: 0 none
@@ -937,17 +926,17 @@
   margin-right: 0.5rem
 
 .p-input-filled .p-multiselect
-  background: #f8f9fa
+  background: $surfaceB
 
 .p-input-filled .p-multiselect:not(.p-disabled):hover
-  background-color: #f8f9fa
+  background-color: $surfaceB
 
 .p-input-filled .p-multiselect:not(.p-disabled).p-focus
-  background-color: #ffffff
+  background-color: $surfaceA
 
 .p-password-panel
   padding: 1rem
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   border: 0 none
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
@@ -962,7 +951,7 @@
 
 .p-radiobutton .p-radiobutton-box
   border: 2px solid #ced4da
-  background: #ffffff
+  background: $surfaceA
   width: 20px
   height: 20px
   color: #495057
@@ -970,46 +959,46 @@
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s
 
 .p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-radiobutton .p-radiobutton-box:not(.p-disabled).p-focus
   outline: 0 none
   outline-offset: 0
   box-shadow: 0 0 0 0.2rem #b7e0b8
-  border-color: #4CAF50
+  border-color: $primaryColor
 
 .p-radiobutton .p-radiobutton-box .p-radiobutton-icon
   width: 12px
   height: 12px
   transition-duration: 0.2s
-  background-color: #ffffff
+  background-color: $surfaceA
 
 .p-radiobutton .p-radiobutton-box.p-highlight
-  border-color: #4CAF50
-  background: #4CAF50
+  border-color: $primaryColor
+  background: $primaryColor
 
 .p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover
-  border-color: #3d8c40
-  background: #3d8c40
-  color: #ffffff
+  border-color: $primaryColor
+  background: $primaryColor
+  color: $surfaceA
 
 .p-radiobutton.p-error > .p-radiobutton-box, .p-radiobutton.p-invalid > .p-radiobutton-box
   border-color: #f44336
 
 .p-input-filled .p-radiobutton .p-radiobutton-box
-  background-color: #f8f9fa
+  background-color: $surfaceB
 
 .p-input-filled .p-radiobutton .p-radiobutton-box:not(.p-disabled):hover
-  background-color: #f8f9fa
+  background-color: $surfaceB
 
 .p-input-filled .p-radiobutton .p-radiobutton-box.p-highlight
-  background: #4CAF50
+  background: $primaryColor
 
 .p-input-filled .p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover
-  background: #3d8c40
+  background: $primaryColor
 
 .p-highlight .p-radiobutton .p-radiobutton-box
-  border-color: #ffffff
+  border-color: $surfaceA
 
 .p-rating .p-rating-icon
   color: #495057
@@ -1029,19 +1018,19 @@
   margin-left: 0
 
 .p-rating .p-rating-icon.pi-star
-  color: #4CAF50
+  color: $primaryColor
 
 .p-rating:not(.p-disabled):not(.p-readonly) .p-rating-icon:hover
-  color: #4CAF50
+  color: $primaryColor
 
 .p-rating:not(.p-disabled):not(.p-readonly) .p-rating-icon.p-rating-cancel:hover
   color: #c0392b
 
 .p-highlight .p-rating .p-rating-icon
-  color: #ffffff
+  color: $surfaceA
 
 .p-selectbutton .p-button
-  background: #ffffff
+  background: $surfaceA
   border: 1px solid #ced4da
   color: #495057
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s
@@ -1051,7 +1040,7 @@
   color: #6c757d
 
 .p-selectbutton .p-button:not(.p-disabled):not(.p-highlight):hover
-  background: #e9ecef
+  background: $surfaceC
   border-color: #ced4da
   color: #495057
 
@@ -1060,28 +1049,28 @@
   color: #6c757d
 
 .p-selectbutton .p-button.p-highlight
-  background: #4CAF50
-  border-color: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  border-color: $primaryColor
+  color: $surfaceA
 
 .p-selectbutton .p-button.p-highlight .p-button-icon-left,
 .p-selectbutton .p-button.p-highlight .p-button-icon-right
-  color: #ffffff
+  color: $surfaceA
 
 .p-selectbutton .p-button.p-highlight:hover
   background: #449e48
   border-color: #449e48
-  color: #ffffff
+  color: $surfaceA
 
 .p-selectbutton .p-button.p-highlight:hover .p-button-icon-left,
 .p-selectbutton .p-button.p-highlight:hover .p-button-icon-right
-  color: #ffffff
+  color: $surfaceA
 
 .p-selectbutton.p-error > .p-button, .p-selectbutton.p-invalid > .p-button
   border-color: #f44336
 
 .p-slider
-  background: #dee2e6
+  background: $surfaceD
   border: 0 none
   border-radius: 3px
 
@@ -1102,8 +1091,8 @@
 .p-slider .p-slider-handle
   height: 1.143rem
   width: 1.143rem
-  background: #ffffff
-  border: 2px solid #4CAF50
+  background: $surfaceA
+  border: 2px solid $primaryColor
   border-radius: 50%
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s
 
@@ -1113,14 +1102,14 @@
   box-shadow: 0 0 0 0.2rem #b7e0b8
 
 .p-slider .p-slider-range
-  background: #4CAF50
+  background: $primaryColor
 
 .p-slider:not(.p-disabled) .p-slider-handle:hover
-  background: #4CAF50
-  border-color: #4CAF50
+  background: $primaryColor
+  border-color: $primaryColor
 
 .p-togglebutton.p-button
-  background: #ffffff
+  background: $surfaceA
   border: 1px solid #ced4da
   color: #495057
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s
@@ -1130,7 +1119,7 @@
   color: #6c757d
 
 .p-togglebutton.p-button:not(.p-disabled):not(.p-highlight):hover
-  background: #e9ecef
+  background: $surfaceC
   border-color: #ced4da
   color: #495057
 
@@ -1139,30 +1128,30 @@
   color: #6c757d
 
 .p-togglebutton.p-button.p-highlight
-  background: #4CAF50
-  border-color: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  border-color: $primaryColor
+  color: $surfaceA
 
 .p-togglebutton.p-button.p-highlight .p-button-icon-left,
 .p-togglebutton.p-button.p-highlight .p-button-icon-right
-  color: #ffffff
+  color: $surfaceA
 
 .p-togglebutton.p-button.p-highlight:hover
   background: #449e48
   border-color: #449e48
-  color: #ffffff
+  color: $surfaceA
 
 .p-togglebutton.p-button.p-highlight:hover .p-button-icon-left,
 .p-togglebutton.p-button.p-highlight:hover .p-button-icon-right
-  color: #ffffff
+  color: $surfaceA
 
 .p-togglebutton.p-button.p-error > .p-button, .p-togglebutton.p-button.p-invalid > .p-button
   border-color: #f44336
 
 .p-button
-  color: #ffffff
-  background: #4CAF50
-  border: 1px solid #4CAF50
+  color: $surfaceA
+  background: $primaryColor
+  border: 1px solid $primaryColor
   padding: 0.5rem 1rem
   font-size: 1rem
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s
@@ -1170,53 +1159,53 @@
 
 .p-button:enabled:hover
   background: #449e48
-  color: #ffffff
+  color: $surfaceA
   border-color: #449e48
 
 .p-button:enabled:active
-  background: #3d8c40
-  color: #ffffff
-  border-color: #3d8c40
+  background: $primaryColor
+  color: $surfaceA
+  border-color: $primaryColor
 
 .p-button.p-button-outlined
   background-color: transparent
-  color: #4CAF50
+  color: $primaryColor
   border: 1px solid
 
 .p-button.p-button-outlined:enabled:hover
   background: rgba(76, 175, 80, 0.04)
-  color: #4CAF50
+  color: $primaryColor
   border: 1px solid
 
 .p-button.p-button-outlined:enabled:active
   background: rgba(76, 175, 80, 0.16)
-  color: #4CAF50
+  color: $primaryColor
   border: 1px solid
 
 .p-button.p-button-text
   background-color: transparent
-  color: #4CAF50
+  color: $primaryColor
   border-color: transparent
 
 .p-button.p-button-text:enabled:hover
   background: rgba(76, 175, 80, 0.04)
-  color: #4CAF50
+  color: $primaryColor
   border-color: transparent
 
 .p-button.p-button-text:enabled:active
   background: rgba(76, 175, 80, 0.16)
-  color: #4CAF50
+  color: $primaryColor
   border-color: transparent
 
 .p-button.p-button-text.p-button-plain
   color: #6c757d
 
 .p-button.p-button-text.p-button-plain:enabled:hover
-  background: #e9ecef
+  background: $surfaceC
   color: #6c757d
 
 .p-button.p-button-text.p-button-plain:enabled:active
-  background: #dee2e6
+  background: $surfaceD
   color: #6c757d
 
 .p-button:focus
@@ -1241,8 +1230,8 @@
   min-width: 1rem
   height: 1rem
   line-height: 1rem
-  color: #4CAF50
-  background-color: #ffffff
+  color: $primaryColor
+  background-color: $surfaceA
 
 .p-button.p-button-raised
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)
@@ -1289,13 +1278,13 @@
   flex: 1
 
 .p-button.p-button-secondary, .p-buttonset.p-button-secondary > .p-button, .p-splitbutton.p-button-secondary > .p-button
-  color: #ffffff
+  color: $surfaceA
   background: #607D8B
   border: 1px solid #607D8B
 
 .p-button.p-button-secondary:enabled:hover, .p-buttonset.p-button-secondary > .p-button:enabled:hover, .p-splitbutton.p-button-secondary > .p-button:enabled:hover
   background: #56717d
-  color: #ffffff
+  color: $surfaceA
   border-color: #56717d
 
 .p-button.p-button-secondary:enabled:focus, .p-buttonset.p-button-secondary > .p-button:enabled:focus, .p-splitbutton.p-button-secondary > .p-button:enabled:focus
@@ -1303,7 +1292,7 @@
 
 .p-button.p-button-secondary:enabled:active, .p-buttonset.p-button-secondary > .p-button:enabled:active, .p-splitbutton.p-button-secondary > .p-button:enabled:active
   background: #4d646f
-  color: #ffffff
+  color: $surfaceA
   border-color: #4d646f
 
 .p-button.p-button-secondary.p-button-outlined, .p-buttonset.p-button-secondary > .p-button.p-button-outlined, .p-splitbutton.p-button-secondary > .p-button.p-button-outlined
@@ -1337,13 +1326,13 @@
   color: #607D8B
 
 .p-button.p-button-info, .p-buttonset.p-button-info > .p-button, .p-splitbutton.p-button-info > .p-button
-  color: #ffffff
+  color: $surfaceA
   background: #0288D1
   border: 1px solid #0288D1
 
 .p-button.p-button-info:enabled:hover, .p-buttonset.p-button-info > .p-button:enabled:hover, .p-splitbutton.p-button-info > .p-button:enabled:hover
   background: #027abc
-  color: #ffffff
+  color: $surfaceA
   border-color: #027abc
 
 .p-button.p-button-info:enabled:focus, .p-buttonset.p-button-info > .p-button:enabled:focus, .p-splitbutton.p-button-info > .p-button:enabled:focus
@@ -1351,7 +1340,7 @@
 
 .p-button.p-button-info:enabled:active, .p-buttonset.p-button-info > .p-button:enabled:active, .p-splitbutton.p-button-info > .p-button:enabled:active
   background: #026da7
-  color: #ffffff
+  color: $surfaceA
   border-color: #026da7
 
 .p-button.p-button-info.p-button-outlined, .p-buttonset.p-button-info > .p-button.p-button-outlined, .p-splitbutton.p-button-info > .p-button.p-button-outlined
@@ -1385,13 +1374,13 @@
   color: #0288D1
 
 .p-button.p-button-success, .p-buttonset.p-button-success > .p-button, .p-splitbutton.p-button-success > .p-button
-  color: #ffffff
+  color: $surfaceA
   background: #689F38
   border: 1px solid #689F38
 
 .p-button.p-button-success:enabled:hover, .p-buttonset.p-button-success > .p-button:enabled:hover, .p-splitbutton.p-button-success > .p-button:enabled:hover
   background: #5e8f32
-  color: #ffffff
+  color: $surfaceA
   border-color: #5e8f32
 
 .p-button.p-button-success:enabled:focus, .p-buttonset.p-button-success > .p-button:enabled:focus, .p-splitbutton.p-button-success > .p-button:enabled:focus
@@ -1399,7 +1388,7 @@
 
 .p-button.p-button-success:enabled:active, .p-buttonset.p-button-success > .p-button:enabled:active, .p-splitbutton.p-button-success > .p-button:enabled:active
   background: #537f2d
-  color: #ffffff
+  color: $surfaceA
   border-color: #537f2d
 
 .p-button.p-button-success.p-button-outlined, .p-buttonset.p-button-success > .p-button.p-button-outlined, .p-splitbutton.p-button-success > .p-button.p-button-outlined
@@ -1481,13 +1470,13 @@
   color: #FBC02D
 
 .p-button.p-button-help, .p-buttonset.p-button-help > .p-button, .p-splitbutton.p-button-help > .p-button
-  color: #ffffff
+  color: $surfaceA
   background: #9C27B0
   border: 1px solid #9C27B0
 
 .p-button.p-button-help:enabled:hover, .p-buttonset.p-button-help > .p-button:enabled:hover, .p-splitbutton.p-button-help > .p-button:enabled:hover
   background: #8c239e
-  color: #ffffff
+  color: $surfaceA
   border-color: #8c239e
 
 .p-button.p-button-help:enabled:focus, .p-buttonset.p-button-help > .p-button:enabled:focus, .p-splitbutton.p-button-help > .p-button:enabled:focus
@@ -1495,7 +1484,7 @@
 
 .p-button.p-button-help:enabled:active, .p-buttonset.p-button-help > .p-button:enabled:active, .p-splitbutton.p-button-help > .p-button:enabled:active
   background: #7d1f8d
-  color: #ffffff
+  color: $surfaceA
   border-color: #7d1f8d
 
 .p-button.p-button-help.p-button-outlined, .p-buttonset.p-button-help > .p-button.p-button-outlined, .p-splitbutton.p-button-help > .p-button.p-button-outlined
@@ -1529,13 +1518,13 @@
   color: #9C27B0
 
 .p-button.p-button-danger, .p-buttonset.p-button-danger > .p-button, .p-splitbutton.p-button-danger > .p-button
-  color: #ffffff
+  color: $surfaceA
   background: #D32F2F
   border: 1px solid #D32F2F
 
 .p-button.p-button-danger:enabled:hover, .p-buttonset.p-button-danger > .p-button:enabled:hover, .p-splitbutton.p-button-danger > .p-button:enabled:hover
   background: #c02929
-  color: #ffffff
+  color: $surfaceA
   border-color: #c02929
 
 .p-button.p-button-danger:enabled:focus, .p-buttonset.p-button-danger > .p-button:enabled:focus, .p-splitbutton.p-button-danger > .p-button:enabled:focus
@@ -1543,7 +1532,7 @@
 
 .p-button.p-button-danger:enabled:active, .p-buttonset.p-button-danger > .p-button:enabled:active, .p-splitbutton.p-button-danger > .p-button:enabled:active
   background: #aa2424
-  color: #ffffff
+  color: $surfaceA
   border-color: #aa2424
 
 .p-button.p-button-danger.p-button-outlined, .p-buttonset.p-button-danger > .p-button.p-button-outlined, .p-splitbutton.p-button-danger > .p-button.p-button-outlined
@@ -1577,13 +1566,13 @@
   color: #D32F2F
 
 .p-button.p-button-link
-  color: #3d8c40
+  color: $primaryColor
   background: transparent
   border: transparent
 
 .p-button.p-button-link:enabled:hover
   background: transparent
-  color: #3d8c40
+  color: $primaryColor
   border-color: transparent
 
 .p-button.p-button-link:enabled:hover .p-button-label
@@ -1596,7 +1585,7 @@
 
 .p-button.p-button-link:enabled:active
   background: transparent
-  color: #3d8c40
+  color: $primaryColor
   border-color: transparent
 
 .p-carousel .p-carousel-content .p-carousel-prev,
@@ -1614,7 +1603,7 @@
 .p-carousel .p-carousel-content .p-carousel-next:enabled:hover
   color: #495057
   border-color: transparent
-  background: #e9ecef
+  background: $surfaceC
 
 .p-carousel .p-carousel-content .p-carousel-prev:focus,
 .p-carousel .p-carousel-content .p-carousel-next:focus
@@ -1630,18 +1619,18 @@
   margin-bottom: 0.5rem
 
 .p-carousel .p-carousel-indicators .p-carousel-indicator button
-  background-color: #e9ecef
+  background-color: $surfaceC
   width: 2rem
   height: 0.5rem
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s
   border-radius: 0
 
 .p-carousel .p-carousel-indicators .p-carousel-indicator button:hover
-  background: #dee2e6
+  background: $surfaceD
 
 .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
 
 .p-datatable .p-paginator-top
   border-width: 0 0 1px 0
@@ -1652,17 +1641,17 @@
   border-radius: 0
 
 .p-datatable .p-datatable-header
-  background: #f8f9fa
+  background: $surfaceB
   color: #495057
-  border: 1px solid #e9ecef
+  border: 1px solid $surfaceC
   border-width: 1px 0 1px 0
   padding: 1rem 1rem
   font-weight: 600
 
 .p-datatable .p-datatable-footer
-  background: #f8f9fa
+  background: $surfaceB
   color: #495057
-  border: 1px solid #e9ecef
+  border: 1px solid $surfaceC
   border-width: 0 0 1px 0
   padding: 1rem 1rem
   font-weight: 600
@@ -1670,21 +1659,21 @@
 .p-datatable .p-datatable-thead > tr > th
   text-align: left
   padding: 1rem 1rem
-  border: 1px solid #e9ecef
+  border: 1px solid $surfaceC
   border-width: 0 0 1px 0
   font-weight: 600
   color: #495057
-  background: #f8f9fa
+  background: $surfaceB
   transition: box-shadow 0.2s
 
 .p-datatable .p-datatable-tfoot > tr > td
   text-align: left
   padding: 1rem 1rem
-  border: 1px solid #e9ecef
+  border: 1px solid $surfaceC
   border-width: 0 0 1px 0
   font-weight: 600
   color: #495057
-  background: #f8f9fa
+  background: $surfaceB
 
 .p-datatable .p-sortable-column
   outline-color: #b7e0b8
@@ -1698,33 +1687,33 @@
   height: 1.143rem
   min-width: 1.143rem
   line-height: 1.143rem
-  color: #ffffff
-  background: #4CAF50
+  color: $surfaceA
+  background: $primaryColor
   margin-left: 0.5rem
 
 .p-datatable .p-sortable-column:not(.p-highlight):hover
-  background: #e9ecef
+  background: $surfaceC
   color: #495057
 
 .p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon
   color: #6c757d
 
 .p-datatable .p-sortable-column.p-highlight
-  background: #f8f9fa
-  color: #4CAF50
+  background: $surfaceB
+  color: $primaryColor
 
 .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon
-  color: #4CAF50
+  color: $primaryColor
 
 .p-datatable .p-datatable-tbody > tr
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   transition: box-shadow 0.2s
   outline-color: #b7e0b8
 
 .p-datatable .p-datatable-tbody > tr > td
   text-align: left
-  border: 1px solid #e9ecef
+  border: 1px solid $surfaceC
   border-width: 0 0 1px 0
   padding: 1rem 1rem
 
@@ -1746,7 +1735,7 @@
 .p-datatable .p-datatable-tbody > tr > td .p-row-editor-cancel:enabled:hover
   color: #495057
   border-color: transparent
-  background: #e9ecef
+  background: $surfaceC
 
 .p-datatable .p-datatable-tbody > tr > td .p-row-toggler:focus,
 .p-datatable .p-datatable-tbody > tr > td .p-row-editor-init:focus,
@@ -1760,25 +1749,25 @@
   margin-right: 0.5rem
 
 .p-datatable .p-datatable-tbody > tr.p-highlight
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
 
 .p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-top > td
-  box-shadow: inset 0 2px 0 0 #4CAF50
+  box-shadow: inset 0 2px 0 0 $primaryColor
 
 .p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-bottom > td
-  box-shadow: inset 0 -2px 0 0 #4CAF50
+  box-shadow: inset 0 -2px 0 0 $primaryColor
 
 .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-highlight):hover
-  background: #e9ecef
+  background: $surfaceC
   color: #495057
 
 .p-datatable .p-column-resizer-helper
-  background: #4CAF50
+  background: $primaryColor
 
 .p-datatable .p-datatable-scrollable-header,
 .p-datatable .p-datatable-scrollable-footer
-  background: #f8f9fa
+  background: $surfaceB
 
 .p-datatable .p-datatable-loading-icon
   font-size: 2rem
@@ -1808,14 +1797,14 @@
   background: #fcfcfc
 
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even).p-highlight
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
 
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even).p-highlight .p-row-toggler
-  color: #ffffff
+  color: $surfaceA
 
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even).p-highlight .p-row-toggler:hover
-  color: #ffffff
+  color: $surfaceA
 
 .p-datatable.p-datatable-sm .p-datatable-header
   padding: 0.5rem 0.5rem
@@ -1856,27 +1845,27 @@
   border-radius: 0
 
 .p-dataview .p-dataview-header
-  background: #f8f9fa
+  background: $surfaceB
   color: #495057
-  border: 1px solid #e9ecef
+  border: 1px solid $surfaceC
   border-width: 1px 0 1px 0
   padding: 1rem 1rem
   font-weight: 600
 
 .p-dataview .p-dataview-content
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   border: 0 none
   padding: 0
 
 .p-dataview.p-dataview-list .p-dataview-content > .p-grid > div
-  border: solid #e9ecef
+  border: solid $surfaceC
   border-width: 0 0 1px 0
 
 .p-dataview .p-dataview-footer
-  background: #f8f9fa
+  background: $surfaceB
   color: #495057
-  border: 1px solid #e9ecef
+  border: 1px solid $surfaceC
   border-width: 0 0 1px 0
   padding: 1rem 1rem
   font-weight: 600
@@ -1884,34 +1873,34 @@
   border-bottom-right-radius: 3px
 
 .fc .fc-view-container th
-  background: #f8f9fa
-  border: 1px solid #dee2e6
+  background: $surfaceB
+  border: 1px solid $surfaceD
   color: #495057
 
 .fc .fc-view-container td.fc-widget-content
-  background: #ffffff
-  border: 1px solid #dee2e6
+  background: $surfaceA
+  border: 1px solid $surfaceD
   color: #495057
 
 .fc .fc-view-container td.fc-head-container
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
 
 .fc .fc-view-container .fc-row
-  border-right: 1px solid #dee2e6
+  border-right: 1px solid $surfaceD
 
 .fc .fc-view-container .fc-event
   background: #449e48
   border: 1px solid #449e48
-  color: #ffffff
+  color: $surfaceA
 
 .fc .fc-view-container .fc-divider
-  background: #f8f9fa
-  border: 1px solid #dee2e6
+  background: $surfaceB
+  border: 1px solid $surfaceD
 
 .fc .fc-toolbar .fc-button
-  color: #ffffff
-  background: #4CAF50
-  border: 1px solid #4CAF50
+  color: $surfaceA
+  background: $primaryColor
+  border: 1px solid $primaryColor
   font-size: 1rem
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s
   border-radius: 3px
@@ -1920,7 +1909,7 @@
 
 .fc .fc-toolbar .fc-button:hover
   background: #449e48
-  color: #ffffff
+  color: $surfaceA
   border-color: #449e48
 
 .fc .fc-toolbar .fc-button .fc-icon-chevron-left
@@ -1945,25 +1934,25 @@
   box-shadow: 0 0 0 0.2rem #b7e0b8
 
 .fc .fc-toolbar .fc-button.fc-dayGridMonth-button, .fc .fc-toolbar .fc-button.fc-timeGridWeek-button, .fc .fc-toolbar .fc-button.fc-timeGridDay-button
-  background: #ffffff
+  background: $surfaceA
   border: 1px solid #ced4da
   color: #495057
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s
 
 .fc .fc-toolbar .fc-button.fc-dayGridMonth-button:hover, .fc .fc-toolbar .fc-button.fc-timeGridWeek-button:hover, .fc .fc-toolbar .fc-button.fc-timeGridDay-button:hover
-  background: #e9ecef
+  background: $surfaceC
   border-color: #ced4da
   color: #495057
 
 .fc .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active, .fc .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active, .fc .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active
-  background: #4CAF50
-  border-color: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  border-color: $primaryColor
+  color: $surfaceA
 
 .fc .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active:hover, .fc .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active:hover, .fc .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active:hover
   background: #449e48
   border-color: #449e48
-  color: #ffffff
+  color: $surfaceA
 
 .fc .fc-toolbar .fc-button.fc-dayGridMonth-button:focus, .fc .fc-toolbar .fc-button.fc-timeGridWeek-button:focus, .fc .fc-toolbar .fc-button.fc-timeGridDay-button:focus
   outline: 0 none
@@ -1989,9 +1978,9 @@
   margin-bottom: 0.5rem
 
 .p-orderlist .p-orderlist-header
-  background: #f8f9fa
+  background: $surfaceB
   color: #495057
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   padding: 1rem
   font-weight: 600
   border-bottom: 0 none
@@ -1999,8 +1988,8 @@
   border-top-left-radius: 3px
 
 .p-orderlist .p-orderlist-list
-  border: 1px solid #dee2e6
-  background: #ffffff
+  border: 1px solid $surfaceD
+  background: $surfaceA
   color: #495057
   padding: 0.5rem 0
   border-bottom-right-radius: 3px
@@ -2015,7 +2004,7 @@
   transition: transform 0.2s, box-shadow 0.2s
 
 .p-orderlist .p-orderlist-list .p-orderlist-item:not(.p-highlight):hover
-  background: #e9ecef
+  background: $surfaceC
   color: #495057
 
 .p-orderlist .p-orderlist-list .p-orderlist-item:focus
@@ -2024,8 +2013,8 @@
   box-shadow: inset 0 0 0 0.15rem #b7e0b8
 
 .p-orderlist .p-orderlist-list .p-orderlist-item.p-highlight
-  color: #ffffff
-  background: #4CAF50
+  color: $surfaceA
+  background: $primaryColor
 
 @media screen and (max-width: 769px)
   .p-orderlist
@@ -2043,30 +2032,30 @@
     margin-right: 0
 
 .p-organizationchart .p-organizationchart-node-content.p-organizationchart-selectable-node:not(.p-highlight):hover
-  background: #e9ecef
+  background: $surfaceC
   color: #495057
 
 .p-organizationchart .p-organizationchart-node-content.p-highlight
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
 
 .p-organizationchart .p-organizationchart-node-content.p-highlight .p-node-toggler i
   color: #255627
 
 .p-organizationchart .p-organizationchart-line-down
-  background: #dee2e6
+  background: $surfaceD
 
 .p-organizationchart .p-organizationchart-line-left
-  border-right: 1px solid #dee2e6
-  border-color: #dee2e6
+  border-right: 1px solid $surfaceD
+  border-color: $surfaceD
 
 .p-organizationchart .p-organizationchart-line-top
-  border-top: 1px solid #dee2e6
-  border-color: #dee2e6
+  border-top: 1px solid $surfaceD
+  border-color: $surfaceD
 
 .p-organizationchart .p-organizationchart-node-content
-  border: 1px solid #dee2e6
-  background: #ffffff
+  border: 1px solid $surfaceD
+  background: $surfaceA
   color: #495057
   padding: 1rem
 
@@ -2081,9 +2070,9 @@
   box-shadow: 0 0 0 0.2rem #b7e0b8
 
 .p-paginator
-  background: #ffffff
+  background: $surfaceA
   color: #6c757d
-  border: solid #e9ecef
+  border: solid $surfaceC
   border-width: 0
   padding: 0.5rem 1rem
   border-radius: 3px
@@ -2105,7 +2094,7 @@
 .p-paginator .p-paginator-prev:not(.p-disabled):not(.p-highlight):hover,
 .p-paginator .p-paginator-next:not(.p-disabled):not(.p-highlight):hover,
 .p-paginator .p-paginator-last:not(.p-disabled):not(.p-highlight):hover
-  background: #e9ecef
+  background: $surfaceC
   border-color: transparent
   color: #495057
 
@@ -2144,12 +2133,12 @@
   border-radius: 3px
 
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight
-  background: #4CAF50
-  border-color: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  border-color: $primaryColor
+  color: $surfaceA
 
 .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover
-  background: #e9ecef
+  background: $surfaceC
   border-color: transparent
   color: #495057
 
@@ -2160,9 +2149,9 @@
   margin-bottom: 0.5rem
 
 .p-picklist .p-picklist-header
-  background: #f8f9fa
+  background: $surfaceB
   color: #495057
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   padding: 1rem
   font-weight: 600
   border-bottom: 0 none
@@ -2170,8 +2159,8 @@
   border-top-left-radius: 3px
 
 .p-picklist .p-picklist-list
-  border: 1px solid #dee2e6
-  background: #ffffff
+  border: 1px solid $surfaceD
+  background: $surfaceA
   color: #495057
   padding: 0.5rem 0
   border-bottom-right-radius: 3px
@@ -2186,7 +2175,7 @@
   transition: transform 0.2s, box-shadow 0.2s
 
 .p-picklist .p-picklist-list .p-picklist-item:not(.p-highlight):hover
-  background: #e9ecef
+  background: $surfaceC
   color: #495057
 
 .p-picklist .p-picklist-list .p-picklist-item:focus
@@ -2195,8 +2184,8 @@
   box-shadow: inset 0 0 0 0.15rem #b7e0b8
 
 .p-picklist .p-picklist-list .p-picklist-item.p-highlight
-  color: #ffffff
-  background: #4CAF50
+  color: $surfaceA
+  background: $primaryColor
 
 @media screen and (max-width: 769px)
   .p-picklist
@@ -2226,8 +2215,8 @@
     content: ""
 
 .p-tree
-  border: 1px solid #dee2e6
-  background: #ffffff
+  border: 1px solid $surfaceD
+  background: $surfaceA
   color: #495057
   padding: 1rem
   border-radius: 3px
@@ -2253,7 +2242,7 @@
 .p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler:enabled:hover
   color: #495057
   border-color: transparent
-  background: #e9ecef
+  background: $surfaceC
 
 .p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler:focus
   outline: 0 none
@@ -2276,15 +2265,15 @@
   box-shadow: 0 0 0 0.2rem #b7e0b8
 
 .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
 
 .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight .p-tree-toggler,
 .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight .p-treenode-icon
-  color: #ffffff
+  color: $surfaceA
 
 .p-tree .p-tree-container .p-treenode .p-treenode-content.p-treenode-selectable:not(.p-highlight):hover
-  background: #e9ecef
+  background: $surfaceC
   color: #495057
 
 .p-tree .p-tree-filter-container
@@ -2313,17 +2302,17 @@
   border-radius: 0
 
 .p-treetable .p-treetable-header
-  background: #f8f9fa
+  background: $surfaceB
   color: #495057
-  border: 1px solid #e9ecef
+  border: 1px solid $surfaceC
   border-width: 1px 0 1px 0
   padding: 1rem 1rem
   font-weight: 600
 
 .p-treetable .p-treetable-footer
-  background: #f8f9fa
+  background: $surfaceB
   color: #495057
-  border: 1px solid #e9ecef
+  border: 1px solid $surfaceC
   border-width: 0 0 1px 0
   padding: 1rem 1rem
   font-weight: 600
@@ -2331,21 +2320,21 @@
 .p-treetable .p-treetable-thead > tr > th
   text-align: left
   padding: 1rem 1rem
-  border: 1px solid #e9ecef
+  border: 1px solid $surfaceC
   border-width: 0 0 1px 0
   font-weight: 600
   color: #495057
-  background: #f8f9fa
+  background: $surfaceB
   transition: box-shadow 0.2s
 
 .p-treetable .p-treetable-tfoot > tr > td
   text-align: left
   padding: 1rem 1rem
-  border: 1px solid #e9ecef
+  border: 1px solid $surfaceC
   border-width: 0 0 1px 0
   font-weight: 600
   color: #495057
-  background: #f8f9fa
+  background: $surfaceB
 
 .p-treetable .p-sortable-column
   outline-color: #b7e0b8
@@ -2359,33 +2348,33 @@
   height: 1.143rem
   min-width: 1.143rem
   line-height: 1.143rem
-  color: #ffffff
-  background: #4CAF50
+  color: $surfaceA
+  background: $primaryColor
   margin-left: 0.5rem
 
 .p-treetable .p-sortable-column:not(.p-highlight):hover
-  background: #e9ecef
+  background: $surfaceC
   color: #495057
 
 .p-treetable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon
   color: #6c757d
 
 .p-treetable .p-sortable-column.p-highlight
-  background: #f8f9fa
-  color: #4CAF50
+  background: $surfaceB
+  color: $primaryColor
 
 .p-treetable .p-sortable-column.p-highlight .p-sortable-column-icon
-  color: #4CAF50
+  color: $primaryColor
 
 .p-treetable .p-treetable-tbody > tr
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   transition: box-shadow 0.2s
   outline-color: #b7e0b8
 
 .p-treetable .p-treetable-tbody > tr > td
   text-align: left
-  border: 1px solid #e9ecef
+  border: 1px solid $surfaceC
   border-width: 0 0 1px 0
   padding: 1rem 1rem
 
@@ -2402,7 +2391,7 @@
 .p-treetable .p-treetable-tbody > tr > td .p-treetable-toggler:enabled:hover
   color: #495057
   border-color: transparent
-  background: #e9ecef
+  background: $surfaceC
 
 .p-treetable .p-treetable-tbody > tr > td .p-treetable-toggler:focus
   outline: 0 none
@@ -2416,28 +2405,28 @@
   color: #495057
 
 .p-treetable .p-treetable-tbody > tr.p-highlight
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
 
 .p-treetable .p-treetable-tbody > tr.p-highlight .p-treetable-toggler
-  color: #ffffff
+  color: $surfaceA
 
 .p-treetable .p-treetable-tbody > tr.p-highlight .p-treetable-toggler:hover
-  color: #ffffff
+  color: $surfaceA
 
 .p-treetable.p-treetable-hoverable-rows .p-treetable-tbody > tr:not(.p-highlight):hover
-  background: #e9ecef
+  background: $surfaceC
   color: #495057
 
 .p-treetable.p-treetable-hoverable-rows .p-treetable-tbody > tr:not(.p-highlight):hover .p-treetable-toggler
   color: #495057
 
 .p-treetable .p-column-resizer-helper
-  background: #4CAF50
+  background: $primaryColor
 
 .p-treetable .p-treetable-scrollable-header,
 .p-treetable .p-treetable-scrollable-footer
-  background: #f8f9fa
+  background: $surfaceB
 
 .p-treetable .p-treetable-loading-icon
   font-size: 2rem
@@ -2495,9 +2484,9 @@
 
 .p-accordion .p-accordion-header .p-accordion-header-link
   padding: 1rem
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   color: #495057
-  background: #f8f9fa
+  background: $surfaceB
   font-weight: 600
   border-radius: 3px
   transition: box-shadow 0.2s
@@ -2511,26 +2500,26 @@
   box-shadow: 0 0 0 0.2rem #b7e0b8
 
 .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link
-  background: #e9ecef
-  border-color: #dee2e6
+  background: $surfaceC
+  border-color: $surfaceD
   color: #495057
 
 .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link
-  background: #f8f9fa
-  border-color: #dee2e6
+  background: $surfaceB
+  border-color: $surfaceD
   color: #495057
   border-bottom-right-radius: 0
   border-bottom-left-radius: 0
 
 .p-accordion .p-accordion-header:not(.p-disabled).p-highlight:hover .p-accordion-header-link
-  border-color: #dee2e6
-  background: #e9ecef
+  border-color: $surfaceD
+  background: $surfaceC
   color: #495057
 
 .p-accordion .p-accordion-content
   padding: 1rem
-  border: 1px solid #dee2e6
-  background: #ffffff
+  border: 1px solid $surfaceD
+  background: $surfaceA
   color: #495057
   border-top: 0
   border-top-right-radius: 0
@@ -2559,7 +2548,7 @@
   border-bottom-left-radius: 3px
 
 .p-card
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12)
   border-radius: 3px
@@ -2584,16 +2573,16 @@
   padding: 1rem 0 0 0
 
 .p-fieldset
-  border: 1px solid #dee2e6
-  background: #ffffff
+  border: 1px solid $surfaceD
+  background: $surfaceA
   color: #495057
   border-radius: 3px
 
 .p-fieldset .p-fieldset-legend
   padding: 1rem
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   color: #495057
-  background: #f8f9fa
+  background: $surfaceB
   font-weight: 600
   border-radius: 3px
 
@@ -2616,14 +2605,14 @@
   box-shadow: 0 0 0 0.2rem #b7e0b8
 
 .p-fieldset.p-fieldset-toggleable .p-fieldset-legend:hover
-  background: #e9ecef
-  border-color: #dee2e6
+  background: $surfaceC
+  border-color: $surfaceD
   color: #495057
 
 .p-panel .p-panel-header
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   padding: 1rem
-  background: #f8f9fa
+  background: $surfaceB
   color: #495057
   border-top-right-radius: 3px
   border-top-left-radius: 3px
@@ -2643,7 +2632,7 @@
 .p-panel .p-panel-header .p-panel-header-icon:enabled:hover
   color: #495057
   border-color: transparent
-  background: #e9ecef
+  background: $surfaceC
 
 .p-panel .p-panel-header .p-panel-header-icon:focus
   outline: 0 none
@@ -2655,8 +2644,8 @@
 
 .p-panel .p-panel-content
   padding: 1rem
-  border: 1px solid #dee2e6
-  background: #ffffff
+  border: 1px solid $surfaceD
+  background: $surfaceA
   color: #495057
   border-bottom-right-radius: 3px
   border-bottom-left-radius: 3px
@@ -2664,28 +2653,28 @@
 
 .p-panel .p-panel-footer
   padding: 0.5rem 1rem
-  border: 1px solid #dee2e6
-  background: #ffffff
+  border: 1px solid $surfaceD
+  background: $surfaceA
   color: #495057
   border-top: 0 none
 
 .p-scrollpanel .p-scrollpanel-bar
-  background: #f8f9fa
+  background: $surfaceB
   border: 0 none
 
 .p-tabview .p-tabview-nav
-  background: #ffffff
-  border: 1px solid #dee2e6
+  background: $surfaceA
+  border: 1px solid $surfaceD
   border-width: 0 0 2px 0
 
 .p-tabview .p-tabview-nav li
   margin-right: 0
 
 .p-tabview .p-tabview-nav li .p-tabview-nav-link
-  border: solid #dee2e6
+  border: solid $surfaceD
   border-width: 0 0 2px 0
-  border-color: transparent transparent #dee2e6 transparent
-  background: #ffffff
+  border-color: transparent transparent $surfaceD transparent
+  background: $surfaceA
   color: #6c757d
   padding: 1rem
   font-weight: 600
@@ -2700,17 +2689,17 @@
   box-shadow: 0 0 0 0.2rem #b7e0b8
 
 .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link
-  background: #ffffff
+  background: $surfaceA
   border-color: #6c757d
   color: #6c757d
 
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link
-  background: #ffffff
-  border-color: #4CAF50
-  color: #4CAF50
+  background: $surfaceA
+  border-color: $primaryColor
+  color: $primaryColor
 
 .p-tabview .p-tabview-panels
-  background: #ffffff
+  background: $surfaceA
   padding: 1rem
   border: 0 none
   color: #495057
@@ -2718,8 +2707,8 @@
   border-bottom-left-radius: 3px
 
 .p-toolbar
-  background: #f8f9fa
-  border: 1px solid #dee2e6
+  background: $surfaceB
+  border: 1px solid $surfaceD
   padding: 1rem
   border-radius: 3px
 
@@ -2733,7 +2722,7 @@
 
 .p-dialog .p-dialog-header
   border-bottom: 0 none
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   padding: 1.5rem
   border-top-right-radius: 3px
@@ -2756,7 +2745,7 @@
 .p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover
   color: #495057
   border-color: transparent
-  background: #e9ecef
+  background: $surfaceC
 
 .p-dialog .p-dialog-header .p-dialog-header-icon:focus
   outline: 0 none
@@ -2767,13 +2756,13 @@
   margin-right: 0
 
 .p-dialog .p-dialog-content
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   padding: 0 1.5rem 2rem 1.5rem
 
 .p-dialog .p-dialog-footer
   border-top: 0 none
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   padding: 0 1.5rem 1.5rem 1.5rem
   text-align: right
@@ -2788,7 +2777,7 @@
   background-color: rgba(0, 0, 0, 0.4)
 
 .p-overlaypanel
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   border: 0 none
   border-radius: 3px
@@ -2798,8 +2787,8 @@
   padding: 1rem
 
 .p-overlaypanel .p-overlaypanel-close
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
   width: 2rem
   height: 2rem
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s
@@ -2810,26 +2799,26 @@
 
 .p-overlaypanel .p-overlaypanel-close:enabled:hover
   background: #449e48
-  color: #ffffff
+  color: $surfaceA
 
 .p-overlaypanel:after
   border: solid transparent
   border-color: rgba(255, 255, 255, 0)
-  border-bottom-color: #ffffff
+  border-bottom-color: $surfaceA
 
 .p-overlaypanel:before
   border: solid transparent
   border-color: rgba(255, 255, 255, 0)
-  border-bottom-color: #ffffff
+  border-bottom-color: $surfaceA
 
 .p-overlaypanel.p-overlaypanel-flipped:after
-  border-top-color: #ffffff
+  border-top-color: $surfaceA
 
 .p-overlaypanel.p-overlaypanel-flipped:before
-  border-top-color: #ffffff
+  border-top-color: $surfaceA
 
 .p-sidebar
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   padding: 1rem
   border: 0 none
@@ -2847,7 +2836,7 @@
 .p-sidebar .p-sidebar-close:enabled:hover
   color: #495057
   border-color: transparent
-  background: #e9ecef
+  background: $surfaceC
 
 .p-sidebar .p-sidebar-close:focus
   outline: 0 none
@@ -2859,7 +2848,7 @@
 
 .p-tooltip .p-tooltip-text
   background: #495057
-  color: #ffffff
+  color: $surfaceA
   padding: 0.5rem 0.5rem
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
   border-radius: 3px
@@ -2877,9 +2866,9 @@
   border-bottom-color: #495057
 
 .p-fileupload .p-fileupload-buttonbar
-  background: #f8f9fa
+  background: $surfaceB
   padding: 1rem
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   color: #495057
   border-bottom: 0 none
   border-top-right-radius: 3px
@@ -2894,9 +2883,9 @@
   box-shadow: 0 0 0 0.2rem #b7e0b8
 
 .p-fileupload .p-fileupload-content
-  background: #ffffff
+  background: $surfaceA
   padding: 2rem 1rem
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   color: #495057
   border-bottom-right-radius: 3px
   border-bottom-left-radius: 3px
@@ -2912,17 +2901,17 @@
 
 .p-fileupload-choose:not(.p-disabled):hover
   background: #449e48
-  color: #ffffff
+  color: $surfaceA
   border-color: #449e48
 
 .p-fileupload-choose:not(.p-disabled):active
-  background: #3d8c40
-  color: #ffffff
-  border-color: #3d8c40
+  background: $primaryColor
+  color: $surfaceA
+  border-color: $primaryColor
 
 .p-breadcrumb
-  background: #ffffff
-  border: 1px solid #dee2e6
+  background: $surfaceA
+  border: 1px solid $surfaceD
   border-radius: 3px
   padding: 1rem
 
@@ -2953,7 +2942,7 @@
 
 .p-contextmenu
   padding: 0.25rem 0
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   border: 0 none
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
@@ -2977,7 +2966,7 @@
   color: #6c757d
 
 .p-contextmenu .p-menuitem-link:not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
 
 .p-contextmenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text
   color: #495057
@@ -2995,12 +2984,12 @@
 
 .p-contextmenu .p-submenu-list
   padding: 0.25rem 0
-  background: #ffffff
+  background: $surfaceA
   border: 0 none
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
 
 .p-contextmenu .p-menuitem.p-menuitem-active > .p-menuitem-link
-  background: #e9ecef
+  background: $surfaceC
 
 .p-contextmenu .p-menuitem.p-menuitem-active > .p-menuitem-link .p-menuitem-text
   color: #495057
@@ -3009,7 +2998,7 @@
   color: #6c757d
 
 .p-contextmenu .p-menu-separator
-  border-top: 1px solid #dee2e6
+  border-top: 1px solid $surfaceD
   margin: 0.25rem 0
 
 .p-contextmenu .p-submenu-icon
@@ -3017,9 +3006,9 @@
 
 .p-megamenu
   padding: 0.5rem
-  background: #f8f9fa
+  background: $surfaceB
   color: #495057
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   border-radius: 3px
 
 .p-megamenu .p-megamenu-root-list > .p-menuitem > .p-menuitem-link
@@ -3041,7 +3030,7 @@
   margin-left: 0.5rem
 
 .p-megamenu .p-megamenu-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
 
 .p-megamenu .p-megamenu-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text
   color: #495057
@@ -3059,7 +3048,7 @@
 
 .p-megamenu .p-megamenu-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link,
 .p-megamenu .p-megamenu-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link:not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
 
 .p-megamenu .p-megamenu-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link .p-menuitem-text,
 .p-megamenu .p-megamenu-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text
@@ -3091,7 +3080,7 @@
   color: #6c757d
 
 .p-megamenu .p-menuitem-link:not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
 
 .p-megamenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text
   color: #495057
@@ -3108,7 +3097,7 @@
   box-shadow: inset 0 0 0 0.15rem #b7e0b8
 
 .p-megamenu .p-megamenu-panel
-  background: #ffffff
+  background: $surfaceA
   color: #495057
   border: 0 none
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
@@ -3117,7 +3106,7 @@
   margin: 0
   padding: 0.75rem 1rem
   color: #495057
-  background: #ffffff
+  background: $surfaceA
   font-weight: 600
   border-top-right-radius: 3px
   border-top-left-radius: 3px
@@ -3127,11 +3116,11 @@
   width: 12.5rem
 
 .p-megamenu .p-megamenu-submenu .p-menu-separator
-  border-top: 1px solid #dee2e6
+  border-top: 1px solid $surfaceD
   margin: 0.25rem 0
 
 .p-megamenu .p-menuitem.p-menuitem-active > .p-menuitem-link
-  background: #e9ecef
+  background: $surfaceC
 
 .p-megamenu .p-menuitem.p-menuitem-active > .p-menuitem-link .p-menuitem-text
   color: #495057
@@ -3145,9 +3134,9 @@
 
 .p-menu
   padding: 0.25rem 0
-  background: #ffffff
+  background: $surfaceA
   color: #495057
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   border-radius: 3px
   width: 12.5rem
 
@@ -3169,7 +3158,7 @@
   color: #6c757d
 
 .p-menu .p-menuitem-link:not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
 
 .p-menu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text
   color: #495057
@@ -3186,7 +3175,7 @@
   box-shadow: inset 0 0 0 0.15rem #b7e0b8
 
 .p-menu.p-menu-overlay
-  background: #ffffff
+  background: $surfaceA
   border: 0 none
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
 
@@ -3194,20 +3183,20 @@
   margin: 0
   padding: 0.75rem 1rem
   color: #495057
-  background: #ffffff
+  background: $surfaceA
   font-weight: 600
   border-top-right-radius: 0
   border-top-left-radius: 0
 
 .p-menu .p-menu-separator
-  border-top: 1px solid #dee2e6
+  border-top: 1px solid $surfaceD
   margin: 0.25rem 0
 
 .p-menubar
   padding: 0.5rem
-  background: #f8f9fa
+  background: $surfaceB
   color: #495057
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   border-radius: 3px
 
 .p-menubar .p-menuitem-link
@@ -3228,7 +3217,7 @@
   color: #6c757d
 
 .p-menubar .p-menuitem-link:not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
 
 .p-menubar .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text
   color: #495057
@@ -3263,7 +3252,7 @@
   margin-left: 0.5rem
 
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
 
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text
   color: #495057
@@ -3281,7 +3270,7 @@
 
 .p-menubar .p-menubar-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link,
 .p-menubar .p-menubar-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link:not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
 
 .p-menubar .p-menubar-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link .p-menuitem-text,
 .p-menubar .p-menubar-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text
@@ -3297,20 +3286,20 @@
 
 .p-menubar .p-submenu-list
   padding: 0.25rem 0
-  background: #ffffff
+  background: $surfaceA
   border: 0 none
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
   width: 12.5rem
 
 .p-menubar .p-submenu-list .p-menu-separator
-  border-top: 1px solid #dee2e6
+  border-top: 1px solid $surfaceD
   margin: 0.25rem 0
 
 .p-menubar .p-submenu-list .p-submenu-icon
   font-size: 0.875rem
 
 .p-menubar .p-menuitem.p-menuitem-active > .p-menuitem-link
-  background: #e9ecef
+  background: $surfaceC
 
 .p-menubar .p-menuitem.p-menuitem-active > .p-menuitem-link .p-menuitem-text
   color: #495057
@@ -3332,7 +3321,7 @@
 
   .p-menubar .p-menubar-button:hover
     color: #6c757d
-    background: #e9ecef
+    background: $surfaceC
 
   .p-menubar .p-menubar-button:focus
     outline: 0 none
@@ -3343,13 +3332,13 @@
     position: absolute
     display: none
     padding: 0.25rem 0
-    background: #ffffff
+    background: $surfaceA
     border: 0 none
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
     width: 100%
 
   .p-menubar .p-menubar-root-list .p-menu-separator
-    border-top: 1px solid #dee2e6
+    border-top: 1px solid $surfaceD
     margin: 0.25rem 0
 
   .p-menubar .p-menubar-root-list .p-submenu-icon
@@ -3377,7 +3366,7 @@
     color: #6c757d
 
   .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover
-    background: #e9ecef
+    background: $surfaceC
 
   .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text
     color: #495057
@@ -3441,9 +3430,9 @@
 
 .p-panelmenu .p-panelmenu-header > a
   padding: 1rem
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   color: #495057
-  background: #f8f9fa
+  background: $surfaceB
   font-weight: 600
   border-radius: 3px
   transition: box-shadow 0.2s
@@ -3460,29 +3449,29 @@
   box-shadow: 0 0 0 0.2rem #b7e0b8
 
 .p-panelmenu .p-panelmenu-header:not(.p-highlight):not(.p-disabled) > a:hover
-  background: #e9ecef
-  border-color: #dee2e6
+  background: $surfaceC
+  border-color: $surfaceD
   color: #495057
 
 .p-panelmenu .p-panelmenu-header.p-highlight
   margin-bottom: 0
 
 .p-panelmenu .p-panelmenu-header.p-highlight > a
-  background: #f8f9fa
-  border-color: #dee2e6
+  background: $surfaceB
+  border-color: $surfaceD
   color: #495057
   border-bottom-right-radius: 0
   border-bottom-left-radius: 0
 
 .p-panelmenu .p-panelmenu-header.p-highlight:not(.p-disabled) > a:hover
-  border-color: #dee2e6
-  background: #e9ecef
+  border-color: $surfaceD
+  background: $surfaceC
   color: #495057
 
 .p-panelmenu .p-panelmenu-content
   padding: 0.25rem 0
-  border: 1px solid #dee2e6
-  background: #ffffff
+  border: 1px solid $surfaceD
+  background: $surfaceA
   color: #495057
   margin-bottom: 0
   border-top: 0
@@ -3509,7 +3498,7 @@
   color: #6c757d
 
 .p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
 
 .p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text
   color: #495057
@@ -3562,12 +3551,12 @@
   background: transparent
   transition: box-shadow 0.2s
   border-radius: 3px
-  background: #ffffff
+  background: $surfaceA
 
 .p-steps .p-steps-item .p-menuitem-link .p-steps-number
   color: #495057
-  border: 1px solid #e9ecef
-  background: #ffffff
+  border: 1px solid $surfaceC
+  background: $surfaceA
   min-width: 2rem
   height: 2rem
   line-height: 2rem
@@ -3585,8 +3574,8 @@
   box-shadow: 0 0 0 0.2rem #b7e0b8
 
 .p-steps .p-steps-item.p-highlight .p-steps-number
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
 
 .p-steps .p-steps-item.p-highlight .p-steps-title
   font-weight: 600
@@ -3594,7 +3583,7 @@
 
 .p-steps .p-steps-item:before
   content: " "
-  border-top: 1px solid #dee2e6
+  border-top: 1px solid $surfaceD
   width: 100%
   top: 50%
   left: 0
@@ -3603,18 +3592,18 @@
   margin-top: -1rem
 
 .p-tabmenu .p-tabmenu-nav
-  background: #ffffff
-  border: 1px solid #dee2e6
+  background: $surfaceA
+  border: 1px solid $surfaceD
   border-width: 0 0 2px 0
 
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem
   margin-right: 0
 
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link
-  border: solid #dee2e6
+  border: solid $surfaceD
   border-width: 0 0 2px 0
-  border-color: transparent transparent #dee2e6 transparent
-  background: #ffffff
+  border-color: transparent transparent $surfaceD transparent
+  background: $surfaceA
   color: #6c757d
   padding: 1rem
   font-weight: 600
@@ -3632,20 +3621,20 @@
   box-shadow: 0 0 0 0.2rem #b7e0b8
 
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover .p-menuitem-link
-  background: #ffffff
+  background: $surfaceA
   border-color: #6c757d
   color: #6c757d
 
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link
-  background: #ffffff
-  border-color: #4CAF50
-  color: #4CAF50
+  background: $surfaceA
+  border-color: $primaryColor
+  color: $primaryColor
 
 .p-tieredmenu
   padding: 0.25rem 0
-  background: #ffffff
+  background: $surfaceA
   color: #495057
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   border-radius: 3px
   width: 12.5rem
 
@@ -3667,7 +3656,7 @@
   color: #6c757d
 
 .p-tieredmenu .p-menuitem-link:not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
 
 .p-tieredmenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text
   color: #495057
@@ -3684,18 +3673,18 @@
   box-shadow: inset 0 0 0 0.15rem #b7e0b8
 
 .p-tieredmenu.p-tieredmenu-overlay
-  background: #ffffff
+  background: $surfaceA
   border: 0 none
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
 
 .p-tieredmenu .p-submenu-list
   padding: 0.25rem 0
-  background: #ffffff
+  background: $surfaceA
   border: 0 none
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
 
 .p-tieredmenu .p-menuitem.p-menuitem-active > .p-menuitem-link
-  background: #e9ecef
+  background: $surfaceC
 
 .p-tieredmenu .p-menuitem.p-menuitem-active > .p-menuitem-link .p-menuitem-text
   color: #495057
@@ -3704,7 +3693,7 @@
   color: #6c757d
 
 .p-tieredmenu .p-menu-separator
-  border-top: 1px solid #dee2e6
+  border-top: 1px solid $surfaceD
   margin: 0.25rem 0
 
 .p-tieredmenu .p-submenu-icon
@@ -3921,7 +3910,7 @@
 .p-galleria .p-galleria-close
   margin: 0.5rem
   background: transparent
-  color: #f8f9fa
+  color: $surfaceB
   width: 4rem
   height: 4rem
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s
@@ -3932,11 +3921,11 @@
 
 .p-galleria .p-galleria-close:hover
   background: rgba(255, 255, 255, 0.1)
-  color: #f8f9fa
+  color: $surfaceB
 
 .p-galleria .p-galleria-item-nav
   background: transparent
-  color: #f8f9fa
+  color: $surfaceB
   width: 4rem
   height: 4rem
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s
@@ -3949,29 +3938,29 @@
 
 .p-galleria .p-galleria-item-nav:not(.p-disabled):hover
   background: rgba(255, 255, 255, 0.1)
-  color: #f8f9fa
+  color: $surfaceB
 
 .p-galleria .p-galleria-caption
   background: rgba(0, 0, 0, 0.5)
-  color: #f8f9fa
+  color: $surfaceB
   padding: 1rem
 
 .p-galleria .p-galleria-indicators
   padding: 1rem
 
 .p-galleria .p-galleria-indicators .p-galleria-indicator button
-  background-color: #e9ecef
+  background-color: $surfaceC
   width: 1rem
   height: 1rem
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s
   border-radius: 50%
 
 .p-galleria .p-galleria-indicators .p-galleria-indicator button:hover
-  background: #dee2e6
+  background: $surfaceD
 
 .p-galleria .p-galleria-indicators .p-galleria-indicator.p-highlight button
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
 
 .p-galleria.p-galleria-indicators-bottom .p-galleria-indicator, .p-galleria.p-galleria-indicators-top .p-galleria-indicator
   margin-right: 0.5rem
@@ -3989,8 +3978,8 @@
   background: rgba(255, 255, 255, 0.6)
 
 .p-galleria.p-galleria-indicator-onitem .p-galleria-indicators .p-galleria-indicator.p-highlight button
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
 
 .p-galleria .p-galleria-thumbnail-container
   background: rgba(0, 0, 0, 0.9)
@@ -4000,7 +3989,7 @@
 .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-next
   margin: 0.5rem
   background-color: transparent
-  color: #f8f9fa
+  color: $surfaceB
   width: 2rem
   height: 2rem
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s
@@ -4009,7 +3998,7 @@
 .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-prev:hover,
 .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-next:hover
   background: rgba(255, 255, 255, 0.1)
-  color: #f8f9fa
+  color: $surfaceB
 
 .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-item-content
   transition: box-shadow 0.2s
@@ -4028,7 +4017,7 @@
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s
 
 .p-inplace .p-inplace-display:not(.p-disabled):hover
-  background: #e9ecef
+  background: $surfaceC
   color: #495057
 
 .p-inplace .p-inplace-display:focus
@@ -4039,34 +4028,34 @@
 .p-progressbar
   border: 0 none
   height: 1.5rem
-  background: #dee2e6
+  background: $surfaceD
   border-radius: 3px
 
 .p-progressbar .p-progressbar-value
   border: 0 none
   margin: 0
-  background: #4CAF50
+  background: $primaryColor
 
 .p-progressbar .p-progressbar-label
   color: #495057
   line-height: 1.5rem
 
 .p-terminal
-  background: #ffffff
+  background: $surfaceA
   color: #495057
-  border: 1px solid #dee2e6
+  border: 1px solid $surfaceD
   padding: 1rem
 
 .p-terminal .p-terminal-input
   font-size: 1rem
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+  font-family: $fontFamily
 
 .p-blockui.p-component-overlay
   background: rgba(0, 0, 0, 0.4)
 
 .p-badge
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
   font-size: 0.75rem
   font-weight: 700
   min-width: 1.5rem
@@ -4075,15 +4064,15 @@
 
 .p-badge.p-badge-secondary
   background-color: #607D8B
-  color: #ffffff
+  color: $surfaceA
 
 .p-badge.p-badge-success
   background-color: #689F38
-  color: #ffffff
+  color: $surfaceA
 
 .p-badge.p-badge-info
   background-color: #0288D1
-  color: #ffffff
+  color: $surfaceA
 
 .p-badge.p-badge-warning
   background-color: #FBC02D
@@ -4091,7 +4080,7 @@
 
 .p-badge.p-badge-danger
   background-color: #D32F2F
-  color: #ffffff
+  color: $surfaceA
 
 .p-badge.p-badge-lg
   font-size: 1.125rem
@@ -4106,8 +4095,8 @@
   line-height: 3rem
 
 .p-tag
-  background: #4CAF50
-  color: #ffffff
+  background: $primaryColor
+  color: $surfaceA
   font-size: 0.75rem
   font-weight: 700
   padding: 0.25rem 0.4rem
@@ -4115,11 +4104,11 @@
 
 .p-tag.p-tag-success
   background-color: #689F38
-  color: #ffffff
+  color: $surfaceA
 
 .p-tag.p-tag-info
   background-color: #0288D1
-  color: #ffffff
+  color: $surfaceA
 
 .p-tag.p-tag-warning
   background-color: #FBC02D
@@ -4127,6 +4116,6 @@
 
 .p-tag.p-tag-danger
   background-color: #D32F2F
-  color: #ffffff
+  color: $surfaceA
 
 /* Customizations to the designer theme should be defined here */

@@ -57,12 +57,12 @@ export default Vue.extend({
 <style src="@/styles/theme.sass" lang="sass"></style>
 
 <style lang="sass">
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap")
 @import @/styles/variables
 
 body
   background: $backgroundColor
   font-family: $fontFamily
+  color: $textColor
   padding: 0
   margin: 0
 </style>
