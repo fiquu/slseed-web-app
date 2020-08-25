@@ -8,7 +8,7 @@ en:
 section.p-fluid(v-if="updateAvailable")
   p-button.p-button-warning.p-button-lg(
     :icon="loading ? 'pi pi-spinner pi-spin' : 'pi pi-info-circle'",
-    :label="$t('UPDATE_AVAILABLE')",
+    :label="loading ? $t('UPDATING') : $t('UPDATE_AVAILABLE')",
     @click="refreshApp()"
   )
 
