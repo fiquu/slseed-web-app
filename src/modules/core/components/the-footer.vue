@@ -33,6 +33,6 @@ footer
   font-family: monospace
   background: white
   min-height: auto
-  position: static
   font-size: 10px
+  z-index: 1
 </style>

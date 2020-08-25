@@ -11,8 +11,9 @@ main#app.p-d-flex.p-flex-column
   the-update-notification
   the-navbar
 
-  transition(name="component-fade", mode="out-in")
-    router-view.router-view(:key="$route.fullPath")
+  section.p-d-flex.p-flex-column.router-view-container
+    transition(name="component-fade", mode="out-in")
+      router-view.router-view(:key="$route.fullPath")
 
   the-footer
 
@@ -73,9 +74,13 @@ main#app
   height: 100vh
   width: 100vw
 
-  .router-view
-    overflow-y: scroll
+  .router-view-container
+    overflow-y: hidden
     flex: 1
+
+    .router-view
+      overflow-y: scroll
+      flex: 1
 
   .selectable
     user-select: auto
