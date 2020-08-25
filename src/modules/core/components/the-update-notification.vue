@@ -1,23 +1,18 @@
 <i18n>
 en:
-  UPDATE_AVAILABLE: An update is available. Click here refresh the app.
+  UPDATE_AVAILABLE: An update is available. Press here refresh the app.
   UPDATING: Refreshing...
 </i18n>
 
 <template lang="pug">
-section
-  button.ui.orange.fluid.button(
-    v-if="updateAvailable"
+section.p-fluid(v-if="updateAvailable")
+  p-button.p-button-warning.p-button-lg(
+    :icon="loading ? 'pi pi-spinner pi-spin' : 'pi pi-info-circle'",
+    :label="$t('UPDATE_AVAILABLE')",
     @click="refreshApp()"
-    :class="{ loading }"
-    )
+  )
 
-    i.exclamation.circle.icon
-    | {{ $t('UPDATE_AVAILABLE') }}
-
-  .ui.inverted.active.page.dimmer(v-if="loading")
-    .ui.primary.text.loader
-      | {{ $t('UPDATING') }}
+  p-block-u-i(:blocked="loading", :full-screen="true")
 </template>
 
 <script lang="ts">
@@ -85,6 +80,6 @@ export default Vue.extend<Data, unknown, Methods>({
 </script>
 
 <style lang="sass" scoped>
-.ui.button
+.p-button
   border-radius: 0
 </style>

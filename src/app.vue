@@ -14,8 +14,6 @@ main#app.p-d-flex.p-flex-column
   transition(name="component-fade", mode="out-in")
     router-view.router-view(:key="$route.fullPath")
 
-  the-footer-nav(v-show="$session.signedIn")
-
   the-footer
 
   p-toast

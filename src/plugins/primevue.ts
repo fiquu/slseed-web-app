@@ -3,6 +3,7 @@ import Vue from 'vue';
 import ToastService from 'primevue/toastservice';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
+import BlockUI from 'primevue/blockui';
 import Message from 'primevue/message';
 import Toolbar from 'primevue/toolbar';
 import Menubar from 'primevue/menubar';
@@ -20,6 +21,7 @@ Vue.use(ToastService);
 
 Vue.component('PInputText', InputText);
 Vue.component('PPassword', Password);
+Vue.component('PBlockUI', BlockUI);
 Vue.component('PMenubar', Menubar);
 Vue.component('PMessage', Message);
 Vue.component('PToolbar', Toolbar);
