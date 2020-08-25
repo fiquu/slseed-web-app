@@ -18,7 +18,7 @@ section.p-p-3
     span(v-text="currentTime")
 
   .p-grid.p-mt-2
-    .p-col
+    .p-col-12.p-md-6
       link-card(
         :header="$t('USERS.HEADER')"
         icon="pi-users"
@@ -27,7 +27,7 @@ section.p-p-3
 
         | {{ $t('USERS.DESCRIPTION') }}
 
-    .p-col
+    .p-col-12.p-md-6
       link-card(
         :header="$t('NOT_FOUND.HEADER')"
         icon="pi-ban"

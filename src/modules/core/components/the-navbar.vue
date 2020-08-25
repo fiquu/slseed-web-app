@@ -79,6 +79,6 @@ export default Vue.extend<unknown, unknown, Computed>({
     text-decoration: none
 
   img
-    height: 1.5em
+    height: 1.75em
     width: auto
 </style>
