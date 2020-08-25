@@ -79,6 +79,7 @@ export default Vue.extend<unknown, unknown, Computed>({
     text-decoration: none
 
   img
-    height: 1.75em
-    width: auto
+    vertical-align: middle
+    height: 2em
+    width: 2em
 </style>
