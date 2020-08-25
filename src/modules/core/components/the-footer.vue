@@ -28,8 +28,10 @@ export default Vue.extend<Data, unknown, unknown>({
 </script>
 
 <style lang="sass" scoped>
+@import @/styles/variables
+
 footer
-  color: rgba(0, 0, 0, 0.3)
+  color: transparentize($textColor, 0.6)
   font-family: monospace
   background: white
   min-height: auto
