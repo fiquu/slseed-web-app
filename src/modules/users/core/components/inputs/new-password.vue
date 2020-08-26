@@ -6,6 +6,9 @@ en:
   WEAK_LABEL: Too weak...
   MEDIUM_LABEL: Fair...
   STRONG_LABEL: Perfect!
+  VALIDATION:
+    REQUIRED: Please input a password.
+    MIN: That password is too short.
 </i18n>
 
 <template lang="pug">
@@ -23,6 +26,7 @@ el-form-item(
     name="new-password",
     :value="value",
     show-password,
+    minlength="8",
     required
   )
 </template>
@@ -30,8 +34,8 @@ el-form-item(
 <script lang="ts">
 import Vue from 'vue';
 
-interface Computed {
-  inputValue: string | number;
+interface Data {
+  rules: Record<string, string | number | boolean | undefined>[];
 }
 
 interface Props {
@@ -39,7 +43,7 @@ interface Props {
   value: string;
 }
 
-export default Vue.extend<unknown, unknown, Computed, Props>({
+export default Vue.extend<Data, unknown, unknown, Props>({
   props: {
     disabled: {
       type: Boolean
@@ -50,16 +54,16 @@ export default Vue.extend<unknown, unknown, Computed, Props>({
     }
   },
 
-  computed: {
-    inputValue: {
-      get() {
-        return this.value;
-      },
-
-      set(value) {
-        this.$emit('input', value);
-      }
-    }
+  data() {
+    return {
+      rules: [{
+        required: true,
+        message: String(this.$t('VALIDATION.REQUIRED'))
+      }, {
+        min: 8,
+        message: String(this.$t('VALIDATION.MIN'))
+      }]
+    };
   }
 });
 </script>

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import {
   Button, Container, Header, Main, Footer, Menu, MenuItem, Submenu, Avatar, Card, Row, Col, Alert, Link, Form, FormItem,
-  Input
+  Input, Divider, Dialog
 } from 'element-ui';
 
 import lang from 'element-ui/lib/locale/lang/en';
@@ -12,9 +12,11 @@ locale.use(lang);
 Vue.use(Container);
 Vue.use(MenuItem);
 Vue.use(FormItem);
+Vue.use(Divider);
 Vue.use(Submenu);
 Vue.use(Avatar);
 Vue.use(Button);
+Vue.use(Dialog);
 Vue.use(Footer);
 Vue.use(Header);
 Vue.use(Alert);

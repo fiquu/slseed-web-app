@@ -27,15 +27,13 @@ en:
 </i18n>
 
 <template lang="pug">
-p-dialog(:visible="show", :modal="true", :closable="false")
+el-dialog(:visible.sync="show", :modal="true", :closable="false")
   template(#header)
     h3 {{ $t('TITLE') }}
 
   template
-    validation-observer(
-      :name="`password-reset-${_uid}`",
+    el-form(
       @submit.prevent="submit()",
-      v-slot="{ invalid }",
       autocomplete="off",
       tag="form"
     )
@@ -55,7 +53,7 @@ p-dialog(:visible="show", :modal="true", :closable="false")
         code-input(:disabled="submitting", v-model="data.code", autofocus)
         new-password-input(:disabled="submitting", v-model="data.password")
 
-        p-button(
+        el-button(
           :disabled="invalid || submitting",
           icon="pi pi-chevron-circle-right",
           :label="$t('FORM.CONFIRM')",
@@ -63,7 +61,7 @@ p-dialog(:visible="show", :modal="true", :closable="false")
           type="submit"
         )
 
-        p-button.p-mt-3.p-button-text(
+        el-button(
           :label="$t('FORM.CANCEL')",
           :disabled="submitting",
           @click="cancel()",

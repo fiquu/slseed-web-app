@@ -17,52 +17,49 @@ en:
 </i18n>
 
 <template lang="pug">
-section.p-grid.p-justify-center.p-nogutter.p-p-3
-  .p-col.p-md-8.p-lg-6.p-xl-2
-    .p-card.p-text-center
-      .p-card-title
-        i.pi.pi-key.p-mt-4(style={ fontSize: '2rem' })
-        .p-mt-3 {{ $t('TITLE') }}
+el-main
+  el-row(justify="center", type="flex")
+    el-col(:sm="14", :md="10", :lg="8", :xl="4")
+      el-card
+        template(#header)
+          i.el-icon-key
+          h3 {{ $t('TITLE') }}
+          | {{ $t('SUBTITLE') }}
 
-      .p-card-body
-        | {{ $t('SUBTITLE') }}
+        el-alert(:closable="false", show-icon)
+          i18n(path="MESSAGES.INFO.TEXT")
+            template(#link)
+              strong {{ $t('HAVE_CODE') }}
 
-    p-message(:closable="false")
-      i18n(path="MESSAGES.INFO.TEXT")
-        template(#link)
-          strong {{ $t('HAVE_CODE') }}
-
-    .p-card
-      .p-card-body
-        validation-observer.p-fluid(
-          @submit.prevent="submit()",
-          v-slot="{ invalid }",
-          ref="form",
-          tag="form"
-        )
+        el-form(@submit.prevent="submit()", ref="form")
           email-input.p-field(
             :disabled="submitting || showModal",
             v-model="data.email"
           )
 
-          p-button(
-            :icon="submitting ? 'pi pi-spin pi-spinner' : 'pi pi-chevron-circle-right'",
-            :disabled="invalid || submitting || showModal",
-            :label="$t('FORM.SUBMIT')",
+          el-button(
+            :disabled="submitting || showModal",
+            :loading="submitting",
+            native-type="submit",
             icon-pos="right",
-            type="submit"
+            type="primary"
           )
+            | {{ $t('FORM.SUBMIT') }}
+            i.el-icon-arrow-right
 
-          p-button.p-button.p-button-link.p-mt-3(
-            :disabled="invalid || submitting || showModal",
+          el-divider
+
+          el-button.p-button.p-button-link.p-mt-3(
+            :disabled="submitting || showModal",
             @click="onSubmitSuccess()",
-            :label="$t('HAVE_CODE')",
-            type="button"
+            native-type="button",
+            type="text"
           )
+            | {{ $t('HAVE_CODE') }}
 
-    .p-text-center.p-m-4
-      router-link.p-button.p-button-link(to="/users/sign-in")
-        | {{ $t('HAVE_PASSWORD') }}
+      p
+        router-link.el-link.el-link--primary(to="/users/sign-in")
+          .el-link--inner {{ $t('HAVE_PASSWORD') }}
 
   reset-modal(
     @hide="showModal = false",
@@ -173,8 +170,18 @@ export default Vue.extend<Data, Methods, unknown>({
 </script>
 
 <style lang="sass" scoped>
-.ui.centered.grid.container
-  .doubling.two.column.row
-    .column
-      padding: 0
+.el-main
+  text-align: center
+
+  .el-card
+    .el-card__header
+      i
+        font-size: 2em
+
+  .el-alert
+    text-align: left
+
+  .el-button
+    display: block
+    width: 100%
 </style>

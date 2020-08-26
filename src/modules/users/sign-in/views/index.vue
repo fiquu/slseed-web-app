@@ -19,56 +19,55 @@ en:
 
 <template lang="pug">
 el-main
-  el-row
-    el-col
+  el-row(justify="center", type="flex")
+    el-col(:sm="14", :md="10", :lg="8", :xl="4")
       el-card
         template(#header)
           i.el-icon-user
+          h3 {{ $t('TITLE') }}
+          | {{ $t('SUBTITLE') }}
 
-        h3 {{ $t('TITLE') }}
-        | {{ $t('SUBTITLE') }}
+        el-form(ref="form", :model="model", @submit.prevent="submit()")
+          email-input(
+            :disabled="submitting",
+            v-model="model.email",
+            :model="model"
+          )
 
-    el-card
-      el-form(ref="form", :model="model", @submit.prevent="submit()")
-        email-input(
-          :disabled="submitting",
-          v-model="model.email",
-          :model="model"
-        )
+          password-input(
+            v-model="model.password",
+            :disabled="submitting",
+            :model="model"
+          )
 
-        password-input(
-          v-model="model.password",
-          :disabled="submitting",
-          :model="model"
-        )
+          el-alert(
+            :description="$t('FORM.NEW_PASSWORD.DESCRIPTION')",
+            :title="$t('FORM.NEW_PASSWORD.TITLE')",
+            v-if="newPasswordRequired",
+            :closable="false",
+            type="warning",
+            show-icon
+          )
 
-        el-alert(
-          :description="$t('FORM.NEW_PASSWORD.DESCRIPTION')",
-          :title="$t('FORM.NEW_PASSWORD.TITLE')",
-          v-if="newPasswordRequired",
-          :closable="false",
-          type="warning",
-          show-icon
-        )
+          new-password-input(
+            v-model="model.newPassword",
+            v-if="newPasswordRequired",
+            :disabled="submitting",
+            :model="model"
+          )
 
-        new-password-input(
-          v-model="model.newPassword",
-          v-if="newPasswordRequired",
-          :disabled="submitting",
-          :model="model"
-        )
+          el-button(
+            :disabled="submitting",
+            :loading="submitting",
+            native-type="submit",
+            type="primary"
+          )
+            | {{ $t('FORM.SUBMIT') }}
+            i.el-icon-arrow-right
 
-        el-button(
-          :disabled="submitting",
-          :loading="submitting",
-          native-type="submit",
-          type="primary"
-        )
-          | {{ $t('FORM.SUBMIT') }}
-          i.el-icon-arrow-right
-
-  router-link.el-link.el-link--primary(to="/users/forgot-password")
-    .el-link--inner {{ $t('FORGOT_PASSWORD') }}
+  p
+    router-link.el-link.el-link--primary(to="/users/forgot-password")
+      .el-link--inner {{ $t('FORGOT_PASSWORD') }}
 </template>
 
 <script lang="ts">
@@ -86,7 +85,7 @@ interface Data {
   newPasswordRequired: boolean;
   submitting: boolean;
   model: {
-    newPassword?: string;
+    newPassword: string;
     password: string;
     email: string;
   };
@@ -110,6 +109,7 @@ export default Vue.extend<Data, Methods, unknown>({
       newPasswordRequired: true,
       submitting: false,
       model: {
+        newPassword: '',
         password: '',
         email: ''
       }
@@ -184,3 +184,20 @@ export default Vue.extend<Data, Methods, unknown>({
   }
 });
 </script>
+
+<style lang="sass" scoped>
+.el-main
+  text-align: center
+
+  .el-card
+    .el-card__header
+      i
+        font-size: 2em
+
+  .el-alert
+    text-align: left
+
+  .el-button
+    display: block
+    width: 100%
+</style>
