@@ -7,17 +7,10 @@ en:
 <template lang="pug">
 section.ui.basic.segment
   .ui.container
-    transition(
-      name="component-fade"
-      mode="out-in"
-      )
-
+    transition(name="component-fade", mode="out-in")
       users-placeholder(v-if="fetching")
 
-      users-cards(
-        :users="users"
-        v-else
-        )
+      users-cards(:users="users", v-else)
 </template>
 
 <script lang="ts">
@@ -74,11 +67,7 @@ export default Vue.extend<Data, Methods, Computed>({
       try {
         await this.fetchAll();
       } catch (err) {
-        console.error(err);
-        this.$toast.add({
-          detail: this.$t('FETCH.ERROR'),
-          severity: 'error'
-        });
+        this.$message.error(String(this.$t('FETCH.ERROR')));
       }
 
       this.fetching = false;

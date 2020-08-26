@@ -136,37 +136,22 @@ export default Vue.extend<Data, Methods, unknown>({
 
       switch (err.code) {
         case 'NotAuthorizedException':
-          clearTimeout(timeout);
+          this.$message.warning(String(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED')));
           this.$router.push('/');
-          this.$toast.add({
-            detail: this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'),
-            severity: 'warn',
-            life: 5000
-          });
+
+          clearTimeout(timeout);
           break;
 
         case 'LimitExceededException':
-          this.$toast.add({
-            detail: this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'),
-            severity: 'error',
-            life: 5000
-          });
+          this.$message.error(String(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED')));
           break;
 
         case 'UserNotFoundException':
-          this.$toast.add({
-            detail: this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'),
-            severity: 'error',
-            life: 5000
-          });
+          this.$message.error(String(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND')));
           break;
 
         default:
-          this.$toast.add({
-            detail: this.$t('MESSAGES.ERRORS.UNKNOWN'),
-            severity: 'error',
-            life: 5000
-          });
+          this.$message.error(String(this.$t('MESSAGES.ERRORS.UNKNOWN')));
       }
     },
 

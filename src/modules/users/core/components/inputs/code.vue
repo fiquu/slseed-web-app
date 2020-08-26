@@ -3,34 +3,33 @@ en:
   PLACEHOLDER: Enter your recovery code...
   LABEL: Recovery Code
   HELP: It should be a 6 digit code.
+  VALIDATION:
+    REQUIRED: Please input a recovery code.
+    NUMBER: It should be a 6 digit number.
 </i18n>
 
 <template lang="pug">
-validation-provider(v-slot="{ classes }", rules="required|digits:6", slim)
-  .p-field(:class="classes")
-    label(:for="`code-input-${_uid}`")
-      | {{ $t('LABEL') }}
+el-form-item(:label="$t('LABEL')", :rules="rules", :model="model", prop="code")
+  el-input(
+    @input="(value) => $emit('input', value)",
+    :placeholder="$t('PLACEHOLDER')",
+    autocomplete="recovery-code",
+    :disabled="disabled",
+    :value="value",
+    name="code",
+    type="text",
+    clearable,
+    required
+  )
 
-    p-input-text(
-      :placeholder="$t('PLACEHOLDER')",
-      autocomplete="recovery-code",
-      :id="`code-input-${_uid}`",
-      :disabled="disabled",
-      v-model="inputValue",
-      :class="classes",
-      name="code",
-      type="text",
-      required
-    )
-
-    small {{ $t('HELP') }}
+  small {{ $t('HELP') }}
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-interface Computed {
-  inputValue: string | number;
+interface Data {
+  rules: Record<string, string | number | boolean | undefined>[];
 }
 
 interface Props {
@@ -38,7 +37,7 @@ interface Props {
   value: string;
 }
 
-export default Vue.extend<unknown, unknown, Computed, Props>({
+export default Vue.extend<Data, unknown, unknown, Props>({
   props: {
     disabled: {
       type: Boolean
@@ -49,16 +48,16 @@ export default Vue.extend<unknown, unknown, Computed, Props>({
     }
   },
 
-  computed: {
-    inputValue: {
-      get() {
-        return this.value;
-      },
-
-      set(value) {
-        this.$emit('input', value);
-      }
-    }
+  data() {
+    return {
+      rules: [{
+        required: true,
+        message: String(this.$t('VALIDATION.REQUIRED'))
+      }, {
+        type: 'integer',
+        message: String(this.$t('VALIDATION.NUMBER'))
+      }]
+    };
   }
 });
 </script>

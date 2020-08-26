@@ -13,27 +13,21 @@ en:
 </i18n>
 
 <template lang="pug">
-section.p-p-3
-  p-panel(:header="$t('TITLE')")
-    span(v-text="currentTime")
+el-main
+  el-row(:gutter="16")
+    el-col
+      el-alert(:description.sync="currentTime", :closable="false")
 
-  .p-grid.p-mt-2
-    .p-col-12.p-md-6
-      link-card(
-        :header="$t('USERS.HEADER')"
-        icon="pi-users"
-        to="/users"
-        )
-
+    el-col(:span="12")
+      link-card(:header="$t('USERS.HEADER')", icon="pi-users", to="/users")
         | {{ $t('USERS.DESCRIPTION') }}
 
-    .p-col-12.p-md-6
+    el-col(:span="12")
       link-card(
-        :header="$t('NOT_FOUND.HEADER')"
-        icon="pi-ban"
+        :header="$t('NOT_FOUND.HEADER')",
+        icon="pi-ban",
         to="/this-page-does-not-exists"
-        )
-
+      )
         | {{ $t('NOT_FOUND.DESCRIPTION') }}
 </template>
 

@@ -2,33 +2,37 @@
 en:
   PLACEHOLDER: Enter your email...
   LABEL: Email
+  VALIDATION:
+    REQUIRED: Please input an email address.
+    EMAIL: Please input a valid email address.
 </i18n>
 
 <template lang="pug">
-validation-provider(v-slot="{ classes }", rules="required|min:6|email", slim)
-  .p-field(:class="classes")
-    label(:for="`email-input-${_uid}`")
-      | {{ $t('LABEL') }}
-
-    p-input-text(
-      :placeholder="$t('PLACEHOLDER')",
-      :id="`email-input-${_uid}`",
-      autocomplete="username",
-      :disabled="disabled",
-      v-model="inputValue",
-      :label="$t('LABEL')",
-      :class="classes",
-      name="email",
-      type="email",
-      required
-    )
+el-form-item(
+  :model="$parent.model",
+  :label="$t('LABEL')",
+  :rules="rules",
+  prop="email"
+)
+  el-input(
+    @input="(value) => $emit('input', value)",
+    :placeholder="$t('PLACEHOLDER')",
+    autocomplete="username",
+    :disabled="disabled",
+    :value="value",
+    minlength="6",
+    name="email",
+    type="email",
+    clearable,
+    required
+  )
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-interface Computed {
-  inputValue: string;
+interface Data {
+  rules: Record<string, string | string[] | number | boolean | undefined>[];
 }
 
 interface Props {
@@ -36,7 +40,7 @@ interface Props {
   value: string;
 }
 
-export default Vue.extend<unknown, unknown, Computed, Props>({
+export default Vue.extend<Data, unknown, unknown, Props>({
   props: {
     disabled: {
       type: Boolean
@@ -47,16 +51,18 @@ export default Vue.extend<unknown, unknown, Computed, Props>({
     }
   },
 
-  computed: {
-    inputValue: {
-      get() {
-        return this.value;
-      },
-
-      set(value) {
-        this.$emit('input', value);
-      }
-    }
+  data() {
+    return {
+      rules: [{
+        required: true,
+        trigger: 'blur',
+        message: String(this.$t('VALIDATION.REQUIRED'))
+      }, {
+        type: 'email',
+        trigger: ['blur', 'change'],
+        message: String(this.$t('VALIDATION.EMAIL'))
+      }]
+    };
   }
 });
 </script>

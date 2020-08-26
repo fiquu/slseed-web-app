@@ -1,5 +1,5 @@
 <template lang="pug">
-.p-card.p-text-center
+el-card
   .p-card-body
     .p-card-header.p-pb-2
       i.pi(:class="icon", style={ fontSize: '2rem' })

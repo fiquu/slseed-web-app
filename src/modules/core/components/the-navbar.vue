@@ -1,85 +1,68 @@
 <i18n>
 en:
-  HOME: Home
+  DASHBOARD: Dashboard
+  NAVIGATION: Navigation
   USERS: Users
   NOT_FOUND: Not Found
   SIGN_OUT: Sign out
 es:
-  HOME: Inicio
+  DASHBOARD: Tablero
+  NAVIGATION: Navegación
   USERS: Usuarios
   NOT_FOUND: No Encontrado
   SIGN_OUT: Salir
 </i18n>
 
 <template lang="pug">
-p-menubar.p-shadow-2(:model="items")
-  template(#start)
-    img.p-mr-2(src="/static/images/navbar-icon.png")
+el-menu(default-active="home", mode="horizontal", router)
+  el-menu-item(index="home")
+    el-avatar(
+      src="/static/images/navbar-icon.png",
+      :alt="$t('DASHBOARD')",
+      size="small"
+    )
+    | {{ title }}
+
+  el-submenu(v-if="$session.signedIn", index="navigation")
+    template(#title) {{ $t('NAVIGATION') }}
+
+    el-menu-item(index="/dashboard")
+      i.el-icon-odometer
+      | {{ $t('DASHBOARD') }}
+
+    el-menu-item(index="/users")
+      i.el-icon-user
+      | {{ $t('USERS') }}
+
+    el-menu-item(index="/not-a-valid-route")
+      i.el-icon-warning-outline
+      | {{ $t('NOT_FOUND') }}
+
+  el-menu-item(v-if="$session.signedIn", disabled)
+    i.el-icon-user
+    | {{ $session.data.name }}
+
+  el-menu-item(v-if="$session.signedIn", @click="$session.signOut()")
+    i.el-icon-switch-button
+    | {{ $t('SIGN_OUT') }}
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-interface Computed {
-  username: string | undefined;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  items: any[];
-}
-
-export default Vue.extend<unknown, unknown, Computed>({
+export default Vue.extend({
   name: 'TheNavbar',
 
-  computed: {
-    username() {
-      return this.$session.data.name;
-    },
-
-    items() {
-      return [{
-        label: this.$t('HOME'),
-        icon: 'pi pi-home',
-        to: '/'
-      }, {
-        label: this.$t('USERS'),
-        icon: 'pi pi-users',
-        to: '/users',
-        visible: () => this.$session.signedIn
-      }, {
-        label: this.$t('NOT_FOUND'),
-        icon: 'pi pi-ban',
-        to: '/no-a-real-route-path',
-        visible: () => this.$session.signedIn
-      }, {
-        separator: true,
-        visible: () => this.$session.signedIn
-      }, {
-        label: this.username,
-        disabled: true,
-        icon: 'pi pi-user',
-        visible: () => this.$session.signedIn
-      }, {
-        label: this.$t('SIGN_OUT'),
-        icon: 'pi pi-sign-out',
-        command: () => this.$session.signOut(),
-        visible: () => this.$session.signedIn
-      }];
-    }
+  data() {
+    return {
+      title: String(process.env.VUE_APP_SHORT)
+    };
   }
 });
 </script>
 
 <style lang="sass" scoped>
-.p-menubar
-  position: relative
-  background: white
-  border-radius: 0
-  border: 0
-
-  a
-    text-decoration: none
-
-  img
-    vertical-align: middle
-    height: 2em
-    width: 2em
+.el-menu
+  .el-avatar
+    margin-right: 0.5em
 </style>

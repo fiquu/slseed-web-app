@@ -1,23 +1,20 @@
 <i18n>
 en:
   SESSION:
-    ERROR:
-      TITLE: Couldn't resolve session.
-      BODY: Please check your internet connection.
+    ERROR: Couldn't resolve session. Please check your internet connection.
 </i18n>
 
 <template lang="pug">
-main#app.p-d-flex.p-flex-column
-  the-update-notification
-  the-navbar
+el-container#app
+  el-header
+    the-update-notification
+    the-navbar
 
-  section.p-d-flex.p-flex-column.router-view-container
+  .router-view-container
     transition(name="component-fade", mode="out-in")
       router-view.router-view(:key="$route.fullPath")
 
   the-footer
-
-  p-toast
 </template>
 
 <script lang="ts">
@@ -36,46 +33,37 @@ export default Vue.extend({
 
   created() {
     this.$session.$on('error', () => {
-      this.$toast.add({
-        summary: this.$t('SESSION.ERROR.TITLE'),
-        detail: this.$t('SESSION.ERROR.BODY'),
-        severity: 'error',
-        life: 5000
-      });
+      this.$message.error(String(this.$t('SESSION.ERROR')));
     });
   }
 });
 </script>
 
-<style src="normalize.css/normalize.css"></style>
-<style src="primevue/resources/primevue.min.css"></style>
-<style src="primeflex/primeflex.min.css"></style>
-<style src="primeicons/primeicons.css"></style>
-
-<style src="@/styles/transitions.sass" lang="sass"></style>
-<style src="@/styles/overrides.sass" lang="sass"></style>
-<style src="@/styles/theme.sass" lang="sass"></style>
+<style src="element-ui/lib/theme-chalk/display.css"></style>
+<style src="@/styles/theme.css"></style>
 
 <style lang="sass">
-@import @/styles/variables
-
 body
-  background: $backgroundColor
-  font-family: $fontFamily
-  color: $textColor
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+  background: #f7f7f6
   padding: 0
   margin: 0
 </style>
 
 <style lang="sass" scoped>
-main#app
+#app
   user-select: none
   overflow: hidden
   height: 100vh
   width: 100vw
 
+  .el-header
+    padding: 0 !important
+
   .router-view-container
+    flex-direction: column
     overflow-y: hidden
+    display: flex
     flex: 1
 
     .router-view

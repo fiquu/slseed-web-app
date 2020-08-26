@@ -2,8 +2,6 @@ import Vue, { CreateElement, VNode } from 'vue';
 
 import { router, store, i18n } from './plugins';
 
-import './components';
-
 import './register-service-worker';
 
 import App from './app.vue';

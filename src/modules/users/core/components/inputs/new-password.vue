@@ -9,25 +9,22 @@ en:
 </i18n>
 
 <template lang="pug">
-validation-provider(v-slot="{ classes }", rules="required|min:8", slim)
-  .p-field(:class="classes")
-    label(:for="`new-password-input-${_uid}`")
-      | {{ $t('LABEL') }}
-
-    p-password(
-      :id="`new-password-input-${_uid}`",
-      :prompt-label="$t('PROMPT_LABEL')",
-      :medium-label="$t('MEDIUM_LABEL')",
-      :strong-label="$t('STRONG_LABEL')",
-      :placeholder="$t('PLACEHOLDER')",
-      :weak-label="$t('WEAK_LABEL')",
-      autocomplete="new-password",
-      :disabled="disabled",
-      v-model="inputValue",
-      name="new-password",
-      :class="classes",
-      required
-    )
+el-form-item(
+  :model="$parent.model",
+  :label="$t('LABEL')",
+  prop="newPassword",
+  :rules="rules"
+)
+  el-input(
+    @input="(value) => $emit('input', value)",
+    :placeholder="$t('PLACEHOLDER')",
+    autocomplete="new-password",
+    :disabled="disabled",
+    name="new-password",
+    :value="value",
+    show-password,
+    required
+  )
 </template>
 
 <script lang="ts">

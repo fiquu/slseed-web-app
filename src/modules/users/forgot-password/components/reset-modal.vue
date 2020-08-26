@@ -136,61 +136,32 @@ export default Vue.extend<Data, Methods, unknown, Props>({
     onSubmitError(err) {
       switch (err.code) {
         case 'LimitExceededException':
-          this.$toast.add({
-            detail: this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'),
-            severity: 'error',
-            life: 5000
-          });
+          this.$message.error(String(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED')));
           break;
 
         case 'UserNotFoundException':
-          this.$toast.add({
-            detail: this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'),
-            severity: 'error',
-            life: 5000
-          });
+          this.$message.error(String(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND')));
           break;
 
         case 'CodeMismatchException':
-          this.$toast.add({
-            detail: this.$t('MESSAGES.ERRORS.INVALID_CODE'),
-            severity: 'error',
-            life: 5000
-          });
+          this.$message.error(String(this.$t('MESSAGES.ERRORS.INVALID_CODE')));
           break;
 
         case 'ExpiredCodeException':
-          this.$toast.add({
-            detail: this.$t('MESSAGES.ERRORS.EXPIRED_CODE'),
-            severity: 'warn',
-            life: 5000
-          });
+          this.$message.warning(String(this.$t('MESSAGES.ERRORS.EXPIRED_CODE')));
           break;
 
         case 'NotAuthorizedException':
-          this.$toast.add({
-            detail: this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'),
-            severity: 'warn',
-            life: 5000
-          });
+          this.$message.warning(String(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED')));
           break;
 
         default:
-          this.$toast.add({
-            detail: this.$t('MESSAGES.ERRORS.UNKNOWN'),
-            severity: 'error',
-            life: 5000
-          });
+          this.$message.error(String(this.$t('MESSAGES.ERRORS.UNKNOWN')));
       }
     },
 
     onSubmitSuccess() {
-      this.$toast.add({
-        detail: this.$t('MESSAGES.SUBMIT.SUCCESS'),
-        severity: 'success',
-        life: 5000
-      });
-
+      this.$message.success(String(this.$t('MESSAGES.SUBMIT.SUCCESS')));
       this.$router.replace('/users/sign-in');
     },
 

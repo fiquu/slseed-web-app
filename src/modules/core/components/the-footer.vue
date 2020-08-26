@@ -1,5 +1,5 @@
 <template lang="pug">
-footer.p-text-center.p-p-1.p-shadow-1
+el-footer(height="1.5em")
   | {{ name }}-{{ env }}-v{{ version }}
 </template>
 
@@ -28,13 +28,13 @@ export default Vue.extend<Data, unknown, unknown>({
 </script>
 
 <style lang="sass" scoped>
-@import @/styles/variables
-
-footer
-  color: transparentize($textColor, 0.6)
+.el-footer
+  color: rgba(0, 0, 0, 0.3)
   font-family: monospace
+  text-align: center
   background: white
   min-height: auto
   font-size: 10px
+  padding: 0.25em
   z-index: 1
 </style>

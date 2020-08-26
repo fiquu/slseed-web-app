@@ -2,32 +2,36 @@
 en:
   PLACEHOLDER: Enter your password...
   LABEL: Password
+  VALIDATION:
+    REQUIRED: Please input a password.
+    MIN: That password is too short.
 </i18n>
 
 <template lang="pug">
-validation-provider(v-slot="{ classes }", rules="required|min:8", slim)
-  .p-field(:class="classes")
-    label(:for="`password-input-${_uid}`")
-      | {{ $t('LABEL') }}
-
-    p-password(
-      :placeholder="$t('PLACEHOLDER')",
-      autocomplete="current-password",
-      :id="`password-input-${_uid}`",
-      :disabled="disabled",
-      v-model="inputValue",
-      :feedback="false",
-      :class="classes",
-      name="password",
-      required
-    )
+el-form-item(
+  :model="$parent.model",
+  :label="$t('LABEL')",
+  prop="password",
+  :rules="rules"
+)
+  el-input(
+    @input="(value) => $emit('input', value)",
+    :placeholder="$t('PLACEHOLDER')",
+    autocomplete="current-password",
+    :disabled="disabled",
+    name="password",
+    :value="value",
+    show-password,
+    minlength="8",
+    required
+  )
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-interface Computed {
-  inputValue: string;
+interface Data {
+  rules: Record<string, string | number | boolean | undefined>[];
 }
 
 interface Props {
@@ -35,7 +39,7 @@ interface Props {
   value: string;
 }
 
-export default Vue.extend<unknown, unknown, Computed, Props>({
+export default Vue.extend<Data, unknown, unknown, Props>({
   props: {
     disabled: {
       type: Boolean
@@ -46,16 +50,16 @@ export default Vue.extend<unknown, unknown, Computed, Props>({
     }
   },
 
-  computed: {
-    inputValue: {
-      get() {
-        return this.value;
-      },
-
-      set(value) {
-        this.$emit('input', value);
-      }
-    }
+  data() {
+    return {
+      rules: [{
+        required: true,
+        message: String(this.$t('VALIDATION.REQUIRED'))
+      }, {
+        min: 8,
+        message: String(this.$t('VALIDATION.MIN'))
+      }]
+    };
   }
 });
 </script>

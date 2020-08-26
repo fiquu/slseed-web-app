@@ -5,11 +5,12 @@ en:
   FORGOT_PASSWORD: I forgot my password
 
   FORM:
-    NEW_PASSWORD: That's a temporary password! You must create a new one to sign in.
+    NEW_PASSWORD:
+      TITLE: That's a temporary password!
+      DESCRIPTION: You must create a new one to sign in.
     SUBMIT: Sign in
 
   ERRORS:
-    TITLE: There's a problem...
     USER_NOT_CONFIRMED_EXCEPTION: Please verify your account first.
     PASSWORD_RESET_REQUIRED_EXCEPTION: Please reset your password.
     NOT_AUTHORIZED_EXCEPTION: Please verify that your email and password are correct.
@@ -17,50 +18,57 @@ en:
 </i18n>
 
 <template lang="pug">
-section.p-grid.p-justify-center.p-nogutter.p-p-3
-  .p-col.p-md-8.p-lg-6.p-xl-2
-    .p-card.p-text-center.p-mb-3
-      .p-card-title
-        i.pi.pi-user.p-mt-4(style={ fontSize: '2rem' })
-        .p-mt-3 {{ $t('TITLE') }}
+el-main
+  el-row
+    el-col
+      el-card
+        template(#header)
+          i.el-icon-user
 
-      .p-card-body {{ $t('SUBTITLE') }}
+        h3 {{ $t('TITLE') }}
+        | {{ $t('SUBTITLE') }}
 
-    .p-card
-      .p-card-body
-        validation-observer.p-fluid(
-          v-slot="{ classes, invalid }",
-          @submit.prevent="signIn()",
-          ref="form",
-          tag="form"
+    el-card
+      el-form(ref="form", :model="model", @submit.prevent="submit()")
+        email-input(
+          :disabled="submitting",
+          v-model="model.email",
+          :model="model"
         )
-          email-input(v-model="input.email", :disabled="submitting")
-          password-input(v-model="input.password", :disabled="submitting")
 
-          p-message(
-            v-if="newPasswordRequired",
-            severity="warn",
-            :closable="false"
-          )
-            | {{ $t('FORM.NEW_PASSWORD') }}
+        password-input(
+          v-model="model.password",
+          :disabled="submitting",
+          :model="model"
+        )
 
-          .p-field(v-if="newPasswordRequired")
-            new-password-input(
-              v-model="input.newPassword",
-              :disabled="submitting"
-            )
+        el-alert(
+          :description="$t('FORM.NEW_PASSWORD.DESCRIPTION')",
+          :title="$t('FORM.NEW_PASSWORD.TITLE')",
+          v-if="newPasswordRequired",
+          :closable="false",
+          type="warning",
+          show-icon
+        )
 
-          p-button(
-            :icon="submitting ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in'",
-            :disabled="invalid || submitting",
-            :label="$t('FORM.SUBMIT')",
-            icon-pos="right",
-            type="submit"
-          )
+        new-password-input(
+          v-model="model.newPassword",
+          v-if="newPasswordRequired",
+          :disabled="submitting",
+          :model="model"
+        )
 
-    .p-text-center.p-m-4
-      router-link.p-button.p-button-link(to="/users/forgot-password")
-        | {{ $t('FORGOT_PASSWORD') }}
+        el-button(
+          :disabled="submitting",
+          :loading="submitting",
+          native-type="submit",
+          type="primary"
+        )
+          | {{ $t('FORM.SUBMIT') }}
+          i.el-icon-arrow-right
+
+  router-link.el-link.el-link--primary(to="/users/forgot-password")
+    .el-link--inner {{ $t('FORGOT_PASSWORD') }}
 </template>
 
 <script lang="ts">
@@ -70,14 +78,14 @@ import NewPasswordInput from '../../core/components/inputs/new-password.vue';
 import PasswordInput from '../../core/components/inputs/password.vue';
 import EmailInput from '../../core/components/inputs/email.vue';
 
-interface SignInError extends Error {
+interface SubmitError extends Error {
   code: string;
 }
 
 interface Data {
   newPasswordRequired: boolean;
   submitting: boolean;
-  input: {
+  model: {
     newPassword?: string;
     password: string;
     email: string;
@@ -85,9 +93,9 @@ interface Data {
 }
 
 interface Methods {
-  onSignInError(err: SignInError): void;
-  onSignInSuccess(): void;
-  signIn(): Promise<void>;
+  onSubmitError(err: SubmitError): void;
+  onSubmitSuccess(): void;
+  submit(): Promise<void>;
 }
 
 export default Vue.extend<Data, Methods, unknown>({
@@ -99,9 +107,9 @@ export default Vue.extend<Data, Methods, unknown>({
 
   data() {
     return {
-      newPasswordRequired: false,
+      newPasswordRequired: true,
       submitting: false,
-      input: {
+      model: {
         password: '',
         email: ''
       }
@@ -115,57 +123,37 @@ export default Vue.extend<Data, Methods, unknown>({
   },
 
   methods: {
-    onSignInSuccess() {
+    onSubmitSuccess() {
       this.$router.replace('/');
     },
 
-    onSignInError(err) {
+    onSubmitError(err) {
       switch (err.code) {
         case 'UserNotConfirmedException':
-          this.$toast.add({
-            summary: this.$t('ERRORS.TITLE'),
-            detail: this.$t('ERRORS.USER_NOT_CONFIRMED_EXCEPTION'),
-            severity: 'error',
-            life: 5000
-          });
+          this.$message.error(String(this.$t('ERRORS.USER_NOT_CONFIRMED_EXCEPTION')));
           break;
 
         case 'PasswordResetRequiredException':
-          this.$toast.add({
-            summary: this.$t('ERRORS.TITLE'),
-            detail: this.$t('ERRORS.PASSWORD_RESET_REQUIRED_EXCEPTION'),
-            severity: 'error',
-            life: 5000
-          });
+          this.$message.error(String(this.$t('ERRORS.PASSWORD_RESET_REQUIRED_EXCEPTION')));
           break;
 
         case 'NotAuthorizedException':
         case 'UserNotFoundException':
-          this.$toast.add({
-            summary: this.$t('ERRORS.TITLE'),
-            detail: this.$t('ERRORS.NOT_AUTHORIZED_EXCEPTION'),
-            severity: 'error',
-            life: 5000
-          });
+          this.$message.error(String(this.$t('ERRORS.NOT_AUTHORIZED_EXCEPTION')));
           break;
 
         default:
-          this.$toast.add({
-            summary: this.$t('ERRORS.TITLE'),
-            detail: this.$t('ERRORS.UNKNOWN'),
-            severity: 'error',
-            life: 5000
-          });
+          this.$message.error(String(this.$t('ERRORS.UNKNOWN')));
       }
     },
 
     /**
      * Signs the user in.
      */
-    async signIn() {
+    async submit() {
       this.submitting = true;
 
-      const { email, password, newPassword } = this.input;
+      const { email, password, newPassword } = this.model;
 
       try {
         const user = await this.$auth.signIn(email, password);
@@ -176,7 +164,7 @@ export default Vue.extend<Data, Methods, unknown>({
           if (this.newPasswordRequired && newPassword) {
             await this.$auth.completeNewPassword(user, newPassword, {});
 
-            this.onSignInSuccess();
+            this.onSubmitSuccess();
 
             return;
           }
@@ -186,9 +174,9 @@ export default Vue.extend<Data, Methods, unknown>({
           return;
         }
 
-        this.onSignInSuccess();
+        this.onSubmitSuccess();
       } catch (err) {
-        this.onSignInError(err);
+        this.onSubmitError(err);
       }
 
       this.submitting = false;
