@@ -24,8 +24,7 @@ section.p-grid.p-justify-center.p-nogutter.p-p-3
         i.pi.pi-user.p-mt-4(style={ fontSize: '2rem' })
         .p-mt-3 {{ $t('TITLE') }}
 
-      .p-card-body
-        | {{ $t('SUBTITLE') }}
+      .p-card-body {{ $t('SUBTITLE') }}
 
     .p-card
       .p-card-body
