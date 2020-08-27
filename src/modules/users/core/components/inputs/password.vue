@@ -9,7 +9,6 @@ en:
 
 <template lang="pug">
 el-form-item(
-  :model="$parent.model",
   :label="$t('LABEL')",
   prop="password",
   :rules="rules"

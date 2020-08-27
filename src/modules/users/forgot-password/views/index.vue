@@ -8,7 +8,7 @@ en:
     SUBMIT: Request a recovery code
   MESSAGES:
     INFO:
-      TEXT: "If you already have a recovery code, enter your email and press {link}."
+      TEXT: "If you already have a recovery code, enter your email and activate the {link} action."
     ERRORS:
       LIMIT_EXCEEDED: Please wait a while before retrying.
       USER_NOT_FOUND: Check your email is right.
@@ -22,48 +22,46 @@ el-main
     el-col(:sm="14", :md="10", :lg="8", :xl="4")
       el-card
         template(#header)
-          i.el-icon-key
-          h3 {{ $t('TITLE') }}
-          | {{ $t('SUBTITLE') }}
+          .text-center
+            i.el-icon-key.text-4xl.mb-4
+            h3.font-bold {{ $t('TITLE') }}
+            | {{ $t('SUBTITLE') }}
 
         el-alert(:closable="false", show-icon)
           i18n(path="MESSAGES.INFO.TEXT")
             template(#link)
               strong {{ $t('HAVE_CODE') }}
 
-        el-form(@submit.prevent="submit()", ref="form")
+        el-form(:model="model", status-icon, ref="form")
           email-input.p-field(
             :disabled="submitting || showModal",
-            v-model="data.email"
+            v-model="model.email"
           )
 
-          el-button(
+          el-button.w-full(
             :disabled="submitting || showModal",
             :loading="submitting",
-            native-type="submit",
-            icon-pos="right",
+            @click="submit()",
             type="primary"
           )
             | {{ $t('FORM.SUBMIT') }}
             i.el-icon-arrow-right
 
-          el-divider
+          .pt-4
+            el-button.w-full(
+              :disabled="submitting || showModal",
+              @click="onSubmitSuccess()",
+              type="text"
+            )
+              | {{ $t('HAVE_CODE') }}
 
-          el-button.p-button.p-button-link.p-mt-3(
-            :disabled="submitting || showModal",
-            @click="onSubmitSuccess()",
-            native-type="button",
-            type="text"
-          )
-            | {{ $t('HAVE_CODE') }}
-
-      p
+      p.text-center.pt-4
         router-link.el-link.el-link--primary(to="/users/sign-in")
           .el-link--inner {{ $t('HAVE_PASSWORD') }}
 
   reset-modal(
     @hide="showModal = false",
-    :email="data.email",
+    :email="model.email",
     :show="showModal"
   )
 </template>
@@ -81,7 +79,7 @@ interface SubmitError extends Error {
 interface Data {
   submitting: boolean;
   showModal: boolean;
-  data: {
+  model: {
     password: string;
     email: string;
     code: string;
@@ -105,7 +103,7 @@ export default Vue.extend<Data, Methods, unknown>({
     return {
       submitting: false,
       showModal: false,
-      data: {
+      model: {
         password: '',
         email: '',
         code: ''
@@ -156,7 +154,7 @@ export default Vue.extend<Data, Methods, unknown>({
       this.submitting = true;
 
       try {
-        await this.$auth.forgotPassword(this.data.email);
+        await this.$auth.forgotPassword(this.model.email);
 
         this.onSubmitSuccess();
       } catch (err) {
@@ -168,20 +166,3 @@ export default Vue.extend<Data, Methods, unknown>({
   }
 });
 </script>
-
-<style lang="sass" scoped>
-.el-main
-  text-align: center
-
-  .el-card
-    .el-card__header
-      i
-        font-size: 2em
-
-  .el-alert
-    text-align: left
-
-  .el-button
-    display: block
-    width: 100%
-</style>

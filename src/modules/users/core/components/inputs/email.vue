@@ -9,7 +9,6 @@ en:
 
 <template lang="pug">
 el-form-item(
-  :model="$parent.model",
   :label="$t('LABEL')",
   :rules="rules",
   prop="email"
@@ -23,7 +22,6 @@ el-form-item(
     minlength="6",
     name="email",
     type="email",
-    clearable,
     required
   )
 </template>

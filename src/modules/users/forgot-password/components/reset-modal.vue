@@ -35,7 +35,8 @@ el-dialog(:visible.sync="show", :modal="true", :closable="false")
     el-form(
       @submit.prevent="submit()",
       autocomplete="off",
-      tag="form"
+      :model="model",
+      status-icon
     )
       strong {{ $t('BODY') }}
 
@@ -50,13 +51,14 @@ el-dialog(:visible.sync="show", :modal="true", :closable="false")
         li {{ $t('INSTRUCTIONS.7') }}
 
       .p-fluid
-        code-input(:disabled="submitting", v-model="data.code", autofocus)
-        new-password-input(:disabled="submitting", v-model="data.password")
+        code-input(:disabled="submitting", v-model="model.code", autofocus)
+        new-password-input(:disabled="submitting", v-model="model.password")
 
         el-button(
-          :disabled="invalid || submitting",
           icon="pi pi-chevron-circle-right",
           :label="$t('FORM.CONFIRM')",
+          :disabled="submitting",
+          :loading="submitting",
           icon-pos="right",
           type="submit"
         )
@@ -81,7 +83,7 @@ interface SubmitError extends Error {
 
 interface Data {
   submitting: boolean;
-  data: {
+  model: {
     password: string;
     code: string;
   };
@@ -119,7 +121,7 @@ export default Vue.extend<Data, Methods, unknown, Props>({
   data() {
     return {
       submitting: false,
-      data: {
+      model: {
         password: '',
         code: ''
       }
@@ -166,7 +168,7 @@ export default Vue.extend<Data, Methods, unknown, Props>({
     async submit() {
       this.submitting = true;
 
-      const { code, password } = this.data;
+      const { code, password } = this.model;
 
       try {
         await this.$auth.forgotPasswordSubmit(this.email, code, password);
@@ -180,8 +182,8 @@ export default Vue.extend<Data, Methods, unknown, Props>({
     },
 
     cancel() {
-      this.data.password = '';
-      this.data.code = '';
+      this.model.password = '';
+      this.model.code = '';
 
       this.$emit('hide');
     }

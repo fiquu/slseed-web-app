@@ -9,7 +9,11 @@ en:
 </i18n>
 
 <template lang="pug">
-el-form-item(:label="$t('LABEL')", :rules="rules", :model="model", prop="code")
+el-form-item(
+  :label="$t('LABEL')",
+  :rules="rules",
+  prop="code"
+)
   el-input(
     @input="(value) => $emit('input', value)",
     :placeholder="$t('PLACEHOLDER')",
@@ -18,7 +22,6 @@ el-form-item(:label="$t('LABEL')", :rules="rules", :model="model", prop="code")
     :value="value",
     name="code",
     type="text",
-    clearable,
     required
   )
 

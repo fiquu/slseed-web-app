@@ -11,7 +11,7 @@ el-container#app
     the-navbar
 
   .router-view-container
-    transition(name="component-fade", mode="out-in")
+    transition(name="el-fade-in-linear", mode="out-in")
       router-view.router-view(:key="$route.fullPath")
 
   the-footer
@@ -39,7 +39,11 @@ export default Vue.extend({
 });
 </script>
 
+<style src="tailwindcss/dist/base.min.css"></style>
+<style src="tailwindcss/dist/utilities.min.css"></style>
+
 <style src="element-ui/lib/theme-chalk/display.css"></style>
+
 <style src="@/styles/theme.css"></style>
 
 <style lang="sass">

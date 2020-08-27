@@ -23,11 +23,12 @@ el-main
     el-col(:sm="14", :md="10", :lg="8", :xl="4")
       el-card
         template(#header)
-          i.el-icon-user
-          h3 {{ $t('TITLE') }}
-          | {{ $t('SUBTITLE') }}
+          .text-center
+            i.el-icon-user.text-4xl.mb-4
+            h3.font-bold {{ $t('TITLE') }}
+            | {{ $t('SUBTITLE') }}
 
-        el-form(ref="form", :model="model", @submit.prevent="submit()")
+        el-form(ref="form", :model="model")
           email-input(
             :disabled="submitting",
             v-model="model.email",
@@ -56,18 +57,18 @@ el-main
             :model="model"
           )
 
-          el-button(
+          el-button.w-full(
             :disabled="submitting",
             :loading="submitting",
-            native-type="submit",
+            @click="submit()",
             type="primary"
           )
             | {{ $t('FORM.SUBMIT') }}
             i.el-icon-arrow-right
 
-  p
-    router-link.el-link.el-link--primary(to="/users/forgot-password")
-      .el-link--inner {{ $t('FORGOT_PASSWORD') }}
+      p.text-center.mt-4
+        router-link.el-link.el-link--primary(to="/users/forgot-password")
+          .el-link--inner {{ $t('FORGOT_PASSWORD') }}
 </template>
 
 <script lang="ts">
@@ -106,7 +107,7 @@ export default Vue.extend<Data, Methods, unknown>({
 
   data() {
     return {
-      newPasswordRequired: true,
+      newPasswordRequired: false,
       submitting: false,
       model: {
         newPassword: '',
@@ -184,20 +185,3 @@ export default Vue.extend<Data, Methods, unknown>({
   }
 });
 </script>
-
-<style lang="sass" scoped>
-.el-main
-  text-align: center
-
-  .el-card
-    .el-card__header
-      i
-        font-size: 2em
-
-  .el-alert
-    text-align: left
-
-  .el-button
-    display: block
-    width: 100%
-</style>
