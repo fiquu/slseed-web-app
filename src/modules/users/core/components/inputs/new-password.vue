@@ -34,7 +34,7 @@ el-form-item(
 import Vue from 'vue';
 
 interface Data {
-  rules: Record<string, string | number | boolean | undefined>[];
+  rules: unknown[];
 }
 
 interface Props {

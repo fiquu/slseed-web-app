@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import {
   Button, Container, Header, Main, Footer, Menu, MenuItem, Submenu, Avatar, Card, Row, Col, Alert, Link, Form, FormItem,
-  Input, Divider, Dialog
+  Input, Dialog, Message, Loading, Drawer, Divider
 } from 'element-ui';
 
 import lang from 'element-ui/lib/locale/lang/en';
@@ -17,6 +17,7 @@ Vue.use(Submenu);
 Vue.use(Avatar);
 Vue.use(Button);
 Vue.use(Dialog);
+Vue.use(Drawer);
 Vue.use(Footer);
 Vue.use(Header);
 Vue.use(Alert);
@@ -28,3 +29,8 @@ Vue.use(Main);
 Vue.use(Menu);
 Vue.use(Col);
 Vue.use(Row);
+
+Vue.use(Loading.directive);
+
+Vue.prototype.$loading = Loading.service;
+Vue.prototype.$message = Message;

@@ -5,14 +5,14 @@ en:
 </i18n>
 
 <template lang="pug">
-el-container#app
+el-container#app.select-none.overflow-hidden.w-screen.h-screen
   el-header
     the-update-notification
     the-navbar
 
-  .router-view-container
+  .flex.flex-1.flex-col.overflow-y-hidden
     transition(name="el-fade-in-linear", mode="out-in")
-      router-view.router-view(:key="$route.fullPath")
+      router-view.flex-1.overflow-y-scroll(:key="$route.fullPath")
 
   the-footer
 </template>
@@ -33,16 +33,14 @@ export default Vue.extend({
 
   created() {
     this.$session.$on('error', () => {
-      this.$message.error(String(this.$t('SESSION.ERROR')));
+      this.$message.error(this.$t('SESSION.ERROR').toString());
     });
   }
 });
 </script>
 
-<style src="tailwindcss/dist/base.min.css"></style>
-<style src="tailwindcss/dist/utilities.min.css"></style>
-
 <style src="element-ui/lib/theme-chalk/display.css"></style>
+<style src="tailwindcss/dist/utilities.min.css"></style>
 
 <style src="@/styles/theme.css"></style>
 
@@ -56,24 +54,6 @@ body
 
 <style lang="sass" scoped>
 #app
-  user-select: none
-  overflow: hidden
-  height: 100vh
-  width: 100vw
-
   .el-header
     padding: 0 !important
-
-  .router-view-container
-    flex-direction: column
-    overflow-y: hidden
-    display: flex
-    flex: 1
-
-    .router-view
-      overflow-y: scroll
-      flex: 1
-
-  .selectable
-    user-select: auto
 </style>

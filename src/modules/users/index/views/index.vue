@@ -67,7 +67,7 @@ export default Vue.extend<Data, Methods, Computed>({
       try {
         await this.fetchAll();
       } catch (err) {
-        this.$message.error(String(this.$t('FETCH.ERROR')));
+        this.$message.error(this.$t('FETCH.ERROR').toString());
       }
 
       this.fetching = false;

@@ -15,18 +15,22 @@ en:
 <template lang="pug">
 el-main
   el-row(:gutter="16")
-    el-col
-      el-alert(:description.sync="currentTime", :closable="false")
+    el-col.pb-4
+      .el-alert.el-alert--info.is-dark
+        .el-alert__content
+          .el-alert__title
+            i.el-icon-date.mr-2
+            span(v-text="currentTime")
 
-    el-col(:span="12")
-      link-card(:header="$t('USERS.HEADER')", icon="pi-users", to="/users")
+    el-col.pb-4(:sm="12")
+      link-card(:header="$t('USERS.HEADER')", icon="el-icon-user", to="/users")
         | {{ $t('USERS.DESCRIPTION') }}
 
-    el-col(:span="12")
+    el-col.pb-4(:sm="12")
       link-card(
         :header="$t('NOT_FOUND.HEADER')",
-        icon="pi-ban",
         to="/this-page-does-not-exists"
+        icon="el-icon-ban",
       )
         | {{ $t('NOT_FOUND.DESCRIPTION') }}
 </template>

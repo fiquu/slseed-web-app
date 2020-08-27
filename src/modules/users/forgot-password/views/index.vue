@@ -23,8 +23,8 @@ el-main
       el-card
         template(#header)
           .text-center
-            i.el-icon-key.text-4xl.mb-4
-            h3.font-bold {{ $t('TITLE') }}
+            i.el-icon-key.text-4xl
+            h3 {{ $t('TITLE') }}
             | {{ $t('SUBTITLE') }}
 
         el-alert(:closable="false", show-icon)
@@ -135,22 +135,22 @@ export default Vue.extend<Data, Methods, unknown>({
 
       switch (err.code) {
         case 'NotAuthorizedException':
-          this.$message.warning(String(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED')));
+          this.$message.warning(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED').toString());
           this.$router.push('/');
 
           clearTimeout(timeout);
           break;
 
         case 'LimitExceededException':
-          this.$message.error(String(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED')));
+          this.$message.error(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED').toString());
           break;
 
         case 'UserNotFoundException':
-          this.$message.error(String(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND')));
+          this.$message.error(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND').toString());
           break;
 
         default:
-          this.$message.error(String(this.$t('MESSAGES.ERRORS.UNKNOWN')));
+          this.$message.error(this.$t('MESSAGES.ERRORS.UNKNOWN').toString());
       }
     },
 

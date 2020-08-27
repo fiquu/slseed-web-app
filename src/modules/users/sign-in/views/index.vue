@@ -10,11 +10,12 @@ en:
       DESCRIPTION: You must create a new one to sign in.
     SUBMIT: Sign in
 
-  ERRORS:
+  MESSAGES:
+    SUCCESS: Nice to have you back!
     USER_NOT_CONFIRMED_EXCEPTION: Please verify your account first.
     PASSWORD_RESET_REQUIRED_EXCEPTION: Please reset your password.
     NOT_AUTHORIZED_EXCEPTION: Please verify that your email and password are correct.
-    UNKNOWN: Please check input values and internet connection.
+    UNKNOWN_ERROR: Please check input values and internet connection.
 </i18n>
 
 <template lang="pug">
@@ -24,8 +25,8 @@ el-main
       el-card
         template(#header)
           .text-center
-            i.el-icon-user.text-4xl.mb-4
-            h3.font-bold {{ $t('TITLE') }}
+            i.el-icon-user.text-4xl
+            h3 {{ $t('TITLE') }}
             | {{ $t('SUBTITLE') }}
 
         el-form(ref="form", :model="model")
@@ -58,7 +59,7 @@ el-main
           )
 
           el-button.w-full(
-            :disabled="submitting",
+            :disabled="!valid || submitting",
             :loading="submitting",
             @click="submit()",
             type="primary"
@@ -73,6 +74,8 @@ el-main
 
 <script lang="ts">
 import Vue from 'vue';
+
+import FormValid from '@/modules/core/mixins/form/valid.vue';
 
 import NewPasswordInput from '../../core/components/inputs/new-password.vue';
 import PasswordInput from '../../core/components/inputs/password.vue';
@@ -105,6 +108,8 @@ export default Vue.extend<Data, Methods, unknown>({
     EmailInput
   },
 
+  mixins: [FormValid],
+
   data() {
     return {
       newPasswordRequired: false,
@@ -125,26 +130,27 @@ export default Vue.extend<Data, Methods, unknown>({
 
   methods: {
     onSubmitSuccess() {
+      this.$message.success(this.$t('MESSAGES.SUCCESS').toString());
       this.$router.replace('/');
     },
 
     onSubmitError(err) {
       switch (err.code) {
         case 'UserNotConfirmedException':
-          this.$message.error(String(this.$t('ERRORS.USER_NOT_CONFIRMED_EXCEPTION')));
+          this.$message.error(this.$t('MESSAGES.USER_NOT_CONFIRMED_EXCEPTION').toString());
           break;
 
         case 'PasswordResetRequiredException':
-          this.$message.error(String(this.$t('ERRORS.PASSWORD_RESET_REQUIRED_EXCEPTION')));
+          this.$message.error(this.$t('MESSAGES.PASSWORD_RESET_REQUIRED_EXCEPTION').toString());
           break;
 
         case 'NotAuthorizedException':
         case 'UserNotFoundException':
-          this.$message.error(String(this.$t('ERRORS.NOT_AUTHORIZED_EXCEPTION')));
+          this.$message.error(this.$t('MESSAGES.NOT_AUTHORIZED_EXCEPTION').toString());
           break;
 
         default:
-          this.$message.error(String(this.$t('ERRORS.UNKNOWN')));
+          this.$message.error(this.$t('MESSAGES.UNKNOWN_ERROR').toString());
       }
     },
 

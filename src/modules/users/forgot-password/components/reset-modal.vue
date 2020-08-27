@@ -74,6 +74,8 @@ el-dialog(:visible.sync="show", :modal="true", :closable="false")
 <script lang="ts">
 import Vue from 'vue';
 
+import FormValid from '@/modules/core/mixins/form/valid.vue';
+
 import NewPasswordInput from '../../core/components/inputs/new-password.vue';
 import CodeInput from '../../core/components/inputs/code.vue';
 
@@ -108,6 +110,8 @@ export default Vue.extend<Data, Methods, unknown, Props>({
     CodeInput
   },
 
+  mixins: [FormValid],
+
   props: {
     show: {
       type: Boolean
@@ -136,32 +140,32 @@ export default Vue.extend<Data, Methods, unknown, Props>({
     onSubmitError(err) {
       switch (err.code) {
         case 'LimitExceededException':
-          this.$message.error(String(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED')));
+          this.$message.error(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED').toString());
           break;
 
         case 'UserNotFoundException':
-          this.$message.error(String(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND')));
+          this.$message.error(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND').toString());
           break;
 
         case 'CodeMismatchException':
-          this.$message.error(String(this.$t('MESSAGES.ERRORS.INVALID_CODE')));
+          this.$message.error(this.$t('MESSAGES.ERRORS.INVALID_CODE').toString());
           break;
 
         case 'ExpiredCodeException':
-          this.$message.warning(String(this.$t('MESSAGES.ERRORS.EXPIRED_CODE')));
+          this.$message.warning(this.$t('MESSAGES.ERRORS.EXPIRED_CODE').toString());
           break;
 
         case 'NotAuthorizedException':
-          this.$message.warning(String(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED')));
+          this.$message.warning(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED').toString());
           break;
 
         default:
-          this.$message.error(String(this.$t('MESSAGES.ERRORS.UNKNOWN')));
+          this.$message.error(this.$t('MESSAGES.ERRORS.UNKNOWN').toString());
       }
     },
 
     onSubmitSuccess() {
-      this.$message.success(String(this.$t('MESSAGES.SUBMIT.SUCCESS')));
+      this.$message.success(this.$t('MESSAGES.SUBMIT.SUCCESS').toString());
       this.$router.replace('/users/sign-in');
     },
 

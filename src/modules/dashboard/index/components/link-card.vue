@@ -1,13 +1,12 @@
 <template lang="pug">
 el-card
-  .p-card-body
-    .p-card-header.p-pb-2
-      i.pi(:class="icon", style={ fontSize: '2rem' })
-    .p-card-title
-      strong {{ header }}
-    .p-card-footer
-      router-link.p-button.p-button-link(:to="to")
-        slot
+  template(#header)
+    .text-center
+      i.text-3xl(:class="icon")
+      h3 {{ header }}
+
+  router-link.el-link.el-link--primary.w-full(:to="to")
+    slot
 </template>
 
 <script lang="ts">
