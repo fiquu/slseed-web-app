@@ -2,7 +2,6 @@
 en:
   PLACEHOLDER: Enter your recovery code...
   LABEL: Recovery Code
-  HELP: It should be a 6 digit code.
   VALIDATION:
     REQUIRED: Please input a recovery code.
     NUMBER: It should be a 6 digit number.
@@ -24,8 +23,6 @@ el-form-item(
     type="text",
     required
   )
-
-  small {{ $t('HELP') }}
 </template>
 
 <script lang="ts">

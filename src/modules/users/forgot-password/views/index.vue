@@ -32,14 +32,14 @@ el-main
             template(#link)
               strong {{ $t('HAVE_CODE') }}
 
-        el-form(:model="model", status-icon, ref="form")
+        el-form(:model="model", ref="form", status-icon)
           email-input.p-field(
             :disabled="submitting || showModal",
             v-model="model.email"
           )
 
           el-button.w-full(
-            :disabled="submitting || showModal",
+            :disabled="!valid || submitting || showModal",
             :loading="submitting",
             @click="submit()",
             type="primary"
@@ -49,7 +49,7 @@ el-main
 
           .pt-4
             el-button.w-full(
-              :disabled="submitting || showModal",
+              :disabled="!valid || submitting || showModal",
               @click="onSubmitSuccess()",
               type="text"
             )
@@ -68,6 +68,8 @@ el-main
 
 <script lang="ts">
 import Vue from 'vue';
+
+import FormValid from '@/modules/core/mixins/form/valid.vue';
 
 import EmailInput from '../../core/components/inputs/email.vue';
 import ResetModal from '../components/reset-modal.vue';
@@ -98,6 +100,8 @@ export default Vue.extend<Data, Methods, unknown>({
     EmailInput,
     ResetModal
   },
+
+  mixins: [FormValid],
 
   data() {
     return {
