@@ -16,8 +16,8 @@ es:
 </i18n>
 
 <template lang="pug">
-el-menu(mode="horizontal", router)
-  el-menu-item(index="/dashboard")
+el-menu(mode="horizontal", :default-active="defaultActive", router)
+  el-menu-item
     el-avatar(
       src="/static/images/navbar-icon.png",
       :alt="$t('DASHBOARD')",
@@ -58,7 +58,7 @@ el-menu(mode="horizontal", router)
     i.el-icon-menu
 
   el-drawer(:visible.sync="showDrawer", :title="$t('MENU')", size="75%")
-    el-menu(router)
+    el-menu(:default-active="defaultActive", router)
       el-menu-item(index="/dashboard")
         i.el-icon-odometer
         | {{ $t('DASHBOARD') }}
@@ -86,6 +86,7 @@ el-menu(mode="horizontal", router)
 import Vue from 'vue';
 
 interface Data {
+  defaultActive: string;
   showDrawer: boolean;
   title: string;
 }
@@ -100,14 +101,19 @@ export default Vue.extend<Data, Methods, unknown>({
   data() {
     return {
       title: String(process.env.VUE_APP_SHORT),
+      defaultActive: '/',
       showDrawer: false
     };
   },
 
   mounted() {
-    this.$router.beforeEach((from, to, next) => {
+    this.$router.beforeEach((to, from, next) => {
       this.showDrawer = false;
       next();
+    });
+
+    this.$router.afterEach(() => {
+      this.defaultActive = this.$route.path;
     });
   },
 
@@ -128,7 +134,11 @@ export default Vue.extend<Data, Methods, unknown>({
   .float-right
     float: right !important
 
-  .el-drawer__header
-    > :first-child::focus
+  ::v-deep .el-drawer
+    &:focus
       outline: 0
+
+    .el-drawer__header
+      > :first-child:focus
+        outline: 0
 </style>
