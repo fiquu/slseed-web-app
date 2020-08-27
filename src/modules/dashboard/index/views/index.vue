@@ -14,23 +14,26 @@ en:
 
 <template lang="pug">
 el-main
-  el-row(:gutter="16")
-    el-col.pb-4
-      .el-alert.el-alert--info.is-dark
-        .el-alert__content
-          .el-alert__title
-            i.el-icon-date.mr-2
-            span(v-text="currentTime")
+  .el-alert.el-alert--info.is-dark
+    .el-alert__content
+      .el-alert__title
+        i.el-icon-date.mr-2
+        span(v-text="currentTime")
 
-    el-col.pb-4(:sm="12")
-      link-card(:header="$t('USERS.HEADER')", icon="el-icon-user", to="/users")
+  el-row.pt-4(:gutter="16", type="flex")
+    el-col.flex.pb-4(:sm="12")
+      link-card.flex-1(
+        :header="$t('USERS.HEADER')",
+        icon="el-icon-user",
+        to="/users"
+      )
         | {{ $t('USERS.DESCRIPTION') }}
 
-    el-col.pb-4(:sm="12")
-      link-card(
+    el-col.flex.pb-4(:sm="12")
+      link-card.flex-1(
         :header="$t('NOT_FOUND.HEADER')",
-        to="/this-page-does-not-exists"
-        icon="el-icon-ban",
+        to="/this-page-does-not-exists",
+        icon="el-icon-warning-outline"
       )
         | {{ $t('NOT_FOUND.DESCRIPTION') }}
 </template>

@@ -2,10 +2,10 @@
 el-card
   template(#header)
     .text-center
-      i.text-3xl(:class="icon")
-      h3 {{ header }}
+      i.text-3xl.mb-3(:class="icon")
+      h3.font-bold {{ header }}
 
-  router-link.el-link.el-link--primary.w-full(:to="to")
+  router-link.el-button.el-button--text.w-full.no-underline(:to="to")
     slot
 </template>
 

@@ -41,6 +41,7 @@ export default Vue.extend({
 
 <style src="element-ui/lib/theme-chalk/display.css"></style>
 <style src="tailwindcss/dist/utilities.min.css"></style>
+<style src="tailwindcss/dist/base.min.css"></style>
 
 <style src="@/styles/theme.css"></style>
 
