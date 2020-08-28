@@ -1,27 +1,25 @@
 <script lang="ts">
-import { Form } from 'element-ui';
 import Vue from 'vue';
 
 interface Data {
-  valid: boolean;
+  isFormValid: boolean;
 }
 
 export default Vue.extend<Data, unknown, unknown>({
   data() {
     return {
-      valid: false
+      isFormValid: false
     };
   },
 
   watch: {
     model: {
       deep: true,
-      async handler() {
-        try {
-          this.valid = await (this.$refs.form as Form).validate();
-        } catch (err) {
-          this.valid = false;
-        }
+      handler() {
+        console.log('is form valid...');
+        this.isFormValid = this.$refs.form && (this.$refs.form as HTMLFormElement).fields.some(field =>
+          field.validateState === 'error'
+        );
       }
     }
   }

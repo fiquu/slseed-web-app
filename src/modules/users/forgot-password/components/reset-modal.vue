@@ -1,7 +1,7 @@
 <i18n>
 en:
   TITLE: 'Attention!'
-  BODY: 'Follow the instructions to reset your password:'
+  BODY: 'Follow these instructions to reset your password:'
   INSTRUCTIONS:
     - Don't close this window.
     - Go to your email inbox.
@@ -28,19 +28,13 @@ en:
 
 <template lang="pug">
 el-dialog(:visible.sync="show", :modal="true", :closable="false")
-  template(#header)
-    h3 {{ $t('TITLE') }}
+  template(#title) {{ $t('TITLE') }}
 
   template
-    el-form(
-      @submit.prevent="submit()",
-      autocomplete="off",
-      :model="model",
-      status-icon
-    )
+    el-form(autocomplete="off", :model="model", ref="form", status-icon)
       strong {{ $t('BODY') }}
 
-      ol
+      ol.list-decimal.list-inside
         li {{ $t('INSTRUCTIONS.0') }}
         li {{ $t('INSTRUCTIONS.1') }}
         li {{ $t('INSTRUCTIONS.2') }}
@@ -50,25 +44,24 @@ el-dialog(:visible.sync="show", :modal="true", :closable="false")
         li {{ $t('INSTRUCTIONS.6') }}
         li {{ $t('INSTRUCTIONS.7') }}
 
-      .p-fluid
-        code-input(:disabled="submitting", v-model="model.code", autofocus)
-        new-password-input(:disabled="submitting", v-model="model.password")
+      el-divider
 
-        el-button(
-          icon="pi pi-chevron-circle-right",
-          :label="$t('FORM.CONFIRM')",
-          :disabled="submitting",
-          :loading="submitting",
-          icon-pos="right",
-          type="submit"
-        )
+      code-input(:disabled="submitting", v-model="model.code", autofocus)
+      new-password-input(:disabled="submitting", v-model="model.newPassword")
 
-        el-button(
-          :label="$t('FORM.CANCEL')",
-          :disabled="submitting",
-          @click="cancel()",
-          type="reset"
-        )
+      el-button.w-full(
+        icon="pi pi-chevron-circle-right",
+        :disabled="!valid || submitting",
+        :loading="submitting",
+        @click="submit()",
+        type="primary"
+      )
+        | {{ $t('FORM.CONFIRM') }}
+
+      .pt-3
+
+      el-button.w-full(:disabled="submitting", @click="cancel()", type="text")
+        | {{ $t('FORM.CANCEL') }}
 </template>
 
 <script lang="ts">
@@ -86,7 +79,7 @@ interface SubmitError extends Error {
 interface Data {
   submitting: boolean;
   model: {
-    password: string;
+    newPassword: string;
     code: string;
   };
 }
@@ -126,7 +119,7 @@ export default Vue.extend<Data, Methods, unknown, Props>({
     return {
       submitting: false,
       model: {
-        password: '',
+        newPassword: '',
         code: ''
       }
     };
@@ -172,10 +165,10 @@ export default Vue.extend<Data, Methods, unknown, Props>({
     async submit() {
       this.submitting = true;
 
-      const { code, password } = this.model;
+      const { code, newPassword } = this.model;
 
       try {
-        await this.$auth.forgotPasswordSubmit(this.email, code, password);
+        await this.$auth.forgotPasswordSubmit(this.email, code, newPassword);
 
         this.onSubmitSuccess();
       } catch (err) {
@@ -186,7 +179,7 @@ export default Vue.extend<Data, Methods, unknown, Props>({
     },
 
     cancel() {
-      this.model.password = '';
+      this.model.newPassword = '';
       this.model.code = '';
 
       this.$emit('hide');

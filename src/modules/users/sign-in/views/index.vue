@@ -25,22 +25,14 @@ el-main
       el-card
         template(#header)
           .text-center
-            i.el-icon-user.text-4xl
-            h3 {{ $t('TITLE') }}
-            | {{ $t('SUBTITLE') }}
+            i.el-icon-user.text-4xl.mb-3
+            h3.font-bold {{ $t('TITLE') }}
+            small {{ $t('SUBTITLE') }}
 
-        el-form(ref="form", :model="model")
-          email-input(
-            :disabled="submitting",
-            v-model="model.email",
-            :model="model"
-          )
+        el-form(ref="form", :model="model", :disabled="submitting")
+          email-input(v-model="model.email", :model="model")
 
-          password-input(
-            v-model="model.password",
-            :disabled="submitting",
-            :model="model"
-          )
+          password-input(v-model="model.password", :model="model")
 
           el-alert(
             :description="$t('FORM.NEW_PASSWORD.DESCRIPTION')",
@@ -54,12 +46,11 @@ el-main
           new-password-input(
             v-model="model.newPassword",
             v-if="newPasswordRequired",
-            :disabled="submitting",
             :model="model"
           )
 
           el-button.w-full(
-            :disabled="!valid || submitting",
+            :disabled="!isFormValid",
             :loading="submitting",
             @click="submit()",
             type="primary"

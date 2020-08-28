@@ -4,23 +4,19 @@ en:
   LABEL: Recovery Code
   VALIDATION:
     REQUIRED: Please input a recovery code.
-    NUMBER: It should be a 6 digit number.
+    INTEGER: It should be a 6 digit number.
 </i18n>
 
 <template lang="pug">
-el-form-item(
-  :label="$t('LABEL')",
-  :rules="rules",
-  prop="code"
-)
+el-form-item(:label="$t('LABEL')", :rules="rules", prop="code")
   el-input(
     @input="(value) => $emit('input', value)",
     :placeholder="$t('PLACEHOLDER')",
     autocomplete="recovery-code",
     :disabled="disabled",
     :value="value",
-    name="code",
     type="text",
+    name="code",
     required
   )
 </template>
@@ -54,8 +50,8 @@ export default Vue.extend<Data, unknown, unknown, Props>({
         required: true,
         message: String(this.$t('VALIDATION.REQUIRED'))
       }, {
-        type: 'integer',
-        message: String(this.$t('VALIDATION.NUMBER'))
+        pattern: /^[0-9]{6}$/,
+        message: String(this.$t('VALIDATION.INTEGER'))
       }]
     };
   }

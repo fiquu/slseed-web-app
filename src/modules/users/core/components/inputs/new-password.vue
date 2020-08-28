@@ -12,11 +12,7 @@ en:
 </i18n>
 
 <template lang="pug">
-el-form-item(
-  :label="$t('LABEL')",
-  prop="newPassword",
-  :rules="rules"
-)
+el-form-item(:label="$t('LABEL')", :rules="rules", prop="newPassword")
   el-input(
     @input="(value) => $emit('input', value)",
     :placeholder="$t('PLACEHOLDER')",

@@ -23,23 +23,25 @@ el-main
       el-card
         template(#header)
           .text-center
-            i.el-icon-key.text-4xl
-            h3 {{ $t('TITLE') }}
-            | {{ $t('SUBTITLE') }}
+            i.el-icon-key.text-4xl.mb-3
+            h3.font-bold {{ $t('TITLE') }}
+            small {{ $t('SUBTITLE') }}
 
         el-alert(:closable="false", show-icon)
           i18n(path="MESSAGES.INFO.TEXT")
             template(#link)
               strong {{ $t('HAVE_CODE') }}
 
-        el-form(:model="model", ref="form", status-icon)
-          email-input.p-field(
-            :disabled="submitting || showModal",
-            v-model="model.email"
-          )
+        el-form(
+          :disabled="submitting || showModal",
+          :model="model",
+          ref="form",
+          status-icon
+        )
+          email-input.p-field(, v-model="model.email")
 
           el-button.w-full(
-            :disabled="!valid || submitting || showModal",
+            :disabled="!isFormValid",
             :loading="submitting",
             @click="submit()",
             type="primary"
@@ -49,8 +51,8 @@ el-main
 
           .pt-4
             el-button.w-full(
-              :disabled="!valid || submitting || showModal",
               @click="onSubmitSuccess()",
+              :disabled="!isFormValid",
               type="text"
             )
               | {{ $t('HAVE_CODE') }}
@@ -67,6 +69,7 @@ el-main
 </template>
 
 <script lang="ts">
+import { Form } from 'element-ui';
 import Vue from 'vue';
 
 import FormValid from '@/modules/core/mixins/form/valid.vue';
@@ -155,6 +158,10 @@ export default Vue.extend<Data, Methods, unknown>({
     },
 
     async submit() {
+      if (!(await (this.$refs.form as Form).validate())) {
+        return;
+      }
+
       this.submitting = true;
 
       try {
