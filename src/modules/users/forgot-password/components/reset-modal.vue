@@ -1,7 +1,7 @@
 <i18n>
 en:
-  TITLE: 'Attention!'
-  BODY: 'Follow these instructions to reset your password:'
+  TITLE: One last thing...
+  BODY: "Follow these instructions to reset your password:"
   INSTRUCTIONS:
     - Don't close this window.
     - Go to your email inbox.
@@ -23,35 +23,46 @@ en:
       INVALID_CODE: That recovery code is not valid.
       EXPIRED_CODE: Please request a new recovery code.
       NOT_AUTHORIZED: Please contact your account administrator.
-      UNKNOWN: "Couldn't fulfill the request."
+      UNKNOWN: Couldn't fulfill the request.
 </i18n>
 
 <template lang="pug">
-el-dialog(:visible.sync="show", :modal="true", :closable="false")
+el-dialog(
+  :close-on-press-escape="false",
+  :close-on-click-modal="false",
+  :visible.sync="show",
+  :show-close="false",
+  :closable="false",
+  :modal="true"
+)
   template(#title) {{ $t('TITLE') }}
 
   template
-    el-form(autocomplete="off", :model="model", ref="form", status-icon)
-      strong {{ $t('BODY') }}
+    el-form(
+      @validate="onValidate",
+      :disabled="submitting",
+      autocomplete="off",
+      :model="model",
+      status-icon,
+      ref="form"
+    )
+      el-alert(:title="$t('BODY')", type="warning", :closable="false")
+        ol.list-decimal.list-inside
+          li {{ $t('INSTRUCTIONS.0') }}
+          li {{ $t('INSTRUCTIONS.1') }}
+          li {{ $t('INSTRUCTIONS.2') }}
+          li {{ $t('INSTRUCTIONS.3') }}
+          li {{ $t('INSTRUCTIONS.4') }}
+          li {{ $t('INSTRUCTIONS.5') }}
+          li {{ $t('INSTRUCTIONS.6') }}
+          li {{ $t('INSTRUCTIONS.7') }}
 
-      ol.list-decimal.list-inside
-        li {{ $t('INSTRUCTIONS.0') }}
-        li {{ $t('INSTRUCTIONS.1') }}
-        li {{ $t('INSTRUCTIONS.2') }}
-        li {{ $t('INSTRUCTIONS.3') }}
-        li {{ $t('INSTRUCTIONS.4') }}
-        li {{ $t('INSTRUCTIONS.5') }}
-        li {{ $t('INSTRUCTIONS.6') }}
-        li {{ $t('INSTRUCTIONS.7') }}
-
-      el-divider
-
-      code-input(:disabled="submitting", v-model="model.code", autofocus)
-      new-password-input(:disabled="submitting", v-model="model.newPassword")
+      code-input(v-model="model.code", autofocus)
+      new-password-input(v-model="model.newPassword")
 
       el-button.w-full(
         icon="pi pi-chevron-circle-right",
-        :disabled="!valid || submitting",
+        :disabled="!isFormValid",
         :loading="submitting",
         @click="submit()",
         type="primary"
@@ -60,7 +71,7 @@ el-dialog(:visible.sync="show", :modal="true", :closable="false")
 
       .pt-3
 
-      el-button.w-full(:disabled="submitting", @click="cancel()", type="text")
+      el-button.w-full(@click="cancel()", type="text")
         | {{ $t('FORM.CANCEL') }}
 </template>
 

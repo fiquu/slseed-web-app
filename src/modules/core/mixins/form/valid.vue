@@ -5,6 +5,10 @@ interface Data {
   isFormValid: boolean;
 }
 
+interface Methods {
+  onValidate(): void;
+}
+
 export default Vue.extend<Data, unknown, unknown>({
   data() {
     return {
@@ -12,15 +16,10 @@ export default Vue.extend<Data, unknown, unknown>({
     };
   },
 
-  watch: {
-    model: {
-      deep: true,
-      handler() {
-        console.log('is form valid...');
-        this.isFormValid = this.$refs.form && (this.$refs.form as HTMLFormElement).fields.some(field =>
-          field.validateState === 'error'
-        );
-      }
+  methods: {
+    onValidate() {
+      this.isFormValid = (this.$refs.form as HTMLFormElement).fields
+        .every(({ validateState }) => validateState === 'success');
     }
   }
 });

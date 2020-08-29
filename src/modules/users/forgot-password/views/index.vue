@@ -34,9 +34,10 @@ el-main
 
         el-form(
           :disabled="submitting || showModal",
+          @validate="onValidate",
           :model="model",
-          ref="form",
-          status-icon
+          status-icon,
+          ref="form"
         )
           email-input.p-field(, v-model="model.email")
 

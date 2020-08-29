@@ -29,10 +29,15 @@ el-main
             h3.font-bold {{ $t('TITLE') }}
             small {{ $t('SUBTITLE') }}
 
-        el-form(ref="form", :model="model", :disabled="submitting")
-          email-input(v-model="model.email", :model="model")
+        el-form(
+          ref="form",
+          :model="model",
+          :disabled="submitting",
+          @validate="onValidate"
+        )
+          email-input(v-model="model.email")
 
-          password-input(v-model="model.password", :model="model")
+          password-input(v-model="model.password")
 
           el-alert(
             :description="$t('FORM.NEW_PASSWORD.DESCRIPTION')",
