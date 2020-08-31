@@ -28,7 +28,7 @@ en:
 
 <template lang="pug">
 el-dialog(
-  custom-class="mt-4 md:mt-12 w-11/12 md:w-7/12 lg:w-4/12",
+  custom-class="mt-4 sm:mt-12 w-11/12 sm:w-8/12 md:w-6/12 lg:w-4/12",
   :close-on-press-escape="false",
   :close-on-click-modal="false",
   :visible.sync="show",

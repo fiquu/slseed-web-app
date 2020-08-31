@@ -43,15 +43,22 @@ export default Vue.extend({
 
 <style src="@/styles/theme.css"></style>
 
-<style lang="sass">
-@tailwind base
-@tailwind utilities
+<style>
+@tailwind base;
+@tailwind utilities;
+</style>
 
+<style lang="sass">
 body
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
   background: #f7f7f6
   padding: 0
   margin: 0
+
+  // Overrides and conflicts
+  .el-loading-spinner
+    svg
+      display: inline
 </style>
 
 <style lang="sass" scoped>
