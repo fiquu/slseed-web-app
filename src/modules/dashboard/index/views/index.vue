@@ -20,7 +20,7 @@ el-main
         i.el-icon-date.mr-2
         span(v-text="currentTime")
 
-  el-row.pt-4(:gutter="16", type="flex")
+  el-row.flex-wrap.pt-4(:gutter="16", type="flex")
     el-col.flex.pb-4(:sm="12")
       link-card.flex-1(
         :header="$t('USERS.HEADER')",

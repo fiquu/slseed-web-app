@@ -30,29 +30,24 @@ el-main
             small {{ $t('SUBTITLE') }}
 
         el-form(
-          ref="form",
-          :model="model",
+          @validate="onValidate",
           :disabled="submitting",
-          @validate="onValidate"
+          :model="model",
+          ref="form"
         )
           email-input(v-model="model.email")
-
           password-input(v-model="model.password")
 
-          el-alert(
-            :description="$t('FORM.NEW_PASSWORD.DESCRIPTION')",
-            :title="$t('FORM.NEW_PASSWORD.TITLE')",
-            v-if="newPasswordRequired",
-            :closable="false",
-            type="warning",
-            show-icon
-          )
+          template(v-if="newPasswordRequired")
+            el-alert(
+              :description="$t('FORM.NEW_PASSWORD.DESCRIPTION')",
+              :title="$t('FORM.NEW_PASSWORD.TITLE')",
+              :closable="false",
+              type="warning",
+              show-icon
+            )
 
-          new-password-input(
-            v-model="model.newPassword",
-            v-if="newPasswordRequired",
-            :model="model"
-          )
+            new-password-input(v-model="model.newPassword", :model="model")
 
           el-button.w-full(
             :disabled="!isFormValid",

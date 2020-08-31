@@ -40,12 +40,13 @@ export default Vue.extend({
 </script>
 
 <style src="element-ui/lib/theme-chalk/display.css"></style>
-<style src="tailwindcss/dist/utilities.min.css"></style>
-<style src="tailwindcss/dist/base.min.css"></style>
 
 <style src="@/styles/theme.css"></style>
 
 <style lang="sass">
+@tailwind base
+@tailwind utilities
+
 body
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
   background: #f7f7f6

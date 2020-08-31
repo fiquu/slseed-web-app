@@ -25,37 +25,41 @@ el-menu(mode="horizontal", :default-active="defaultActive", router)
     )
     | {{ title }}
 
-  el-submenu.hidden-xs-only(v-if="$session.signedIn", index="navigation")
-    template(#title) {{ $t('NAVIGATION') }}
+  transition(name="el-fade-in", mode="out-in")
+    el-submenu.hidden-xs-only(v-if="$session.signedIn", index="navigation")
+      template(#title) {{ $t('NAVIGATION') }}
 
-    el-menu-item(index="/dashboard")
-      i.el-icon-odometer
-      | {{ $t('DASHBOARD') }}
+      el-menu-item(index="/dashboard")
+        i.el-icon-odometer
+        | {{ $t('DASHBOARD') }}
 
-    el-menu-item(index="/users")
+      el-menu-item(index="/users")
+        i.el-icon-user
+        | {{ $t('USERS') }}
+
+      el-menu-item(index="/not-a-valid-route")
+        i.el-icon-warning-outline
+        | {{ $t('NOT_FOUND') }}
+
+  transition(name="el-fade-in", mode="out-in")
+    el-menu-item.hidden-xs-only(v-if="$session.signedIn", disabled)
       i.el-icon-user
-      | {{ $t('USERS') }}
+      | {{ $session.data.name }}
 
-    el-menu-item(index="/not-a-valid-route")
-      i.el-icon-warning-outline
-      | {{ $t('NOT_FOUND') }}
+  transition(name="el-fade-in", mode="out-in")
+    el-menu-item.hidden-xs-only(
+      @click="$session.signOut()",
+      v-if="$session.signedIn"
+    )
+      i.el-icon-switch-button
+      | {{ $t('SIGN_OUT') }}
 
-  el-menu-item.hidden-xs-only(v-if="$session.signedIn", disabled)
-    i.el-icon-user
-    | {{ $session.data.name }}
-
-  el-menu-item.hidden-xs-only(
-    @click="$session.signOut()",
-    v-if="$session.signedIn"
-  )
-    i.el-icon-switch-button
-    | {{ $t('SIGN_OUT') }}
-
-  el-menu-item.hidden-sm-and-up.float-right(
-    @click="showDrawer = true",
-    v-if="$session.signedIn"
-  )
-    i.el-icon-menu
+  transition(name="el-fade-in", mode="out-in")
+    el-menu-item.hidden-sm-and-up.float-right(
+      @click="showDrawer = true",
+      v-if="$session.signedIn"
+    )
+      i.el-icon-menu
 
   el-drawer(:visible.sync="showDrawer", :title="$t('MENU')", size="75%")
     el-menu(:default-active="defaultActive", router)

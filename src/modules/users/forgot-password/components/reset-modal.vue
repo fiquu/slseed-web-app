@@ -28,6 +28,7 @@ en:
 
 <template lang="pug">
 el-dialog(
+  custom-class="mt-4 md:mt-12 w-11/12 md:w-3/5 lg:w-2/5",
   :close-on-press-escape="false",
   :close-on-click-modal="false",
   :visible.sync="show",

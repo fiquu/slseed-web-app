@@ -1,5 +1,8 @@
+/* eslint-disable node/no-unpublished-require */
+
 module.exports = {
-  plugins: {
-    autoprefixer: {}
-  }
+  plugins: [
+    require('tailwindcss'),
+    require('autoprefixer')
+  ]
 };
