@@ -2,6 +2,9 @@
 en:
   FETCH:
     ERROR: Could not retrieve data.
+es:
+  FETCH:
+    ERROR: No se pudieron obtener los datos.
 </i18n>
 
 <template lang="pug">

@@ -4,12 +4,17 @@ en:
   USERS:
     HEADER: Users
     DESCRIPTION: View all avaliable users list.
-  THEME:
-    HEADER: Theme
-    DESCRIPTION: View a collection of your theme elements.
   NOT_FOUND:
     HEADER: Not found
     DESCRIPTION: View the not found page.
+es:
+  TITLE: Tablero
+  USERS:
+    HEADER: Usuarios
+    DESCRIPTION: Ver la lista de todos los usuarios disponibles.
+  NOT_FOUND:
+    HEADER: Extraviado
+    DESCRIPTION: Ver la página de no encontrado.
 </i18n>
 
 <template lang="pug">

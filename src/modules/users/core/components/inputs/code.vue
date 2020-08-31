@@ -5,6 +5,12 @@ en:
   VALIDATION:
     REQUIRED: Please input a recovery code.
     INTEGER: It should be a 6 digit number.
+es:
+  PLACEHOLDER: Ingresa tu código de recuperación...
+  LABEL: Código de recuperación
+  VALIDATION:
+    REQUIRED: Ingresa un código de recuperación.
+    INTEGER: Debe ser un número de 6 dígitos.
 </i18n>
 
 <template lang="pug">

@@ -14,6 +14,21 @@ en:
       USER_NOT_FOUND: Check your email is right.
       NOT_AUTHORIZED: Please contact your account administrator.
       UNKNOWN: "Couldn't fulfill the request."
+es:
+  TITLE: Restablecer la contraseña
+  SUBTITLE: Ingresa tu correo electrónico para restablecer tu contraseña.
+  HAVE_PASSWORD: Tengo mi contraseña
+  HAVE_CODE: Ya tengo un código de recuperación
+  FORM:
+    SUBMIT: Solicitar un código de recuperación
+  MESSAGES:
+    INFO:
+      TEXT: "Si ya tienes un código de recuperación, ingresa tu correo electrónico y activa la acción {link}."
+    ERRORS:
+      LIMIT_EXCEEDED: Espera un poco antes de volver a intentarlo.
+      USER_NOT_FOUND: Comprueba que tu correo electrónico sea correcto.
+      NOT_AUTHORIZED: Comunícate con el administrador de tu cuenta.
+      UNKNOWN: "No se pudo cumplir con la solicitud."
 </i18n>
 
 <template lang="pug">

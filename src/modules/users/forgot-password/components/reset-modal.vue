@@ -24,11 +24,36 @@ en:
       EXPIRED_CODE: Please request a new recovery code.
       NOT_AUTHORIZED: Please contact your account administrator.
       UNKNOWN: Couldn't fulfill the request.
+es:
+  TITLE: Una última cosa...
+  BODY: "Sigue estas instrucciones para restablecer tu contraseña:"
+  INSTRUCTIONS:
+    - No cierres esta ventana.
+    - Ve a la bandeja de entrada de tu correo electrónico.
+    - Abre el mensaje que te enviamos.
+    - Busca el código de recuperación y cópialo.
+    - Vuelve a esta ventana y pega el código de recuperación.
+    - Introduce tu nueva contraseña.
+    - Confirma la modificación.
+    - ¡Hecho!
+  FORM:
+    CONFIRM: Confirmar
+    CANCEL: Cancelar
+  MESSAGES:
+    SUBMIT:
+      SUCCESS: Inicia sesión con tu nueva contraseña.
+    ERRORS:
+      LIMIT_EXCEEDED: Espera un poco antes de volver a intentarlo.
+      USER_NOT_FOUND: Comprueba que tu correo electrónico sea correcto.
+      INVALID_CODE: Ese código de recuperación no es válido.
+      EXPIRED_CODE: Solicita un nuevo código de recuperación.
+      NOT_AUTHORIZED: Comunícate con el administrador de tu cuenta.
+      UNKNOWN: No se pudo cumplir con la solicitud.
 </i18n>
 
 <template lang="pug">
 el-dialog(
-  custom-class="mt-4 sm:mt-12 w-11/12 sm:w-8/12 md:w-6/12 lg:w-4/12",
+  custom-class="break-normal mt-4 sm:mt-12 w-11/12 sm:w-8/12 md:w-6/12 lg:w-4/12",
   :close-on-press-escape="false",
   :close-on-click-modal="false",
   :visible.sync="show",
@@ -157,11 +182,11 @@ export default Vue.extend<Data, Methods, unknown, Props>({
           break;
 
         case 'ExpiredCodeException':
-          this.$message.warning(this.$t('MESSAGES.ERRORS.EXPIRED_CODE').toString());
+          this.$message.error(this.$t('MESSAGES.ERRORS.EXPIRED_CODE').toString());
           break;
 
         case 'NotAuthorizedException':
-          this.$message.warning(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED').toString());
+          this.$message.error(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED').toString());
           break;
 
         default:

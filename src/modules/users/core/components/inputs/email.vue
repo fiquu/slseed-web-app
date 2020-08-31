@@ -5,6 +5,12 @@ en:
   VALIDATION:
     REQUIRED: Please input an email address.
     EMAIL: Please input a valid email address.
+es:
+  PLACEHOLDER: Ingresa tu correo electrónico...
+  LABEL: Email
+  VALIDATION:
+    REQUIRED: Ingresa una dirección de correo electrónico.
+    EMAIL: Ingresa una dirección de correo electrónico válida.
 </i18n>
 
 <template lang="pug">

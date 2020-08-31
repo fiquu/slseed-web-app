@@ -9,6 +9,16 @@ en:
   VALIDATION:
     REQUIRED: Please input a password.
     MIN: That password is too short.
+es:
+  PLACEHOLDER: Crea tu nueva contraseña...
+  LABEL: Nueva contraseña
+  PROMPT_LABEL: Ingresa una contraseña...
+  WEAK_LABEL: Muy debil...
+  MEDIUM_LABEL: Justa...
+  STRONG_LABEL: ¡Perfecta!
+  VALIDATION:
+    REQUIRED: Ingresa una contraseña.
+    MIN: Esa contraseña es demasiado corta.
 </i18n>
 
 <template lang="pug">

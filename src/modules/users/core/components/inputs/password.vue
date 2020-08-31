@@ -5,6 +5,12 @@ en:
   VALIDATION:
     REQUIRED: Please input a password.
     MIN: That password is too short.
+es:
+  PLACEHOLDER: Ingresa tu contraseña...
+  LABEL: Contraseña
+  VALIDATION:
+    REQUIRED: Ingresa una contraseña.
+    MIN: Esa contraseña es demasiado corta.
 </i18n>
 
 <template lang="pug">

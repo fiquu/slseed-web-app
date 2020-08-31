@@ -3,19 +3,32 @@ en:
   TITLE: Welcome
   SUBTITLE: Please sign in with your credentials.
   FORGOT_PASSWORD: I forgot my password
-
   FORM:
     NEW_PASSWORD:
       TITLE: That's a temporary password!
       DESCRIPTION: You must create a new one to sign in.
     SUBMIT: Sign in
-
   MESSAGES:
     SUCCESS: Nice to have you back!
     USER_NOT_CONFIRMED_EXCEPTION: Please verify your account first.
     PASSWORD_RESET_REQUIRED_EXCEPTION: Please reset your password.
     NOT_AUTHORIZED_EXCEPTION: Please verify that your email and password are correct.
     UNKNOWN_ERROR: Please check input values and internet connection.
+es:
+  TITLE: Bienvenido
+  SUBTITLE: Inicia sesión con tus credenciales.
+  FORGOT_PASSWORD: Olvidé mi contraseña
+  FORM:
+    NEW_PASSWORD:
+      TITLE: ¡Esa es una contraseña temporal!
+      DESCRIPTION: Debes crear una nueva para iniciar sesión.
+    SUBMIT: Ingresar
+  MESSAGES:
+    SUCCESS: ¡Bueno tenerte de vuelta!
+    USER_NOT_CONFIRMED_EXCEPTION: Primero verifica tu cuenta.
+    PASSWORD_RESET_REQUIRED_EXCEPTION: Por favor, cambia tu contraseña.
+    NOT_AUTHORIZED_EXCEPTION: Verifica que tu correo electrónico y contraseña sean correctos.
+    UNKNOWN_ERROR: Comprueba los valores de entrada y la conexión a Internet.
 </i18n>
 
 <template lang="pug">

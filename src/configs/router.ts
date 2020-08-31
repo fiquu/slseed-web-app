@@ -1,4 +1,4 @@
-import { RouterOptions, RouteConfig } from 'vue-router';
+import type { RouterOptions, RouteConfig } from 'vue-router';
 
 const routes: RouteConfig[] = [];
 

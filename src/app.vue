@@ -2,11 +2,14 @@
 en:
   SESSION:
     ERROR: Couldn't resolve session. Please check your internet connection.
+es:
+  SESSION:
+    ERROR: No se pudo resolver la sesión. Por favor revisa tu conexion a internet.
 </i18n>
 
 <template lang="pug">
 el-container#app.select-none.overflow-hidden.w-screen.h-screen
-  el-header
+  el-header(height="")
     the-update-notification
     the-navbar
 
@@ -59,6 +62,10 @@ body
   .el-loading-spinner
     svg
       display: inline
+
+  .el-dialog
+    .el-dialog__body
+      word-break: normal
 </style>
 
 <style lang="sass" scoped>

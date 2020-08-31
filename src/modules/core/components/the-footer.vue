@@ -1,5 +1,5 @@
 <template lang="pug">
-el-footer(height="1.5em")
+el-footer(height="")
   | {{ name }}-{{ env }}-v{{ version }}
 </template>
 

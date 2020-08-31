@@ -1,6 +1,6 @@
+import type { AuthClass } from '@aws-amplify/auth';
 import Vue from 'vue';
 
-import { AuthClass } from '@aws-amplify/auth';
 import auth from '@/services/auth';
 
 /**

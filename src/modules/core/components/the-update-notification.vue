@@ -2,17 +2,25 @@
 en:
   UPDATE_AVAILABLE: An update is available. Press here refresh the app.
   UPDATING: Refreshing...
+es:
+  UPDATE_AVAILABLE: Hay una actualización disponible. Presione aquí para actualizar la aplicación.
+  UPDATING: Refrescando...
 </i18n>
 
 <template lang="pug">
-section.p-fluid(v-if="updateAvailable")
-  p-button.p-button-warning.p-button-lg(
-    :icon="loading ? 'pi pi-spinner pi-spin' : 'pi pi-info-circle'",
-    :label="loading ? $t('UPDATING') : $t('UPDATE_AVAILABLE')",
-    @click="refreshApp()"
+section(
+  :element-loading-text="$t('UPDATING')",
+  v-loading.fullscreen.block="loading",
+  v-if="updateAvailable"
+)
+  el-button.rounded-none.w-full(
+    icon="el-icon-warning",
+    @click="refreshApp()",
+    :disabled="loading",
+    :loading="loading",
+    type="warning"
   )
-
-  p-block-u-i(:blocked="loading", :full-screen="true")
+    | {{ $t('UPDATE_AVAILABLE') }}
 </template>
 
 <script lang="ts">
@@ -63,6 +71,7 @@ export default Vue.extend<Data, unknown, Methods>({
     },
 
     refreshApp() {
+      this.loading = true;
       this.updateAvailable = false;
 
       // Make sure we only send a 'skip waiting' message if the SW is waiting.
