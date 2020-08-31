@@ -26,7 +26,11 @@ el-menu(mode="horizontal", :default-active="defaultActive", router)
     | {{ title }}
 
   transition(name="el-fade-in", mode="out-in")
-    el-submenu.hidden-xs-only(v-if="$session.signedIn", index="navigation")
+    el-submenu.hidden-xs-only(
+      v-if="$session.signedIn",
+      index="navigation",
+      key="nav-menu"
+    )
       template(#title) {{ $t('NAVIGATION') }}
 
       el-menu-item(index="/dashboard")
@@ -42,14 +46,15 @@ el-menu(mode="horizontal", :default-active="defaultActive", router)
         | {{ $t('NOT_FOUND') }}
 
   transition(name="el-fade-in", mode="out-in")
-    el-menu-item.hidden-xs-only(v-if="$session.signedIn", disabled)
+    el-menu-item.hidden-xs-only(v-if="$session.signedIn", key="profile")
       i.el-icon-user
       | {{ $session.data.name }}
 
   transition(name="el-fade-in", mode="out-in")
     el-menu-item.hidden-xs-only(
       @click="$session.signOut()",
-      v-if="$session.signedIn"
+      v-if="$session.signedIn",
+      key="sign-out"
     )
       i.el-icon-switch-button
       | {{ $t('SIGN_OUT') }}
@@ -57,7 +62,8 @@ el-menu(mode="horizontal", :default-active="defaultActive", router)
   transition(name="el-fade-in", mode="out-in")
     el-menu-item.hidden-sm-and-up.float-right(
       @click="showDrawer = true",
-      v-if="$session.signedIn"
+      v-if="$session.signedIn",
+      key="drawer-menu"
     )
       i.el-icon-menu
 
