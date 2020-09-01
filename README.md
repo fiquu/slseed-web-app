@@ -1,20 +1,20 @@
 # @fiquu/slseed-web-app
 
-Serveless Seed Web App project with [Vue](https://vuejs.org), [Fomantic UI](https://fomantic-ui.com), [AWS Amplify](https://aws.amazon.com/amplify/), automated setup and deploy with [AWS CloudFormation](https://aws.amazon.com/cloudformation/), [Amazon S3](https://aws.amazon.com/s3/), [Amazon CloudFront](https://aws.amazon.com/cloudfront/) and some other goodies.
+Serveless Seed Web App project with [Vue](https://vuejs.org), [Element UI](https://element.eleme.io/#/en-US), [Tailwind CSS](https://tailwindcss.com/), [AWS Amplify](https://aws.amazon.com/amplify/), automated setup and deploy with [AWS CloudFormation](https://aws.amazon.com/cloudformation/), [Amazon S3](https://aws.amazon.com/s3/), [Amazon CloudFront](https://aws.amazon.com/cloudfront/) and other goodies.
 
 ## Description
 
 This project aims to provide a template with sensible defaults and structure, using a set of technologies that ease development and improve usability with a strong focus on providing a secure and great end-user experience.
 
-This seed or boilerplate does not ties you to any particular stack or backend, it just provides a comprehensive structure that you can use to connect to any endpoint you choose to as you can easily replace the default AWS Amplify Auth and API Client with any other module of your choosing (e.g., [Axios](https://github.com/axios/axios), [Vue Apollo Client](https://hasura.io/learn/graphql/vue/apollo-client/)). Adding or removing plugins is just as easy.
+This seed or boilerplate does not tie you to any particular stack or backend, it just provides a comprehensive structure that you can use to connect to any endpoint you choose to as you can easily replace the default AWS Amplify Auth and API Client with any other module of your choosing (e.g., [Axios](https://github.com/axios/axios), [Vue Apollo Client](https://hasura.io/learn/graphql/vue/apollo-client/)). Adding or removing plugins is just as easy.
 
-The folder structure is intended for scalability into even very large applications in an intuitive and predictable way.
+The folder structure is intended for scalability in an intuitive and predictable way, even on very large applications.
 
 ## Technologies
 
 ### Amazon Web Services
 
-[AWS](https://aws.amazon.com) provides great services at great prices, most of them have free tiers that you may never fully use. This way, you can have an account for your each stage of your project (ideally created with [AWS Organziations](https://aws.amazon.com/organizations)) so you don't use the free tier of your main account (`.env.production.local`) while developing on local (`.env.local.local`), developing on the cloud (`.env.development.local`), testing (`.env.testing.local`) or validating (`.env.staging.local`).
+[AWS](https://aws.amazon.com) provides great services at competitive prices, most of them have free tiers that you may never fully use. This way, you can have an account for your each stage of your project (ideally created with [AWS Organziations](https://aws.amazon.com/organizations)) so you don't use the free tier of your main account (`.env.production.local`) while developing on local (`.env.local.local`), developing on the cloud (`.env.development.local`), testing (`.env.testing.local`) or validating (`.env.staging.local`).
 
 ### Vue
 
@@ -28,11 +28,15 @@ Here you can learn how it compares to other frameworks: https://vuejs.org/v2/gui
 
 It's worth noting that it may get in your way sometimes but it may be that you just need to rethink you code.
 
-### Fomantic UI
+### Element UI
 
-[Fomantic UI](https://fomantic-ui.com) is a modern and up-to-date fork of [Semantic UI](https://semantic-ui.com) with some new additions like [Toast](https://fomantic-ui.com/modules/toast.html) and [Emoji](https://fomantic-ui.com/elements/emoji.html) that make it very robust and useful.
+[Element UI](https://element.eleme.io/#/en-US) is a modern and very complete component library that eases a lot of common component implementations. It provides a very wide set of components to choose from and allows you to import just what you need.
 
-**NOTE:** It needs [JQuery](https://jquery.com) for now but Vue integration is coming on [V3](https://github.com/fomantic/Fomantic-UI/blob/master/ROADMAP.md).
+### Tailwind CSS
+
+[Tailwind CSS](https://tailwindcss.com/) is a utility-first framework that eases common problems like paddings and margins on your templates with simple and short classes. It provides a lot of classes and utilities to simplify layouting and templating.
+
+This library also helps to better support responsiveness since Element UI is not mobile-first.
 
 ## Getting started
 
@@ -48,7 +52,6 @@ Most of these steps apply to any project, but we're assuming you'll also be usin
 1. Wait for it to finish (it may take a while)...
 1. Configure your [AWS Systems Manager](https://aws.amazon.com/systems-manager/) parameters to `.env` values on `configs/ssm-env.js`. These are the SSM parameter names only as the prefix is taken from the `.slseedrc.js` file and from the `package.json` `name` and `title` properties by default.
 1. Run `npm run setup` and select `env` (or `npm run setup:env`) and select stage to set your `.env.{stage}.local` file.
-1. Run `npm run semantic` to build and watch (or `npm run semantic:build` to just build) the Fomantic UI files.
 1. Run `npm start`.
 
 That's it. Your App should be running wherever it says it's running.
@@ -102,7 +105,7 @@ Repeat the last 2 steps to update your repo with the latest changes from this on
 
 And have fun resolving conflicts! :D
 
-# Recommended Tools
+## Recommended Tools
 
 - **Icons:** https://realfavicongenerator.net/
 - **Image Optimization:** https://squoosh.app/
