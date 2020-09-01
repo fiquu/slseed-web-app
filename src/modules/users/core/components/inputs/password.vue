@@ -23,6 +23,7 @@ el-form-item(
     @input="(value) => $emit('input', value)",
     :placeholder="$t('PLACEHOLDER')",
     autocomplete="current-password",
+    :id="`password-input-${_uid}`",
     :disabled="disabled",
     name="password",
     :value="value",

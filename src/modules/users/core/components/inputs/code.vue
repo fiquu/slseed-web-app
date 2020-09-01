@@ -19,6 +19,7 @@ el-form-item(:label="$t('LABEL')", :rules="rules", prop="code")
     @input="(value) => $emit('input', value)",
     :placeholder="$t('PLACEHOLDER')",
     autocomplete="recovery-code",
+    :id="`code-input-${_uid}`",
     :disabled="disabled",
     :value="value",
     type="text",

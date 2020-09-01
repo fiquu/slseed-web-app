@@ -63,6 +63,7 @@ el-main
             new-password-input(v-model="model.newPassword", :model="model")
 
           el-button.w-full(
+            :id="`submit-button-${_uid}`",
             :disabled="!isFormValid",
             :loading="submitting",
             @click="submit()",

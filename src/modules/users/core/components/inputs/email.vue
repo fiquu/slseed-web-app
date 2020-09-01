@@ -22,6 +22,7 @@ el-form-item(
   el-input(
     @input="(value) => $emit('input', value)",
     :placeholder="$t('PLACEHOLDER')",
+    :id="`email-input-${_uid}`",
     autocomplete="username",
     :disabled="disabled",
     :value="value",

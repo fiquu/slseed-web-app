@@ -25,6 +25,7 @@ es:
 el-form-item(:label="$t('LABEL')", :rules="rules", prop="newPassword")
   el-input(
     @input="(value) => $emit('input', value)",
+    :id="`new-password-input-${_uid}`",
     :placeholder="$t('PLACEHOLDER')",
     autocomplete="new-password",
     :disabled="disabled",
