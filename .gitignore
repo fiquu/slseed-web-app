@@ -6,7 +6,6 @@
 /tests/e2e/reports/
 /tests/e2e/videos/
 
-
 # Local env files
 .env.local
 .env.*.local

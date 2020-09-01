@@ -11,6 +11,7 @@
     "start": "cross-env BUNDLE_ANALYZER=server vue-cli-service serve --mode local --no-unsafe-inline",
     "lint": "vue-cli-service lint",
     "test": "cross-env VUE_APP_ENV=test vue-cli-service test:e2e",
+    "coverage:report": "nyc report --reporter=text",
     "postversion": "git push --follow-tags",
     "build": "vue-cli-service build --modern --no-unsafe-inline",
     "deploy": "slseed-utils --do deploy"
