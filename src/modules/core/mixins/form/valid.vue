@@ -9,7 +9,7 @@ interface Methods {
   onValidate(): void;
 }
 
-export default Vue.extend<Data, unknown, unknown>({
+export default Vue.extend<Data, Methods, unknown>({
   data() {
     return {
       isFormValid: false
