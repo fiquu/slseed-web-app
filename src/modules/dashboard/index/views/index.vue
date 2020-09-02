@@ -4,48 +4,42 @@ en:
   USERS:
     HEADER: Users
     DESCRIPTION: View all avaliable users list.
-  THEME:
-    HEADER: Theme
-    DESCRIPTION: View a collection of your theme elements.
   NOT_FOUND:
     HEADER: Not found
     DESCRIPTION: View the not found page.
+es:
+  TITLE: Tablero
+  USERS:
+    HEADER: Usuarios
+    DESCRIPTION: Ver la lista de todos los usuarios disponibles.
+  NOT_FOUND:
+    HEADER: Extraviado
+    DESCRIPTION: Ver la página de no encontrado.
 </i18n>
 
 <template lang="pug">
-section.ui.basic.segment
-  .ui.container
-    .ui.red.segment
-      h4.ui.red.header
-        | {{ $t('TITLE') }}
+el-main
+  .el-alert.el-alert--info.is-dark
+    .el-alert__content
+      .el-alert__title
+        i.el-icon-date.mr-2
+        span(v-text="currentTime")
 
-      p(v-text="currentTime")
-
-    .ui.hidden.divider
-
-    .ui.three.stackable.cards
-      link-card.yellow(
-        :header="$t('USERS.HEADER')"
-        icon="users"
+  el-row.flex-wrap.pt-4(:gutter="16", type="flex")
+    el-col.flex.pb-4(:sm="12")
+      link-card.flex-1(
+        :header="$t('USERS.HEADER')",
+        icon="el-icon-user",
         to="/users"
-        )
-
+      )
         | {{ $t('USERS.DESCRIPTION') }}
 
-      link-card.blue(
-        :header="$t('THEME.HEADER')"
-        icon="brush"
-        to="/theme"
-        )
-
-        | {{ $t('THEME.DESCRIPTION') }}
-
-      link-card.grey(
-        :header="$t('NOT_FOUND.HEADER')"
-        icon="meh"
-        to="/this-page-doesnt-exists"
-        )
-
+    el-col.flex.pb-4(:sm="12")
+      link-card.flex-1(
+        :header="$t('NOT_FOUND.HEADER')",
+        to="/this-page-does-not-exists",
+        icon="el-icon-warning-outline"
+      )
         | {{ $t('NOT_FOUND.DESCRIPTION') }}
 </template>
 

@@ -1,6 +1,6 @@
 <template lang="pug">
-footer.ui.fluid.one.item.mini.bottom.fixed.fitted.menu
-  .disabled.item {{ name }}-{{ env }}-v{{ version }}
+el-footer(height="")
+  | {{ name }}-{{ env }}-v{{ version }}
 </template>
 
 <script lang="ts">
@@ -28,13 +28,13 @@ export default Vue.extend<Data, unknown, unknown>({
 </script>
 
 <style lang="sass" scoped>
-footer.ui.mini.menu
+.el-footer
+  color: rgba(0, 0, 0, 0.3)
+  font-family: monospace
+  text-align: center
+  background: white
   min-height: auto
-  position: static
   font-size: 10px
-
-  .disabled.item
-    text-transform: lowercase
-    font-family: monospace
-    line-height: 2
+  padding: 0.25em
+  z-index: 1
 </style>

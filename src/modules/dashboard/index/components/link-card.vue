@@ -1,12 +1,12 @@
 <template lang="pug">
-router-link.ui.card(:to="to")
-  .center.aligned.content
-    i.big.circular.icon(:class="icon")
+el-card
+  template(#header)
+    .text-center
+      i.text-3xl.mb-3(:class="icon")
+      h3.font-bold {{ header }}
 
-  .center.aligned.content
-    .header {{ header }}
-    .description
-      slot
+  router-link.el-button.el-button--text.w-full.no-underline(:to="to")
+    slot
 </template>
 
 <script lang="ts">

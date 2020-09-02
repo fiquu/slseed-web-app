@@ -2,7 +2,9 @@
 /dist
 
 # Reports
+/tests/e2e/screenshots/
 /tests/e2e/reports/
+/tests/e2e/videos/
 
 # Local env files
 .env.local
@@ -23,6 +25,7 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
+.nyc_output
 coverage
 
 # node-waf configuration

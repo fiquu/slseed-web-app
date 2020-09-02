@@ -1,24 +1,24 @@
 <template lang="pug">
-.ui.one.cards
-  .ui.card(
+section
+  el-card.mb-4(
     v-for="user in users"
     :key="user._id"
     )
 
-    .content
-      .header
-        i.user.circle.icon
+    template(#header)
+      h3.font-bold
+        i.el-icon-user.mr-4
         | {{ user.name }}
+      small.text-opacity-50 {{ user.sub }}
 
-      .meta {{ user.sub }}
+    template
+      small
+        i.el-icon-circle-plus.mr-2
+        span {{ createdAt(user) }}
 
-    .extra.content
-      i.plus.circle.icon
-      span {{ createdAt(user) }}
-
-      .right.floated
+      small.float-right
         span {{ updatedAt(user) }}
-        i.edit.icon
+        i.el-icon-edit.ml-2
 </template>
 
 <script lang="ts">

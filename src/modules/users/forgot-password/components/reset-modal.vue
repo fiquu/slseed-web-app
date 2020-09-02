@@ -1,16 +1,16 @@
 <i18n>
 en:
-  TITLE: 'Attention!'
-  BODY: 'Follow this instructions to reset your password:'
+  TITLE: One last thing...
+  BODY: "Follow these instructions to reset your password:"
   INSTRUCTIONS:
-    - "Don't close this window."
+    - Don't close this window.
     - Go to your email inbox.
-    - "Open the message we've sent you."
+    - Open the message we've sent you.
     - Search the recovery code and copy it.
     - Come back to this window and paste the recovery code.
     - Enter your new password.
     - Confirm the modification.
-    - 'Done!'
+    - Done!
   FORM:
     CONFIRM: Confirm
     CANCEL: Cancel
@@ -23,66 +23,88 @@ en:
       INVALID_CODE: That recovery code is not valid.
       EXPIRED_CODE: Please request a new recovery code.
       NOT_AUTHORIZED: Please contact your account administrator.
-      UNKNOWN: "Couldn't fulfill the request."
+      UNKNOWN: Couldn't fulfill the request.
+es:
+  TITLE: Una última cosa...
+  BODY: "Sigue estas instrucciones para restablecer tu contraseña:"
+  INSTRUCTIONS:
+    - No cierres esta ventana.
+    - Ve a la bandeja de entrada de tu correo electrónico.
+    - Abre el mensaje que te enviamos.
+    - Busca el código de recuperación y cópialo.
+    - Vuelve a esta ventana y pega el código de recuperación.
+    - Introduce tu nueva contraseña.
+    - Confirma la modificación.
+    - ¡Hecho!
+  FORM:
+    CONFIRM: Confirmar
+    CANCEL: Cancelar
+  MESSAGES:
+    SUBMIT:
+      SUCCESS: Inicia sesión con tu nueva contraseña.
+    ERRORS:
+      LIMIT_EXCEEDED: Espera un poco antes de volver a intentarlo.
+      USER_NOT_FOUND: Comprueba que tu correo electrónico sea correcto.
+      INVALID_CODE: Ese código de recuperación no es válido.
+      EXPIRED_CODE: Solicita un nuevo código de recuperación.
+      NOT_AUTHORIZED: Comunícate con el administrador de tu cuenta.
+      UNKNOWN: No se pudo cumplir con la solicitud.
 </i18n>
 
 <template lang="pug">
-validation-observer.ui.mini.modal(
-  @submit.prevent="submit()"
-  v-slot="{ invalid }"
-  tag="form"
-  )
+el-dialog(
+  custom-class="break-normal mt-4 sm:mt-12 w-11/12 sm:w-8/12 md:w-6/12 lg:w-4/12",
+  :close-on-press-escape="false",
+  :close-on-click-modal="false",
+  :visible.sync="show",
+  :show-close="false",
+  :closable="false",
+  :modal="true"
+)
+  template(#title) {{ $t('TITLE') }}
 
-  .header {{ $t('TITLE') }}
+  template
+    el-form(
+      @validate="onValidate",
+      :disabled="submitting",
+      autocomplete="off",
+      :model="model",
+      status-icon,
+      ref="form"
+    )
+      el-alert(:title="$t('BODY')", type="warning", :closable="false")
+        ol.list-decimal.list-inside
+          li {{ $t('INSTRUCTIONS.0') }}
+          li {{ $t('INSTRUCTIONS.1') }}
+          li {{ $t('INSTRUCTIONS.2') }}
+          li {{ $t('INSTRUCTIONS.3') }}
+          li {{ $t('INSTRUCTIONS.4') }}
+          li {{ $t('INSTRUCTIONS.5') }}
+          li {{ $t('INSTRUCTIONS.6') }}
+          li {{ $t('INSTRUCTIONS.7') }}
 
-  .content
-    p
-      strong {{ $t('BODY') }}
+      code-input(v-model="model.code", autofocus)
+      new-password-input(v-model="model.newPassword")
 
-    ol.ui.list
-      li {{ $t('INSTRUCTIONS.0') }}
-      li {{ $t('INSTRUCTIONS.1') }}
-      li {{ $t('INSTRUCTIONS.2') }}
-      li {{ $t('INSTRUCTIONS.3') }}
-      li {{ $t('INSTRUCTIONS.4') }}
-      li {{ $t('INSTRUCTIONS.5') }}
-      li {{ $t('INSTRUCTIONS.6') }}
-      li {{ $t('INSTRUCTIONS.7') }}
-
-    .ui.divider
-
-    .ui.form
-      code-input.required.field(
-        :disabled="submitting"
-        v-model="data.code"
-        :class="fieldClass"
-        )
-
-      new-password-input.required.field(
-        :disabled="submitting"
-        v-model="data.password"
-        :class="fieldClass"
-        )
-
-  .actions
-    button.ui.cancel.basic.button(
-      :disabled="submitting"
-      type="button"
+      el-button.w-full(
+        icon="pi pi-chevron-circle-right",
+        :disabled="!isFormValid",
+        :loading="submitting",
+        @click="submit()",
+        type="primary"
       )
+        | {{ $t('FORM.CONFIRM') }}
 
-      | {{ $t('FORM.CANCEL') }}
+      .pt-3
 
-    button.ui.primary.button(
-      :disabled="invalid || submitting"
-      :class="confirmClass"
-      type="submit"
-      )
-
-      | {{ $t('FORM.CONFIRM') }}
+      el-button.w-full(@click="cancel()", type="text")
+        | {{ $t('FORM.CANCEL') }}
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+
+import FormValid from '@/modules/core/mixins/form/valid.vue';
 
 import NewPasswordInput from '../../core/components/inputs/new-password.vue';
 import CodeInput from '../../core/components/inputs/code.vue';
@@ -93,8 +115,8 @@ interface SubmitError extends Error {
 
 interface Data {
   submitting: boolean;
-  data: {
-    password: string;
+  model: {
+    newPassword: string;
     code: string;
   };
 }
@@ -105,30 +127,25 @@ interface Methods {
   submit(): Promise<void>;
   afterError(): void;
   cancel(): void;
-  show(): void;
-}
-
-interface Computed {
-  fieldClass: {
-    disabled: boolean;
-  };
-
-  confirmClass: {
-    loading: boolean;
-  };
 }
 
 interface Props {
+  show: boolean;
   email: string;
 }
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export default Vue.extend<Data, Methods, unknown, Props>({
   components: {
     NewPasswordInput,
     CodeInput
   },
 
+  mixins: [FormValid],
+
   props: {
+    show: {
+      type: Boolean
+    },
     email: {
       type: String,
       required: true
@@ -138,117 +155,71 @@ export default Vue.extend<Data, Methods, Computed, Props>({
   data() {
     return {
       submitting: false,
-      data: {
-        password: '',
+      model: {
+        newPassword: '',
         code: ''
       }
     };
   },
 
-  computed: {
-    fieldClass() {
-      return {
-        disabled: this.submitting
-      };
-    },
-
-    confirmClass() {
-      return {
-        loading: this.submitting
-      };
-    }
-  },
-
-  mounted() {
-    const $modal = this.$$(this.$el) as JQuery;
-    const settings: SemanticUI.ModalSettings = {
-      closable: false
-    };
-
-    $modal.modal(settings);
-  },
-
   methods: {
-    show() {
-      const $el = this.$$(this.$el) as JQuery;
-
-      $el.modal('show');
-    },
-
-    cancel() {
-      const $el = this.$$(this.$el) as JQuery;
-
-      $el.modal('hide');
-    },
-
     afterError() {
       this.submitting = false;
-
-      const $el = this.$$(this.$refs.modal) as JQuery;
-
-      $el.modal('hide');
     },
 
     onSubmitError(err) {
-      console.error(err);
-
       switch (err.code) {
         case 'LimitExceededException':
-          this.$toast.error(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'));
-          setTimeout(() => this.afterError(), 30000);
+          this.$message.error(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED').toString());
           break;
 
         case 'UserNotFoundException':
-          this.$toast.error(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'));
-          setTimeout(() => this.afterError(), 3000);
+          this.$message.error(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND').toString());
           break;
 
         case 'CodeMismatchException':
-          this.$toast.error(this.$t('MESSAGES.ERRORS.INVALID_CODE'));
-          setTimeout(() => this.afterError(), 3000);
+          this.$message.error(this.$t('MESSAGES.ERRORS.INVALID_CODE').toString());
           break;
 
         case 'ExpiredCodeException':
-          this.$toast.warning(this.$t('MESSAGES.ERRORS.EXPIRED_CODE'));
-          setTimeout(() => this.afterError(), 3000);
+          this.$message.error(this.$t('MESSAGES.ERRORS.EXPIRED_CODE').toString());
           break;
 
         case 'NotAuthorizedException':
-          this.$toast.warning(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'));
-          this.$router.push('/');
+          this.$message.error(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED').toString());
           break;
 
         default:
-          this.$toast.error(this.$t('MESSAGES.ERRORS.UNKNOWN'));
-          setTimeout(() => this.afterError(), 3000);
+          this.$message.error(this.$t('MESSAGES.ERRORS.UNKNOWN').toString());
       }
     },
 
     onSubmitSuccess() {
-      this.$toast.success(this.$t('MESSAGES.SUBMIT.SUCCESS'));
-
-      const $el = this.$$(this.$el) as JQuery;
-
-      $el.modal('hide');
-
+      this.$message.success(this.$t('MESSAGES.SUBMIT.SUCCESS').toString());
       this.$router.replace('/users/sign-in');
     },
 
     async submit() {
       this.submitting = true;
 
-      const { code, password } = this.data;
+      const { code, newPassword } = this.model;
 
       try {
-        await this.$auth.forgotPasswordSubmit(this.email, code, password);
+        await this.$auth.forgotPasswordSubmit(this.email, code, newPassword);
 
         this.onSubmitSuccess();
       } catch (err) {
         this.onSubmitError(err);
-        console.error(err);
       }
 
       this.submitting = false;
+    },
+
+    cancel() {
+      this.model.newPassword = '';
+      this.model.code = '';
+
+      this.$emit('hide');
     }
   }
 });

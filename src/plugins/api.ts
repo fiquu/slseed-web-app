@@ -1,4 +1,4 @@
-import { APIClass } from '@aws-amplify/api';
+import type { APIClass } from '@aws-amplify/api';
 import Vue from 'vue';
 
 import api from '@/services/api';

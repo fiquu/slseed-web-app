@@ -8,72 +8,87 @@ en:
     SUBMIT: Request a recovery code
   MESSAGES:
     INFO:
-      TEXT: "If you already have a recovery code, enter your email and press: {link}."
+      TEXT: "If you already have a recovery code, enter your email and activate the {link} action."
     ERRORS:
       LIMIT_EXCEEDED: Please wait a while before retrying.
       USER_NOT_FOUND: Check your email is right.
       NOT_AUTHORIZED: Please contact your account administrator.
       UNKNOWN: "Couldn't fulfill the request."
+es:
+  TITLE: Restablecer la contraseña
+  SUBTITLE: Ingresa tu correo electrónico para restablecer tu contraseña.
+  HAVE_PASSWORD: Tengo mi contraseña
+  HAVE_CODE: Ya tengo un código de recuperación
+  FORM:
+    SUBMIT: Solicitar un código de recuperación
+  MESSAGES:
+    INFO:
+      TEXT: "Si ya tienes un código de recuperación, ingresa tu correo electrónico y activa la acción {link}."
+    ERRORS:
+      LIMIT_EXCEEDED: Espera un poco antes de volver a intentarlo.
+      USER_NOT_FOUND: Comprueba que tu correo electrónico sea correcto.
+      NOT_AUTHORIZED: Comunícate con el administrador de tu cuenta.
+      UNKNOWN: "No se pudo cumplir con la solicitud."
 </i18n>
 
 <template lang="pug">
-section.ui.basic.segment
-  .ui.text.container
-    .ui.center.aligned.primary.segment
-      h3.ui.primary.icon.header
-        i.circular.asterisk.icon
-        .content {{ $t('TITLE') }}
-          .sub.header {{ $t('SUBTITLE') }}
+el-main
+  el-row(justify="center", type="flex")
+    el-col(:sm="14", :md="10", :lg="8", :xl="4")
+      el-card
+        template(#header)
+          .text-center
+            i.el-icon-key.text-4xl.mb-3
+            h3.font-bold {{ $t('TITLE') }}
+            small {{ $t('SUBTITLE') }}
 
-    .ui.visible.info.icon.message
-      i.info.circle.icon
-      i18n.content(path="MESSAGES.INFO.TEXT" tag="div")
-        template(v-slot:link)
-          strong {{ $t('HAVE_CODE') }}
+        el-alert(:closable="false", show-icon)
+          i18n(path="MESSAGES.INFO.TEXT")
+            template(#link)
+              strong {{ $t('HAVE_CODE') }}
 
-    validation-observer.ui.form(
-      @submit.prevent="submit()"
-      v-slot="{ invalid }"
-      ref="form"
-      tag="form"
-      )
-
-      email-input.required.field(
-        :disabled="submitting"
-        v-model="data.email"
-        :class="fieldClass"
+        el-form(
+          :disabled="submitting || showModal",
+          @validate="onValidate",
+          :model="model",
+          status-icon,
+          ref="form"
         )
+          email-input.p-field(, v-model="model.email")
 
-      button.ui.primary.fluid.right.labeled.icon.submit.button(
-        :disabled="invalid || submitting"
-        :class="buttonClass"
-        type="submit"
-        )
-
-        | {{ $t('FORM.SUBMIT') }}
-        i.chevron.right.icon
-
-      .ui.basic.vertical.segment
-        button.ui.fluid.basic.button(
-          :disabled="invalid || submitting"
-          @click="onSubmitSuccess()"
-          type="button"
+          el-button.w-full(
+            :disabled="!isFormValid",
+            :loading="submitting",
+            @click="submit()",
+            type="primary"
           )
+            | {{ $t('FORM.SUBMIT') }}
+            i.el-icon-arrow-right
 
-          | {{ $t('HAVE_CODE') }}
+          .pt-4
+            el-button.w-full(
+              @click="onSubmitSuccess()",
+              :disabled="!isFormValid",
+              type="text"
+            )
+              | {{ $t('HAVE_CODE') }}
 
-      .ui.center.aligned.basic.vertical.segment
-        router-link.ui.link(to="/users/sign-in")
-          | {{ $t('HAVE_PASSWORD') }}
+      p.text-center.pt-4
+        router-link.el-link.el-link--primary(to="/users/sign-in")
+          .el-link--inner {{ $t('HAVE_PASSWORD') }}
 
   reset-modal(
-    :email="data.email"
-    ref="modal"
-    )
+    @hide="showModal = false",
+    :email="model.email",
+    :show="showModal"
+  )
 </template>
 
 <script lang="ts">
+import { Form } from 'element-ui';
 import Vue from 'vue';
+
+import FormValid from '@/modules/core/mixins/form/valid.vue';
 
 import EmailInput from '../../core/components/inputs/email.vue';
 import ResetModal from '../components/reset-modal.vue';
@@ -84,7 +99,8 @@ interface SubmitError extends Error {
 
 interface Data {
   submitting: boolean;
-  data: {
+  showModal: boolean;
+  model: {
     password: string;
     email: string;
     code: string;
@@ -98,47 +114,24 @@ interface Methods {
   afterError(): void;
 }
 
-interface Computed {
-  fieldClass: {
-    disabled: boolean;
-  };
-
-  buttonClass: {
-    disabled: boolean;
-    loading: boolean;
-  };
-}
-
-export default Vue.extend<Data, Methods, Computed>({
+export default Vue.extend<Data, Methods, unknown>({
   components: {
     EmailInput,
     ResetModal
   },
 
+  mixins: [FormValid],
+
   data() {
     return {
       submitting: false,
-      data: {
+      showModal: false,
+      model: {
         password: '',
         email: '',
         code: ''
       }
     };
-  },
-
-  computed: {
-    fieldClass() {
-      return {
-        disabled: this.submitting
-      };
-    },
-
-    buttonClass() {
-      return {
-        disabled: this.submitting,
-        loading: this.submitting
-      };
-    }
   },
 
   beforeCreate() {
@@ -149,9 +142,7 @@ export default Vue.extend<Data, Methods, Computed>({
 
   methods: {
     onSubmitSuccess() {
-      const $modal: any = this.$refs.modal; // eslint-disable-line @typescript-eslint/no-explicit-any
-
-      $modal.show();
+      this.showModal = true;
     },
 
     afterError() {
@@ -159,39 +150,41 @@ export default Vue.extend<Data, Methods, Computed>({
     },
 
     onSubmitError(err) {
-      console.error(err);
+      const timeout = setTimeout(() => this.afterError(), 30000);
 
       switch (err.code) {
+        case 'NotAuthorizedException':
+          this.$message.warning(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED').toString());
+          this.$router.push('/');
+
+          clearTimeout(timeout);
+          break;
+
         case 'LimitExceededException':
-          this.$toast.error(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED'));
-          setTimeout(() => this.afterError(), 30000);
+          this.$message.error(this.$t('MESSAGES.ERRORS.LIMIT_EXCEEDED').toString());
           break;
 
         case 'UserNotFoundException':
-          this.$toast.error(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND'));
-          setTimeout(() => this.afterError(), 3000);
-          break;
-
-        case 'NotAuthorizedException':
-          this.$toast.warning(this.$t('MESSAGES.ERRORS.NOT_AUTHORIZED'));
-          this.$router.push('/');
+          this.$message.error(this.$t('MESSAGES.ERRORS.USER_NOT_FOUND').toString());
           break;
 
         default:
-          this.$toast.error(this.$t('MESSAGES.ERRORS.UNKNOWN'));
-          setTimeout(() => this.afterError(), 3000);
+          this.$message.error(this.$t('MESSAGES.ERRORS.UNKNOWN').toString());
       }
     },
 
     async submit() {
+      if (!(await (this.$refs.form as Form).validate())) {
+        return;
+      }
+
       this.submitting = true;
 
       try {
-        await this.$auth.forgotPassword(this.data.email);
+        await this.$auth.forgotPassword(this.model.email);
 
         this.onSubmitSuccess();
       } catch (err) {
-        console.error(err);
         this.onSubmitError(err);
       }
 
@@ -200,10 +193,3 @@ export default Vue.extend<Data, Methods, Computed>({
   }
 });
 </script>
-
-<style lang="sass" scoped>
-.ui.centered.grid.container
-  .doubling.two.column.row
-    .column
-      padding: 0
-</style>

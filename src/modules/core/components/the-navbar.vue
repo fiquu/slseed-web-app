@@ -1,66 +1,154 @@
 <i18n>
 en:
+  MENU: Menu
+  DASHBOARD: Dashboard
+  NAVIGATION: Navigation
+  USERS: Users
+  NOT_FOUND: Not Found
   SIGN_OUT: Sign out
+es:
+  MENU: Menú
+  DASHBOARD: Tablero
+  NAVIGATION: Navegación
+  USERS: Usuarios
+  NOT_FOUND: No Encontrado
+  SIGN_OUT: Salir
 </i18n>
 
 <template lang="pug">
-header.ui.fixed.top.compact.menu
-  router-link.icon.item.tablet.or.lower.hidden(
-    :class="{ disabled: $route.path === '/dashboard' }"
-    v-if="$session.signedIn"
-    to='/'
+el-menu(mode="horizontal", :default-active="defaultActive", router)
+  el-menu-item
+    el-avatar(
+      src="/static/images/navbar-icon.png",
+      :alt="$t('DASHBOARD')",
+      size="small"
     )
-
-    i.chevron.left.icon
-
-  router-link.header.item(to='/')
-    img(src='/static/images/navbar-icon.png')
     | {{ title }}
 
-  .right.menu.tablet.or.lower.hidden(v-if="$session.signedIn")
-    .disabled.item
-      i.user.circle.icon
+  transition(name="el-fade-in", mode="out-in")
+    el-submenu.hidden-xs-only(
+      v-if="$session.signedIn",
+      index="navigation",
+      key="nav-menu"
+    )
+      template(#title) {{ $t('NAVIGATION') }}
+
+      el-menu-item(index="/dashboard")
+        i.el-icon-odometer
+        | {{ $t('DASHBOARD') }}
+
+      el-menu-item(index="/users")
+        i.el-icon-user
+        | {{ $t('USERS') }}
+
+      el-menu-item(index="/not-a-valid-route")
+        i.el-icon-warning-outline
+        | {{ $t('NOT_FOUND') }}
+
+  transition(name="el-fade-in", mode="out-in")
+    el-menu-item.hidden-xs-only(v-if="$session.signedIn", key="profile")
+      i.el-icon-user
       | {{ $session.data.name }}
 
-    a.item(
-      @click="$session.signOut()"
-      v-if="$session.signedIn"
-      role="button"
-      href=""
-      )
-
-      i.sign.out.icon
+  transition(name="el-fade-in", mode="out-in")
+    el-menu-item.hidden-xs-only(
+      @click="$session.signOut()",
+      v-if="$session.signedIn",
+      key="sign-out"
+    )
+      i.el-icon-switch-button
       | {{ $t('SIGN_OUT') }}
+
+  transition(name="el-fade-in", mode="out-in")
+    el-menu-item.hidden-sm-and-up.float-right(
+      @click="showDrawer = true",
+      v-if="$session.signedIn",
+      key="drawer-menu"
+    )
+      i.el-icon-menu
+
+  el-drawer(:visible.sync="showDrawer", :title="$t('MENU')", size="75%")
+    el-menu(:default-active="defaultActive", router)
+      el-menu-item(index="/dashboard")
+        i.el-icon-odometer
+        | {{ $t('DASHBOARD') }}
+
+      el-menu-item(index="/users")
+        i.el-icon-user
+        | {{ $t('USERS') }}
+
+      el-menu-item(index="/not-a-valid-route")
+        i.el-icon-warning-outline
+        | {{ $t('NOT_FOUND') }}
+
+      el-divider
+
+      el-menu-item(disabled)
+        i.el-icon-user
+        | {{ $session.data.name }}
+
+      el-menu-item(@click="signOut()")
+        i.el-icon-switch-button
+        | {{ $t('SIGN_OUT') }}
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
 interface Data {
+  defaultActive: string;
+  showDrawer: boolean;
   title: string;
 }
 
-export default Vue.extend<Data, unknown, unknown>({
+interface Methods {
+  signOut(): void;
+}
+
+export default Vue.extend<Data, Methods, unknown>({
   name: 'TheNavbar',
 
   data() {
     return {
-      title: String(process.env.VUE_APP_SHORT)
+      title: String(process.env.VUE_APP_SHORT),
+      defaultActive: '/',
+      showDrawer: false
     };
+  },
+
+  mounted() {
+    this.$router.beforeEach((to, from, next) => {
+      this.showDrawer = false;
+      next();
+    });
+
+    this.$router.afterEach(() => {
+      this.defaultActive = this.$route.path;
+    });
+  },
+
+  methods: {
+    signOut() {
+      this.$session.signOut();
+      this.showDrawer = false;
+    }
   }
 });
 </script>
 
 <style lang="sass" scoped>
-header.ui.fixed.top.compact.menu
-  position: static
+.el-menu
+  .el-avatar
+    margin-right: 0.5em
 
-  > button
-    border: 0
+  .float-right
+    float: right !important
 
-  .header.item
-    img
-      margin-right: 1rem
-      height: 1.5em
-      width: auto
+  ::v-deep .el-drawer
+    &:focus
+      outline: 0
+
+    .el-drawer__header
+      > :first-child:focus
+        outline: 0
 </style>

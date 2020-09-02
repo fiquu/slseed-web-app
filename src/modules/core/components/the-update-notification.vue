@@ -1,23 +1,26 @@
 <i18n>
 en:
-  UPDATE_AVAILABLE: An update is available. Click here refresh the app.
+  UPDATE_AVAILABLE: An update is available. Press here refresh the app.
   UPDATING: Refreshing...
+es:
+  UPDATE_AVAILABLE: Hay una actualización disponible. Presione aquí para actualizar la aplicación.
+  UPDATING: Refrescando...
 </i18n>
 
 <template lang="pug">
-section
-  button.ui.orange.fluid.button(
-    v-if="updateAvailable"
-    @click="refreshApp()"
-    :class="{ loading }"
-    )
-
-    i.exclamation.circle.icon
+section(
+  :element-loading-text="$t('UPDATING')",
+  v-loading.fullscreen.block="loading",
+  v-if="updateAvailable"
+)
+  el-button.rounded-none.w-full(
+    icon="el-icon-warning",
+    @click="refreshApp()",
+    :disabled="loading",
+    :loading="loading",
+    type="warning"
+  )
     | {{ $t('UPDATE_AVAILABLE') }}
-
-  .ui.inverted.active.page.dimmer(v-if="loading")
-    .ui.primary.text.loader
-      | {{ $t('UPDATING') }}
 </template>
 
 <script lang="ts">
@@ -68,6 +71,7 @@ export default Vue.extend<Data, unknown, Methods>({
     },
 
     refreshApp() {
+      this.loading = true;
       this.updateAvailable = false;
 
       // Make sure we only send a 'skip waiting' message if the SW is waiting.
@@ -85,6 +89,6 @@ export default Vue.extend<Data, unknown, Methods>({
 </script>
 
 <style lang="sass" scoped>
-.ui.button
+.p-button
   border-radius: 0
 </style>

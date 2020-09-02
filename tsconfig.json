@@ -14,8 +14,7 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
-      "semantic-ui",
-      "jquery",
+      "cypress",
       "mocha",
       "node",
       "chai"

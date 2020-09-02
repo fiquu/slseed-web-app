@@ -3,148 +3,128 @@ en:
   TITLE: Welcome
   SUBTITLE: Please sign in with your credentials.
   FORGOT_PASSWORD: I forgot my password
-
   FORM:
     NEW_PASSWORD:
-      MESSAGE:
-        TITLE: "That's a temporary password!"
-        BODY: You must create a new password.
+      TITLE: That's a temporary password!
+      DESCRIPTION: You must create a new one to sign in.
     SUBMIT: Sign in
-
-  ERRORS:
+  MESSAGES:
+    SUCCESS: Nice to have you back!
     USER_NOT_CONFIRMED_EXCEPTION: Please verify your account first.
     PASSWORD_RESET_REQUIRED_EXCEPTION: Please reset your password.
     NOT_AUTHORIZED_EXCEPTION: Please verify that your email and password are correct.
-    UNKNOWN: Please check input values and internet connection.
+    UNKNOWN_ERROR: Please check input values and internet connection.
+es:
+  TITLE: Bienvenido
+  SUBTITLE: Inicia sesión con tus credenciales.
+  FORGOT_PASSWORD: Olvidé mi contraseña
+  FORM:
+    NEW_PASSWORD:
+      TITLE: ¡Esa es una contraseña temporal!
+      DESCRIPTION: Debes crear una nueva para iniciar sesión.
+    SUBMIT: Ingresar
+  MESSAGES:
+    SUCCESS: ¡Bueno tenerte de vuelta!
+    USER_NOT_CONFIRMED_EXCEPTION: Primero verifica tu cuenta.
+    PASSWORD_RESET_REQUIRED_EXCEPTION: Por favor, cambia tu contraseña.
+    NOT_AUTHORIZED_EXCEPTION: Verifica que tu correo electrónico y contraseña sean correctos.
+    UNKNOWN_ERROR: Comprueba los valores de entrada y la conexión a Internet.
 </i18n>
 
 <template lang="pug">
-section.ui.basic.segment
-  .ui.text.container
-    .ui.basic.vertical.segment
-      .ui.center.aligned.primary.segment
-        h3.ui.primary.icon.header
-          i.circular.id.badge.icon
-          .content {{ $t('TITLE') }}
-            .sub.header {{ $t('SUBTITLE') }}
+el-main
+  el-row(justify="center", type="flex")
+    el-col(:sm="14", :md="10", :lg="8", :xl="4")
+      el-card
+        template(#header)
+          .text-center
+            i.el-icon-user.text-4xl.mb-3
+            h3.font-bold {{ $t('TITLE') }}
+            small {{ $t('SUBTITLE') }}
 
-      validation-observer.ui.form(
-        v-slot="{ classes, invalid }"
-        @submit.prevent="signIn()"
-        ref="form"
-        tag="form"
+        el-form(
+          @validate="onValidate",
+          :disabled="submitting",
+          :model="model",
+          ref="form"
         )
+          email-input(v-model="model.email")
+          password-input(v-model="model.password")
 
-        email-input.required.field(
-          :disabled="signingIn"
-          v-model="data.email"
-          :class="fieldClass"
-          )
-
-        password-input.required.field(
-          v-model="data.password"
-          :disabled="signingIn"
-          :class="fieldClass"
-          )
-
-        .ui.info.icon.message.visible(v-if="newPasswordRequired")
-          i.exclamation.circle.icon
-          .content
-            .header {{ $t('FORM.NEW_PASSWORD.MESSAGE.TITLE') }}
-            p {{ $t('FORM.NEW_PASSWORD.MESSAGE.BODY') }}
-
-        .required.field(
-          :class="[classes, fieldClass]"
-          v-if="newPasswordRequired"
-          )
-
-          new-password-input.required.field(
-            v-model="data.newPassword"
-            :disabled="signingIn"
-            :class="fieldClass"
+          template(v-if="newPasswordRequired")
+            el-alert(
+              :description="$t('FORM.NEW_PASSWORD.DESCRIPTION')",
+              :title="$t('FORM.NEW_PASSWORD.TITLE')",
+              :closable="false",
+              type="warning",
+              show-icon
             )
 
-        button.ui.primary.fluid.right.labeled.icon.submit.button(
-          :disabled="invalid || signingIn"
-          :class="submitClass"
-          type="submit"
+            new-password-input(v-model="model.newPassword", :model="model")
+
+          el-button.w-full(
+            :id="`submit-button-${_uid}`",
+            :disabled="!isFormValid",
+            :loading="submitting",
+            @click="submit()",
+            type="primary"
           )
+            | {{ $t('FORM.SUBMIT') }}
+            i.el-icon-arrow-right
 
-          | {{ $t('FORM.SUBMIT') }}
-          i.sign.in.icon
-
-        .ui.center.aligned.vertical.segment
-          router-link.ui.link(to="/users/forgot-password")
-            | {{ $t('FORGOT_PASSWORD') }}
+      p.text-center.mt-4
+        router-link.el-link.el-link--primary(to="/users/forgot-password")
+          .el-link--inner {{ $t('FORGOT_PASSWORD') }}
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
+import FormValid from '@/modules/core/mixins/form/valid.vue';
+
 import NewPasswordInput from '../../core/components/inputs/new-password.vue';
 import PasswordInput from '../../core/components/inputs/password.vue';
 import EmailInput from '../../core/components/inputs/email.vue';
 
-interface SignInError extends Error {
+interface SubmitError extends Error {
   code: string;
 }
 
 interface Data {
   newPasswordRequired: boolean;
-  signingIn: boolean;
-  data: {
-    newPassword?: string;
+  submitting: boolean;
+  model: {
+    newPassword: string;
     password: string;
     email: string;
   };
 }
 
-interface Computed {
-  fieldClass: {
-    disabled: boolean;
-  };
-
-  submitClass: {
-    loading: boolean;
-  };
-}
-
 interface Methods {
-  onSignInError(err: SignInError): void;
-  onSignInSuccess(): void;
-  signIn(): Promise<void>;
+  onSubmitError(err: SubmitError): void;
+  onSubmitSuccess(): void;
+  submit(): Promise<void>;
 }
 
-export default Vue.extend<Data, Methods, Computed>({
+export default Vue.extend<Data, Methods, unknown>({
   components: {
     NewPasswordInput,
     PasswordInput,
     EmailInput
   },
 
+  mixins: [FormValid],
+
   data() {
     return {
       newPasswordRequired: false,
-      signingIn: false,
-      data: {
+      submitting: false,
+      model: {
+        newPassword: '',
         password: '',
         email: ''
       }
     };
-  },
-
-  computed: {
-    fieldClass() {
-      return {
-        disabled: this.signingIn
-      };
-    },
-
-    submitClass() {
-      return {
-        loading: this.signingIn
-      };
-    }
   },
 
   beforeCreate() {
@@ -154,38 +134,38 @@ export default Vue.extend<Data, Methods, Computed>({
   },
 
   methods: {
-    onSignInSuccess() {
+    onSubmitSuccess() {
+      this.$message.success(this.$t('MESSAGES.SUCCESS').toString());
       this.$router.replace('/');
     },
 
-    onSignInError(err) {
+    onSubmitError(err) {
       switch (err.code) {
         case 'UserNotConfirmedException':
-          this.$toast.error(this.$t('ERRORS.USER_NOT_CONFIRMED_EXCEPTION'));
+          this.$message.error(this.$t('MESSAGES.USER_NOT_CONFIRMED_EXCEPTION').toString());
           break;
 
         case 'PasswordResetRequiredException':
-          this.$t('ERRORS.PASSWORD_RESET_REQUIRED_EXCEPTION');
+          this.$message.error(this.$t('MESSAGES.PASSWORD_RESET_REQUIRED_EXCEPTION').toString());
           break;
 
         case 'NotAuthorizedException':
         case 'UserNotFoundException':
-          this.$toast.error(this.$t('ERRORS.NOT_AUTHORIZED_EXCEPTION'));
+          this.$message.error(this.$t('MESSAGES.NOT_AUTHORIZED_EXCEPTION').toString());
           break;
 
         default:
-          this.$toast.error(this.$t('ERRORS.UNKNOWN'));
-          console.error(err);
+          this.$message.error(this.$t('MESSAGES.UNKNOWN_ERROR').toString());
       }
     },
 
     /**
      * Signs the user in.
      */
-    async signIn() {
-      this.signingIn = true;
+    async submit() {
+      this.submitting = true;
 
-      const { email, password, newPassword } = this.data;
+      const { email, password, newPassword } = this.model;
 
       try {
         const user = await this.$auth.signIn(email, password);
@@ -196,30 +176,23 @@ export default Vue.extend<Data, Methods, Computed>({
           if (this.newPasswordRequired && newPassword) {
             await this.$auth.completeNewPassword(user, newPassword, {});
 
-            this.onSignInSuccess();
+            this.onSubmitSuccess();
 
             return;
           }
 
-          this.signingIn = false;
+          this.submitting = false;
 
           return;
         }
 
-        this.onSignInSuccess();
+        this.onSubmitSuccess();
       } catch (err) {
-        this.onSignInError(err);
+        this.onSubmitError(err);
       }
 
-      this.signingIn = false;
+      this.submitting = false;
     }
   }
 });
 </script>
-
-<style lang="sass" scoped>
-.ui.centered.grid.container
-  .doubling.two.column.row
-    .column
-      padding: 0
-</style>
