@@ -25,6 +25,9 @@ function generateCSP (policy) {
 }
 
 module.exports = {
+  clientLogLevel: 'debug',
+  disableHostCheck: true, // Allow Gitpod previews
+  compress: true,
   port: PORT,
   headers: {
     'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
