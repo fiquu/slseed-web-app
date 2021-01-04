@@ -1,5 +1,7 @@
 # @fiquu/slseed-web-app
 
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/dotstudio-io/fi-slseed-app)
+
 Serveless Seed Web App project with [Vue](https://vuejs.org), [Element UI](https://element.eleme.io/#/en-US), [Tailwind CSS](https://tailwindcss.com/), [AWS Amplify](https://aws.amazon.com/amplify/), automated setup and deploy with [AWS CloudFormation](https://aws.amazon.com/cloudformation/), [Amazon S3](https://aws.amazon.com/s3/), [Amazon CloudFront](https://aws.amazon.com/cloudfront/) and other goodies.
 
 ## Description
